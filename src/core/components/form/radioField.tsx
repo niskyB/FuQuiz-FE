@@ -15,10 +15,12 @@ export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values }) =
 
     return (
         <div>
-            <span>{label}</span>
-            <div>
+            <label htmlFor={name} className="block text-sm font-medium text-gray-700 capitalize">
+                {label}
+            </label>
+            <div className="flex mt-1 space-x-5">
                 {values.map((item) => (
-                    <div key={item.value}>
+                    <div className="flex items-center space-x-2" key={item.value}>
                         <input type="radio" id={`${name}.${item.value}`} {...register(name)} value={item.value} />
                         <label htmlFor={`${name}.${item.value}`}>{item.label}</label>
                     </div>
@@ -26,7 +28,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values }) =
             </div>
 
             {Boolean(errors[name]?.message) && (
-                <div>
+                <div className="text-red-500">
                     {label} {errors[name]?.message}
                 </div>
             )}

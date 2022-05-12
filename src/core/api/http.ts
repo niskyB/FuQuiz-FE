@@ -4,10 +4,12 @@ import { store } from '../store';
 import { apiActions } from '../store/api';
 import Cookies from 'universal-cookie';
 import { constant } from '../constant';
+
 const http = axios.create({
     baseURL: config.SERVER_URL,
     withCredentials: true,
 });
+
 http.interceptors.request.use(function (req) {
     store.dispatch(apiActions.initReq());
     const cookies = new Cookies();
@@ -16,6 +18,7 @@ http.interceptors.request.use(function (req) {
 
     return req;
 });
+
 http.interceptors.response.use(
     function (response) {
         store.dispatch(apiActions.resetState());

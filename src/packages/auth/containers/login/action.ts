@@ -2,9 +2,9 @@ import { http } from '../../../../core/api';
 import joi from 'joi';
 import { User, userSchema } from '../../../../core/models/user';
 
-export interface AuthLoginDto extends Pick<User, 'username' | 'password'> {}
+export interface AuthLoginDto extends Pick<User, 'email' | 'password'> {}
 export const authLoginSchema = joi.object<AuthLoginDto>({
-    username: userSchema.username,
+    email: userSchema.email,
     password: userSchema.password,
 });
 

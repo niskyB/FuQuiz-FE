@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Transition } from '@headlessui/react';
 import { useStoreApi } from '../../store';
 
 interface ProgressBarProps {}
