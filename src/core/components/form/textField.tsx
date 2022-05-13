@@ -13,7 +13,7 @@ export const TextField: React.FC<TextFieldProps> = ({ name, label, ...rest }) =>
     } = useFormContext();
 
     return (
-        <div>
+        <div className="w-full">
             <label htmlFor={name} className="block text-sm font-medium text-gray-700 capitalize">
                 {label}
             </label>

@@ -1,4 +1,4 @@
-import joi from 'joi';
+import { Role } from './role';
 
 export enum UserStatus {
     ACTIVE = 'active',
@@ -14,25 +14,14 @@ export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.USER];
 
 export interface User {
     id: string;
-    name: string;
-    username: string;
+    fullName: string;
     password: string;
     email: string;
-    googleId: string;
-    createDate: string;
-    updateDate: string;
-    status: UserStatus;
-    role: UserRole;
+    gender: string;
+    mobile: string;
+    token: string;
+    isActive: boolean;
+    createAt: Date;
+    updateAt: Date;
+    role: Role;
 }
-
-export const userSchema = {
-    username: joi.string().min(1).max(255).required(),
-    password: joi.string().min(1).max(255).required(),
-    email: joi
-        .string()
-        .email({ tlds: { allow: false } })
-        .min(1)
-        .max(255)
-        .required(),
-    name: joi.string().min(1).max(255).required(),
-};

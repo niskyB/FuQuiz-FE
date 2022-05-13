@@ -40,7 +40,7 @@ export const Login: React.FC<LoginProps> = () => {
                             <FormErrorMessage />
                             <div className="flex flex-col items-end justify-center mt-1">
                                 <div className="text-sm">
-                                    <Link href="#">
+                                    <Link href={routes.resetPasswordUrl}>
                                         <a className="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
                                     </Link>
                                 </div>

@@ -1,9 +1,8 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
 import { useStoreUser } from '../../../../core/store';
-import { UpdateUserDto, updateUserSchema, updateUser } from './action';
+import { UpdateUserDto, updateUser } from './action';
 
 interface UpdateUserProps {}
 const defaultValues: UpdateUserDto = {
@@ -13,7 +12,6 @@ const defaultValues: UpdateUserDto = {
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
     const methods = useForm<UpdateUserDto>({
         defaultValues,
-        resolver: joiResolver(updateUserSchema),
     });
     const user = useStoreUser();
 
