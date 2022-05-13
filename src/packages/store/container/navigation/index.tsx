@@ -3,6 +3,8 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { SearchIcon } from '@heroicons/react/solid';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface NavigationProps {}
 function classNames(...classes: any) {
@@ -17,6 +19,7 @@ const NAV_LINK = [
 ];
 
 export const Navigation: React.FC<NavigationProps> = () => {
+    const router = useRouter();
     return (
         <Disclosure as="nav" className="bg-white shadow">
             {({ open }) => (
@@ -25,27 +28,26 @@ export const Navigation: React.FC<NavigationProps> = () => {
                         <div className="flex justify-between h-16">
                             <div className="flex px-2 lg:px-0">
                                 <div className="flex items-center flex-shrink-0">
-                                    <img
-                                        className="block w-auto h-8 lg:hidden"
-                                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                                        alt="Workflow"
-                                    />
+                                    <img className="block w-auto h-8 lg:hidden" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" />
                                     <img
                                         className="hidden w-auto h-8 lg:block"
                                         src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                                        alt="Workflow"
                                     />
                                 </div>
                                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
-                                    {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+                                    {/* Current: "", Default: "" */}
                                     {NAV_LINK.map((item) => (
-                                        <a
-                                            key={item.label}
-                                            href={item.link}
-                                            className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-indigo-500"
-                                        >
-                                            {item.label}
-                                        </a>
+                                        <Link key={item.label} href={item.link}>
+                                            <a
+                                                className={`${
+                                                    router.pathname === item.link
+                                                        ? 'border-indigo-500 text-gray-900'
+                                                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                                                } inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 `}
+                                            >
+                                                {item.label}
+                                            </a>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>
