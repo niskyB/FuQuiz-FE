@@ -1,4 +1,3 @@
-import Joi from 'joi';
 import { http } from '../../../../core/api';
 
 export interface ChangePasswordDto {
