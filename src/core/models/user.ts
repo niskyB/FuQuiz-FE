@@ -1,5 +1,3 @@
-import joi from 'joi';
-
 export enum UserStatus {
     ACTIVE = 'active',
     INACTIVE = 'inactive',
@@ -24,15 +22,3 @@ export interface User {
     status: UserStatus;
     role: UserRole;
 }
-
-export const userSchema = {
-    username: joi.string().min(1).max(255).required(),
-    password: joi.string().min(1).max(255).required(),
-    email: joi
-        .string()
-        .email({ tlds: { allow: false } })
-        .min(1)
-        .max(255)
-        .required(),
-    name: joi.string().min(1).max(255).required(),
-};
