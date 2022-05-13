@@ -57,7 +57,7 @@ export const Login: React.FC<LoginProps> = () => {
                                 <div className="space-x-1 text-sm">
                                     <span className="">Don&apos;t have account yet?</span>
                                     <Link href={routes.registerUrl}>
-                                        <a className="font-medium text-indigo-600 hover:text-indigo-500">Register here!</a>
+                                        <a className="font-medium text-indigo-600 underline hover:text-indigo-500">Register here!</a>
                                     </Link>
                                 </div>
                             </div>
