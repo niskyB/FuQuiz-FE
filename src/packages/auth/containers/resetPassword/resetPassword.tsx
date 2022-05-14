@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
-import { authResetPassword, AuthResetPasswordDto, AuthSendResetDto, authSendResetPassword } from './action';
+import { authResetPassword, AuthResetPasswordDto } from './action';
 
-interface ResetPasswordProps {}
-const defaultValues: AuthSendResetDto = {
-    email: '',
+interface ResetPasswordProps {
+    token: string;
+}
+const defaultValues: AuthResetPasswordDto = {
+    password: '',
+    confirmPassword: '',
 };
 
-const SendResetPassword: React.FunctionComponent<ResetPasswordProps> = () => {
-    const methods = useForm<AuthSendResetDto>({ defaultValues });
+const ResetPassword: React.FunctionComponent<ResetPasswordProps> = ({ token }) => {
+    const methods = useForm<AuthResetPasswordDto>({ defaultValues });
 
-    const _handleOnSubmit = async (data: AuthSendResetDto) => {
-        const res = await authSendResetPassword(data);
+    const _handleOnSubmit = async (data: AuthResetPasswordDto) => {
+        console.log(data);
+        const res = await authResetPassword(data, token);
         console.log(res);
     };
     return (
@@ -23,14 +27,10 @@ const SendResetPassword: React.FunctionComponent<ResetPasswordProps> = () => {
 
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="px-4 py-8 space-y-5 bg-white shadow sm:rounded-lg sm:px-10">
-                        <p className="text-sm text-gray-500">If you forgot your password an email with password will be sent to you</p>
-                        <form
-                            onSubmit={methods.handleSubmit(_handleOnSubmit)}
-                            className="flex items-center justify-center space-x-5 space-y-6"
-                            action="#"
-                            method="POST"
-                        >
-                            <TextField label="Email" name="email" />
+                        <p className="text-sm text-gray-500">Enter your new password here</p>
+                        <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="flex flex-col items-end justify-center space-y-6">
+                            <TextField label="Password" name="password" type="password" />
+                            <TextField label="Confirm Password" name="confirmPassword" type="password" />
                             <FormErrorMessage />
 
                             <button
@@ -47,4 +47,4 @@ const SendResetPassword: React.FunctionComponent<ResetPasswordProps> = () => {
     );
 };
 
-export default SendResetPassword;
+export default ResetPassword;
