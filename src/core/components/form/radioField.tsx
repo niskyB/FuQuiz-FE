@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Gender } from '../../models/user';
 
 interface RadioFieldProps {
     name: string;
     label: string;
-    values: Array<{ label: string; value: any }>;
+    values: Array<{ label: string; value: Gender }>;
 }
 
 export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values }) => {

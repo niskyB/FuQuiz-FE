@@ -8,5 +8,5 @@ export const FormErrorMessage: React.FC<FormErrorMessageProps> = () => {
         formState: { errors },
     } = useFormContext();
 
-    return <>{Boolean(errors.errorMessage?.message) && <div>{errors.errorMessage.message}</div>}</>;
+    return <>{Boolean(errors.errorMessage?.message) && <div className="text-red-500">{errors.errorMessage.message}</div>}</>;
 };

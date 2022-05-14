@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import * as joi from 'joi';
 
 // --- components
 
@@ -10,14 +9,6 @@ interface TestDto {
     hello: string;
     lll: string;
 }
-
-const schema = joi.object<TestDto>({});
-
-const defaultValues: TestDto = {
-    username: '',
-    hello: '24',
-    lll: '24',
-};
 
 const Home: NextPage = () => {
     return <StoreLayout></StoreLayout>;
