@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
+import { Gender } from '../../../../core/models/user';
 import { useStoreUser } from '../../../../core/store';
 import { UpdateUserDto, updateUser } from './action';
 
 interface UpdateUserProps {}
 const defaultValues: UpdateUserDto = {
     fullName: '',
-    gender: '',
+    gender: Gender.MALE,
     mobile: '',
     email: '',
     imageUrl: '',
