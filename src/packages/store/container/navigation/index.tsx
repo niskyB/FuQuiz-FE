@@ -27,6 +27,7 @@ const GUEST_SELECTION = [
     { label: 'Sign in', link: routes.loginUrl },
     { label: 'Register', link: routes.registerUrl },
 ];
+
 export const Navigation: React.FC<NavigationProps> = () => {
     const router = useRouter();
     const userState = useStoreUser();
