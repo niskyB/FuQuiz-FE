@@ -1,8 +1,8 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
-import { ChangePasswordDto, changePasswordSchema, userChangePassword } from './action';
+import { ChangePasswordDto, userChangePassword } from './action';
 
 interface PasswordProps {}
 
@@ -13,11 +13,11 @@ const defaultValues: ChangePasswordDto = {
 };
 
 export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
-    const methods = useForm<ChangePasswordDto>({ defaultValues, resolver: joiResolver(changePasswordSchema) });
+    const methods = useForm<ChangePasswordDto>({ defaultValues });
 
     const _handleOnSubmit = async (data: ChangePasswordDto) => {
         const res = await userChangePassword(data);
-        console.log(res);
+        if (res) toast.success('Change password success!');
     };
 
     return (

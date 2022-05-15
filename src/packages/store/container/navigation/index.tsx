@@ -2,9 +2,12 @@ import * as React from 'react';
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { SearchIcon } from '@heroicons/react/solid';
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { logout } from './action';
+import { useStoreUser } from '../../../../core/store';
+import { routes } from '../../../../core/routes';
 
 interface NavigationProps {}
 function classNames(...classes: any) {
@@ -12,14 +15,26 @@ function classNames(...classes: any) {
 }
 
 const NAV_LINK = [
-    { label: 'Dashboard', link: '' },
+    { label: 'Dashboard', link: '/' },
     { label: 'Team', link: '' },
-    { label: 'Projects', link: '' },
-    { label: 'Calendar', link: '' },
+];
+
+const USER_ACTION_LINK = [
+    { label: 'your profile', link: '' },
+    { label: 'setting', link: '' },
+];
+const GUEST_SELECTION = [
+    { label: 'Sign in', link: routes.loginUrl },
+    { label: 'Register', link: routes.registerUrl },
 ];
 
 export const Navigation: React.FC<NavigationProps> = () => {
     const router = useRouter();
+    const userState = useStoreUser();
+    const _onLogout = async () => {
+        const res = await logout();
+        if (res) window.location.reload();
+    };
     return (
         <Disclosure as="nav" className="bg-white shadow">
             {({ open }) => (
@@ -35,7 +50,6 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                     />
                                 </div>
                                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
-                                    {/* Current: "", Default: "" */}
                                     {NAV_LINK.map((item) => (
                                         <Link key={item.label} href={item.link}>
                                             <a
@@ -86,7 +100,6 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                 <Menu as="div" className="relative flex-shrink-0 ml-4">
                                     <div>
                                         <Menu.Button className="flex text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            <span className="sr-only">Open user menu</span>
                                             <img
                                                 className="w-8 h-8 rounded-full"
                                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -103,35 +116,35 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                         leaveFrom="transform opacity-100 scale-100"
                                         leaveTo="transform opacity-0 scale-95"
                                     >
-                                        <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                            {USER_ACTION_LINK.map((item) => (
+                                                <Menu.Item key={item.label}>
+                                                    {({ active }) => (
+                                                        <Link href={item.link}>
+                                                            <a
+                                                                className={classNames(
+                                                                    active ? 'bg-gray-100' : '',
+                                                                    'block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700'
+                                                                )}
+                                                            >
+                                                                {item.label}
+                                                            </a>
+                                                        </Link>
+                                                    )}
+                                                </Menu.Item>
+                                            ))}
+
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                                                    >
-                                                        Your Profile
-                                                    </a>
-                                                )}
-                                            </Menu.Item>
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                                                    >
-                                                        Settings
-                                                    </a>
-                                                )}
-                                            </Menu.Item>
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                    <div
+                                                        onClick={() => _onLogout()}
+                                                        className={classNames(
+                                                            active ? 'bg-gray-100' : '',
+                                                            'block hover:bg-gray-100 px-4 cursor-pointer py-2 text-sm text-gray-700'
+                                                        )}
                                                     >
                                                         Sign out
-                                                    </a>
+                                                    </div>
                                                 )}
                                             </Menu.Item>
                                         </Menu.Items>
@@ -143,80 +156,64 @@ export const Navigation: React.FC<NavigationProps> = () => {
 
                     <Disclosure.Panel className="lg:hidden">
                         <div className="pt-2 pb-3 space-y-1">
-                            {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
-                            <Disclosure.Button
-                                as="a"
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-base font-medium text-indigo-700 border-l-4 border-indigo-500 bg-indigo-50"
-                            >
-                                Dashboard
-                            </Disclosure.Button>
-                            <Disclosure.Button
-                                as="a"
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                            >
-                                Team
-                            </Disclosure.Button>
-                            <Disclosure.Button
-                                as="a"
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                            >
-                                Projects
-                            </Disclosure.Button>
-                            <Disclosure.Button
-                                as="a"
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                            >
-                                Calendar
-                            </Disclosure.Button>
+                            {NAV_LINK.map((item) => (
+                                <Link passHref key={item.label} href={item.link}>
+                                    <Disclosure.Button
+                                        as="a"
+                                        className={`block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 ${
+                                            item.link === router.pathname && 'bg-indigo-50 border-indigo-500 text-indigo-700'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </Disclosure.Button>
+                                </Link>
+                            ))}
                         </div>
-                        <div className="pt-4 pb-3 border-t border-gray-200">
-                            <div className="flex items-center px-4">
-                                <div className="flex-shrink-0">
-                                    <img
-                                        className="w-10 h-10 rounded-full"
-                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="ml-3">
-                                    <div className="text-base font-medium text-gray-800">Tom Cook</div>
-                                    <div className="text-sm font-medium text-gray-500">tom@example.com</div>
-                                </div>
-                                <button
-                                    type="button"
-                                    className="flex-shrink-0 p-1 ml-auto text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    <span className="sr-only">View notifications</span>
-                                    <BellIcon className="w-6 h-6" aria-hidden="true" />
-                                </button>
-                            </div>
-                            <div className="mt-3 space-y-1">
-                                <Disclosure.Button
-                                    as="a"
-                                    href="#"
-                                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-                                >
-                                    Your Profile
-                                </Disclosure.Button>
-                                <Disclosure.Button
-                                    as="a"
-                                    href="#"
-                                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-                                >
-                                    Settings
-                                </Disclosure.Button>
-                                <Disclosure.Button
-                                    as="a"
-                                    href="#"
-                                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-                                >
-                                    Sign out
-                                </Disclosure.Button>
-                            </div>
+
+                        <div className="pt-4 pb-2 border-t border-gray-200">
+                            {userState.id ? (
+                                <>
+                                    <div className="flex items-center px-4">
+                                        <div className="flex-shrink-0">
+                                            <img className="w-10 h-10 rounded-full" src={userState.imageUrl} alt="" />
+                                        </div>
+                                        <div className="ml-3">
+                                            <div className="text-base font-medium text-gray-800">{userState.fullName}</div>
+                                            <div className="text-sm font-medium text-gray-500">{userState.email}</div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 space-y-1">
+                                        {USER_ACTION_LINK.map((item) => (
+                                            <Link href={item.link} key={item.label}>
+                                                <Disclosure.Button className="block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                                                    {item.label}
+                                                </Disclosure.Button>
+                                            </Link>
+                                        ))}
+
+                                        <div
+                                            onClick={() => _onLogout()}
+                                            className="block px-4 py-2 text-base font-medium text-left text-gray-500 cursor-pointer hover:text-gray-800 hover:bg-gray-100"
+                                        >
+                                            Sign out
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    {GUEST_SELECTION.map((item) => (
+                                        <Link key={item.label} href={item.link} passHref>
+                                            <div
+                                                className={`block cursor-pointer py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 ${
+                                                    item.link === router.pathname && 'bg-indigo-50 border-indigo-500 text-indigo-700'
+                                                }`}
+                                            >
+                                                {item.label}
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </>
+                            )}
                         </div>
                     </Disclosure.Panel>
                 </>

@@ -22,21 +22,22 @@ const reducer = createSlice({
     name: 'api',
     initialState,
     reducers: {
-        // initReq: (state) => ({ ...state, isLoading: true, isError: false }),
-        setGlobalLoading: (state, { payload }: PayloadAction<{ isLoading: boolean }>) => ({
+        initReq: (state) => ({ ...state, isError: false, isGlobalLoading: true }),
+        setGlobalLoading: (state, { payload }: PayloadAction<boolean>) => ({
             ...state,
-            isGlobalLoading: payload.isLoading,
+            isGlobalLoading: payload,
         }),
-        setLocalLoading: (state, { payload }: PayloadAction<{ isLoading: boolean }>) => ({
+        setLocalLoading: (state, { payload }: PayloadAction<boolean>) => ({
             ...state,
-            isLocalLoading: payload.isLoading,
+            isLocalLoading: payload,
         }),
         resetState: () => ({ ...initialState }),
         updateErrorDetails: (state, { payload }: PayloadAction<Record<string, string>>) => {
             const newState = { ...state };
-            if (payload?.errorMessage) newState.errorMessage = payload.errorMessage;
+            const { errorMessage, message, ...others } = payload;
+            if (payload?.errorMessage) newState.errorMessage = errorMessage;
 
-            newState.errorDetails = payload;
+            newState.errorDetails = others;
             newState.isError = true;
             return newState;
         },

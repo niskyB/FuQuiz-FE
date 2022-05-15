@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
-import * as joi from 'joi';
 
 // --- components
 
 import { StoreLayout } from '../src/packages/store/components/storeLayout';
+import { Home } from '../src/packages/store/container/Home';
 
 interface TestDto {
     username: string;
@@ -11,16 +11,12 @@ interface TestDto {
     lll: string;
 }
 
-const schema = joi.object<TestDto>({});
-
-const defaultValues: TestDto = {
-    username: '',
-    hello: '24',
-    lll: '24',
+const HomePage: NextPage = () => {
+    return (
+        <StoreLayout>
+            <Home />
+        </StoreLayout>
+    );
 };
 
-const Home: NextPage = () => {
-    return <StoreLayout></StoreLayout>;
-};
-
-export default Home;
+export default HomePage;

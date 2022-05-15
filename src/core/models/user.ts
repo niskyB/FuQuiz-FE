@@ -9,7 +9,10 @@ export enum UserRole {
     ADMIN = 'admin',
     USER = 'user',
 }
-
+export enum Gender {
+    MALE = 'male',
+    FEMALE = 'female',
+}
 export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.USER];
 
 export interface User {
@@ -17,11 +20,12 @@ export interface User {
     fullName: string;
     password: string;
     email: string;
-    gender: string;
+    gender: Gender;
     mobile: string;
     token: string;
     isActive: boolean;
     createAt: Date;
     updateAt: Date;
     role: Role;
+    imageUrl: string;
 }

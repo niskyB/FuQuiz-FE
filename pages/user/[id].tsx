@@ -6,23 +6,27 @@ import { UserRole } from '../../src/core/models/user';
 import GetUser from '../../src/packages/user/containers/getUser';
 import { useRouter } from 'next/router';
 import { NextPage, NextPageContext } from 'next';
+import { StoreLayout } from '../../src/packages/store/components';
+import { UpdateUser } from '../../src/packages/user';
 
-interface GetUserPageProps {
+interface UpdateUserPageProps {
     id: string;
 }
 
-const GetUserPage: NextPage<GetUserPageProps> = ({ id }) => {
+const UpdateUserPage: NextPage<UpdateUserPageProps> = ({ id }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.USER]}>
-            <UserLayout>
-                <GetUser id={id} />
-            </UserLayout>
-        </RouterProtectionWrapper>
+        // <RouterProtectionWrapper acceptRoles={[UserRole.USER]}>
+        <UserLayout>
+            <StoreLayout>
+                <UpdateUser />
+            </StoreLayout>
+        </UserLayout>
+        // </RouterProtectionWrapper>
     );
 };
-GetUserPage.getInitialProps = async (ctx: NextPageContext): Promise<GetUserPageProps> => {
+UpdateUserPage.getInitialProps = async (ctx: NextPageContext): Promise<UpdateUserPageProps> => {
     let props = { id: ctx.query?.id || '' };
 
-    return props as GetUserPageProps;
+    return props as UpdateUserPageProps;
 };
-export default GetUserPage;
+export default UpdateUserPage;
