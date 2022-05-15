@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
+import { defaultCurrentUser } from '../../../packages/user';
 import { constant } from '../../constant';
 
-import { User, UserRole, UserStatus } from '../../models/user';
+import { User } from '../../models/user';
 import { userThunk } from './thunks';
 
 export interface UserState extends User {
@@ -10,16 +11,7 @@ export interface UserState extends User {
 }
 
 const initialState: UserState = {
-    email: '',
-    username: '',
-    name: '',
-    id: '',
-    createDate: '',
-    updateDate: '',
-    googleId: '',
-    password: '',
-    role: UserRole.ADMIN,
-    status: UserStatus.ACTIVE,
+    ...defaultCurrentUser,
     isLogin: false,
 };
 

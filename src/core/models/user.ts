@@ -1,19 +1,15 @@
-import { Role } from './role';
+import { Role, UserRole } from './role';
 
 export enum UserStatus {
     ACTIVE = 'active',
     INACTIVE = 'inactive',
 }
 
-export enum UserRole {
-    ADMIN = 'admin',
-    USER = 'user',
-}
 export enum Gender {
     MALE = 'male',
     FEMALE = 'female',
 }
-export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.USER];
+export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.CUSTOMER, UserRole.EXPERT, UserRole.MARKETING];
 
 export interface User {
     id: string;
@@ -24,8 +20,8 @@ export interface User {
     mobile: string;
     token: string;
     isActive: boolean;
-    createAt: Date;
-    updateAt: Date;
+    createAt: string;
+    updateAt: string;
     role: Role;
     imageUrl: string;
 }
