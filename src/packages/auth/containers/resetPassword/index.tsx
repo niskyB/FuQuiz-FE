@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
-import { authResetPassword, AuthResetPasswordDto, AuthSendResetDto, authSendResetPassword } from './action';
+import { routes } from '../../../../core/routes';
+import { AuthSendResetDto, authSendResetPassword } from './action';
 
 interface ResetPasswordProps {}
 const defaultValues: AuthSendResetDto = {
@@ -10,10 +12,14 @@ const defaultValues: AuthSendResetDto = {
 
 const SendResetPassword: React.FunctionComponent<ResetPasswordProps> = () => {
     const methods = useForm<AuthSendResetDto>({ defaultValues });
+    const router = useRouter();
 
     const _handleOnSubmit = async (data: AuthSendResetDto) => {
         const res = await authSendResetPassword(data);
-        console.log(res);
+
+        if (res.status === 201) {
+            router.push(routes.resetPasswordUrl + '/send-success');
+        }
     };
     return (
         <FormWrapper methods={methods}>
