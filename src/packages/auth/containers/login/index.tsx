@@ -6,6 +6,8 @@ import { routes } from '../../../../core/routes';
 import { toast } from 'react-toastify';
 import { authLogin, AuthLoginDto } from './action';
 import { useRouter } from 'next/router';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
 
 const defaultValues: AuthLoginDto = {
     password: '',
@@ -20,10 +22,16 @@ export const Login: React.FC<LoginProps> = () => {
         defaultValues,
     });
 
+    React.useEffect(() => {
+        store.dispatch(apiActions.resetState());
+        methods.reset();
+        return () => {};
+    }, []);
+
     const _handleOnSubmit = async (data: AuthLoginDto) => {
         const res = await authLogin(data);
 
-        if (res?.status === 201) router.push(routes.homeUrl);
+        if (res) window.location.reload();
     };
 
     return (

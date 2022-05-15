@@ -26,7 +26,6 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
 
     const _handleOnSubmit = async (data: UpdateUserDto) => {
         const res = await updateUser(data);
-        console.log(res);
     };
 
     React.useEffect(() => {

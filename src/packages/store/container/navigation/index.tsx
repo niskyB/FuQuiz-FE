@@ -33,7 +33,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
     const userState = useStoreUser();
     const _onLogout = async () => {
         const res = await logout();
-        window.location.reload();
+        if (res) window.location.reload();
     };
     return (
         <Disclosure as="nav" className="bg-white shadow">
@@ -116,7 +116,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                         leaveFrom="transform opacity-100 scale-100"
                                         leaveTo="transform opacity-0 scale-95"
                                     >
-                                        <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                             {USER_ACTION_LINK.map((item) => (
                                                 <Menu.Item key={item.label}>
                                                     {({ active }) => (

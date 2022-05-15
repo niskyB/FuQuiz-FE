@@ -6,6 +6,9 @@ import { routes } from '../../../../core/routes';
 import { authRegister, AuthRegisterDto } from './action';
 import { toast } from 'react-toastify';
 import { Gender } from '../../../../core/models/user';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
+import { useRouter } from 'next/router';
 
 const defaultValues: AuthRegisterDto = {
     password: '',
@@ -19,14 +22,24 @@ const defaultValues: AuthRegisterDto = {
 interface RegisterProps {}
 
 export const Register: React.FC<RegisterProps> = () => {
+    const router = useRouter();
     const methods = useForm<AuthRegisterDto>({
         defaultValues,
     });
 
+    React.useEffect(() => {
+        store.dispatch(apiActions.resetState());
+        methods.reset();
+        return () => {};
+    }, []);
+
     const _handleOnSubmit = async (data: AuthRegisterDto) => {
+        console.log(data);
         const res = await authRegister(data);
-        console.log(res);
-        if (res?.status === 201) toast.success('Register success!');
+        if (res) {
+            toast.success('Register success!');
+            router.push(routes.loginUrl);
+        }
     };
 
     return (

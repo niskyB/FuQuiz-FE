@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useStoreApi } from '../../store';
 
 interface FormErrorMessageProps {}
 
 export const FormErrorMessage: React.FC<FormErrorMessageProps> = () => {
-    const {
-        formState: { errors },
-    } = useFormContext();
+    const { errorMessage } = useStoreApi();
 
-    return <>{Boolean(errors.errorMessage?.message) && <div className="text-red-500">{errors.errorMessage.message}</div>}</>;
+    return <>{Boolean(errorMessage) && <div className="text-red-500">{errorMessage}</div>}</>;
 };

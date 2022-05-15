@@ -7,6 +7,10 @@ export interface ChangePasswordDto {
 }
 
 export const userChangePassword = async (input: ChangePasswordDto) => {
-    const res = await http.put('/user/password', input);
-    return res.data;
+    try {
+        const res = await http.put('/user/password', input);
+        return res.data;
+    } catch (error) {
+        return null;
+    }
 };

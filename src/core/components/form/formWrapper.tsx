@@ -14,9 +14,6 @@ export const FormWrapper: React.FC<FormWrapperProps> = ({ children, methods }) =
         Object.keys(apiState.errorDetails).map((item) => {
             methods.setError(item, { message: apiState.errorDetails[item] });
         });
-
-        if (apiState.errorMessage) methods.setError('errorMessage', { message: apiState.errorMessage });
-        if (apiState.message) methods.setError('message', { message: apiState.message });
     }, [apiState, methods]);
 
     return <FormProvider {...methods}>{children}</FormProvider>;

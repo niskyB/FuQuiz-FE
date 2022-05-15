@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useStoreApi } from '../../store';
 
 interface FormSuccessMessageProps {}
 
 export const FormSuccessMessage: React.FC<FormSuccessMessageProps> = () => {
-    const {
-        formState: { errors },
-    } = useFormContext();
+    const { message } = useStoreApi();
 
-    return <>{Boolean(errors.message?.message) && <div>{errors.message.message}</div>}</>;
+    return <>{Boolean(message) && <div>{message}</div>}</>;
 };

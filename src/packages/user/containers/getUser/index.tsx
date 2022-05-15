@@ -11,7 +11,6 @@ const GetUser: React.FunctionComponent<GetUserProps> = ({ id }) => {
     useEffect(() => {
         if (id)
             getUserById(id).then((data) => {
-                console.log(data);
                 setUserData(data);
             });
         return () => {};
