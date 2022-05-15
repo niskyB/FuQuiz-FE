@@ -9,7 +9,7 @@ const defaultCurrentUser: User = {
     id: '',
     name: '',
     password: '',
-    role: UserRole.ADMIN,
+    role:{ id:""} ,
     status: UserStatus.ACTIVE,
     updateDate: '',
     username: '',
@@ -27,11 +27,6 @@ export const UserMe: React.FC<UserMeProps> = () => {
     }, []);
 
     return (
-        <div>
-            <div>{currentUser.id}</div>
-            <div>{currentUser.email}</div>
-            <div>{currentUser.name}</div>
-            <div>{currentUser.username}</div>
-        </div>
+        
     );
 };
