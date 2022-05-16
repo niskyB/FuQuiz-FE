@@ -20,13 +20,24 @@ const PROFILE_FIELD = [
     { label: 'Phone number', name: 'mobile', readonly: false },
 ];
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
-    const methods = useForm<UpdateUserDto>({
+    const [avatar, setAvatar] = React.useState('');
+
+    const methods = useForm<any>({
         defaultValues,
     });
+
     const user = useStoreUser();
 
-    const _handleOnSubmit = async (data: UpdateUserDto) => {
+    const _handleOnSubmit = async (data: any) => {
+        console.log(data);
         const res = await updateUser(data);
+        console.log(methods.getValues);
+    };
+
+    const _onChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setAvatar(URL.createObjectURL(e.target.files[0]));
+        }
     };
 
     React.useEffect(() => {
@@ -36,6 +47,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
             methods.setValue('mobile', user.mobile);
             methods.setValue('email', user.email);
             methods.setValue('imageUrl', user.imageUrl);
+            setAvatar(user.imageUrl);
         }
     }, [user, methods]);
 
@@ -65,10 +77,19 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-between px-5 pt-5 space-y-4 cursor-pointer w-96">
-                        <img
-                            className="rounded-full w-72 h-72"
-                            src="https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg"
-                        />
+                        <div className="relative">
+                            <input type="file" id="imageUrl" hidden {...methods.register('imageUrl')} />
+                            <label
+                                htmlFor="imageUrl"
+                                className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-gray-200 rounded-full opacity-0 cursor-pointer hover:bg-gray-900/50 hover:opacity-100"
+                            >
+                                Choose image
+                            </label>
+                            <img
+                                className="rounded-full w-72 h-72"
+                                src={avatar ? avatar : 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'}
+                            />
+                        </div>
                         <div className="flex flex-col justify-between w-full space-y-2">
                             <button
                                 type="submit"
