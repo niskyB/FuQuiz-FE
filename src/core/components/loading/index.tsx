@@ -1,1 +1,2 @@
-export * from './progressBar';
+export * from './globalLoading';
+export * from './localLoading';

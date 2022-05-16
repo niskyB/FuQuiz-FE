@@ -1,0 +1,13 @@
+version: '3'
+services:
+    client:
+        build: .
+        container_name: fuquizclient
+        image: dauleduc2/fuquizclient:latest
+        ports:
+            - 3000:3000
+        networks:
+            - tetcha
+networks:
+    tetcha:
+        external: true

@@ -3,7 +3,7 @@ require('dotenv').config({ path: `./config/.env.${process.env.NODE_ENV}` });
 module.exports = {
     productionBrowserSourceMaps: false,
     env: {
-        MY_ENV: process.env.MY_ENV,
+        SERVER_URL: process.env.SERVER_URL,
     },
     webpack(config, options) {
         return config;
