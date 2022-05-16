@@ -38,7 +38,7 @@ export const Register: React.FC<RegisterProps> = () => {
         const res = await authRegister(data);
         if (res) {
             toast.success('Register success!');
-            router.push(routes.loginUrl);
+            router.push(routes.verifyEmailUrl);
         }
     };
 
