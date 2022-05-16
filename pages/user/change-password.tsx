@@ -3,17 +3,17 @@ import { AllRole } from '../../src/core/models/user';
 
 //---- components
 import { RouterProtectionWrapper } from '../../src/core/components/routerProtection';
-import { AuthLayout } from '../../src/packages/auth/components';
 import { ChangePassword } from '../../src/packages/user/containers/changePassword';
+import { StoreLayout } from '../../src/packages/store/components';
 
 interface PasswordPageProps {}
 
 const PasswordPage: React.FunctionComponent<PasswordPageProps> = () => {
     return (
         <RouterProtectionWrapper acceptRoles={AllRole}>
-            <AuthLayout>
+            <StoreLayout>
                 <ChangePassword />
-            </AuthLayout>
+            </StoreLayout>
         </RouterProtectionWrapper>
     );
 };
