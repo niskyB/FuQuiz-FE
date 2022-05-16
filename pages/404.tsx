@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { StoreLayout } from '../src/packages/store/components';
-import { NotFound } from '../src/packages/store/components/notFound';
+import { Error } from '../src/packages/store/components/errorPage';
 
 interface NotFoundPageProps {}
 
 const NotFoundPage: React.FC<NotFoundPageProps> = () => {
     return (
         <StoreLayout>
-            <NotFound />
+            <Error detail="Please check the URL in the address bar and try again. " statusCode="404" title="Page not found" />
         </StoreLayout>
     );
 };
