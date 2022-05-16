@@ -15,7 +15,7 @@ export const updateUser = async (data: UpdateUserDto) => {
             form.append(key, element);
         }
 
-        if (key === 'imageUrl') {
+        if (key === 'image') {
             const element = (data as any)[key];
             if (element === null) {
                 form.append(key, '');
