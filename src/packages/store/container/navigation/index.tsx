@@ -16,13 +16,10 @@ function classNames(...classes: any) {
 
 const NAV_LINK = [
     { label: 'Dashboard', link: '/' },
-    { label: 'Team', link: '' },
+    { label: 'Team', link: '/team' },
 ];
 
-const USER_ACTION_LINK = [
-    { label: 'your profile', link: '' },
-    { label: 'setting', link: '' },
-];
+const USER_ACTION_LINK = [{ label: 'your profile', link: routes.meUrl }];
 const GUEST_SELECTION = [
     { label: 'Sign in', link: routes.loginUrl },
     { label: 'Register', link: routes.registerUrl },
@@ -97,63 +94,74 @@ export const Navigation: React.FC<NavigationProps> = () => {
                             </div>
                             <div className="hidden lg:ml-4 lg:flex lg:items-center">
                                 {/* Profile dropdown */}
-                                <Menu as="div" className="relative flex-shrink-0 ml-4">
-                                    <div>
-                                        <Menu.Button className="flex text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            <img
-                                                className="w-8 h-8 rounded-full"
-                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                alt=""
-                                            />
-                                        </Menu.Button>
-                                    </div>
-                                    <Transition
-                                        as={Fragment}
-                                        enter="transition ease-out duration-100"
-                                        enterFrom="transform opacity-0 scale-95"
-                                        enterTo="transform opacity-100 scale-100"
-                                        leave="transition ease-in duration-75"
-                                        leaveFrom="transform opacity-100 scale-100"
-                                        leaveTo="transform opacity-0 scale-95"
-                                    >
-                                        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                            {USER_ACTION_LINK.map((item) => (
-                                                <Menu.Item key={item.label}>
+                                {userState.id ? (
+                                    <Menu as="div" className="relative flex-shrink-0 ml-4">
+                                        <div>
+                                            <Menu.Button className="flex text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                <img
+                                                    className="w-8 h-8 rounded-full"
+                                                    src={userState.imageUrl ? userState.imageUrl : '/asset/images/default-avatar.png'}
+                                                    alt="avatar"
+                                                />
+                                            </Menu.Button>
+                                        </div>
+                                        <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                        >
+                                            <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                                {USER_ACTION_LINK.map((item) => (
+                                                    <Menu.Item key={item.label}>
+                                                        {({ active }) => (
+                                                            <Link href={item.link}>
+                                                                <a
+                                                                    className={classNames(
+                                                                        active ? 'bg-gray-100' : '',
+                                                                        'block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700'
+                                                                    )}
+                                                                >
+                                                                    {item.label}
+                                                                </a>
+                                                            </Link>
+                                                        )}
+                                                    </Menu.Item>
+                                                ))}
+
+                                                <Menu.Item>
                                                     {({ active }) => (
-                                                        <Link href={item.link}>
-                                                            <a
-                                                                className={classNames(
-                                                                    active ? 'bg-gray-100' : '',
-                                                                    'block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700'
-                                                                )}
-                                                            >
-                                                                {item.label}
-                                                            </a>
-                                                        </Link>
+                                                        <div
+                                                            onClick={() => _onLogout()}
+                                                            className={classNames(
+                                                                active ? 'bg-gray-100' : '',
+                                                                'block hover:bg-gray-100 px-4 cursor-pointer py-2 text-sm text-gray-700'
+                                                            )}
+                                                        >
+                                                            Sign out
+                                                        </div>
                                                     )}
                                                 </Menu.Item>
-                                            ))}
-
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <div
-                                                        onClick={() => _onLogout()}
-                                                        className={classNames(
-                                                            active ? 'bg-gray-100' : '',
-                                                            'block hover:bg-gray-100 px-4 cursor-pointer py-2 text-sm text-gray-700'
-                                                        )}
-                                                    >
-                                                        Sign out
-                                                    </div>
-                                                )}
-                                            </Menu.Item>
-                                        </Menu.Items>
-                                    </Transition>
-                                </Menu>
+                                            </Menu.Items>
+                                        </Transition>
+                                    </Menu>
+                                ) : (
+                                    <Link href={routes.loginUrl} passHref>
+                                        <a
+                                            type="button"
+                                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        >
+                                            Login
+                                        </a>
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     </div>
-
+                    {/* moobile layout */}
                     <Disclosure.Panel className="lg:hidden">
                         <div className="pt-2 pb-3 space-y-1">
                             {NAV_LINK.map((item) => (
@@ -175,7 +183,11 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                 <>
                                     <div className="flex items-center px-4">
                                         <div className="flex-shrink-0">
-                                            <img className="w-10 h-10 rounded-full" src={userState.imageUrl} alt="" />
+                                            <img
+                                                className="w-10 h-10 rounded-full"
+                                                src={userState.imageUrl ? userState.imageUrl : '/asset/images/default-avatar.png'}
+                                                alt=""
+                                            />
                                         </div>
                                         <div className="ml-3">
                                             <div className="text-base font-medium text-gray-800">{userState.fullName}</div>

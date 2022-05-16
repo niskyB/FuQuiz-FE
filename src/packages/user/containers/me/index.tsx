@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { User, UserRole, UserStatus } from '../../../../core/models/user';
+import { Gender, User } from '../../../../core/models/user';
 import { getMe } from './action';
 
-const defaultCurrentUser: User = {
-    createDate: '',
+export const defaultCurrentUser: User = {
     email: '',
-    googleId: '',
+    fullName: '',
     id: '',
-    name: '',
+    createAt: '',
+    updateAt: '',
     password: '',
-    role:{ id:""} ,
-    status: UserStatus.ACTIVE,
-    updateDate: '',
-    username: '',
+    role: { id: '', name: null },
+    gender: Gender.MALE,
+    imageUrl: '',
+    isActive: false,
+    mobile: '',
+    token: '',
 };
 
 interface UserMeProps {}
@@ -27,6 +29,11 @@ export const UserMe: React.FC<UserMeProps> = () => {
     }, []);
 
     return (
-        
+        <div>
+            <div>{currentUser.id}</div>
+            <div>{currentUser.email}</div>
+            <div>{currentUser.fullName}</div>
+            <div>{currentUser.gender}</div>
+        </div>
     );
 };

@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { UserLayout } from '../../src/packages/user/components';
 import { RouterProtectionWrapper } from '../../src/core/components/routerProtection';
-import { UserMe } from '../../src/packages/user/containers/me';
-import { UserRole } from '../../src/core/models/user';
+import { AllRole } from '../../src/core/models/user';
+import { UpdateUser } from '../../src/packages/user';
 import { StoreLayout } from '../../src/packages/store/components';
 
 interface UserMePageProps {}
 
 const UserMePage: React.FC<UserMePageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.USER]}>
+        <RouterProtectionWrapper acceptRoles={AllRole}>
             <UserLayout>
                 <StoreLayout>
-                    <UserMe />
+                    <UpdateUser />
                 </StoreLayout>
             </UserLayout>
         </RouterProtectionWrapper>

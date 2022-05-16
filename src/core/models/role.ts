@@ -6,5 +6,5 @@ export enum UserRole {
 }
 export interface Role {
     id: string;
-    name: UserRole;
+    name: UserRole | null;
 }
