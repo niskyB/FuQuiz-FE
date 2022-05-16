@@ -15,7 +15,7 @@ const SearchPage: NextPage<SearchPageProps> = ({ currentPage, pageSize, name, or
     return (
         <>
             <div className="p-10">
-                <Search currentPage={currentPage} pageSize={pageSize} name={name} orderBy={orderBy as keyof User} order={order} />
+                {/* <Search currentPage={currentPage} pageSize={pageSize} name={name} orderBy={orderBy as keyof User} order={order} /> */}
             </div>
         </>
     );
