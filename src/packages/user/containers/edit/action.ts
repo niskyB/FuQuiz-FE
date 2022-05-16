@@ -7,7 +7,6 @@ export interface UpdateUserDto extends Pick<User, 'fullName' | 'gender' | 'mobil
 
 export const updateUser = async (data: UpdateUserDto) => {
     let { email, ...other } = data;
-    console.log(other);
     let form = new FormData();
     for (const key in other) {
         if (Object.prototype.hasOwnProperty.call(data, key)) {
