@@ -40,8 +40,8 @@ export const Navigation: React.FC<NavigationProps> = () => {
                         <div className="flex justify-between h-16">
                             <div className="flex px-2 lg:px-0">
                                 <div className="flex items-center flex-shrink-0">
-                                    <img className="block w-auto h-full " src="/asset/icons/logo-image.svg" />
-                                    <img className="hidden block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.svg" />
+                                    <img className="block w-auto h-full " src="/asset/icons/logo-image.png" />
+                                    <img className="hidden block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.png" />
                                 </div>
                                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                                     {NAV_LINK.map((item) => (

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
+import { config } from '../../../../core/config';
 import { Gender, User } from '../../../../core/models/user';
 import { useStoreUser } from '../../../../core/store';
 import { updateUser, UpdateUserDto } from './action';
@@ -96,7 +97,11 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                             </label>
                             <img
                                 className="rounded-full w-72 h-72"
-                                src={previewAvatarUrl || 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'}
+                                src={
+                                    previewAvatarUrl
+                                        ? `${config.SERVER_URL}/${previewAvatarUrl}`
+                                        : 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'
+                                }
                             />
                         </div>
                         <div className="flex flex-col justify-between w-full space-y-2">

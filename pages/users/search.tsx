@@ -1,7 +1,5 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { User } from '../../src/core/models/user';
-import Search from '../../src/packages/users/containers/search';
 
 interface SearchPageProps {
     currentPage: number;
