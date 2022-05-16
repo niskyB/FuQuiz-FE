@@ -2,7 +2,7 @@ import { User } from '../../../../core/models/user';
 import { http } from '../../../../core/api';
 
 export interface UpdateUserDto extends Pick<User, 'fullName' | 'gender' | 'mobile' | 'email'> {
-    image: FileList;
+    // image: FileList;
 }
 
 export const updateUser = async (data: UpdateUserDto) => {

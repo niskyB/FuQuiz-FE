@@ -11,7 +11,7 @@ const defaultValues: UpdateUserDto = {
     gender: Gender.MALE,
     mobile: '',
     email: '',
-    image: new FileList(),
+    // image: new FileList(),
 };
 const PROFILE_FIELD = [
     { label: 'Email address', name: 'email', readonly: true },
