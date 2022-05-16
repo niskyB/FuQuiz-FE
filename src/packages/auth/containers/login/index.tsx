@@ -37,7 +37,6 @@ export const Login: React.FC<LoginProps> = () => {
     return (
         <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8 intro-y">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <img className="w-auto h-12 mx-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
                 <h2 className="mt-0 text-3xl font-extrabold text-center text-gray-900">Login</h2>
             </div>
 
