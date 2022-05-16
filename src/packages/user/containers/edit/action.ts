@@ -2,7 +2,7 @@ import { User } from '../../../../core/models/user';
 import { http } from '../../../../core/api';
 
 export interface UpdateUserDto extends Pick<User, 'fullName' | 'gender' | 'mobile' | 'email'> {
-    image: FileList[];
+    image: Array<FileList>;
 }
 
 export const updateUser = async (data: UpdateUserDto) => {
@@ -15,14 +15,18 @@ export const updateUser = async (data: UpdateUserDto) => {
         }
 
         if (key === 'image') {
-            const element = (data as any)[key];
-            if (element === null) {
-                form.append(key, '');
+            let element = (data as any)[key];
+            if (element.length <= 0) {
+                form.append(key, new File([], 'image', { type: 'image/png' }));
+                console.log(new File([], '', { type: 'image/png' }));
             } else {
                 form.append(key, element[0]);
+                console.log(element[0]);
             }
         }
     }
+    const image = form.getAll('image');
+    // console.log(image);
 
     const res = await http.put('/user', form, {
         headers: {
