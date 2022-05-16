@@ -1,17 +1,19 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
-import { Gender } from '../../../../core/models/user';
+import { Gender, User } from '../../../../core/models/user';
 import { useStoreUser } from '../../../../core/store';
-import { UpdateUserDto, updateUser } from './action';
+import { updateUser, UpdateUserDto } from './action';
 
 interface UpdateUserProps {}
-const defaultValues: UpdateUserDto = {
+
+export interface UpdateUserFieldDto extends Pick<User, 'fullName' | 'gender' | 'mobile' | 'email'> {}
+
+const defaultValues: UpdateUserFieldDto = {
     fullName: '',
     gender: Gender.MALE,
     mobile: '',
     email: '',
-    // image: new FileList(),
 };
 const PROFILE_FIELD = [
     { label: 'Email address', name: 'email', readonly: true },
@@ -20,40 +22,43 @@ const PROFILE_FIELD = [
     { label: 'Phone number', name: 'mobile', readonly: false },
 ];
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
-    const [avatar, setAvatar] = React.useState('');
-    const [avatarFile, setAvatarFile] = React.useState<FileList>();
+    const [previewAvatarUrl, setPreviewAvatarUrl] = React.useState<string>('');
+    const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
 
     const methods = useForm<UpdateUserDto>({
         defaultValues,
     });
 
-    const user = useStoreUser();
+    const userState = useStoreUser();
 
     const _handleOnSubmit = async (data: UpdateUserDto) => {
-        console.log(data);
-        data.image = avatarFile ? avatarFile : new FileList();
+        if (avatarFile) data.image = avatarFile;
+
         const res = await updateUser(data);
-        console.log(methods.getValues);
     };
+    React.useEffect(() => {
+        if (avatarFile) setPreviewAvatarUrl(URL.createObjectURL(avatarFile));
+        return () => {
+            URL.revokeObjectURL(previewAvatarUrl);
+        };
+    }, [avatarFile]);
 
     const _onChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
-            const files = e.target.files;
-            setAvatarFile(files);
-            setAvatar(URL.createObjectURL(e.target.files[0]));
+            const file = e.target.files[0];
+            setAvatarFile(file);
         }
     };
 
     React.useEffect(() => {
-        if (user.id) {
-            methods.setValue('fullName', user.fullName);
-            methods.setValue('gender', user.gender);
-            methods.setValue('mobile', user.mobile);
-            methods.setValue('email', user.email);
-            // methods.setValue('imageUrl', user.imageUrl);
-            setAvatar(user.imageUrl);
+        if (userState.id) {
+            methods.setValue('fullName', userState.fullName);
+            methods.setValue('gender', userState.gender);
+            methods.setValue('mobile', userState.mobile);
+            methods.setValue('email', userState.email);
+            setPreviewAvatarUrl(userState.imageUrl);
         }
-    }, [user, methods]);
+    }, [userState, methods]);
 
     return (
         <FormWrapper methods={methods}>
@@ -82,16 +87,16 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                     </div>
                     <div className="flex flex-col items-center justify-between px-5 pt-5 space-y-4 cursor-pointer w-96">
                         <div className="relative">
-                            <input type="file" id="imageUrl" hidden {...methods.register('image')} onChange={_onChangeAvatar} />
+                            <input type="file" id="image" hidden {...methods.register('image')} onChange={_onChangeAvatar} />
                             <label
-                                htmlFor="imageUrl"
+                                htmlFor="image"
                                 className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-gray-200 rounded-full opacity-0 cursor-pointer hover:bg-gray-900/50 hover:opacity-100"
                             >
                                 Choose image
                             </label>
                             <img
                                 className="rounded-full w-72 h-72"
-                                src={avatar ? avatar : 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'}
+                                src={previewAvatarUrl || 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'}
                             />
                         </div>
                         <div className="flex flex-col justify-between w-full space-y-2">
