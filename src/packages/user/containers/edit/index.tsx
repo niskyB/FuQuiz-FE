@@ -11,7 +11,7 @@ const defaultValues: UpdateUserDto = {
     gender: Gender.MALE,
     mobile: '',
     email: '',
-    imageUrl: '',
+    image: [],
 };
 const PROFILE_FIELD = [
     { label: 'Email address', name: 'email', readonly: true },
@@ -22,13 +22,13 @@ const PROFILE_FIELD = [
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
     const [avatar, setAvatar] = React.useState('');
 
-    const methods = useForm<any>({
+    const methods = useForm<UpdateUserDto>({
         defaultValues,
     });
 
     const user = useStoreUser();
 
-    const _handleOnSubmit = async (data: any) => {
+    const _handleOnSubmit = async (data: UpdateUserDto) => {
         console.log(data);
         const res = await updateUser(data);
         console.log(methods.getValues);
@@ -46,7 +46,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
             methods.setValue('gender', user.gender);
             methods.setValue('mobile', user.mobile);
             methods.setValue('email', user.email);
-            methods.setValue('imageUrl', user.imageUrl);
+            // methods.setValue('imageUrl', user.imageUrl);
             setAvatar(user.imageUrl);
         }
     }, [user, methods]);
@@ -78,7 +78,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                     </div>
                     <div className="flex flex-col items-center justify-between px-5 pt-5 space-y-4 cursor-pointer w-96">
                         <div className="relative">
-                            <input type="file" id="imageUrl" hidden {...methods.register('imageUrl')} />
+                            <input type="file" id="imageUrl" hidden {...methods.register('image')} />
                             <label
                                 htmlFor="imageUrl"
                                 className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-gray-200 rounded-full opacity-0 cursor-pointer hover:bg-gray-900/50 hover:opacity-100"
