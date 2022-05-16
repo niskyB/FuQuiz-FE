@@ -196,10 +196,14 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                     </div>
                                     <div className="mt-3 space-y-1">
                                         {USER_ACTION_LINK.map((item) => (
-                                            <Link href={item.link} key={item.label}>
-                                                <Disclosure.Button className="block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                                            <Link href={item.link} key={item.label} passHref>
+                                                <a
+                                                    className={`block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:text-gray-800 hover:bg-gray-100 ${
+                                                        router.asPath === item.link && 'bg-indigo-50 text-indigo-500'
+                                                    }`}
+                                                >
                                                     {item.label}
-                                                </Disclosure.Button>
+                                                </a>
                                             </Link>
                                         ))}
 
