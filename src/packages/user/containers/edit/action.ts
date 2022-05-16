@@ -1,7 +1,9 @@
 import { User } from '../../../../core/models/user';
 import { http } from '../../../../core/api';
 
-export interface UpdateUserDto extends Pick<User, 'fullName' | 'gender' | 'mobile' | 'email' | 'imageUrl'> {}
+export interface UpdateUserDto extends Pick<User, 'fullName' | 'gender' | 'mobile' | 'email'> {
+    image: FileList[];
+}
 
 export const updateUser = async (data: UpdateUserDto) => {
     let { email, ...other } = data;
@@ -12,7 +14,7 @@ export const updateUser = async (data: UpdateUserDto) => {
             form.append(key, element);
         }
 
-        if (key === 'imageUrl') {
+        if (key === 'image') {
             const element = (data as any)[key];
             if (element === null) {
                 form.append(key, '');
