@@ -14,10 +14,10 @@ const defaultValues: UpdateUserDto = {
     imageUrl: '',
 };
 const PROFILE_FIELD = [
-    { label: 'Full name', name: 'fullName' },
-    { label: 'Gender', name: 'gender' },
-    { label: 'Email address', name: 'email' },
-    { label: 'Phone number', name: 'mobile' },
+    { label: 'Email address', name: 'email', readonly: true },
+    { label: 'Full name', name: 'fullName', readonly: false },
+    { label: 'Gender', name: 'gender', readonly: false },
+    { label: 'Phone number', name: 'mobile', readonly: false },
 ];
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
     const methods = useForm<UpdateUserDto>({
@@ -55,7 +55,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                         <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                             <dt className="flex items-center text-sm font-medium text-gray-500">{item.label}</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                <TextField label="" name={item.name} type="text" />
+                                                <TextField label="" name={item.name} type="text" readOnly={item.readonly} />
                                             </dd>
                                         </div>
                                     ))}
