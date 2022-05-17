@@ -6,4 +6,6 @@ export const routes = {
     homeUrl: '/',
     meUrl: '/user/me',
     changePasswordUrl: '/user/change-password',
+    dashboardUrl: '/dashboard/',
+    sliderUrl: '/dashboard/slider',
 };
