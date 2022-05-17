@@ -20,6 +20,6 @@ export const updateUser = async (data: UpdateUserDto) => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
     });
-    console.log(res);
-    return res.data;
+
+    return res;
 };

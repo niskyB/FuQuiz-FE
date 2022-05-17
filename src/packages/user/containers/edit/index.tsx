@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField, SelectField } from '../../../../core/components/form';
-import { config } from '../../../../core/config';
 import { Gender, User } from '../../../../core/models/user';
 import { useStoreUser } from '../../../../core/store';
 import { updateUser, UpdateUserDto } from './action';
 import Link from 'next/link';
 import { routes } from '../../../../core/routes';
+import { toast } from 'react-toastify';
 
 interface UpdateUserProps {}
 
@@ -48,9 +48,12 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
 
     const _handleOnSubmit = async (data: UpdateUserDto) => {
         if (avatarFile) data.image = avatarFile;
-        console.log(data);
 
         const res = await updateUser(data);
+
+        if (res.data === 200) {
+            toast.success('Update profile success!');
+        }
     };
     React.useEffect(() => {
         if (avatarFile) setPreviewAvatarUrl(URL.createObjectURL(avatarFile));
@@ -118,11 +121,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                             </label>
                             <img
                                 className="rounded-full w-72 h-72"
-                                src={
-                                    previewAvatarUrl
-                                        ? `${config.SERVER_URL}/${previewAvatarUrl}`
-                                        : 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'
-                                }
+                                src={previewAvatarUrl || 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'}
                             />
                         </div>
                         <div className="flex flex-col justify-between w-full space-y-2">
