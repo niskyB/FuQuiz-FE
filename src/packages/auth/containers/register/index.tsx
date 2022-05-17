@@ -78,7 +78,7 @@ export const Register: React.FC<RegisterProps> = () => {
                                 <div className="self-end mt-4 text-sm">
                                     Already have an account?
                                     <Link href={routes.loginUrl}>
-                                        <a className="ml-1 font-semibold text-indigo-600 underline hover:text-indigo-500">Register</a>
+                                        <a className="ml-1 font-semibold text-indigo-600 underline hover:text-indigo-500">Login</a>
                                     </Link>
                                 </div>
                             </div>
