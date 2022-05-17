@@ -5,6 +5,8 @@ import { config } from '../../../../core/config';
 import { Gender, User } from '../../../../core/models/user';
 import { useStoreUser } from '../../../../core/store';
 import { updateUser, UpdateUserDto } from './action';
+import Link from 'next/link';
+import { routes } from '../../../../core/routes';
 
 interface UpdateUserProps {}
 
@@ -130,12 +132,11 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                             >
                                 Save
                             </button>
-                            <button
-                                type="submit"
-                                className="inline-flex items-center justify-center px-10 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Reset
-                            </button>
+                            <Link href={routes.changePasswordUrl} passHref>
+                                <p className="inline-flex items-center justify-center px-10 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Change Password
+                                </p>
+                            </Link>
                         </div>
                     </div>
                 </div>
