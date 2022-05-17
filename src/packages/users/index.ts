@@ -1,1 +1,1 @@
-export * from './containers/search';
+export * from './components/paginationBar';

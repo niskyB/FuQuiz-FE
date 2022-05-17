@@ -1,7 +1,5 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { User } from '../../src/core/models/user';
-import Search from '../../src/packages/users/containers/search';
 
 interface SearchPageProps {
     currentPage: number;
@@ -15,7 +13,7 @@ const SearchPage: NextPage<SearchPageProps> = ({ currentPage, pageSize, name, or
     return (
         <>
             <div className="p-10">
-                <Search currentPage={currentPage} pageSize={pageSize} name={name} orderBy={orderBy as keyof User} order={order} />
+                {/* <Search currentPage={currentPage} pageSize={pageSize} name={name} orderBy={orderBy as keyof User} order={order} /> */}
             </div>
         </>
     );

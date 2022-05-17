@@ -40,11 +40,8 @@ export const Navigation: React.FC<NavigationProps> = () => {
                         <div className="flex justify-between h-16">
                             <div className="flex px-2 lg:px-0">
                                 <div className="flex items-center flex-shrink-0">
-                                    <img className="block w-auto h-8 lg:hidden" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" />
-                                    <img
-                                        className="hidden w-auto h-8 lg:block"
-                                        src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                                    />
+                                    <img className="block w-auto h-full " src="/asset/icons/logo-image.png" />
+                                    <img className="hidden block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.png" />
                                 </div>
                                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                                     {NAV_LINK.map((item) => (
@@ -196,10 +193,14 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                     </div>
                                     <div className="mt-3 space-y-1">
                                         {USER_ACTION_LINK.map((item) => (
-                                            <Link href={item.link} key={item.label}>
-                                                <Disclosure.Button className="block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                                            <Link href={item.link} key={item.label} passHref>
+                                                <a
+                                                    className={`block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:text-gray-800 hover:bg-gray-100 ${
+                                                        router.asPath === item.link && 'bg-indigo-50 text-indigo-500'
+                                                    }`}
+                                                >
                                                     {item.label}
-                                                </Disclosure.Button>
+                                                </a>
                                             </Link>
                                         ))}
 
