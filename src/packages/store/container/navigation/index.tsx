@@ -119,7 +119,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                                                 <a
                                                                     className={classNames(
                                                                         active ? 'bg-gray-100' : '',
-                                                                        'block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700'
+                                                                        'block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 capitalize'
                                                                     )}
                                                                 >
                                                                     {item.label}
@@ -166,7 +166,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                     <Disclosure.Button
                                         as="a"
                                         className={`block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 ${
-                                            item.link === router.pathname && 'bg-indigo-50 border-indigo-500 text-indigo-700'
+                                            item.link === router.pathname && 'bg-indigo-50 border-indigo-500 text-indigo-700 capitalize'
                                         }`}
                                     >
                                         {item.label}
