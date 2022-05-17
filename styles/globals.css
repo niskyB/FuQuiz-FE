@@ -106,3 +106,11 @@
         transform: translateX(-100%);
     }
 }
+
+.slide-box:hover .slider-pointer {
+    visibility: visible !important;
+}
+
+.slider-content::-webkit-scrollbar {
+    display: none;
+}
