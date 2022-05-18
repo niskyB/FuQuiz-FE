@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import { SliderWithoutAuthDTO } from '../../../core/models/slider';
+import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
 import * as React from 'react';
 
 interface SlideProps {
@@ -11,10 +11,6 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
     const slide = React.useRef<HTMLDivElement | null>(null);
 
     const [scrollDeg, setScrollDeg] = React.useState<number>(0);
-    React.useEffect(() => {
-        const slideBox = slide.current?.childNodes[0] as HTMLDivElement;
-        return () => {};
-    }, []);
 
     React.useEffect(() => {
         if (slide.current) {
@@ -42,15 +38,15 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
     return (
         <div className="flex slide-box">
             <div className="flex items-center visible md:invisible slider-pointer">
-                <div onClick={_onScrollLeft} className="w-10 h-10 text-black/50 hover:text-black cursor-pointer   ">
+                <div onClick={_onScrollLeft} className="w-10 h-10 cursor-pointer text-black/50 hover:text-black ">
                     <ChevronLeftIcon />
                 </div>
             </div>
 
-            <div ref={slide} className="snap-x duration-700 relative flex snap-mandatory overflow-x-auto flex-1 slider-content">
+            <div ref={slide} className="relative flex flex-1 overflow-x-auto duration-700 snap-x snap-mandatory slider-content">
                 {slideList.map((item) => (
                     <Link key={item.id} href={item.backLink} passHref>
-                        <div className="w-full md:w-1/2 lg:w-1/3 px-3 snap-center cursor-pointer shrink-0 space-y-2">
+                        <div className="w-full px-3 space-y-2 cursor-pointer md:w-1/2 lg:w-1/3 snap-center shrink-0">
                             <img className="w-full shrink-0" src={item.imageUrl} />
                             <div className="text-base font-semibold text-center capitalize">{item.title}</div>
                         </div>
@@ -58,8 +54,8 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
                 ))}
             </div>
 
-            <div className="flex items-center visible md:invisible  slider-pointer">
-                <div onClick={_onScrollRight} className="w-10 h-10 text-black/50 hover:text-black cursor-pointer ">
+            <div className="flex items-center visible md:invisible slider-pointer">
+                <div onClick={_onScrollRight} className="w-10 h-10 cursor-pointer text-black/50 hover:text-black ">
                     <ChevronRightIcon />
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import { FireIcon, HomeIcon, TrendingUpIcon, UserGroupIcon } from '@heroicons/react/outline';
-import { Slide } from '../../components/slider';
+import { Slide } from '../slider';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
 import { Blog } from '../blog/interface.dto';
 import { BlogPost } from '../blog';
