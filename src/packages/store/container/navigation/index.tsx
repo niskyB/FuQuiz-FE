@@ -15,8 +15,8 @@ function classNames(...classes: any) {
 }
 
 const NAV_LINK = [
-    { label: 'Dashboard', link: routes.dashboardUrl },
-    // { label: 'Team', link: '/team' },
+    { label: 'Dashboard', link: '/' },
+    { label: 'Team', link: '/team' },
 ];
 
 const USER_ACTION_LINK = [{ label: 'your profile', link: routes.meUrl }];
@@ -39,13 +39,10 @@ export const Navigation: React.FC<NavigationProps> = () => {
                     <div className="px-2 mx-auto max-w-7xl sm:px-4 lg:px-8">
                         <div className="flex justify-between h-16">
                             <div className="flex px-2 lg:px-0">
-                                <div className="flex items-center flex-shrink-0"></div>
-                                <Link href={routes.homeUrl} passHref>
-                                    <img className="block w-auto h-full cursor-pointer" src="/asset/icons/logo-image.png" />
-                                </Link>
-                                <Link href={routes.homeUrl} passHref>
+                                <div className="flex items-center flex-shrink-0">
+                                    <img className="block w-auto h-full " src="/asset/icons/logo-image.png" />
                                     <img className="hidden block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.png" />
-                                </Link>
+                                </div>
                                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                                     {NAV_LINK.map((item) => (
                                         <Link key={item.label} href={item.link}>
