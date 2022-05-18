@@ -15,7 +15,7 @@ export const addSlider = async (data: AddSliderDTO) => {
         }
     }
 
-    const res = await http.put('/slider', form, {
+    const res = await http.post('/slider', form, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
