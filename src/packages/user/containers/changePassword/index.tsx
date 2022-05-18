@@ -31,24 +31,24 @@ export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
             toast.success('Change password success!');
             store.dispatch(apiActions.resetState());
             methods.clearErrors();
-            // methods.reset();
+            methods.reset();
         }
     };
 
     return (
         <FormWrapper methods={methods}>
-            <form className="flex flex-col mt-10 space-y-5" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+            <form className="flex flex-col items-center justify-center mt-10 space-y-5" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="flex flex-col w-full space-y-4 sm:max-w-4xl">
                     <div className="flex-1 space-y-5">
-                        <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-                            <div className="px-4 py-5 sm:px-6">
+                        <div className="px-5 overflow-hidden bg-white shadow py-7 sm:px-8 sm:rounded-lg">
+                            <div className="">
                                 <h3 className="text-lg font-medium leading-6 text-gray-900">Change Password</h3>
                                 <p className="max-w-2xl mt-1 text-sm text-gray-500">Personal details and application.</p>
                             </div>
-                            <div className="px-4 py-5 border-t border-gray-200 sm:p-0">
+                            <div className="py-5 border-t border-gray-200 sm:p-0">
                                 <dl className="sm:divide-y sm:divide-gray-200">
                                     {PROFILE_FIELD.map((item) => (
-                                        <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
                                             <dt className="flex items-center text-sm font-medium text-gray-500">{item.label}</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <TextField label="" name={item.name} type={item.type} />
@@ -56,8 +56,8 @@ export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
                                         </div>
                                     ))}
                                 </dl>
+                                <FormErrorMessage />
                             </div>
-                            <FormErrorMessage />
                         </div>
                     </div>
                     <div className="flex justify-end space-x-5">
