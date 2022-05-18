@@ -17,9 +17,9 @@ const defaultValues: ChangePasswordDto = {
 };
 
 const PROFILE_FIELD = [
-    { label: 'Current password', name: 'currentPassword', readonly: false },
-    { label: 'New password', name: 'newPassword', readonly: false },
-    { label: 'Confirm new password', name: 'confirmNewPassword', readonly: false },
+    { label: 'Current password', name: 'currentPassword', type: 'password' },
+    { label: 'New password', name: 'newPassword', type: 'password' },
+    { label: 'Confirm new password', name: 'confirmNewPassword', type: 'password' },
 ];
 
 export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
@@ -31,6 +31,7 @@ export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
             toast.success('Change password success!');
             store.dispatch(apiActions.resetState());
             methods.clearErrors();
+            // methods.reset();
         }
     };
 
@@ -50,7 +51,7 @@ export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
                                         <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                             <dt className="flex items-center text-sm font-medium text-gray-500">{item.label}</dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                <TextField label="" name={item.name} type="text" readOnly={item.readonly} />
+                                                <TextField label="" name={item.name} type={item.type} />
                                             </dd>
                                         </div>
                                     ))}
@@ -59,18 +60,18 @@ export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
                             <FormErrorMessage />
                         </div>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-end space-x-5">
+                        <Link href={routes.meUrl} passHref>
+                            <p className="inline-flex items-center justify-center px-10 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                Change Information
+                            </p>
+                        </Link>
                         <button
                             type="submit"
                             className="inline-flex items-center justify-center px-10 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Change Password
                         </button>
-                        <Link href={routes.meUrl} passHref>
-                            <p className="inline-flex items-center justify-center px-10 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Change Information
-                            </p>
-                        </Link>
                     </div>
                 </div>
             </form>
