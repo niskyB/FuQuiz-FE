@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Gender } from '../../models/user';
+import { useStoreApi } from '../../store';
 
 interface RadioFieldProps {
     name: string;
@@ -9,10 +10,8 @@ interface RadioFieldProps {
 }
 
 export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values }) => {
-    const {
-        register,
-        formState: { errors },
-    } = useFormContext();
+    const { errorDetails } = useStoreApi();
+    const { register } = useFormContext();
 
     return (
         <div>
@@ -28,7 +27,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values }) =
                 ))}
             </div>
 
-            {Boolean(errors[name]?.message) && <div className="text-red-500">{errors[name]?.message}</div>}
+            {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
         </div>
     );
 };

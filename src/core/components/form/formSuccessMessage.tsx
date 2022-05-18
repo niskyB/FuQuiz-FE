@@ -6,5 +6,5 @@ interface FormSuccessMessageProps {}
 export const FormSuccessMessage: React.FC<FormSuccessMessageProps> = () => {
     const { message } = useStoreApi();
 
-    return <>{Boolean(message) && <div>{message}</div>}</>;
+    return <>{Boolean(message) && <div className="text-green-500">{message}</div>}</>;
 };
