@@ -28,11 +28,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values }) =
                 ))}
             </div>
 
-            {Boolean(errors[name]?.message) && (
-                <div className="text-red-500">
-                    {label} {errors[name]?.message}
-                </div>
-            )}
+            {Boolean(errors[name]?.message) && <div className="text-red-500">{errors[name]?.message}</div>}
         </div>
     );
 };

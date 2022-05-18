@@ -16,11 +16,7 @@ export const FileField: React.FC<FileFieldProps> = ({ name, label, ...rest }) =>
         <div>
             <label htmlFor={name}>{label}</label>
             <input {...register(name)} {...rest} type="file" />
-            {Boolean(errors[name]?.message) && (
-                <div>
-                    {label} {errors[name]?.message}
-                </div>
-            )}
+            {Boolean(errors[name]?.message) && <div>{errors[name]?.message}</div>}
         </div>
     );
 };
