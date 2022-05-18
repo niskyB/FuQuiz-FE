@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
-import { config } from '../../../../core/config';
+import { FormErrorMessage, FormWrapper, TextField, SelectField } from '../../../../core/components/form';
 import { Gender, User } from '../../../../core/models/user';
 import { useStoreUser } from '../../../../core/store';
 import { updateUser, UpdateUserDto } from './action';
+import Link from 'next/link';
+import { routes } from '../../../../core/routes';
+import { toast } from 'react-toastify';
 
 interface UpdateUserProps {}
 
@@ -19,9 +21,21 @@ const defaultValues: UpdateUserFieldDto = {
 const PROFILE_FIELD = [
     { label: 'Email address', name: 'email', readonly: true },
     { label: 'Full name', name: 'fullName', readonly: false },
-    { label: 'Gender', name: 'gender', readonly: false },
+    // { label: 'Gender', name: 'gender', readonly: false },
     { label: 'Phone number', name: 'mobile', readonly: false },
 ];
+
+const GENDER_FIELD = [
+    {
+        label: 'Male',
+        value: Gender.MALE,
+    },
+    {
+        label: 'Female',
+        value: Gender.FEMALE,
+    },
+];
+
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
     const [previewAvatarUrl, setPreviewAvatarUrl] = React.useState<string>('');
     const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
@@ -36,6 +50,10 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
         if (avatarFile) data.image = avatarFile;
 
         const res = await updateUser(data);
+
+        if (res.data === 200) {
+            toast.success('Update profile success!');
+        }
     };
     React.useEffect(() => {
         if (avatarFile) setPreviewAvatarUrl(URL.createObjectURL(avatarFile));
@@ -81,6 +99,12 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                             </dd>
                                         </div>
                                     ))}
+                                    <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt className="flex items-center text-sm font-medium text-gray-500">Gender</dt>
+                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            <SelectField label="" name="gender" values={GENDER_FIELD} defaultValue={userState.gender} />
+                                        </dd>
+                                    </div>
                                 </dl>
                             </div>
                             <FormErrorMessage />
@@ -97,11 +121,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                             </label>
                             <img
                                 className="rounded-full w-72 h-72"
-                                src={
-                                    previewAvatarUrl
-                                        ? `${config.SERVER_URL}/${previewAvatarUrl}`
-                                        : 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'
-                                }
+                                src={previewAvatarUrl || 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'}
                             />
                         </div>
                         <div className="flex flex-col justify-between w-full space-y-2">
@@ -111,12 +131,11 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                             >
                                 Save
                             </button>
-                            <button
-                                type="submit"
-                                className="inline-flex items-center justify-center px-10 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Reset
-                            </button>
+                            <Link href={routes.changePasswordUrl} passHref>
+                                <p className="inline-flex items-center justify-center px-10 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Change Password
+                                </p>
+                            </Link>
                         </div>
                     </div>
                 </div>

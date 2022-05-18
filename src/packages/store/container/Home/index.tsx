@@ -13,6 +13,8 @@ import {
     ThumbUpIcon,
 } from '@heroicons/react/solid';
 import { BellIcon, FireIcon, HomeIcon, MenuIcon, TrendingUpIcon, UserGroupIcon, XIcon } from '@heroicons/react/outline';
+import { Slide } from '../../components/slider';
+import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
 
 const user = {
     name: 'Chelsea Hagon',
@@ -69,28 +71,56 @@ const questions = [
     },
     // More questions...
 ];
-const whoToFollow = [
+
+const slideList: SliderWithoutAuthDTO[] = [
     {
-        name: 'Leonard Krasner',
-        handle: 'leonardkrasner',
-        href: '#',
+        id: '1',
+        backLink: '',
         imageUrl:
-            'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+            'https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
+        isShow: true,
+        title: 'hehe1',
     },
-    // More people...
-];
-const trendingPosts = [
     {
-        id: 1,
-        user: {
-            name: 'Floyd Miles',
-            imageUrl:
-                'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        body: 'What books do you have on your bookshelf just to look smarter than you actually are?',
-        comments: 291,
+        id: '2',
+        backLink: '',
+        imageUrl:
+            'https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
+        isShow: true,
+        title: 'hehe2',
     },
-    // More posts...
+    {
+        id: '3',
+        backLink: '',
+        imageUrl:
+            'https://images.unsplash.com/photo-1622890806166-111d7f6c7c97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
+        isShow: true,
+        title: 'hehe3',
+    },
+    {
+        id: '4',
+        backLink: '',
+        imageUrl:
+            'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
+        isShow: true,
+        title: 'hehe4',
+    },
+    {
+        id: '5',
+        backLink: '',
+        imageUrl:
+            'https://images.unsplash.com/photo-1575424909138-46b05e5919ec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
+        isShow: true,
+        title: 'hehe5',
+    },
+    {
+        id: '6',
+        backLink: '',
+        imageUrl:
+            'https://images.unsplash.com/photo-1559333086-b0a56225a93c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
+        isShow: true,
+        title: 'hehe6',
+    },
 ];
 
 function classNames(...classes: any) {
@@ -147,7 +177,7 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                                 </div>
                             </nav>
                         </div>
-                        <main className="lg:col-span-9 xl:col-span-6">
+                        <main className="lg:col-span-9 space-y-10 xl:col-span-9">
                             <div className="px-4 sm:px-0">
                                 <div className="sm:hidden">
                                     <label htmlFor="question-tabs" className="sr-only">
@@ -189,7 +219,8 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                                     </nav>
                                 </div>
                             </div>
-                            <div className="mt-4">
+                            <div className="mt-4 space-y-5">
+                                <Slide slideList={slideList} />
                                 <h1 className="sr-only">Recent questions</h1>
                                 <ul role="list" className="space-y-4">
                                     {questions.map((question) => (
@@ -336,97 +367,6 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                                 </ul>
                             </div>
                         </main>
-                        <aside className="hidden xl:block xl:col-span-4">
-                            <div className="sticky space-y-4 top-4">
-                                <section aria-labelledby="who-to-follow-heading">
-                                    <div className="bg-white rounded-lg shadow">
-                                        <div className="p-6">
-                                            <h2 id="who-to-follow-heading" className="text-base font-medium text-gray-900">
-                                                Who to follow
-                                            </h2>
-                                            <div className="flow-root mt-6">
-                                                <ul role="list" className="-my-4 divide-y divide-gray-200">
-                                                    {whoToFollow.map((user) => (
-                                                        <li key={user.handle} className="flex items-center py-4 space-x-3">
-                                                            <div className="flex-shrink-0">
-                                                                <img className="w-8 h-8 rounded-full" src={user.imageUrl} alt="" />
-                                                            </div>
-                                                            <div className="flex-1 min-w-0">
-                                                                <p className="text-sm font-medium text-gray-900">
-                                                                    <a href={user.href}>{user.name}</a>
-                                                                </p>
-                                                                <p className="text-sm text-gray-500">
-                                                                    <a href={user.href}>{'@' + user.handle}</a>
-                                                                </p>
-                                                            </div>
-                                                            <div className="flex-shrink-0">
-                                                                <button
-                                                                    type="button"
-                                                                    className="inline-flex items-center px-3 py-0.5 rounded-full bg-rose-50 text-sm font-medium text-rose-700 hover:bg-rose-100"
-                                                                >
-                                                                    <PlusSmIcon className="-ml-1 mr-0.5 h-5 w-5 text-rose-400" aria-hidden="true" />
-                                                                    <span>Follow</span>
-                                                                </button>
-                                                            </div>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                            <div className="mt-6">
-                                                <a
-                                                    href="#"
-                                                    className="block w-full px-4 py-2 text-sm font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
-                                                >
-                                                    View all
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section aria-labelledby="trending-heading">
-                                    <div className="bg-white rounded-lg shadow">
-                                        <div className="p-6">
-                                            <h2 id="trending-heading" className="text-base font-medium text-gray-900">
-                                                Trending
-                                            </h2>
-                                            <div className="flow-root mt-6">
-                                                <ul role="list" className="-my-4 divide-y divide-gray-200">
-                                                    {trendingPosts.map((post) => (
-                                                        <li key={post.id} className="flex py-4 space-x-3">
-                                                            <div className="flex-shrink-0">
-                                                                <img className="w-8 h-8 rounded-full" src={post.user.imageUrl} alt={post.user.name} />
-                                                            </div>
-                                                            <div className="flex-1 min-w-0">
-                                                                <p className="text-sm text-gray-800">{post.body}</p>
-                                                                <div className="flex mt-2">
-                                                                    <span className="inline-flex items-center text-sm">
-                                                                        <button
-                                                                            type="button"
-                                                                            className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
-                                                                        >
-                                                                            <ChatAltIcon className="w-5 h-5" aria-hidden="true" />
-                                                                            <span className="font-medium text-gray-900">{post.comments}</span>
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                            <div className="mt-6">
-                                                <a
-                                                    href="#"
-                                                    className="block w-full px-4 py-2 text-sm font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
-                                                >
-                                                    View all
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </aside>
                     </div>
                 </div>
             </div>
