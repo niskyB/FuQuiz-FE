@@ -1,8 +1,15 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { routes } from '../../../../core/routes';
+import { useRouter } from 'next/router';
 
-interface SliderProps {}
+interface SliderProps {
+    currentPage?: number;
+    pageSize?: number;
+    title?: string;
+    userId?: string;
+    createAt?: Date;
+}
 const sliders = [
     {
         title: 'Front-end Developer',
@@ -11,7 +18,17 @@ const sliders = [
         image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
 ];
-export const SliderList: React.FunctionComponent<SliderProps> = () => {
+export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, userId, createAt }) => {
+    const router = useRouter();
+
+    // Default param
+    React.useEffect(() => {
+        router.push({
+            pathname: routes.sliderUrl,
+            query: { currentPage, pageSize, title, userId, createAt: createAt?.toLocaleDateString() },
+        });
+    }, []);
+
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
@@ -44,6 +61,9 @@ export const SliderList: React.FunctionComponent<SliderProps> = () => {
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Back link
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Showing
                                         </th>
                                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span className="sr-only">Edit</span>

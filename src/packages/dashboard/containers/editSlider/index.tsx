@@ -42,6 +42,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
     const _handleOnSubmit = async (data: UpdateSliderDTO) => {
         if (imageFile) data.image = imageFile;
+        else data.image = new File([], '');
 
         const res = await updateSlider(id, data);
 
