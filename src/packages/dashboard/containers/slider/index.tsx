@@ -5,9 +5,8 @@ import { routes } from '../../../../core/routes';
 interface SliderProps {}
 
 const Slider: React.FunctionComponent<SliderProps> = () => {
-    const people = [
+    const sliders = [
         {
-            name: 'Lindsay Walton',
             title: 'Front-end Developer',
             backLink: 'Optimization',
             isShow: true,
@@ -39,14 +38,14 @@ const Slider: React.FunctionComponent<SliderProps> = () => {
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-gray-50">
                                     <tr>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Image
+                                        </th>
                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                             Title
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Back link
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Image
                                         </th>
                                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span className="sr-only">Edit</span>
@@ -54,32 +53,29 @@ const Slider: React.FunctionComponent<SliderProps> = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {people.map((person) => (
-                                        <tr key={person.email}>
+                                    {sliders.map((slider) => (
+                                        <tr key={slider.image}>
                                             <td className="py-4 pl-4 pr-3 text-sm whitespace-nowrap sm:pl-6">
                                                 <div className="flex items-center">
                                                     <div className="flex-shrink-0 w-10 h-10">
-                                                        <img className="w-10 h-10 rounded-full" src={person.image} alt="" />
-                                                    </div>
-                                                    <div className="ml-4">
-                                                        <div className="font-medium text-gray-900">{person.name}</div>
-                                                        <div className="text-gray-500">{person.email}</div>
+                                                        <img className="w-10 h-10 rounded-full" src={slider.image} alt="" />
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="text-gray-900">{person.title}</div>
-                                                <div className="text-gray-500">{person.department}</div>
+                                                <div className="text-gray-900">{slider.title}</div>
+                                            </td>
+                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <div className="text-gray-900">{slider.backLink}</div>
                                             </td>
                                             <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                 <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                     Active
                                                 </span>
                                             </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{person.role}</td>
                                             <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
                                                 <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                    Edit<span className="sr-only">, {person.name}</span>
+                                                    Edit
                                                 </a>
                                             </td>
                                         </tr>
