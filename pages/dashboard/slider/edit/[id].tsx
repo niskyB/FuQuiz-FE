@@ -1,20 +1,28 @@
+import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { Component } from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../src/core/models/role';
 import DashBoardLayout from '../../../../src/packages/dashboard/components/dashboardLayout';
-import AddSlider from '../../../../src/packages/dashboard/containers/addSlider';
+import EditSlider from '../../../../src/packages/dashboard/containers/editSlider';
 
-interface EditSliderProps {}
+interface EditSliderPageProps {
+    id: string;
+}
 
-const EditSlider: React.FunctionComponent<EditSliderProps> = () => {
+const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <AddSlider />
+                <EditSlider id={id} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-export default EditSlider;
+EditSliderPage.getInitialProps = async (ctx: NextPageContext): Promise<EditSliderPageProps> => {
+    let props = { id: ctx.query?.id || '' };
+
+    return props as EditSliderPageProps;
+};
+
+export default EditSliderPage;

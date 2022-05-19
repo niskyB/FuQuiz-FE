@@ -2,14 +2,13 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, TextField } from '../../../../core/components/form';
-import { Slider } from '../../../../core/models/slider';
 import { routes } from '../../../../core/routes';
 import { addSlider } from '../addSlider/action';
-import { AddSliderDTO } from './interface';
+import { AddSliderDTO, AddSliderInput } from './interface';
 
 interface AddSliderProps {}
 
-const defaultValues: Pick<Slider, 'backLink' | 'title'> = {
+const defaultValues: AddSliderInput = {
     backLink: '',
     title: '',
 };
@@ -109,12 +108,12 @@ const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="h-96 max-h-96 max-w-2xl w-full">
+                                        <div className="w-full max-w-2xl h-96 max-h-96">
                                             <div className="relative">
-                                                <img src={imageUrl} alt="" className="max-h-full max-w-full" />
+                                                <img src={imageUrl} alt="" className="max-w-full max-h-full" />
                                                 <label
                                                     htmlFor="image"
-                                                    className="absolute top-0 left-0 w-full h-full bg-gray-900/50 text-gray-50 text-lg flex justify-center items-center opacity-0 hover:opacity-100 cursor-pointer"
+                                                    className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-lg opacity-0 cursor-pointer bg-gray-900/50 text-gray-50 hover:opacity-100"
                                                 >
                                                     Click to change image
                                                 </label>
