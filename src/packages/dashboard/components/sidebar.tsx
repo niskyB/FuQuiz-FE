@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { FolderIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, FolderIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
+import { UserRole } from '../../../core/models/role';
+import { AllRole } from '../../../core/models/user';
 import Link from 'next/link';
 
 interface SideBarProps {}
 const navigation = [
-    { name: 'Dashboard', icon: HomeIcon, link: routes.dashboardUrl },
-    { name: 'Slider', icon: MapIcon, link: routes.sliderUrl },
+    { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
+    { name: 'Slider', icon: MapIcon, link: routes.sliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
 ];
 
 const secondaryNavigation = [{ name: 'Back to store', icon: LogoutIcon, link: routes.homeUrl }];
@@ -29,26 +32,31 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
                         </div>
                     </Link>
                 </div>
-                <nav className="flex-1 px-2 mt-5 space-y-1 bg-white" aria-label="Sidebar">
-                    {navigation.map((item) => (
-                        <a
-                            key={item.name}
-                            href={item.link}
-                            className={classNames(
-                                router.asPath === item.link ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                                'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                            )}
-                        >
-                            <item.icon
-                                className={classNames(
-                                    router.asPath === item.link ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
-                                    'mr-3 flex-shrink-0 h-6 w-6'
-                                )}
-                                aria-hidden="true"
-                            />
-                            <span className="flex-1 text-gray-900">{item.name}</span>
-                        </a>
-                    ))}
+                <nav className="px-2 mt-5 space-y-1 bg-gray-800 " aria-label="Sidebar">
+                    {navigation.map((item) => {
+                        if (item.acceptRole.findIndex((selection) => userState.role && userState.role.name === selection) !== -1)
+                            return (
+                                <a
+                                    key={item.name}
+                                    href={item.link}
+                                    className={classNames(
+                                        router.asPath === item.link ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                                    )}
+                                >
+                                    <item.icon
+                                        className={classNames(
+                                            router.asPath === item.link ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
+                                            'mr-3 flex-shrink-0 h-6 w-6'
+                                        )}
+                                        aria-hidden="true"
+                                    />
+                                    <span className="flex-1">{item.name}</span>
+                                </a>
+                            );
+
+                        return <></>;
+                    })}
 
                     <div className="relative py-5">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
