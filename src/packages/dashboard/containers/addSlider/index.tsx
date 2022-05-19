@@ -18,7 +18,7 @@ const mapFields = [
     { label: 'Back link', name: 'backLink' },
 ];
 
-const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
+export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
     const [imageFile, setImageFile] = React.useState<File | null>();
     const [imageUrl, setImageUrl] = React.useState<string>('');
 
@@ -146,5 +146,3 @@ const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
         </FormWrapper>
     );
 };
-
-export default AddSlider;
