@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { GlobalLoading } from '../../../core/components/loading/globalLoading';
 import { Navigation } from '../container/navigation';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 interface StoreLayoutProps {}
 
