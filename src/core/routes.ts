@@ -10,4 +10,5 @@ export const routes = {
     sliderUrl: '/dashboard/slider',
     addSliderUrl: '/dashboard/slider/add',
     blogUrl: '/dashboard/blog',
+    addBlogUrl: '/dashboard/blog/add',
 };
