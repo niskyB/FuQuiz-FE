@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 interface SideBarProps {}
 const navigation = [
-    { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
+    // { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
     { name: 'Slider', icon: MapIcon, link: routes.sliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
 ];
@@ -36,26 +36,24 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
                     {navigation.map((item) => {
                         if (item.acceptRole.findIndex((selection) => userState.role && userState.role.name === selection) !== -1)
                             return (
-                                <a
-                                    key={item.name}
-                                    href={item.link}
-                                    className={classNames(
-                                        router.asPath === item.link ? 'bg-gray-500 text-white' : 'text-black hover:bg-gray-500 hover:text-white',
-                                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                                    )}
-                                >
-                                    <item.icon
+                                <Link key={item.name} href={item.link} passHref>
+                                    <div
                                         className={classNames(
-                                            router.asPath === item.link ? 'text-white' : 'text-black group-hover:text-white',
-                                            'mr-3 flex-shrink-0 h-6 w-6'
+                                            router.asPath === item.link ? 'bg-gray-500 text-white' : 'text-black hover:bg-gray-500 hover:text-white',
+                                            'group flex items-center px-2 py-2 text-sm font-medium rounded-md cursor-pointer'
                                         )}
-                                        aria-hidden="true"
-                                    />
-                                    <span className="flex-1">{item.name}</span>
-                                </a>
+                                    >
+                                        <item.icon
+                                            className={classNames(
+                                                router.asPath === item.link ? 'text-white' : 'text-black group-hover:text-white',
+                                                'mr-3 flex-shrink-0 h-6 w-6'
+                                            )}
+                                            aria-hidden="true"
+                                        />
+                                        <span className="flex-1">{item.name}</span>
+                                    </div>
+                                </Link>
                             );
-
-                        return <></>;
                     })}
 
                     <div className="relative py-5">
@@ -68,23 +66,23 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
                     </div>
 
                     {secondaryNavigation.map((item) => (
-                        <a
-                            key={item.name}
-                            href={item.link}
-                            className={classNames(
-                                router.asPath === item.link ? 'bg-gray-500 text-white' : 'text-black hover:bg-gray-500 hover:text-white',
-                                'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                            )}
-                        >
-                            <item.icon
+                        <Link key={item.name} href={item.link} passHref>
+                            <div
                                 className={classNames(
-                                    router.asPath === item.link ? 'text-white' : 'text-black group-hover:text-white',
-                                    'mr-3 flex-shrink-0 h-6 w-6'
+                                    router.asPath === item.link ? 'bg-gray-500 text-white' : 'text-black hover:bg-gray-500 hover:text-white',
+                                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md cursor-pointer'
                                 )}
-                                aria-hidden="true"
-                            />
-                            <span className="flex-1">{item.name}</span>
-                        </a>
+                            >
+                                <item.icon
+                                    className={classNames(
+                                        router.asPath === item.link ? 'text-white' : 'text-black group-hover:text-white',
+                                        'mr-3 flex-shrink-0 h-6 w-6'
+                                    )}
+                                    aria-hidden="true"
+                                />
+                                <span className="flex-1">{item.name}</span>
+                            </div>
+                        </Link>
                     ))}
                 </nav>
             </div>
