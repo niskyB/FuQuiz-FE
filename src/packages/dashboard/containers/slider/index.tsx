@@ -108,3 +108,5 @@ const Slider: React.FunctionComponent<SliderProps> = ({ title, currentPage, page
         </div>
     );
 };
+
+export default Slider;
