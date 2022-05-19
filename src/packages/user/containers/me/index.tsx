@@ -3,10 +3,11 @@ import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField, SelectField } from '../../../../core/components/form';
 import { Gender, User } from '../../../../core/models/user';
 import { useStoreUser } from '../../../../core/store';
-import { updateUser, UpdateUserDto } from './action';
+import { updateUser } from './action';
 import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 import { toast } from 'react-toastify';
+import { UpdateUserDto } from './interface';
 
 interface UpdateUserProps {}
 

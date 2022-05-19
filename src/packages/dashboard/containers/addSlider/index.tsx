@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { Slider } from '../../../../core/models/slider';
 import { routes } from '../../../../core/routes';
-import { AddSliderDTO, addSlider } from '../addSlider/action';
+import { addSlider } from '../addSlider/action';
+import { AddSliderDTO } from './interface';
 
 interface AddSliderProps {}
 

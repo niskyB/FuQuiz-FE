@@ -1,9 +1,5 @@
-import { User } from '../../../../core/models/user';
 import { http } from '../../../../core/api';
-
-export interface UpdateUserDto extends Pick<User, 'fullName' | 'gender' | 'mobile' | 'email'> {
-    image: File;
-}
+import { UpdateUserDto } from './interface';
 
 export const updateUser = async (data: UpdateUserDto) => {
     let { email, ...other } = data;

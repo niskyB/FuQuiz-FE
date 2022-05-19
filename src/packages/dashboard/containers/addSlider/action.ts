@@ -1,9 +1,5 @@
 import { http } from '../../../../core/api';
-import { Slider } from '../../../../core/models/slider';
-
-export interface AddSliderDTO extends Pick<Slider, 'backLink' | 'title'> {
-    image: File;
-}
+import { AddSliderDTO } from './interface';
 
 export const addSlider = async (data: AddSliderDTO) => {
     let form = new FormData();
@@ -20,6 +16,5 @@ export const addSlider = async (data: AddSliderDTO) => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
     });
-    console.log(res);
     return res.data;
 };

@@ -5,7 +5,8 @@ import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/compo
 import { routes } from '../../../../core/routes';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
-import { AuthSendResetDto, authSendResetPassword } from './action';
+import { authSendResetPassword } from './action';
+import { AuthSendResetDto } from './interface';
 
 interface ResetPasswordProps {}
 const defaultValues: AuthSendResetDto = {
