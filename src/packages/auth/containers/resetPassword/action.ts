@@ -1,4 +1,3 @@
-import Joi from 'joi';
 import { http } from '../../../../core/api';
 import { User } from '../../../../core/models/user';
 

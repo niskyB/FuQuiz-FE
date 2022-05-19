@@ -15,7 +15,10 @@ const defaultValues: AuthSendResetDto = {
 const SendResetPassword: React.FunctionComponent<ResetPasswordProps> = () => {
     const methods = useForm<AuthSendResetDto>({ defaultValues });
     const router = useRouter();
-
+    React.useEffect(() => {
+        store.dispatch(apiActions.resetState());
+        return () => {};
+    }, []);
     const _handleOnSubmit = async (data: AuthSendResetDto) => {
         const res = await authSendResetPassword(data);
 

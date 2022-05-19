@@ -17,5 +17,4 @@ const DashBoardLayout: React.FunctionComponent<DashBoardLayoutProps> = ({ childr
         </>
     );
 };
-
 export default DashBoardLayout;
