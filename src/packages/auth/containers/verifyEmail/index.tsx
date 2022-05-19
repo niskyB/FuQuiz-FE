@@ -11,7 +11,7 @@ const VerifyEmail: React.FunctionComponent<VerifyEmailProps> = ({ token }) => {
     const router = useRouter();
 
     React.useEffect(() => {
-        authVerifyEmail(token).then(() => router.push(routes.loginUrl));
+        authVerifyEmail(token).finally(() => router.push(routes.loginUrl));
     }, []);
     return <></>;
 };
