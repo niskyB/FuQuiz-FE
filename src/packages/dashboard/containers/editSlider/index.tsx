@@ -1,11 +1,9 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, TextField } from '../../../../core/components/form';
-import { Slider } from '../../../../core/models/slider';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
-import { getSliderById } from './action';
+import { getSliderById, updateSlider } from './action';
 import { GetSliderDTO, UpdateSliderDTO, UpdateSliderInput } from './interface';
 
 interface EditSliderProps {
@@ -23,6 +21,17 @@ const mapFields = [
     { label: 'Back link', name: 'backLink' },
 ];
 
+const SHOWING_FIELDS = [
+    {
+        label: 'Showing',
+        value: true,
+    },
+    {
+        label: 'Not showing',
+        value: false,
+    },
+];
+
 const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
     const [slider, setSlider] = React.useState<GetSliderDTO>({ id: '', backLink: '', imageUrl: '', isShow: false, title: '' });
     const [imageFile, setImageFile] = React.useState<File | null>();
@@ -34,9 +43,11 @@ const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
     const _handleOnSubmit = async (data: UpdateSliderDTO) => {
         if (imageFile) data.image = imageFile;
 
-        // if (res) {
-        //     router.push(routes.sliderUrl);
-        // }
+        const res = await updateSlider(id, data);
+
+        if (res) {
+            router.push(routes.sliderUrl);
+        }
     };
 
     const getSlider = async () => {
@@ -50,8 +61,11 @@ const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
         methods.setValue('backLink', slider.backLink);
         methods.setValue('isShow', slider.isShow);
         setImageUrl(slider.imageUrl);
-        console.log(slider);
     }, [methods, slider]);
+
+    // React.useEffect(() => {
+    //     console.log('Url:' + imageUrl);
+    // }, [imageUrl]);
 
     React.useEffect(() => {
         getSlider();
@@ -86,7 +100,7 @@ const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
                                     key={item.name}
                                     className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
                                 >
-                                    <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    <label htmlFor={item.name} className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         {item.label}
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
@@ -94,6 +108,14 @@ const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
                                     </div>
                                 </div>
                             ))}
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Showing
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <SelectField label="" values={SHOWING_FIELDS} name="isShow" defaultValue={slider.isShow} />
+                                </div>
+                            </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="cover-photo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
@@ -101,7 +123,7 @@ const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <input id="image" name="image" type="file" className="sr-only" onChange={_onChangeImage} />
-                                    {!imageUrl.length ? (
+                                    {Boolean(!imageUrl || !imageUrl.length) ? (
                                         <div className="flex justify-center max-w-lg px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                             <div className="space-y-1 text-center">
                                                 <svg
@@ -160,7 +182,7 @@ const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Add
+                            Update
                         </button>
                     </div>
                 </div>
