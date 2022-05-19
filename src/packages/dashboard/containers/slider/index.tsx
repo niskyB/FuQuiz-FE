@@ -4,7 +4,7 @@ import { routes } from '../../../../core/routes';
 
 interface SliderProps {}
 
-const Slider: React.FunctionComponent<SliderProps> = () => {
+export const Slider: React.FunctionComponent<SliderProps> = () => {
     const people = [
         {
             name: 'Lindsay Walton',
@@ -93,5 +93,3 @@ const Slider: React.FunctionComponent<SliderProps> = () => {
         </div>
     );
 };
-
-export default Slider;

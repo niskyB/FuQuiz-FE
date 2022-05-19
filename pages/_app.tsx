@@ -1,4 +1,5 @@
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-quill/dist/quill.snow.css';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Script from 'next/script';
