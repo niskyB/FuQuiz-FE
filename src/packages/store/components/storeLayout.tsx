@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { GlobalLoading } from '../../../core/components/loading/globalLoading';
 import { Navigation } from '../container/navigation';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 interface StoreLayoutProps {}
 
@@ -16,17 +14,6 @@ export const StoreLayout: React.FC<StoreLayoutProps> = ({ children }) => {
                 </div>
                 <GlobalLoading />
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
         </>
     );
 };
