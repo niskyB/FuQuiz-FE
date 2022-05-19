@@ -17,16 +17,14 @@ const defaultValues: AuthLoginDto = {
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = () => {
-    const router = useRouter();
     const methods = useForm<AuthLoginDto>({
         defaultValues,
     });
 
     React.useEffect(() => {
         store.dispatch(apiActions.resetState());
-        methods.reset();
         return () => {};
-    }, [methods]);
+    }, []);
 
     const _handleOnSubmit = async (data: AuthLoginDto) => {
         methods.clearErrors();
