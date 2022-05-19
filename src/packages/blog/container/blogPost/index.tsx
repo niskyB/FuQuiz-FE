@@ -1,4 +1,4 @@
-import { Blog } from './interface.dto';
+import { Blog } from '../../../../core/models/blog';
 
 interface BlogPostProps {
     data: Blog;

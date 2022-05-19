@@ -89,5 +89,3 @@ const Slider: React.FunctionComponent<SliderProps> = () => {
         </div>
     );
 };
-
-export default Slider;

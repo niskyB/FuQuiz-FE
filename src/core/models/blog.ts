@@ -1,4 +1,4 @@
-import { User } from '../../../../core/models/user';
+import { User } from './user';
 
 export interface BlogCategory {
     id: string;
@@ -13,6 +13,6 @@ export interface Blog {
     createAt: string;
     user: User;
     title: string;
-    thumbnail: string;
+    thumbnailUrl: string;
     blogCategory: BlogCategory;
 }

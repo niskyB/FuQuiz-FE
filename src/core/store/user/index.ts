@@ -1,15 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
-import { defaultCurrentUser } from '../../../packages/user';
 import { constant } from '../../constant';
+import { UserRole } from '../../models/role';
 
-import { User } from '../../models/user';
+import { Gender, User } from '../../models/user';
 import { userThunk } from './thunks';
 
 export interface UserState extends User {
     isLogin: boolean;
 }
-
+export const defaultCurrentUser: User = {
+    createAt: '',
+    email: '',
+    fullName: '',
+    gender: Gender.MALE,
+    id: '',
+    imageUrl: '',
+    isActive: false,
+    mobile: '',
+    password: '',
+    role: { id: '', name: UserRole.CUSTOMER },
+    token: '',
+    updateAt: '',
+};
 const initialState: UserState = {
     ...defaultCurrentUser,
     isLogin: false,
