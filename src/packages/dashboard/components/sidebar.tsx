@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FolderIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, FolderIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ interface SideBarProps {}
 const navigation = [
     { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
     { name: 'Slider', icon: MapIcon, link: routes.sliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
-    { name: 'Add slider', icon: FolderIcon, link: routes.addSliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
 ];
 
 const secondaryNavigation = [{ name: 'Back to store', icon: LogoutIcon, link: routes.homeUrl }];
