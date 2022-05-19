@@ -32,7 +32,7 @@ const SHOWING_FIELDS = [
     },
 ];
 
-const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
+export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
     const [slider, setSlider] = React.useState<GetSliderDTO>({ id: '', backLink: '', imageUrl: '', isShow: false, title: '' });
     const [imageFile, setImageFile] = React.useState<File | null>();
     const [imageUrl, setImageUrl] = React.useState<string>('');
@@ -191,5 +191,3 @@ const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
         </FormWrapper>
     );
 };
-
-export default EditSlider;

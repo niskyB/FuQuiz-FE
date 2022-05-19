@@ -2,7 +2,7 @@ import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
-import { Slider } from '../../../src/packages/dashboard';
+import { SliderList } from '../../../src/packages/dashboard';
 import DashBoardLayout from '../../../src/packages/dashboard/components/dashboardLayout';
 
 interface SliderPageProps {
@@ -17,7 +17,7 @@ const SliderPage: NextPage<SliderPageProps> = ({ createAt, currentPage, pageSize
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <Slider createAt={createAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} />
+                <SliderList createAt={createAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
