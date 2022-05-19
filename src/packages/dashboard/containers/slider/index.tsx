@@ -3,17 +3,15 @@ import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 
 interface SliderProps {}
-
-const Slider: React.FunctionComponent<SliderProps> = () => {
-    const sliders = [
-        {
-            title: 'Front-end Developer',
-            backLink: 'Optimization',
-            isShow: true,
-            image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    ];
-
+const sliders = [
+    {
+        title: 'Front-end Developer',
+        backLink: 'Optimization',
+        isShow: true,
+        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    },
+];
+export const SliderList: React.FunctionComponent<SliderProps> = () => {
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
