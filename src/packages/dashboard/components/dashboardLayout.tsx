@@ -7,7 +7,7 @@ interface DashBoardLayoutProps {}
 const DashBoardLayout: React.FunctionComponent<DashBoardLayoutProps> = ({ children }) => {
     return (
         <>
-            <div className="flex h-full min-h-screen bg-gray-50">
+            <div className="flex h-full min-h-screen bg-gray-200">
                 <SideBar />
                 <div className="flex-1">
                     <div className="w-full py-10 mx-auto max-w-7xl ">{children}</div>
