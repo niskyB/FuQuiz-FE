@@ -17,7 +17,7 @@ const SliderPage: NextPage<SliderPageProps> = ({ createAt, currentPage, pageSize
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <Slider />
+                <Slider createAt={createAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
