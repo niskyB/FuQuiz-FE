@@ -1,25 +1,25 @@
-import { User } from '../../../../core/models/user';
 import { http } from '../../../../core/api';
+import { Slider } from '../../../../core/models/slider';
 
-export interface UpdateUserDto extends Pick<User, 'fullName' | 'gender' | 'mobile' | 'email'> {
+export interface AddSliderDTO extends Pick<Slider, 'backLink' | 'title'> {
     image: File;
 }
 
-export const updateUser = async (data: UpdateUserDto) => {
-    let { email, ...other } = data;
+export const addSlider = async (data: AddSliderDTO) => {
     let form = new FormData();
 
-    for (const key in other) {
+    for (const key in data) {
         if (Object.prototype.hasOwnProperty.call(data, key)) {
             const element = (data as any)[key];
             form.append(key, element);
         }
     }
-    const res = await http.put('/user', form, {
+
+    const res = await http.post('/slider', form, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
     });
-
-    return res;
+    console.log(res);
+    return res.data;
 };

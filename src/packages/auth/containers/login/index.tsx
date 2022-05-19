@@ -26,11 +26,11 @@ export const Login: React.FC<LoginProps> = () => {
         store.dispatch(apiActions.resetState());
         methods.reset();
         return () => {};
-    }, []);
+    }, [methods]);
 
     const _handleOnSubmit = async (data: AuthLoginDto) => {
+        methods.clearErrors();
         const res = await authLogin(data);
-
         if (res) window.location.reload();
     };
 

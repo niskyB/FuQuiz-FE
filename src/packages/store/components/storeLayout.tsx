@@ -14,7 +14,6 @@ export const StoreLayout: React.FC<StoreLayoutProps> = ({ children }) => {
                 <div className="flex-1 p-5 ">
                     <div className="w-full mx-auto max-w-7xl">{children}</div>
                 </div>
-
                 <GlobalLoading />
             </div>
             <ToastContainer

@@ -11,8 +11,11 @@ interface VerifyEmailProps {
 const VerifyEmail: React.FunctionComponent<VerifyEmailProps> = ({ token }) => {
     const router = useRouter();
     const handleRequest = async () => {
-        await authVerifyEmail(token);
-        router.push(routes.loginUrl);
+        try {
+            await authVerifyEmail(token);
+        } finally {
+            router.push(routes.loginUrl);
+        }
     };
     React.useEffect(() => {
         handleRequest();

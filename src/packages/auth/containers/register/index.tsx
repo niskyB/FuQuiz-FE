@@ -29,12 +29,10 @@ export const Register: React.FC<RegisterProps> = () => {
 
     React.useEffect(() => {
         store.dispatch(apiActions.resetState());
-        methods.reset();
         return () => {};
     }, []);
 
     const _handleOnSubmit = async (data: AuthRegisterDto) => {
-        console.log(data);
         const res = await authRegister(data);
         if (res) {
             toast.success('Register success!');

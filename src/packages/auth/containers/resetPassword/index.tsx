@@ -3,6 +3,8 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
 import { AuthSendResetDto, authSendResetPassword } from './action';
 
 interface ResetPasswordProps {}
@@ -18,6 +20,8 @@ const SendResetPassword: React.FunctionComponent<ResetPasswordProps> = () => {
         const res = await authSendResetPassword(data);
 
         if (res.status === 201) {
+            methods.reset();
+            store.dispatch(apiActions.resetState());
             router.push(routes.resetPasswordUrl + '/send-success');
         }
     };

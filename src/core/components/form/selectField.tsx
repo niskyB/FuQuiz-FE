@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useStoreApi } from '../../store';
 
 interface SelectFieldProps {
     name: string;
@@ -9,10 +10,8 @@ interface SelectFieldProps {
 }
 
 export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue }) => {
-    const {
-        register,
-        formState: { errors },
-    } = useFormContext();
+    const { errorDetails } = useStoreApi();
+    const { register } = useFormContext();
 
     return (
         <div>
@@ -31,11 +30,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
                     </option>
                 ))}
             </select>
-            {Boolean(errors[name]?.message) && (
-                <div>
-                    {label} {errors[name]?.message}
-                </div>
-            )}
+            {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
         </div>
     );
 };
