@@ -1,8 +1,14 @@
 import { http } from '../../../../core/api';
-import { AddSliderDTO } from './interface';
+import { GetSliderDTO, UpdateSliderDTO } from './interface';
 
-export const addSlider = async (data: AddSliderDTO) => {
+export const getSliderById = async (id: string) => {
+    const res = await http.get<GetSliderDTO>(`/slider/${id}`);
+    return res.data;
+};
+
+export const updateSlider = async (id: string, data: UpdateSliderDTO) => {
     let form = new FormData();
+    console.log(data);
 
     for (const key in data) {
         if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -10,11 +16,11 @@ export const addSlider = async (data: AddSliderDTO) => {
             form.append(key, element);
         }
     }
-
-    const res = await http.post('/slider', form, {
+    const res = await http.put(`/slider/${id}`, form, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
     });
-    return res.data;
+
+    return res;
 };

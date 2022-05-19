@@ -3,7 +3,10 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
-import { authResetPassword, AuthResetPasswordDto } from './action';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
+import { authResetPassword } from './action';
+import { AuthResetPasswordDto } from './interface';
 
 interface ResetPasswordProps {
     token: string;
@@ -16,7 +19,10 @@ const defaultValues: AuthResetPasswordDto = {
 const ResetPassword: React.FunctionComponent<ResetPasswordProps> = ({ token }) => {
     const methods = useForm<AuthResetPasswordDto>({ defaultValues });
     const router = useRouter();
-
+    React.useEffect(() => {
+        store.dispatch(apiActions.resetState());
+        return () => {};
+    }, []);
     const _handleOnSubmit = async (data: AuthResetPasswordDto) => {
         const res = await authResetPassword(data, token);
 

@@ -1,10 +1,5 @@
 import { http } from '../../../../core/api';
-
-export interface ChangePasswordDto {
-    currentPassword: string;
-    newPassword: string;
-    confirmNewPassword: string;
-}
+import { ChangePasswordDto } from './interface';
 
 export const userChangePassword = async (input: ChangePasswordDto) => {
     try {

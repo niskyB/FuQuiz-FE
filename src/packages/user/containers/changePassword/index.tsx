@@ -6,7 +6,8 @@ import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/compo
 import { routes } from '../../../../core/routes';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
-import { ChangePasswordDto, userChangePassword } from './action';
+import { userChangePassword } from './action';
+import { ChangePasswordDto } from './interface';
 
 interface PasswordProps {}
 
