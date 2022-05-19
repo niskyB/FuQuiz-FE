@@ -32,7 +32,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
                         </div>
                     </Link>
                 </div>
-                <nav className="px-2 mt-5 space-y-1 bg-gray-800 " aria-label="Sidebar">
+                <nav className="px-2 mt-5 space-y-1 bg-white " aria-label="Sidebar">
                     {navigation.map((item) => {
                         if (item.acceptRole.findIndex((selection) => userState.role && userState.role.name === selection) !== -1)
                             return (
@@ -40,13 +40,13 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
                                     key={item.name}
                                     href={item.link}
                                     className={classNames(
-                                        router.asPath === item.link ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        router.asPath === item.link ? 'bg-gray-500 text-white' : 'text-black hover:bg-gray-500 hover:text-white',
                                         'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                                     )}
                                 >
                                     <item.icon
                                         className={classNames(
-                                            router.asPath === item.link ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
+                                            router.asPath === item.link ? 'text-white' : 'text-black group-hover:text-white',
                                             'mr-3 flex-shrink-0 h-6 w-6'
                                         )}
                                         aria-hidden="true"
@@ -63,7 +63,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
                             <div className="w-full border-t border-gray-300" />
                         </div>
                         <div className="relative flex justify-center">
-                            <span className="px-2 text-sm text-white bg-gray-800">Or</span>
+                            <span className="px-2 text-sm text-black bg-white">Or</span>
                         </div>
                     </div>
 
@@ -72,13 +72,13 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
                             key={item.name}
                             href={item.link}
                             className={classNames(
-                                router.asPath === item.link ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                router.asPath === item.link ? 'bg-gray-500 text-white' : 'text-black hover:bg-gray-500 hover:text-white',
                                 'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                             )}
                         >
                             <item.icon
                                 className={classNames(
-                                    router.asPath === item.link ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
+                                    router.asPath === item.link ? 'text-white' : 'text-black group-hover:text-white',
                                     'mr-3 flex-shrink-0 h-6 w-6'
                                 )}
                                 aria-hidden="true"
