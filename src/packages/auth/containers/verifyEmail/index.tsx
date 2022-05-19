@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { toast } from 'react-toastify';
 import { routes } from '../../../../core/routes';
 import { authVerifyEmail } from './action';
 
