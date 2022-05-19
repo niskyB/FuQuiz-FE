@@ -15,7 +15,7 @@ function classNames(...classes: any) {
 }
 
 const NAV_LINK = [
-    { label: 'Dashboard', link: '/' },
+    { label: 'Dashboard', link: routes.dashboardUrl },
     { label: 'Team', link: '/team' },
 ];
 
