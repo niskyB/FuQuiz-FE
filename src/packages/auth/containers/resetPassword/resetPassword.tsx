@@ -5,7 +5,8 @@ import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/compo
 import { routes } from '../../../../core/routes';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
-import { authResetPassword, AuthResetPasswordDto } from './action';
+import { authResetPassword } from './action';
+import { AuthResetPasswordDto } from './interface';
 
 interface ResetPasswordProps {
     token: string;

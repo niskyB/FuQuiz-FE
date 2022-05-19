@@ -4,10 +4,11 @@ import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { toast } from 'react-toastify';
-import { authLogin, AuthLoginDto } from './action';
+import { authLogin } from './action';
 import { useRouter } from 'next/router';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
+import { AuthLoginDto } from './interface';
 
 const defaultValues: AuthLoginDto = {
     password: '',
@@ -27,7 +28,6 @@ export const Login: React.FC<LoginProps> = () => {
     }, []);
 
     const _handleOnSubmit = async (data: AuthLoginDto) => {
-        methods.clearErrors();
         const res = await authLogin(data);
         if (res) window.location.reload();
     };

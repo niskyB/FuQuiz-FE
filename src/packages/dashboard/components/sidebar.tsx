@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BookOpenIcon, FolderIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
