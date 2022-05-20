@@ -1,6 +1,8 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { getSliderById, updateSlider } from './action';
@@ -44,10 +46,15 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
         if (imageFile) data.image = imageFile;
         else data.image = new File([], '');
 
-        const res = await updateSlider(id, data);
+        try {
+            const res = await updateSlider(id, data);
 
-        if (res) {
-            router.push(routes.sliderUrl);
+            if (res) {
+                toast.success('Update slider success');
+                router.push(routes.sliderUrl);
+            }
+        } catch {
+            toast.error('Update slider failed');
         }
     };
 
@@ -173,12 +180,11 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <button
-                            type="button"
-                            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Cancel
-                        </button>
+                        <Link href={routes.sliderUrl} passHref>
+                            <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Cancel
+                            </p>
+                        </Link>
                         <button
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

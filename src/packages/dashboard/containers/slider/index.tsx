@@ -103,14 +103,20 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                                     <div className="text-gray-900">{slider.backLink}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                        Active
-                                                    </span>
+                                                    {slider.isShow ? (
+                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                            Active
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                            Inactive
+                                                        </span>
+                                                    )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                        Edit
-                                                    </a>
+                                                    <Link href={`${routes.editSliderUrl}/${slider.id}`}>
+                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         ))}
