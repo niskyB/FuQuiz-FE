@@ -4,6 +4,8 @@ import { routes } from '../../../../core/routes';
 import { useRouter } from 'next/router';
 import { Slider } from '../../../../core/models/slider';
 import { getFilterSlider } from './action';
+import { useStoreUser } from '../../../../core/store';
+import { UserRole } from '../../../../core/models/role';
 
 interface SliderProps {
     currentPage?: number;
@@ -14,6 +16,7 @@ interface SliderProps {
 }
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, userId, createAt }) => {
     const router = useRouter();
+    const userState = useStoreUser();
 
     const [sliders, setSliders] = React.useState<Slider[]>([]);
     const [count, setCount] = React.useState<number>(1);
@@ -114,9 +117,11 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.editSliderUrl}/${slider.id}`}>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                    </Link>
+                                                    {slider.marketing.user.id === userState.id || userState.role.name === UserRole.ADMIN ? (
+                                                        <Link href={`${routes.editSliderUrl}/${slider.id}`} passHref>
+                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                        </Link>
+                                                    ) : null}
                                                 </td>
                                             </tr>
                                         ))}
