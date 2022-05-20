@@ -15,7 +15,7 @@ interface SliderProps {
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, userId, createAt }) => {
     const router = useRouter();
 
-    const [sliders, setSliders] = React.useState<Slider[]>([{ backLink: 'asd', id: 'asda', imageUrl: '', isShow: true, title: 'asdsa', user: {} }]);
+    const [sliders, setSliders] = React.useState<Slider[]>([]);
     const [count, setCount] = React.useState<number>(1);
 
     const [filterUrl, setFilterUrl] = React.useState<string>('');
@@ -40,10 +40,10 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
 
     const _fetchData = async () => {
         const filterUrlServer = filterUrl.replace(`currentPage=${Number(currentPage)}`, `currentPage=${Number(currentPage) - 1}`);
-        const data = await getFilterSlider(filterUrlServer);
-        // console.log(data);
-        // setSliders(data);
-        // setCount(data.count);
+        const res = await getFilterSlider(filterUrlServer);
+        console.log(res);
+        setSliders(res.data);
+        setCount(res.count);
     };
 
     return (
@@ -93,12 +93,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                             <tr key={slider.id}>
                                                 <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
                                                     <div className="max-w-sm">
-                                                        <img
-                                                            className="h-auto max-w-sm"
-                                                            src={'https://images3.alphacoders.com/785/785576.png'}
-                                                            alt=""
-                                                        />
-                                                        {/* <img className="w-10 h-10" src={slider.imageUrl} alt="" /> */}
+                                                        <img className="w-10 h-10" src={slider.imageUrl} alt="" />
                                                     </div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
