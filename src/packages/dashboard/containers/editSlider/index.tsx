@@ -1,8 +1,13 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { UserRole } from '../../../../core/models/role';
+import { Slider } from '../../../../core/models/slider';
 import { routes } from '../../../../core/routes';
+import { useStoreUser } from '../../../../core/store';
 import { getSliderById, updateSlider } from './action';
 import { GetSliderDTO, UpdateSliderDTO, UpdateSliderInput } from './interface';
 
@@ -33,7 +38,8 @@ const SHOWING_FIELDS = [
 ];
 
 export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
-    const [slider, setSlider] = React.useState<GetSliderDTO>({ id: '', backLink: '', imageUrl: '', isShow: false, title: '' });
+    const userState = useStoreUser();
+    const [slider, setSlider] = React.useState<Slider>();
     const [imageFile, setImageFile] = React.useState<File | null>();
     const [imageUrl, setImageUrl] = React.useState<string>('');
 
@@ -44,10 +50,15 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
         if (imageFile) data.image = imageFile;
         else data.image = new File([], '');
 
-        const res = await updateSlider(id, data);
+        try {
+            const res = await updateSlider(id, data);
 
-        if (res) {
-            router.push(routes.sliderUrl);
+            if (res) {
+                toast.success('Update slider success');
+                router.push(routes.sliderUrl);
+            }
+        } catch {
+            toast.error('Update slider failed');
         }
     };
 
@@ -58,11 +69,18 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     };
 
     React.useEffect(() => {
-        methods.setValue('title', slider.title);
-        methods.setValue('backLink', slider.backLink);
-        methods.setValue('isShow', slider.isShow);
-        setImageUrl(slider.imageUrl);
-    }, [methods, slider]);
+        if (slider) {
+            if (userState.role.name != UserRole.ADMIN && slider.marketing.id && slider.marketing.id !== userState.typeId) {
+                router.push(routes.sliderUrl);
+                return;
+            }
+
+            methods.setValue('title', slider.title);
+            methods.setValue('backLink', slider.backLink);
+            methods.setValue('isShow', slider.isShow);
+            setImageUrl(slider.imageUrl);
+        }
+    }, [methods, slider, router, userState]);
 
     // React.useEffect(() => {
     //     console.log('Url:' + imageUrl);
@@ -82,7 +100,8 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImageFile(file);
+            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setImageFile(file);
+            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
         }
     };
     return (
@@ -114,7 +133,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
                                     Showing
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <SelectField label="" values={SHOWING_FIELDS} name="isShow" defaultValue={slider.isShow} />
+                                    <SelectField label="" values={SHOWING_FIELDS} name="isShow" defaultValue={slider?.isShow} />
                                 </div>
                             </div>
 
@@ -173,12 +192,11 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <button
-                            type="button"
-                            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Cancel
-                        </button>
+                        <Link href={routes.sliderUrl} passHref>
+                            <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Cancel
+                            </p>
+                        </Link>
                         <button
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

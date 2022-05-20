@@ -12,6 +12,7 @@ const navigation = [
     // { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
     { name: 'Slider', icon: MapIcon, link: routes.sliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN] },
 ];
 
 const secondaryNavigation = [{ name: 'Back to store', icon: LogoutIcon, link: routes.homeUrl }];

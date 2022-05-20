@@ -1,4 +1,4 @@
-import { User } from './user';
+import { Marketing } from './marketing';
 
 export interface Slider {
     id: string;
@@ -6,7 +6,7 @@ export interface Slider {
     imageUrl: string;
     backLink: string;
     isShow: boolean;
-    user: User;
+    marketing: Marketing;
 }
 
 export interface SliderWithoutAuthDTO extends Omit<Slider, 'user'> {}

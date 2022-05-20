@@ -8,7 +8,10 @@ export const routes = {
     changePasswordUrl: '/user/change-password',
     dashboardUrl: '/dashboard/',
     sliderUrl: '/dashboard/slider',
+    editSliderUrl: '/dashboard/slider/edit',
     addSliderUrl: '/dashboard/slider/add',
     blogUrl: '/dashboard/blog',
     addBlogUrl: '/dashboard/blog/add',
+    usersUrl: '/dashboard/users',
+    addUserUrl: '/dashboard/users/add',
 };
