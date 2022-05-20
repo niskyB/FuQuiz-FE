@@ -4,7 +4,10 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { UserRole } from '../../../../core/models/role';
+import { Slider } from '../../../../core/models/slider';
 import { routes } from '../../../../core/routes';
+import { useStoreUser } from '../../../../core/store';
 import { getSliderById, updateSlider } from './action';
 import { GetSliderDTO, UpdateSliderDTO, UpdateSliderInput } from './interface';
 
@@ -35,7 +38,8 @@ const SHOWING_FIELDS = [
 ];
 
 export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
-    const [slider, setSlider] = React.useState<GetSliderDTO>({ id: '', backLink: '', imageUrl: '', isShow: false, title: '' });
+    const userState = useStoreUser();
+    const [slider, setSlider] = React.useState<Slider>();
     const [imageFile, setImageFile] = React.useState<File | null>();
     const [imageUrl, setImageUrl] = React.useState<string>('');
 
@@ -65,11 +69,18 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     };
 
     React.useEffect(() => {
-        methods.setValue('title', slider.title);
-        methods.setValue('backLink', slider.backLink);
-        methods.setValue('isShow', slider.isShow);
-        setImageUrl(slider.imageUrl);
-    }, [methods, slider]);
+        if (slider) {
+            if (userState.role.name != UserRole.ADMIN && slider.marketing.id && slider.marketing.id !== userState.typeId) {
+                router.push(routes.sliderUrl);
+                return;
+            }
+
+            methods.setValue('title', slider.title);
+            methods.setValue('backLink', slider.backLink);
+            methods.setValue('isShow', slider.isShow);
+            setImageUrl(slider.imageUrl);
+        }
+    }, [methods, slider, router, userState]);
 
     // React.useEffect(() => {
     //     console.log('Url:' + imageUrl);
@@ -89,7 +100,8 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImageFile(file);
+            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setImageFile(file);
+            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
         }
     };
     return (
@@ -121,7 +133,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
                                     Showing
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <SelectField label="" values={SHOWING_FIELDS} name="isShow" defaultValue={slider.isShow} />
+                                    <SelectField label="" values={SHOWING_FIELDS} name="isShow" defaultValue={slider?.isShow} />
                                 </div>
                             </div>
 

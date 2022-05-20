@@ -13,6 +13,7 @@ export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.CUSTOMER, UserRole.
 
 export interface User {
     id: string;
+    typeId: string;
     fullName: string;
     password: string;
     email: string;

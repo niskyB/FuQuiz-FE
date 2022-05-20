@@ -1,6 +1,8 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { addSlider } from '../addSlider/action';
@@ -44,7 +46,8 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImageFile(file);
+            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setImageFile(file);
+            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
         }
     };
 
@@ -128,12 +131,11 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <button
-                            type="button"
-                            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Cancel
-                        </button>
+                        <Link href={routes.sliderUrl} passHref>
+                            <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Cancel
+                            </p>
+                        </Link>
                         <button
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

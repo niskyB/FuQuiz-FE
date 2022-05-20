@@ -1,5 +1,4 @@
 import { Marketing } from './marketing';
-import { User } from './user';
 
 export interface Slider {
     id: string;
