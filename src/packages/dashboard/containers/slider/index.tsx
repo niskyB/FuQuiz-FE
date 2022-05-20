@@ -2,6 +2,8 @@ import * as React from 'react';
 import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 import { useRouter } from 'next/router';
+import { Slider } from '../../../../core/models/slider';
+import { getFilterSlider } from './action';
 
 interface SliderProps {
     currentPage?: number;
@@ -10,24 +12,39 @@ interface SliderProps {
     userId?: string;
     createAt?: Date;
 }
-const sliders = [
-    {
-        title: 'Front-end Developer',
-        backLink: 'Optimization',
-        isShow: true,
-        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-];
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, userId, createAt }) => {
     const router = useRouter();
+
+    const [sliders, setSliders] = React.useState<Slider[]>([{ backLink: 'asd', id: 'asda', imageUrl: '', isShow: true, title: 'asdsa', user: {} }]);
+    const [count, setCount] = React.useState<number>(1);
+
+    const [filterUrl, setFilterUrl] = React.useState<string>('');
 
     // Default param
     React.useEffect(() => {
         router.push({
             pathname: routes.sliderUrl,
-            query: { currentPage, pageSize, title, userId, createAt: createAt?.toLocaleDateString() },
+            query: { currentPage, pageSize, title, userId, createAt: '01/01/2022' },
         });
     }, []);
+
+    //  Filter Process
+    React.useEffect(() => {
+        _fetchData();
+    }, [filterUrl]);
+
+    React.useEffect(() => {
+        console.log('AS PATH:' + router.asPath);
+        setFilterUrl(router.asPath.replace(`${routes.sliderUrl}?`, ''));
+    }, []);
+
+    const _fetchData = async () => {
+        const filterUrlServer = filterUrl.replace(`currentPage=${Number(currentPage)}`, `currentPage=${Number(currentPage) - 1}`);
+        const data = await getFilterSlider(filterUrlServer);
+        // console.log(data);
+        // setSliders(data);
+        // setCount(data.count);
+    };
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
@@ -71,33 +88,37 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {sliders.map((slider) => (
-                                        <tr key={slider.image}>
-                                            <td className="py-4 pl-4 pr-3 text-sm whitespace-nowrap sm:pl-6">
-                                                <div className="flex items-center">
-                                                    <div className="flex-shrink-0 w-10 h-10">
-                                                        <img className="w-10 h-10 rounded-full" src={slider.image} alt="" />
+                                    {Boolean(count && sliders) &&
+                                        sliders.map((slider) => (
+                                            <tr key={slider.id}>
+                                                <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+                                                    <div className="max-w-sm">
+                                                        <img
+                                                            className="h-auto max-w-sm"
+                                                            src={'https://images3.alphacoders.com/785/785576.png'}
+                                                            alt=""
+                                                        />
+                                                        {/* <img className="w-10 h-10" src={slider.imageUrl} alt="" /> */}
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="text-gray-900">{slider.title}</div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="text-gray-900">{slider.backLink}</div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                    Active
-                                                </span>
-                                            </td>
-                                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                    Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                                </td>
+                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    <div className="text-gray-900">{slider.title}</div>
+                                                </td>
+                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    <div className="text-gray-900">{slider.backLink}</div>
+                                                </td>
+                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                        Active
+                                                    </span>
+                                                </td>
+                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                    <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                        Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        ))}
                                 </tbody>
                             </table>
                         </div>
