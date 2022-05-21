@@ -8,17 +8,17 @@ import { useStoreUser } from '../../../../core/store';
 import { UserRole } from '../../../../core/models/role';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useForm } from 'react-hook-form';
+import PaginationBar from '../../components/paginationBar';
 
 interface SliderProps {
     currentPage?: number;
     pageSize?: number;
     title?: string;
-    backLink?: string;
     userId?: string;
     isShow?: boolean;
     createdAt?: Date;
 }
-export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt, isShow, backLink }) => {
+export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt, isShow }) => {
     const router = useRouter();
     const userState = useStoreUser();
     const [userId, setUserId] = React.useState('');
@@ -41,7 +41,6 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 userId,
                 isShow,
                 createdAt: new Date(createdAt ? createdAt : '01/01/2022').toLocaleDateString(),
-                backLink,
             },
         });
     }, [userId]);
@@ -58,6 +57,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     const _fetchData = async () => {
         const filterUrlServer = filterUrl.replace(`currentPage=${Number(currentPage)}`, `currentPage=${Number(currentPage) - 1}`);
         const res = await getFilterSlider(filterUrlServer);
+        console.log(res.data);
         setSliders(res.data);
         setCount(res.count);
     };
@@ -65,13 +65,11 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     // Submit filter
 
     const _handleOnSubmit = async (data: SliderProps) => {
-        console.log('Filter data:', data);
         router.push({
             pathname: routes.sliderUrl,
             query: {
-                backLink: data.backLink,
-                currentPage: data.currentPage,
-                pageSize: data.pageSize,
+                currentPage: 1,
+                pageSize: 12,
                 title: data.title,
                 isShow: data.isShow,
                 createdAt: data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '',
@@ -81,7 +79,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     };
 
     return (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Sliders</h1>
@@ -108,7 +106,6 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
                             <TextField name="title" label="Title" />
-                            <TextField name="backLink" label="Back Link" />
                             <TextField name="createdAt" label="Create From" type={'date'} />
                             <SelectField
                                 label="Showing"
@@ -196,6 +193,13 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                     </div>
                 </div>
             </div>
+            <PaginationBar
+                handleChangeFilterField={() => {}}
+                currentPage={Number(currentPage)}
+                numberOfItem={count}
+                pageSize={Number(pageSize)}
+                routeUrl={router.asPath}
+            />
         </div>
     );
 };
