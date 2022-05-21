@@ -1,6 +1,7 @@
 import { Marketing } from './marketing';
 
 export interface Slider {
+    createdAt: Date;
     id: string;
     title: string;
     imageUrl: string;
