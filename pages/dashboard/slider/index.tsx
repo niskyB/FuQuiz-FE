@@ -10,14 +10,14 @@ interface SliderPageProps {
     pageSize?: number;
     title?: string;
     userId?: string;
-    createAt?: Date;
+    createdAt?: Date;
 }
 
-const SliderPage: NextPage<SliderPageProps> = ({ createAt, currentPage, pageSize, title, userId }) => {
+const SliderPage: NextPage<SliderPageProps> = ({ createdAt, currentPage, pageSize, title, userId }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <SliderList createAt={createAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} />
+                <SliderList createdAt={createdAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );

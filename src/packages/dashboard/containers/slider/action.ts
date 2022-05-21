@@ -8,7 +8,7 @@ interface ListItem {
 
 export const getFilterSlider = async (filterUrl: string) => {
     const url = filterUrl ? `?${filterUrl}` : '';
-    console.log('AS server:' + filterUrl);
+    console.log('AS server: ' + filterUrl);
     const res = await http.get<ListItem>('/sliders' + url);
     return res.data;
 };
