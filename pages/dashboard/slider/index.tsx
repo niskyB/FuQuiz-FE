@@ -11,13 +11,14 @@ interface SliderPageProps {
     title?: string;
     userId?: string;
     createdAt?: Date;
+    isShow?: boolean;
 }
 
-const SliderPage: NextPage<SliderPageProps> = ({ createdAt, currentPage, pageSize, title, userId }) => {
+const SliderPage: NextPage<SliderPageProps> = ({ createdAt, currentPage, pageSize, title, userId, isShow }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <SliderList createdAt={createdAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} />
+                <SliderList createdAt={createdAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} isShow={isShow} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
@@ -29,7 +30,8 @@ SliderPage.getInitialProps = async (ctx: NextPageContext): Promise<SliderPagePro
         pageSize: ctx.query?.pageSize || 12,
         title: ctx.query?.title || '',
         userId: ctx.query?.userId || '',
-        createAt: ctx.query?.createDate || new Date('01/01/2022'),
+        isShow: ctx.query?.isShow || true,
+        createAt: ctx.query?.createDate || new Date('01-01-2022'),
     };
     return props as SliderPageProps;
 };
