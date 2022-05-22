@@ -8,7 +8,7 @@ import { useStoreUser } from '../../../../core/store';
 import { UserRole } from '../../../../core/models/role';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useForm } from 'react-hook-form';
-import PaginationBar from '../../components/paginationBar';
+import PaginationBar from '../../../dashboard/components/paginationBar';
 
 interface SliderProps {
     currentPage?: number;

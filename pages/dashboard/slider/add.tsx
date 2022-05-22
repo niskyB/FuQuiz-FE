@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
-import { AddSlider } from '../../../src/packages/dashboard';
 import DashBoardLayout from '../../../src/packages/dashboard/components/dashboardLayout';
+import { AddSlider } from '../../../src/packages/slider';
 
 interface AddSliderPageProps {}
 

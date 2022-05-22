@@ -4,4 +4,3 @@ export * from './components/notification';
 
 export * from './container/Home';
 export * from './container/navigation';
-export * from './container/slider';
