@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BookOpenIcon, IdentificationIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, HomeIcon, IdentificationIcon, MapIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
@@ -15,7 +15,7 @@ const navigation = [
     { name: 'User', icon: IdentificationIcon, link: routes.usersUrl, acceptRole: [UserRole.ADMIN] },
 ];
 
-const secondaryNavigation = [{ name: 'Back to store', icon: LogoutIcon, link: routes.homeUrl }];
+const secondaryNavigation = [{ name: 'Back to store', icon: HomeIcon, link: routes.homeUrl }];
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ');
 }
