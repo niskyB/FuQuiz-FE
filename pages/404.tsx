@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StoreLayout } from '../src/packages/store/components';
+import { StoreLayout } from '../src/packages/store';
 import { Error } from '../src/packages/store/components/errorPage';
 
 interface NotFoundPageProps {}

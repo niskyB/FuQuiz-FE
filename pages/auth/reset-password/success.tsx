@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import * as React from 'react';
-import { Component } from 'react';
 import { RouterUnAuthProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { routes } from '../../../src/core/routes';
-import { StoreLayout } from '../../../src/packages/store/components';
+import { StoreLayout } from '../../../src/packages/store';
 
 interface ResetPasswordSuccessPageProps {}
 
