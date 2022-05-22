@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Blog } from '../../../../core/models/blog';
+import { routes } from '../../../../core/routes';
 
 interface BlogBoxProps {
     data: Blog;
@@ -7,7 +8,7 @@ interface BlogBoxProps {
 
 export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data }) => {
     return (
-        <Link href={''} passHref>
+        <Link href={routes.editBlogUrl + '/asd-zxz-3512-zas'} passHref>
             <div key={data.id} className="flex flex-col w-full overflow-hidden duration-700 rounded-lg shadow-lg cursor-pointer hover:-translate-y-5">
                 <div className="min-w-full mx-auto bg-white">
                     <img className="object-cover h-48 py-3 mx-auto" src={data.thumbnailUrl} alt="thumbnail" />

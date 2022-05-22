@@ -7,28 +7,39 @@ import { FormWrapper, QuillInput, TextField } from '../../../../core/components/
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { BlogCategory } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
-import { AddBlogDTO } from './interface';
+import { EditBlogDTO } from './interface';
 
-interface AddBlogProps {}
-const defaultValues: AddBlogDTO = {
-    blogCategoryId: '',
-    briefInfo: '',
-    details: '',
+//---------------------- Not official ----------------------------
+
+interface EditBlogProps {}
+// const defaultValues: EditBlogDTO = {
+//     blogCategoryId: '',
+//     briefInfo: '',
+//     details: '',
+//     thumbnail: null,
+//     title: '',
+// };
+
+const defaultValues: EditBlogDTO = {
+    blogCategoryId: '1',
+    briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+    details: 'details 1',
     thumbnail: null,
-    title: '',
+    title: 'Giá Green Satoshi Token (GST)',
 };
+
 const categories: BlogCategory[] = [
     { id: '1', name: 'category 1' },
     { id: '2', name: 'category 2' },
     { id: '3', name: 'category 3' },
 ];
-export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
-    const methods = useForm<AddBlogDTO>({
+const EditBlog: React.FunctionComponent<EditBlogProps> = () => {
+    const methods = useForm<EditBlogDTO>({
         defaultValues,
     });
-    const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
+    const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
-    const [details, setDetails] = React.useState<string>('');
+    const [details, setDetails] = React.useState<string>('details 1');
 
     const _onChangeThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -39,7 +50,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
         }
     };
 
-    const _handleOnSubmit = async (data: AddBlogDTO) => {
+    const _handleOnSubmit = async (data: EditBlogDTO) => {
         if (thumbnailFile) data.thumbnail = thumbnailFile;
         if (details) data.details = details;
         console.log(data);
@@ -65,7 +76,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Add new blog</h3>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Edit old blog</h3>
                             <p className="max-w-2xl mt-1 text-sm text-gray-500">
                                 This information will be displayed publicly so be careful what you share.
                             </p>
@@ -193,3 +204,5 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
         </FormWrapper>
     );
 };
+
+export default EditBlog;
