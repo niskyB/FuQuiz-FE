@@ -85,7 +85,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
         },
     ]);
 
-    const [count, setCount] = React.useState(9);
+    const [count, setCount] = React.useState(4);
 
     const _handleOnSubmit = async () => {};
 
@@ -93,9 +93,9 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Sliders</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Users</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the Sliders in home website including their title, backLink, image and isShow.
+                        A list of all users in database including their Information, role, create date and active status.
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -110,15 +110,26 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
+                            <TextField name="email" label="email" />
+                            <TextField name="Fullname" label="fullName" />
                             <TextField name="createdAt" label="Create From" type={'date'} />
                             <SelectField
-                                label="Showing"
+                                label="Active"
                                 values={[
                                     { label: 'Active', value: true },
                                     { label: 'Inactive', value: false },
                                 ]}
-                                name="isShow"
+                                name="isActive"
+                            />
+                            <SelectField
+                                label="Role"
+                                values={[
+                                    { label: 'Customer', value: UserRole.CUSTOMER },
+                                    { label: 'Expert', value: UserRole.EXPERT },
+                                    { label: 'Marketing', value: UserRole.MARKETING },
+                                    { label: 'Admin', value: UserRole.ADMIN },
+                                ]}
+                                name="role"
                             />
                         </div>
                         <div className="flex justify-end">
@@ -210,13 +221,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                     </div>
                 </div>
             </div>
-            <PaginationBar
-                handleChangeFilterField={() => {}}
-                currentPage={Number(1)}
-                numberOfItem={4}
-                pageSize={Number(12)}
-                routeUrl={router.asPath}
-            />
+            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
         </div>
     );
 };
