@@ -4,12 +4,10 @@ import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
 import { UserRole } from '../../../core/models/role';
-import { AllRole } from '../../../core/models/user';
 import Link from 'next/link';
 
 interface SideBarProps {}
 const navigation = [
-    // { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
     { name: 'Slider', icon: MapIcon, link: routes.sliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'User', icon: IdentificationIcon, link: routes.usersUrl, acceptRole: [UserRole.ADMIN] },

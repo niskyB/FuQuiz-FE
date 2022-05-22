@@ -82,10 +82,6 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
         }
     }, [methods, slider, router, userState]);
 
-    // React.useEffect(() => {
-    //     console.log('Url:' + imageUrl);
-    // }, [imageUrl]);
-
     React.useEffect(() => {
         getSlider();
     }, []);

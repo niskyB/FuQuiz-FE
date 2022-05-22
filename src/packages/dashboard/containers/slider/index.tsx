@@ -57,6 +57,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     const _fetchData = async () => {
         const filterUrlServer = filterUrl.replace(`currentPage=${Number(currentPage)}`, `currentPage=${Number(currentPage) - 1}`);
         const res = await getFilterSlider(filterUrlServer);
+        console.log(res);
         setSliders(res.data);
         setCount(res.count);
     };

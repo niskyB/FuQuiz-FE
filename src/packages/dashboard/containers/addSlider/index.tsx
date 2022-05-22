@@ -40,6 +40,7 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
         const res = await addSlider(data);
         if (res) {
             router.push(routes.sliderUrl);
+            toast.success('Add slider success!');
         }
     };
 
