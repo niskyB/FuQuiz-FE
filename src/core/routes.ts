@@ -1,18 +1,30 @@
 export const routes = {
+    // store
+    homeUrl: '/',
+    dashboardUrl: '/dashboard/',
+
+    // auth
     loginUrl: '/auth/login',
     registerUrl: '/auth/register',
     resetPasswordUrl: '/auth/reset-password',
     verifyEmailUrl: '/auth/verify-email',
-    homeUrl: '/',
+
+    // user
     meUrl: '/user/me',
     changePasswordUrl: '/user/change-password',
-    dashboardUrl: '/dashboard/',
-    sliderUrl: '/dashboard/slider',
+    addUserUrl: '/dashboard/users/add',
+
+    // users
+    usersUrl: '/dashboard/users',
+
+    // slider
+    sliderListUrl: '/dashboard/slider',
     editSliderUrl: '/dashboard/slider/edit',
     addSliderUrl: '/dashboard/slider/add',
-    blogUrl: '/dashboard/blog',
+
+    // blog
+    blogListUrl: '/dashboard/blog',
     addBlogUrl: '/dashboard/blog/add',
     editBlogUrl: '/dashboard/blog/edit',
-    usersUrl: '/dashboard/users',
-    addUserUrl: '/dashboard/users/add',
+    blogUrl: '/blog',
 };

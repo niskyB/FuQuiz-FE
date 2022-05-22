@@ -33,7 +33,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     // Default param
     React.useEffect(() => {
         router.push({
-            pathname: routes.sliderUrl,
+            pathname: routes.sliderListUrl,
             query: {
                 currentPage,
                 pageSize,
@@ -51,7 +51,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     }, [filterUrl]);
 
     React.useEffect(() => {
-        setFilterUrl(router.asPath.replace(`${routes.sliderUrl}?`, ''));
+        setFilterUrl(router.asPath.replace(`${routes.sliderListUrl}?`, ''));
     }, [router.asPath]);
 
     const _fetchData = async () => {
@@ -66,7 +66,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
 
     const _handleOnSubmit = async (data: SliderProps) => {
         router.push({
-            pathname: routes.sliderUrl,
+            pathname: routes.sliderListUrl,
             query: {
                 currentPage: 1,
                 pageSize: 12,

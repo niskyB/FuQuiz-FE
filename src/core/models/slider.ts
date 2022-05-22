@@ -1,7 +1,7 @@
 import { Marketing } from './marketing';
 
 export interface Slider {
-    createdAt: Date;
+    createdAt: string;
     id: string;
     title: string;
     imageUrl: string;
@@ -10,4 +10,4 @@ export interface Slider {
     marketing: Marketing;
 }
 
-export interface SliderWithoutAuthDTO extends Omit<Slider, 'user'> {}
+export interface SliderWithoutAuthDTO extends Omit<Slider, 'marketing'> {}

@@ -3,6 +3,8 @@ import { Slide } from '../../../slider/containers/slide';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
 import { BlogPost } from '../../../blog/container/blogPost';
 import { Blog } from '../../../../core/models/blog';
+import { defaultCurrentUser } from '../../../../core/store/user';
+import { BlogBox } from '../../../blog';
 
 const navigation = [
     { name: 'Home', href: '#', icon: HomeIcon, current: true },
@@ -22,12 +24,55 @@ const communities = [
     { name: 'Gaming', href: '#' },
 ];
 const tabs = [
-    { name: 'Recent', href: '#', current: true },
-    { name: 'Most Liked', href: '#', current: false },
-    { name: 'Most Answers', href: '#', current: false },
+    { name: 'Blog', href: '#', current: true },
+    { name: 'Course', href: '#', current: false },
 ];
-
-const blogList: Blog[] = [];
+const blogList: Blog[] = [
+    {
+        id: '1',
+        blogCategory: { id: '1', name: 'Learning' },
+        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+        createAt: '',
+        details: 'details 1',
+        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+        title: 'Giá Green Satoshi Token (GST)',
+        updateAt: '',
+        user: { ...defaultCurrentUser },
+    },
+    {
+        id: '1',
+        blogCategory: { id: '1', name: 'Learning' },
+        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+        createAt: '',
+        details: 'details 1',
+        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+        title: 'Giá Green Satoshi Token (GST)',
+        updateAt: '',
+        user: { ...defaultCurrentUser },
+    },
+    {
+        id: '1',
+        blogCategory: { id: '1', name: 'Learning' },
+        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+        createAt: '',
+        details: 'details 1',
+        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+        title: 'Giá Green Satoshi Token (GST)',
+        updateAt: '',
+        user: { ...defaultCurrentUser },
+    },
+    {
+        id: '1',
+        blogCategory: { id: '1', name: 'Learning' },
+        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+        createAt: '',
+        details: 'details 1',
+        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+        title: 'Giá Green Satoshi Token (GST)',
+        updateAt: '',
+        user: { ...defaultCurrentUser },
+    },
+];
 
 const slideList: SliderWithoutAuthDTO[] = [
     {
@@ -35,8 +80,9 @@ const slideList: SliderWithoutAuthDTO[] = [
         backLink: '',
         imageUrl:
             'https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
-        isShow: true,
+        isShow: false,
         title: 'hehe1',
+        createdAt: '',
     },
     {
         id: '2',
@@ -45,6 +91,7 @@ const slideList: SliderWithoutAuthDTO[] = [
             'https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
         isShow: true,
         title: 'hehe2',
+        createdAt: '',
     },
     {
         id: '3',
@@ -53,6 +100,7 @@ const slideList: SliderWithoutAuthDTO[] = [
             'https://images.unsplash.com/photo-1622890806166-111d7f6c7c97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
         isShow: true,
         title: 'hehe3',
+        createdAt: '',
     },
     {
         id: '4',
@@ -61,6 +109,7 @@ const slideList: SliderWithoutAuthDTO[] = [
             'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
         isShow: true,
         title: 'hehe4',
+        createdAt: '',
     },
     {
         id: '5',
@@ -68,6 +117,7 @@ const slideList: SliderWithoutAuthDTO[] = [
         imageUrl:
             'https://images.unsplash.com/photo-1575424909138-46b05e5919ec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
         isShow: true,
+        createdAt: '',
         title: 'hehe5',
     },
     {
@@ -77,6 +127,7 @@ const slideList: SliderWithoutAuthDTO[] = [
             'https://images.unsplash.com/photo-1559333086-b0a56225a93c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80',
         isShow: true,
         title: 'hehe6',
+        createdAt: '',
     },
 ];
 
@@ -178,12 +229,12 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                             </div>
                             <div className="mt-4 space-y-5">
                                 <Slide slideList={slideList} />
-                                <h1 className="sr-only">Recent questions</h1>
-                                <ul role="list" className="space-y-4">
-                                    {blogList.map((blog) => (
-                                        <BlogPost data={blog} key={blog.id} />
+
+                                <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-2">
+                                    {blogList.map((item) => (
+                                        <BlogBox key={item.id} data={item} mode="view" />
                                     ))}
-                                </ul>
+                                </div>
                             </div>
                         </main>
                     </div>

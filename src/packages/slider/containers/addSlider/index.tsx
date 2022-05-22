@@ -39,7 +39,7 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
 
         const res = await addSlider(data);
         if (res) {
-            router.push(routes.sliderUrl);
+            router.push(routes.sliderListUrl);
             toast.success('Add slider success!');
         }
     };
@@ -132,7 +132,7 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <Link href={routes.sliderUrl} passHref>
+                        <Link href={routes.sliderListUrl} passHref>
                             <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Cancel
                             </p>

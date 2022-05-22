@@ -73,7 +73,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = () => {
             </div>
             <div className="grid grid-cols-4 gap-5 mt-8">
                 {blogList.map((item) => (
-                    <BlogBox key={item.id} data={item} />
+                    <BlogBox key={item.id} data={item} mode="edit" />
                 ))}
             </div>
         </div>
