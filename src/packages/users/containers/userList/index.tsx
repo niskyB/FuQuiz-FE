@@ -1,90 +1,45 @@
-import * as React from 'react';
 import Link from 'next/link';
-import { routes } from '../../../../core/routes';
 import { useRouter } from 'next/router';
-import { Slider } from '../../../../core/models/slider';
-import { getFilterSlider } from './action';
-import { useStoreUser } from '../../../../core/store';
-import { UserRole } from '../../../../core/models/role';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { UserRole } from '../../../../core/models/role';
+import { Gender, User } from '../../../../core/models/user';
+import { routes } from '../../../../core/routes';
 import PaginationBar from '../../../dashboard/components/paginationBar';
 
-interface SliderProps {
+interface UserListProps {
     currentPage?: number;
     pageSize?: number;
-    title?: string;
-    userId?: string;
-    isShow?: boolean;
-    createdAt?: Date;
 }
-export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt, isShow }) => {
+
+const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSize }) => {
+    const methods = useForm();
+
     const router = useRouter();
-    const userState = useStoreUser();
-    const [userId, setUserId] = React.useState('');
 
-    const methods = useForm<SliderProps>();
+    const [users, setUsers] = React.useState<User[]>([
+        {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
+            email: 'kainesv86@gmail.com',
+            createAt: '05/18/2022',
+            fullName: 'Trịnh Văn Quyết',
+            gender: Gender.MALE,
+            isActive: true,
+            mobile: '0986609813',
+            password: '',
+            role: { id: '6', name: UserRole.ADMIN },
+            id: '1',
+            token: '',
+            typeId: '1',
+            updateAt: '05/17/2022',
+        },
+    ]);
 
-    const [sliders, setSliders] = React.useState<Slider[]>([]);
-    const [count, setCount] = React.useState<number>(0);
+    const [count, setCount] = React.useState(9);
 
-    const [filterUrl, setFilterUrl] = React.useState<string>('');
-
-    // Default param
-    React.useEffect(() => {
-        pushWithParams();
-    }, []);
-
-    const pushWithParams = () => {
-        router.push({
-            pathname: routes.sliderListUrl,
-            query: {
-                currentPage,
-                pageSize,
-                title,
-                userId,
-                isShow,
-                createdAt: new Date(createdAt ? createdAt : '01/01/2022').toLocaleDateString(),
-            },
-        });
-    };
-
-    //  Filter Process
-    React.useEffect(() => {
-        _fetchData();
-    }, [filterUrl]);
-
-    React.useEffect(() => {
-        pushWithParams();
-    }, [userId]);
-
-    React.useEffect(() => {
-        setFilterUrl(router.asPath.replace(`${routes.sliderListUrl}?`, ''));
-    }, [router.asPath]);
-
-    const _fetchData = async () => {
-        const filterUrlServer = filterUrl.replace(`currentPage=${Number(currentPage)}`, `currentPage=${Number(currentPage) - 1}`);
-        const res = await getFilterSlider(filterUrlServer);
-        console.log(res);
-        setSliders(res.data);
-        setCount(res.count);
-    };
-
-    // Submit filter
-
-    const _handleOnSubmit = async (data: SliderProps) => {
-        router.push({
-            pathname: routes.sliderListUrl,
-            query: {
-                currentPage: 1,
-                pageSize: 12,
-                title: data.title,
-                isShow: data.isShow,
-                createdAt: data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '',
-                userId,
-            },
-        });
-    };
+    const _handleOnSubmit = async () => {};
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -96,15 +51,9 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <button
-                        onClick={() => (userId.length ? setUserId('') : setUserId(userState.id))}
-                        className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                    >
-                        {userId.length ? 'All sliders' : 'My sliders'}
-                    </button>
-                    <Link href={routes.addSliderUrl} passHref>
+                    <Link href={routes.addUserUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                            Add Slider
+                            Add User
                         </p>
                     </Link>
                 </div>
@@ -146,10 +95,13 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                             Image
                                         </th>
                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Title/Date
+                                            Information
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Back link
+                                            Gender
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Create Date / Last Update
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Showing
@@ -160,23 +112,28 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {Boolean(count && sliders) &&
-                                        sliders.map((slider) => (
-                                            <tr key={slider.id}>
+                                    {Boolean(count && users) &&
+                                        users.map((user) => (
+                                            <tr key={user.id}>
                                                 <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
                                                     <div className="max-w-sm">
-                                                        <img className="w-10 h-10" src={slider.imageUrl} alt="" />
+                                                        <img className="w-10 h-10" src={user.imageUrl} alt="" />
                                                     </div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{slider.title}</div>
-                                                    <div className="text-gray-900">{new Date(slider.createdAt).toLocaleDateString()}</div>
+                                                    <div className="text-gray-900">{user.email}</div>
+                                                    <div className="text-gray-900">{user.fullName}</div>
+                                                    <div className="text-gray-900">{user.mobile}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{slider.backLink}</div>
+                                                    <div className="text-gray-900">{user.gender}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    {slider.isShow ? (
+                                                    <div className="text-gray-900">{user.createAt}</div>
+                                                    <div className="text-gray-900">{user.updateAt}</div>
+                                                </td>
+                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    {user.isActive ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
                                                         </span>
@@ -187,11 +144,9 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    {slider.marketing.user.id === userState.id || userState.role.name === UserRole.ADMIN ? (
-                                                        <Link href={`${routes.editSliderUrl}/${slider.id}`} passHref>
-                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                        </Link>
-                                                    ) : null}
+                                                    <Link href={`${routes.editSliderUrl}/${user.id}`} passHref>
+                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         ))}
@@ -203,11 +158,13 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
             </div>
             <PaginationBar
                 handleChangeFilterField={() => {}}
-                currentPage={Number(currentPage)}
-                numberOfItem={count}
-                pageSize={Number(pageSize)}
+                currentPage={Number(1)}
+                numberOfItem={4}
+                pageSize={Number(12)}
                 routeUrl={router.asPath}
             />
         </div>
     );
 };
+
+export default UserList;

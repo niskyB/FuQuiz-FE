@@ -4,6 +4,7 @@ import { RouterProtectionWrapper } from '../../../src/core/components/routerProt
 import { UserRole } from '../../../src/core/models/role';
 import { routes } from '../../../src/core/routes';
 import DashBoardLayout from '../../../src/packages/dashboard/components/dashboardLayout';
+import UserList from '../../../src/packages/users/containers/userList';
 
 interface UsersPageProps {}
 
@@ -11,7 +12,7 @@ const UsersPage: NextPage<UsersPageProps> = () => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
-                <a href={routes.addUserUrl}>Add</a>
+                <UserList />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
