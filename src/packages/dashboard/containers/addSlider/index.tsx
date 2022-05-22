@@ -27,6 +27,13 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
     const methods = useForm<AddSliderDTO>({ defaultValues });
     const router = useRouter();
 
+    React.useEffect(() => {
+        if (imageFile) setImageUrl(URL.createObjectURL(imageFile));
+        return () => {
+            URL.revokeObjectURL(imageUrl);
+        };
+    }, [imageFile]);
+
     const _handleOnSubmit = async (data: AddSliderDTO) => {
         if (imageFile) data.image = imageFile;
 
@@ -35,13 +42,6 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
             router.push(routes.sliderUrl);
         }
     };
-
-    React.useEffect(() => {
-        if (imageFile) setImageUrl(URL.createObjectURL(imageFile));
-        return () => {
-            URL.revokeObjectURL(imageUrl);
-        };
-    }, [imageFile]);
 
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {

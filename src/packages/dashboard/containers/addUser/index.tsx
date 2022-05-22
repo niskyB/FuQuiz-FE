@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, RadioField, TextField } from '../../../../core/components/form';
 import { Gender } from '../../../../core/models/user';
@@ -10,7 +9,6 @@ import { routes } from '../../../../core/routes';
 interface AddUserProps {}
 
 const AddUser: React.FunctionComponent<AddUserProps> = () => {
-    const router = useRouter();
     const methods = useForm({});
 
     const _handleOnSubmit = async () => {};

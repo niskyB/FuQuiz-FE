@@ -9,7 +9,7 @@ import { Slider } from '../../../../core/models/slider';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { getSliderById, updateSlider } from './action';
-import { GetSliderDTO, UpdateSliderDTO, UpdateSliderInput } from './interface';
+import { UpdateSliderDTO, UpdateSliderInput } from './interface';
 
 interface EditSliderProps {
     id: string;
