@@ -1,14 +1,30 @@
 import Link from 'next/link';
 import { Blog } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
+import * as React from 'react';
 
 interface BlogBoxProps {
     data: Blog;
+    mode: 'view' | 'edit';
 }
 
-export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data }) => {
+export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) => {
+    const [redirectLink, setRedirectLink] = React.useState<string>('');
+    React.useEffect(() => {
+        switch (mode) {
+            case 'edit':
+                setRedirectLink(routes.editBlogUrl + '/asd-zxz-3512-zas');
+                break;
+            case 'view':
+                setRedirectLink(routes.blogUrl + '/asd-zxz-3512-zas');
+                break;
+        }
+
+        return () => {};
+    }, []);
+
     return (
-        <Link href={routes.editBlogUrl + '/asd-zxz-3512-zas'} passHref>
+        <Link href={redirectLink} passHref>
             <div key={data.id} className="flex flex-col w-full overflow-hidden duration-700 rounded-lg shadow-lg cursor-pointer hover:-translate-y-5">
                 <div className="min-w-full mx-auto bg-white">
                     <img className="object-cover h-48 py-3 mx-auto" src={data.thumbnailUrl} alt="thumbnail" />

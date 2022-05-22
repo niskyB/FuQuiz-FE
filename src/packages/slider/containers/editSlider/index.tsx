@@ -55,7 +55,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
             if (res) {
                 toast.success('Update slider success');
-                router.push(routes.sliderUrl);
+                router.push(routes.sliderListUrl);
             }
         } catch {
             toast.error('Update slider failed');
@@ -71,7 +71,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     React.useEffect(() => {
         if (slider) {
             if (userState.role.name != UserRole.ADMIN && slider.marketing.id && slider.marketing.id !== userState.typeId) {
-                router.push(routes.sliderUrl);
+                router.push(routes.sliderListUrl);
                 return;
             }
 
@@ -188,7 +188,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <Link href={routes.sliderUrl} passHref>
+                        <Link href={routes.sliderListUrl} passHref>
                             <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Cancel
                             </p>
