@@ -17,8 +17,9 @@ interface SliderProps {
     userId?: string;
     isShow?: boolean;
     createdAt?: Date;
+    orderBy?: string;
 }
-export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt, isShow }) => {
+export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt, isShow, orderBy }) => {
     const router = useRouter();
     const userState = useStoreUser();
     const [userId, setUserId] = React.useState('');
@@ -44,6 +45,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 title,
                 userId,
                 isShow,
+                orderBy,
                 createdAt: new Date(createdAt ? createdAt : '01/01/2022').toLocaleDateString(),
             },
         });
@@ -201,13 +203,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                     </div>
                 </div>
             </div>
-            <PaginationBar
-                handleChangeFilterField={() => {}}
-                currentPage={Number(currentPage)}
-                numberOfItem={count}
-                pageSize={Number(pageSize)}
-                routeUrl={router.asPath}
-            />
+            <PaginationBar currentPage={Number(currentPage)} numberOfItem={count} pageSize={Number(pageSize)} routeUrl={router.asPath} />
         </div>
     );
 };

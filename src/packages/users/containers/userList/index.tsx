@@ -30,14 +30,62 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
             mobile: '0986609813',
             password: '',
             role: { id: '6', name: UserRole.ADMIN },
-            id: '1',
+            id: '1asdasd-asdzv-azsde4',
+            token: '',
+            typeId: '1',
+            updateAt: '05/17/2022',
+        },
+        {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
+            email: 'kainesv86@gmail.com',
+            createAt: '05/18/2022',
+            fullName: 'Trịnh Văn Quyết',
+            gender: Gender.MALE,
+            isActive: true,
+            mobile: '0986609813',
+            password: '',
+            role: { id: '6', name: UserRole.ADMIN },
+            id: '1asdasd-asdzv-azsde4',
+            token: '',
+            typeId: '1',
+            updateAt: '05/17/2022',
+        },
+        {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
+            email: 'kainesv86@gmail.com',
+            createAt: '05/18/2022',
+            fullName: 'Trịnh Văn Quyết',
+            gender: Gender.MALE,
+            isActive: true,
+            mobile: '0986609813',
+            password: '',
+            role: { id: '6', name: UserRole.ADMIN },
+            id: '1asdasd-asdzv-azsde4',
+            token: '',
+            typeId: '1',
+            updateAt: '05/17/2022',
+        },
+        {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
+            email: 'kainesv86@gmail.com',
+            createAt: '05/18/2022',
+            fullName: 'Trịnh Văn Quyết',
+            gender: Gender.MALE,
+            isActive: true,
+            mobile: '0986609813',
+            password: '',
+            role: { id: '6', name: UserRole.ADMIN },
+            id: '1asdasd-asdzv-azsde4',
             token: '',
             typeId: '1',
             updateAt: '05/17/2022',
         },
     ]);
 
-    const [count, setCount] = React.useState(9);
+    const [count, setCount] = React.useState(4);
 
     const _handleOnSubmit = async () => {};
 
@@ -45,9 +93,9 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Sliders</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Users</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the Sliders in home website including their title, backLink, image and isShow.
+                        A list of all users in database including their Information, role, create date and active status.
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -62,15 +110,26 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
+                            <TextField name="email" label="email" />
+                            <TextField name="Fullname" label="fullName" />
                             <TextField name="createdAt" label="Create From" type={'date'} />
                             <SelectField
-                                label="Showing"
+                                label="Active"
                                 values={[
                                     { label: 'Active', value: true },
                                     { label: 'Inactive', value: false },
                                 ]}
-                                name="isShow"
+                                name="isActive"
+                            />
+                            <SelectField
+                                label="Role"
+                                values={[
+                                    { label: 'Customer', value: UserRole.CUSTOMER },
+                                    { label: 'Expert', value: UserRole.EXPERT },
+                                    { label: 'Marketing', value: UserRole.MARKETING },
+                                    { label: 'Admin', value: UserRole.ADMIN },
+                                ]}
+                                name="role"
                             />
                         </div>
                         <div className="flex justify-end">
@@ -101,10 +160,13 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                             Gender
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Role
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Create Date / Last Update
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Showing
+                                            Activation
                                         </th>
                                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span className="sr-only">Edit</span>
@@ -129,6 +191,9 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                                     <div className="text-gray-900">{user.gender}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    <div className="text-gray-900">{user.role.name}</div>
+                                                </td>
+                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                     <div className="text-gray-900">{user.createAt}</div>
                                                     <div className="text-gray-900">{user.updateAt}</div>
                                                 </td>
@@ -144,7 +209,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.editSliderUrl}/${user.id}`} passHref>
+                                                    <Link href={`${routes.editUsersUrl}/${user.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </td>
@@ -156,13 +221,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                     </div>
                 </div>
             </div>
-            <PaginationBar
-                handleChangeFilterField={() => {}}
-                currentPage={Number(1)}
-                numberOfItem={4}
-                pageSize={Number(12)}
-                routeUrl={router.asPath}
-            />
+            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
         </div>
     );
 };

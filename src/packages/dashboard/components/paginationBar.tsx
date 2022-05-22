@@ -6,10 +6,9 @@ interface PaginationBarProps {
     pageSize: number;
     numberOfItem: number;
     routeUrl: string;
-    handleChangeFilterField: Function;
 }
 
-const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pageSize, currentPage, numberOfItem, routeUrl, handleChangeFilterField }) => {
+const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pageSize, currentPage, numberOfItem, routeUrl }) => {
     //variable for pagination
     let isTruncate = false; //this variable for checking is render truncated box or not
     const numLinksTwoSide = 1;

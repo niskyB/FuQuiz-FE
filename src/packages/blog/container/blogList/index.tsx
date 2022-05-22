@@ -60,7 +60,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = () => {
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Blogs</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the Blogs in home website including their title, backLink, image and isShow.
+                        A list of all the Blogs in home website including their title, category, info, details and thumbnail.
                     </p>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
