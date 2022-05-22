@@ -16,6 +16,8 @@ export const routes = {
 
     // users
     usersUrl: '/dashboard/users',
+    editUsersUrl: '/dashboard/users/edit',
+    addUsersUrl: '/dashboard/users/add',
 
     // slider
     sliderListUrl: '/dashboard/slider',

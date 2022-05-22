@@ -30,7 +30,55 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
             mobile: '0986609813',
             password: '',
             role: { id: '6', name: UserRole.ADMIN },
-            id: '1',
+            id: '1asdasd-asdzv-azsde4',
+            token: '',
+            typeId: '1',
+            updateAt: '05/17/2022',
+        },
+        {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
+            email: 'kainesv86@gmail.com',
+            createAt: '05/18/2022',
+            fullName: 'Trịnh Văn Quyết',
+            gender: Gender.MALE,
+            isActive: true,
+            mobile: '0986609813',
+            password: '',
+            role: { id: '6', name: UserRole.ADMIN },
+            id: '1asdasd-asdzv-azsde4',
+            token: '',
+            typeId: '1',
+            updateAt: '05/17/2022',
+        },
+        {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
+            email: 'kainesv86@gmail.com',
+            createAt: '05/18/2022',
+            fullName: 'Trịnh Văn Quyết',
+            gender: Gender.MALE,
+            isActive: true,
+            mobile: '0986609813',
+            password: '',
+            role: { id: '6', name: UserRole.ADMIN },
+            id: '1asdasd-asdzv-azsde4',
+            token: '',
+            typeId: '1',
+            updateAt: '05/17/2022',
+        },
+        {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
+            email: 'kainesv86@gmail.com',
+            createAt: '05/18/2022',
+            fullName: 'Trịnh Văn Quyết',
+            gender: Gender.MALE,
+            isActive: true,
+            mobile: '0986609813',
+            password: '',
+            role: { id: '6', name: UserRole.ADMIN },
+            id: '1asdasd-asdzv-azsde4',
             token: '',
             typeId: '1',
             updateAt: '05/17/2022',
@@ -101,10 +149,13 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                             Gender
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Role
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Create Date / Last Update
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Showing
+                                            Activation
                                         </th>
                                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span className="sr-only">Edit</span>
@@ -129,6 +180,9 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                                     <div className="text-gray-900">{user.gender}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    <div className="text-gray-900">{user.role.name}</div>
+                                                </td>
+                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                     <div className="text-gray-900">{user.createAt}</div>
                                                     <div className="text-gray-900">{user.updateAt}</div>
                                                 </td>
@@ -144,7 +198,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.editSliderUrl}/${user.id}`} passHref>
+                                                    <Link href={`${routes.editUsersUrl}/${user.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </td>
