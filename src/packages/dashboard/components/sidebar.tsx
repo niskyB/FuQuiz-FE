@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BookOpenIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, IdentificationIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
@@ -12,7 +12,7 @@ const navigation = [
     // { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
     { name: 'Slider', icon: MapIcon, link: routes.sliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
-    { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN] },
+    { name: 'User', icon: IdentificationIcon, link: routes.usersUrl, acceptRole: [UserRole.ADMIN] },
 ];
 
 const secondaryNavigation = [{ name: 'Back to store', icon: LogoutIcon, link: routes.homeUrl }];
