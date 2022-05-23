@@ -1,20 +1,19 @@
 import * as React from 'react';
-import { BookOpenIcon, HomeIcon, LogoutIcon, MapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, HomeIcon, IdentificationIcon, MapIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
 import { UserRole } from '../../../core/models/role';
-import { AllRole } from '../../../core/models/user';
 import Link from 'next/link';
 
 interface SideBarProps {}
 const navigation = [
-    // { name: '', icon: HomeIcon, link: '#', acceptRole: [...AllRole] },
-    { name: 'Slider', icon: MapIcon, link: routes.sliderUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
-    { name: 'Blog', icon: BookOpenIcon, link: routes.blogUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    { name: 'Slider', icon: MapIcon, link: routes.sliderListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    { name: 'Blog', icon: BookOpenIcon, link: routes.blogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    { name: 'User', icon: IdentificationIcon, link: routes.usersUrl, acceptRole: [UserRole.ADMIN] },
 ];
 
-const secondaryNavigation = [{ name: 'Back to store', icon: LogoutIcon, link: routes.homeUrl }];
+const secondaryNavigation = [{ name: 'Back to store', icon: HomeIcon, link: routes.homeUrl }];
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ');
 }

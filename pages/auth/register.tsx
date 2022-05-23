@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Register } from '../../src/packages/auth';
-import { StoreLayout } from '../../src/packages/store/components';
+import { StoreLayout } from '../../src/packages/store';
 
 interface RegisterPageProps {}
 

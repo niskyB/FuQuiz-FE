@@ -1,16 +1,33 @@
 import Link from 'next/link';
 import { Blog } from '../../../../core/models/blog';
+import { routes } from '../../../../core/routes';
+import * as React from 'react';
 
 interface BlogBoxProps {
     data: Blog;
+    mode: 'view' | 'edit';
 }
 
-export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data }) => {
+export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) => {
+    const [redirectLink, setRedirectLink] = React.useState<string>('');
+    React.useEffect(() => {
+        switch (mode) {
+            case 'edit':
+                setRedirectLink(routes.editBlogUrl + '/asd-zxz-3512-zas');
+                break;
+            case 'view':
+                setRedirectLink(routes.blogUrl + '/asd-zxz-3512-zas');
+                break;
+        }
+
+        return () => {};
+    }, []);
+
     return (
-        <Link href={''} passHref>
+        <Link href={redirectLink} passHref>
             <div key={data.id} className="flex flex-col w-full overflow-hidden duration-700 rounded-lg shadow-lg cursor-pointer hover:-translate-y-5">
                 <div className="min-w-full mx-auto bg-white">
-                    <img className="object-cover h-48 py-3 mx-auto" src={data.thumbnail} alt="thumbnail" />
+                    <img className="object-cover h-48 py-3 mx-auto" src={data.thumbnailUrl} alt="thumbnail" />
                 </div>
 
                 <div className="flex flex-col justify-between flex-1 p-6 bg-white">
@@ -29,12 +46,20 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data }) => {
                         <div className="flex-shrink-0">
                             <div>
                                 <span className="sr-only">{data.user.fullName}</span>
-                                <img className="w-10 h-10 rounded-full" src={data.user.imageUrl} alt="" />
+                                <img
+                                    className="w-10 h-10 rounded-full"
+                                    src={
+                                        data.user.imageUrl
+                                            ? data.user.imageUrl
+                                            : 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg'
+                                    }
+                                    alt=""
+                                />
                             </div>
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-gray-900">
-                                <div className="hover:underline">{data.user.fullName}</div>
+                                <div className="hover:underline">{data.user.fullName ? data.user.fullName : 'Mr Quýt'}</div>
                             </p>
                             <div className="flex space-x-1 text-sm text-gray-500">
                                 <time dateTime={data.createAt}>{data.createAt}</time>

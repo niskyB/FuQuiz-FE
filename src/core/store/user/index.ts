@@ -15,6 +15,7 @@ export const defaultCurrentUser: User = {
     fullName: '',
     gender: Gender.MALE,
     id: '',
+    typeId: '',
     imageUrl: '',
     isActive: false,
     mobile: '',

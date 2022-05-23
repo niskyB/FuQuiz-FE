@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
+import { StoreLayout } from '../src/packages/store';
 
 // --- components
 
-import { StoreLayout } from '../src/packages/store/components/storeLayout';
 import { Home } from '../src/packages/store/container/Home';
 
 const HomePage: NextPage = () => {

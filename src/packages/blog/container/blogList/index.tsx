@@ -18,6 +18,39 @@ const blogData: Blog[] = [
         updateAt: '',
         user: { ...defaultCurrentUser },
     },
+    {
+        id: '1',
+        blogCategory: { id: '1', name: 'Learning' },
+        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+        createAt: '',
+        details: 'details 1',
+        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+        title: 'Giá Green Satoshi Token (GST)',
+        updateAt: '',
+        user: { ...defaultCurrentUser },
+    },
+    {
+        id: '1',
+        blogCategory: { id: '1', name: 'Learning' },
+        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+        createAt: '',
+        details: 'details 1',
+        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+        title: 'Giá Green Satoshi Token (GST)',
+        updateAt: '',
+        user: { ...defaultCurrentUser },
+    },
+    {
+        id: '1',
+        blogCategory: { id: '1', name: 'Learning' },
+        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+        createAt: '',
+        details: 'details 1',
+        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+        title: 'Giá Green Satoshi Token (GST)',
+        updateAt: '',
+        user: { ...defaultCurrentUser },
+    },
 ];
 export const BlogList: React.FunctionComponent<BlogListProps> = () => {
     const [blogList, setBlogList] = React.useState<Blog[]>(blogData);
@@ -27,7 +60,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = () => {
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Blogs</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the Blogs in home website including their title, backLink, image and isShow.
+                        A list of all the Blogs in home website including their title, category, info, details and thumbnail.
                     </p>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -40,7 +73,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = () => {
             </div>
             <div className="grid grid-cols-4 gap-5 mt-8">
                 {blogList.map((item) => (
-                    <BlogBox key={item.id} data={item} />
+                    <BlogBox key={item.id} data={item} mode="edit" />
                 ))}
             </div>
         </div>

@@ -2,18 +2,18 @@ import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import DashBoardLayout from '../../../src/packages/dashboard/components/dashboardLayout';
-import { AddSlider } from '../../../src/packages/slider';
+import AddUser from '../../../src/packages/users/containers/addUser';
 
-interface AddSliderPageProps {}
+interface AddUserPageProps {}
 
-const AddSliderPage: React.FunctionComponent<AddSliderPageProps> = () => {
+const AddUserPage: React.FunctionComponent<AddUserPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
-                <AddSlider />
+                <AddUser />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-export default AddSliderPage;
+export default AddUserPage;

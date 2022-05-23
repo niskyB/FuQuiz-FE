@@ -2,27 +2,27 @@ import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../src/core/models/role';
+import EditBlog from '../../../../src/packages/blog/container/editBlog';
 import DashBoardLayout from '../../../../src/packages/dashboard/components/dashboardLayout';
-import { EditSlider } from '../../../../src/packages/slider';
 
-interface EditSliderPageProps {
+interface EditBlogPageProps {
     id: string;
 }
 
-const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
+const EditBlogPage: NextPage<EditBlogPageProps> = ({ id }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <EditSlider id={id} />
+                <EditBlog />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-EditSliderPage.getInitialProps = async (ctx: NextPageContext): Promise<EditSliderPageProps> => {
+EditBlogPage.getInitialProps = async (ctx: NextPageContext): Promise<EditBlogPageProps> => {
     let props = { id: ctx.query?.id || '' };
 
-    return props as EditSliderPageProps;
+    return props as EditBlogPageProps;
 };
 
-export default EditSliderPage;
+export default EditBlogPage;

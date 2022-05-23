@@ -14,7 +14,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
     const { register } = useFormContext();
 
     return (
-        <div>
+        <div className="w-full">
             <label htmlFor={name} className="block text-sm font-medium text-gray-700">
                 {label}
             </label>

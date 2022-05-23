@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouterUnAuthProtectionWrapper } from '../../../src/core/components/routerProtection';
-import { Notification, StoreLayout } from '../../../src/packages/store/components';
+import { Notification, StoreLayout } from '../../../src/packages/store';
 
 interface SendEmailProps {}
 

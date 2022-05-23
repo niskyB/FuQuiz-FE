@@ -8,7 +8,6 @@ export const getSliderById = async (id: string) => {
 
 export const updateSlider = async (id: string, data: UpdateSliderDTO) => {
     let form = new FormData();
-    console.log(data);
 
     for (const key in data) {
         if (Object.prototype.hasOwnProperty.call(data, key)) {
