@@ -8,7 +8,12 @@ import Link from 'next/link';
 
 interface SideBarProps {}
 const navigation = [
-    { name: 'Slider', icon: MapIcon, link: routes.sliderListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    {
+        name: 'Slider',
+        icon: MapIcon,
+        link: `${routes.sliderListUrl}?currentPage=1&pageSize=10&title=&userId=&isShow=true&createdAt=`,
+        acceptRole: [UserRole.ADMIN, UserRole.MARKETING],
+    },
     { name: 'Blog', icon: BookOpenIcon, link: routes.blogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'User', icon: IdentificationIcon, link: routes.usersUrl, acceptRole: [UserRole.ADMIN] },
 ];
