@@ -29,4 +29,9 @@ export const routes = {
     addBlogUrl: '/dashboard/blog/add',
     editBlogUrl: '/dashboard/blog/edit',
     blogUrl: '/blog',
+
+    // Subject
+    subjectUrl: '/dashboard/subject',
+    addSubjectUrl: '/dashboard/subject/add',
+    editSubjectUrl: '/dashboard/subject/edit',
 };
