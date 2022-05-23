@@ -1,13 +1,15 @@
+import { User } from './user';
+
 export interface Subject {
     id: string;
     title: string;
     tagLine: string;
     description: string;
     subjectCategory: SubjectCategory;
-    briefInfo: string;
+    thumbnailUrl: string;
     createAt: string;
     updateAt: string;
-    assignTo: string;
+    assignTo: User;
 }
 
 export interface SubjectCategory {
