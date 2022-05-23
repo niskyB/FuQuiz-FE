@@ -77,9 +77,9 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Sliders</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Subjects</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the Sliders in home website including their title, backLink, image and isShow.
+                        A list of all the Sliders in home website including their title, category, Info and Expert.
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -96,8 +96,6 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                         <div className="flex space-x-4">
                             <TextField name="title" label="Title" />
                             <TextField name="createdAt" label="Create From" type={'date'} />
-                            <TextField name="briefInfo" label="Brief info" />
-                            <TextField name="description" label="Description" />
                             <TextField name="assignTo" label="Expert" />
                             <SelectField
                                 label="Category"
