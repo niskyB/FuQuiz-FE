@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Answer } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
-import { Answer } from '../../../lesson/containers/quizLesson/interface';
 
 interface AddQuestionProps {}
 

@@ -38,11 +38,12 @@ export const routes = {
     subjectUrl: '/courses',
 
     // Lesson
-    lessonListUrl: '/lesson/',
+    lessonListUrl: '/lesson',
     addLessonUrl: '/lesson/add',
     editLessonUrl: '/lesson/edit',
 
     // questionList
     questionListUrl: '/question',
     addQuestionUrl: '/question/add',
+    editQuestionUrl: '/question/edit',
 };

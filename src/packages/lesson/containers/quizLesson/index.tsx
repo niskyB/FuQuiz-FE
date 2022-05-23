@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { QuillInput, SelectField, TextField } from '../../../../core/components/form';
-import { Answer } from './interface';
+import { Answer } from '../../../../core/models/question';
 
 interface QuizLessonProps {}
 
