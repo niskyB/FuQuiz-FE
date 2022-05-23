@@ -3,13 +3,16 @@ import { Component } from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../src/core/models/role';
 import DashBoardLayout from '../../../../src/packages/dashboard/components/dashboardLayout';
+import LessonList from '../../../../src/packages/lesson/containers/lessonList';
 
 interface SubjectDetailPageProps {}
 
 const SubjectDetailPage: React.FunctionComponent<SubjectDetailPageProps> = () => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
-            <DashBoardLayout>Subjects Details</DashBoardLayout>
+            <DashBoardLayout>
+                <LessonList />
+            </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
