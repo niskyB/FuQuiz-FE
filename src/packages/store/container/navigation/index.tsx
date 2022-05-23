@@ -19,7 +19,10 @@ const NAV_LINK = [
     { label: 'Team', link: '/team' },
 ];
 
-const USER_ACTION_LINK = [{ label: 'your profile', link: routes.meUrl }];
+const USER_ACTION_LINK = [
+    { label: 'your profile', link: routes.meUrl },
+    { label: 'My course', link: routes.userCourseUrl },
+];
 const GUEST_SELECTION = [
     { label: 'Sign in', link: routes.loginUrl },
     { label: 'Register', link: routes.registerUrl },
