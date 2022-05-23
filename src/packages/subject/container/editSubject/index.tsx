@@ -3,17 +3,17 @@ import * as React from 'react';
 import { Component } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { SubjectCategory } from '../../../../core/models/subject';
+import { Subject, SubjectCategory } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
 
-interface AddSubjectProps {}
+interface EditSubjectProps {}
 
 const mapFields = [
     { label: 'Title', name: 'title' },
     { label: 'Expert', name: 'assignTo' },
 ];
 
-const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
+const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
     const [categories, setCategories] = React.useState<SubjectCategory[]>([
         { id: '1', name: 'Javascript' },
         { id: '2', name: 'React' },
@@ -21,7 +21,19 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
         { id: '4', name: 'Dotnet' },
     ]);
 
-    const methods = useForm();
+    const [subject, setSubject] = React.useState<Subject>({
+        title: 'Javascript basic',
+        id: '1aasd-asdzxc',
+        assignTo: 'Trịnh Văn Quyết',
+        briefInfo: 'Learn javascript from zero to hero',
+        createAt: '5/18/2022',
+        description: 'Javascript for newbie',
+        subjectCategory: categories[0],
+        tagLine: '',
+        updateAt: '5/18/2022',
+    });
+
+    const methods = useForm({ defaultValues: subject });
 
     const _handleOnSubmit = async () => {};
 
@@ -31,8 +43,8 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Adding Subject</h3>
-                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new subject</p>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Subject</h3>
+                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be edit old subject</p>
                         </div>
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
@@ -60,6 +72,25 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                 />
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Active
+                                </label>
+                                <SelectField
+                                    label=""
+                                    values={[
+                                        {
+                                            label: 'Active',
+                                            value: true,
+                                        },
+                                        {
+                                            label: 'Inactive',
+                                            value: false,
+                                        },
+                                    ]}
+                                    name="isActive"
+                                />
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Brief Info
                                 </label>
@@ -80,7 +111,7 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <textarea
-                                        {...methods.register('Description')}
+                                        {...methods.register('description')}
                                         rows={7}
                                         name="briefInfo"
                                         id="briefInfo"
@@ -104,7 +135,7 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Add
+                            Edit
                         </button>
                     </div>
                 </div>
@@ -113,4 +144,4 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     );
 };
 
-export default AddSubject;
+export default EditSubject;

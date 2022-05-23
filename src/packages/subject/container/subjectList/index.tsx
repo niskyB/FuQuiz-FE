@@ -79,7 +79,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Subjects</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the Sliders in home website including their title, category, Info and Expert.
+                        A list of all the subject in home website including their title, category, info and expert.
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -184,7 +184,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                                                     <Link href={`${routes.editSubjectUrl}/${subject.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
-                                                    <Link href={`${routes.editSubjectUrl}/${subject.id}`} passHref>
+                                                    <Link href={`${routes.subjectListUrl}/${subject.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Detail</p>
                                                     </Link>
                                                 </td>
