@@ -1,7 +1,6 @@
 import { FireIcon, HomeIcon, TrendingUpIcon, UserGroupIcon } from '@heroicons/react/outline';
 import { Slide } from '../../../slider/containers/slide';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
-import { BlogPost } from '../../../blog/container/blogPost';
 import { Blog } from '../../../../core/models/blog';
 import { defaultCurrentUser } from '../../../../core/store/user';
 import { BlogBox } from '../../../blog';
