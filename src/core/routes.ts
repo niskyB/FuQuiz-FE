@@ -41,4 +41,8 @@ export const routes = {
     lessonListUrl: '/lesson/',
     addLessonUrl: '/lesson/add',
     editLessonUrl: '/lesson/edit',
+
+    // questionList
+    questionListUrl: '/question',
+    addQuestionUrl: '/question/add',
 };
