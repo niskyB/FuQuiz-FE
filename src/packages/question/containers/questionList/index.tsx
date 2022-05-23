@@ -1,109 +1,76 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { UserRole } from '../../../../core/models/role';
-import { Subject, SubjectCategory } from '../../../../core/models/subject';
-import { Gender, User } from '../../../../core/models/user';
+import { Answer, Question } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
 import PaginationBar from '../../../dashboard/components/paginationBar';
 
-interface SubjectListProps {
-    currentPage?: number;
-    pageSize?: number;
-}
+interface QuestionListProps {}
 
-const user: User = {
-    email: '',
-    createAt: '',
-    fullName: 'Trịnh Văn Quyết',
-    gender: Gender.MALE,
-    id: '',
-    imageUrl: '',
-    isActive: true,
-    mobile: '',
-    password: '',
-    role: { id: '', name: UserRole.EXPERT },
-    token: '',
-    typeId: '',
-    updateAt: '',
-};
+const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
+    const methods = useForm();
+    const router = useRouter();
 
-const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize }) => {
-    const [categories, setCategories] = React.useState<SubjectCategory[]>([
-        { id: '1', name: 'Javascript' },
-        { id: '2', name: 'React' },
-        { id: '3', name: 'C#' },
-        { id: '4', name: 'Dotnet' },
+    const cloneAnswers: Answer[] = [
+        { id: '1', answerContent: 'Answer 1' },
+        { id: '2', answerContent: 'Answer 2' },
+        { id: '3', answerContent: 'Answer 3' },
+        { id: '4', answerContent: 'Answer 4' },
+    ];
+
+    const [questions, setQuestions] = React.useState<Question[]>([
+        {
+            id: 'q1',
+            answers: cloneAnswers,
+            content: 'Question 1',
+            isActive: true,
+            lessonType: { id: 'l1', name: 'Quiz' },
+            dimension: { id: '', description: '', name: 'Domain 1', typeId: { id: '1', name: '' } },
+        },
+        {
+            id: 'q2',
+            answers: cloneAnswers,
+            content: 'Question 2',
+            isActive: true,
+            lessonType: { id: 'l2', name: 'Quiz' },
+            dimension: { id: '', description: '', name: 'Domain 2', typeId: { id: '1', name: '' } },
+        },
+        {
+            id: 'q3',
+            answers: cloneAnswers,
+            content: 'Question 3',
+            isActive: true,
+            lessonType: { id: 'l3', name: 'Quiz' },
+            dimension: { id: '', description: '', name: 'Domain 3', typeId: { id: '1', name: '' } },
+        },
+        {
+            id: 'q4',
+            answers: cloneAnswers,
+            content: 'Question 4',
+            isActive: true,
+            lessonType: { id: 'l4', name: 'Quiz' },
+            dimension: { id: '', description: '', name: 'Domain 4', typeId: { id: '1', name: '' } },
+        },
     ]);
     const [count, setCount] = React.useState<number>(4);
-    const [subjects, setSubjects] = React.useState<Subject[]>([
-        {
-            title: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-        {
-            title: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-        {
-            title: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-        {
-            title: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-    ]);
-    const methods = useForm();
 
     const _handleOnSubmit = async () => {};
-
-    const router = useRouter();
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Subjects</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Questions</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the subject in home website including their title, category, info and expert.
+                        A list of all question in current quiz including Question, Dimension, and active status.
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={routes.addSubjectUrl} passHref>
+                    <Link href={router.asPath + '/add'} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                            Add Subject
+                            Add Question
                         </p>
                     </Link>
                 </div>
@@ -112,13 +79,16 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
-                            <TextField name="createdAt" label="Create From" type={'date'} />
-                            <TextField name="assignTo" label="Expert" />
+                            <TextField name="content" label="Question" />
                             <SelectField
-                                label="Category"
-                                values={categories.map((category) => ({ label: category.name, value: category.name }))}
-                                name="isShow"
+                                label="Dimension"
+                                values={[
+                                    { label: 'Dimension 1', value: '1' },
+                                    { label: 'Dimension 2', value: '2' },
+                                    { label: 'Dimension 3', value: '3' },
+                                    { label: 'Dimension 4', value: '4' },
+                                ]}
+                                name="isActive"
                             />
                             <SelectField
                                 label="Active"
@@ -147,18 +117,13 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Title
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Question
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Category
+                                            Dimension
                                         </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Info
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Expert
-                                        </th>
+
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Activation
                                         </th>
@@ -168,26 +133,18 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {Boolean(count && subjects) &&
-                                        subjects.map((subject) => (
-                                            <tr key={subject.id}>
+                                    {Boolean(count && questions) &&
+                                        questions.map((question, index) => (
+                                            <tr key={question.id}>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{subject.title}</div>
-                                                    <div className="text-gray-900">{new Date(subject.createAt).toLocaleDateString()}</div>
-                                                </td>
-                                                <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
-                                                    <div className="max-w-sm">
-                                                        <div className="text-gray-900">{subject.subjectCategory.name}</div>
-                                                    </div>
+                                                    <div className="text-gray-900">{question.content}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{subject.description}</div>
+                                                    <div className="text-gray-900">{question.dimension.name}</div>
                                                 </td>
+
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{subject.assignTo.fullName}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    {subject ? (
+                                                    {question.isActive ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
                                                         </span>
@@ -198,11 +155,8 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.editSubjectUrl}/${subject.id}`} passHref>
+                                                    <Link href={`${router.asPath}/edit/${question.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                    </Link>
-                                                    <Link href={`${routes.subjectListUrl}/${subject.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Detail</p>
                                                     </Link>
                                                 </td>
                                             </tr>
@@ -218,4 +172,4 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
     );
 };
 
-export default SubjectList;
+export default QuestionList;
