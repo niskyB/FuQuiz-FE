@@ -31,7 +31,7 @@ export const routes = {
     blogUrl: '/blog',
 
     // Subject
-    subjectUrl: '/dashboard/subject',
+    subjectListUrl: '/dashboard/subject',
     addSubjectUrl: '/dashboard/subject/add',
     editSubjectUrl: '/dashboard/subject/edit',
 };

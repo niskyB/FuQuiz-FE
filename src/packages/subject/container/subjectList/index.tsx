@@ -96,7 +96,9 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                         <div className="flex space-x-4">
                             <TextField name="title" label="Title" />
                             <TextField name="createdAt" label="Create From" type={'date'} />
-                            <TextField name="Expert" label="Expert" />
+                            <TextField name="briefInfo" label="Brief info" />
+                            <TextField name="description" label="Description" />
+                            <TextField name="assignTo" label="Expert" />
                             <SelectField
                                 label="Category"
                                 values={categories.map((category) => ({ label: category.name, value: category.name }))}

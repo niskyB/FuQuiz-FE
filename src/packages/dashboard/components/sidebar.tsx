@@ -11,7 +11,7 @@ const navigation = [
     { name: 'Slider', icon: MapIcon, link: routes.sliderListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'Blog', icon: BookOpenIcon, link: routes.blogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'User', icon: IdentificationIcon, link: routes.usersUrl, acceptRole: [UserRole.ADMIN] },
-    { name: 'Subject', icon: AcademicCapIcon, link: routes.subjectUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
+    { name: 'Subject', icon: AcademicCapIcon, link: routes.subjectListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
 ];
 
 const secondaryNavigation = [{ name: 'Back to store', icon: HomeIcon, link: routes.homeUrl }];
