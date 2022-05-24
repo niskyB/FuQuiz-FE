@@ -1,13 +1,7 @@
 import { http } from '../../../../core/api';
-import { Slider } from '../../../../core/models/slider';
-
-interface ListItem {
-    count: number;
-    data: Slider[];
-}
+import { ListItem } from './interface';
 
 export const getFilterSlider = async (filterUrl: string) => {
-    const url = filterUrl ? `?${filterUrl}` : '';
-    const res = await http.get<ListItem>('/sliders' + url);
+    const res = await http.get<ListItem>(`/sliders?${filterUrl || ''}`);
     return res.data;
 };

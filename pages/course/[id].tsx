@@ -71,53 +71,53 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col mt-12 space-y-5 sm:mt-16">
-                    <h2 className="text-2xl font-semibold">Package :</h2>
-                    <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-4">
-                        {tiers.map((tier) => (
-                            <div key={tier.name} className="border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm">
-                                <div className="p-6">
-                                    <h2 className="text-lg font-medium leading-6 text-gray-900">{tier.name}</h2>
-                                    <p className="mt-4 text-sm text-gray-500">{tier.description}</p>
-                                    <p className="mt-8">
-                                        <span className="text-4xl font-extrabold text-gray-900">${tier.priceMonthly}</span>{' '}
-                                        <span className="text-base font-medium text-gray-500">/mo</span>
-                                    </p>
-                                    <a
-                                        href={tier.href}
-                                        className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white bg-purple-600 border border-transparent rounded-md hover:bg-purple-700"
-                                    >
-                                        Buy {tier.name}
-                                    </a>
-                                </div>
+                <h1 className="mt-12 text-3xl font-bold sm:mt-16">Package</h1>
+                <div className="mt-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-4">
+                    {tiers.map((tier) => (
+                        <div key={tier.name} className="bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm shadow-lg">
+                            <div className="p-6">
+                                <h2 className="text-lg font-medium leading-6 text-gray-900">{tier.name}</h2>
+                                <p className="mt-4 text-sm text-gray-500">{tier.description}</p>
+                                <p className="mt-8">
+                                    <span className="text-4xl font-extrabold text-gray-900">${tier.priceMonthly}</span>{' '}
+                                    <span className="text-base font-medium text-gray-500">/mo</span>
+                                </p>
+                                <a
+                                    href={tier.href}
+                                    className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white bg-blue-500 border border-blue-600 rounded-md hover:bg-blue-800"
+                                >
+                                    Buy {tier.name}
+                                </a>
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
-                <div className="space-y-5">
-                    <h2 className="text-2xl font-semibold">Lessons :</h2>
-                    <div className="overflow-hidden bg-white shadow sm:rounded-md">
-                        <ul role="list" className="divide-y divide-gray-200">
-                            {positions.map((position) => (
-                                <li key={position.id}>
-                                    <a href="#" className="flex items-center justify-between pr-10 hover:bg-gray-50">
-                                        <div className="flex flex-col items-start justify-between px-4 py-4 space-y-3 sm:px-6">
-                                            <p className="text-sm font-medium text-indigo-600 truncate">{position.title}</p>
-                                            <p className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                {position.type}
-                                            </p>
-                                        </div>
 
-                                        <div className="flex flex-shrink-0 ml-2">
-                                            <div className="w-7 h-7">
-                                                <ChevronRightIcon />
+                <h1 className="mt-12 text-3xl font-bold sm:mt-16">Lesson</h1>
+                <div className="overflow-hidden bg-white shadow sm:rounded-md">
+                    <ul role="list" className="divide-y divide-gray-200">
+                        {positions.map((position) => (
+                            <li key={position.id}>
+                                <a href="#" className="block hover:bg-gray-50">
+                                    <div className="px-4 py-4 sm:px-6">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex flex-col space-y-3">
+                                                <div className="text-sm font-medium text-indigo-600 truncate">{position.title}</div>
+                                                <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full max-w-fit">
+                                                    {position.type}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center flex-shrink-0 ml-2">
+                                                <div className="w-7 h-7">
+                                                    <ChevronRightIcon />
+                                                </div>
                                             </div>
                                         </div>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                                    </div>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         </StoreLayout>

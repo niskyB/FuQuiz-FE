@@ -13,7 +13,6 @@ export interface Lesson {
     id: string;
     name: string;
     createAt: string;
-    subject: Subject;
     lessonType: LessonType;
     updateAt: string;
     isActive: boolean;

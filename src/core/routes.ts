@@ -35,5 +35,15 @@ export const routes = {
     subjectListUrl: '/dashboard/subject',
     addSubjectUrl: '/dashboard/subject/add',
     editSubjectUrl: '/dashboard/subject/edit',
-    subjectUrl: '/course',
+    subjectUrl: '/courses',
+
+    // Lesson
+    lessonListUrl: '/lesson',
+    addLessonUrl: '/lesson/add',
+    editLessonUrl: '/lesson/edit',
+
+    // questionList
+    questionListUrl: '/question',
+    addQuestionUrl: '/question/add',
+    editQuestionUrl: '/question/edit',
 };

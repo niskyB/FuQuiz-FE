@@ -2,14 +2,14 @@ import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useStoreApi } from '../../store';
 
-interface SelectFieldProps {
+interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     name: string;
     label: string;
     values: Array<{ label: string; value: any }>;
     defaultValue?: any;
 }
 
-export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue }) => {
+export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
@@ -19,8 +19,9 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
                 {label}
             </label>
             <select
-                id={name}
+                {...rest}
                 {...register(name)}
+                id={name}
                 className="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 defaultValue={defaultValue}
             >
