@@ -9,21 +9,27 @@ import { UserRole } from '../../../../core/models/role';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useForm } from 'react-hook-form';
 import PaginationBar from '../../../dashboard/components/paginationBar';
+import { GetSliderOptionsDTO } from './interface';
 
-interface SliderProps {
-    currentPage?: number;
-    pageSize?: number;
-    title?: string;
-    userId?: string;
-    isShow?: boolean;
-    createdAt?: Date;
-    orderBy?: string;
-}
+interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt, isShow, orderBy }) => {
     const router = useRouter();
     const userState = useStoreUser();
+
     const [userId, setUserId] = React.useState('');
 
+    const GetSliderOptions = React.useMemo(
+        () => ({
+            currentPage,
+            pageSize,
+            title,
+            userId,
+            isShow,
+            orderBy,
+            createdAt: new Date(createdAt ? createdAt : '01/01/2022').toLocaleDateString(),
+        }),
+        [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
+    );
     const methods = useForm<SliderProps>();
 
     const [sliders, setSliders] = React.useState<Slider[]>([]);
@@ -31,23 +37,10 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
 
     const [filterUrl, setFilterUrl] = React.useState<string>('');
 
-    // Default param
-    React.useEffect(() => {
-        pushWithParams();
-    }, []);
-
     const pushWithParams = () => {
         router.push({
             pathname: routes.sliderListUrl,
-            query: {
-                currentPage,
-                pageSize,
-                title,
-                userId,
-                isShow,
-                orderBy,
-                createdAt: new Date(createdAt ? createdAt : '01/01/2022').toLocaleDateString(),
-            },
+            query: GetSliderOptions,
         });
     };
 
@@ -61,13 +54,13 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     }, [userId]);
 
     React.useEffect(() => {
-        setFilterUrl(router.asPath.replace(`${routes.sliderListUrl}?`, ''));
+        setFilterUrl(router.asPath.replace(`${router.route}?`, ''));
     }, [router.asPath]);
 
     const _fetchData = async () => {
         const filterUrlServer = filterUrl.replace(`currentPage=${Number(currentPage)}`, `currentPage=${Number(currentPage) - 1}`);
         const res = await getFilterSlider(filterUrlServer);
-        console.log(res);
+
         setSliders(res.data);
         setCount(res.count);
     };

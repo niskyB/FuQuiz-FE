@@ -17,10 +17,6 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
             }, 0),
         [slideList]
     );
-    React.useEffect(() => {
-        console.log(slideLength);
-        return () => {};
-    }, [slideLength]);
 
     const [scrollDeg, setScrollDeg] = React.useState<number>(0);
 
