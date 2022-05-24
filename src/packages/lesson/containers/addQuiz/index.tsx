@@ -3,45 +3,15 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField } from '../../../../core/components/form';
-import { LessonDetail, LessonType, QuizLesson, SubjectTopic } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
-import QuizLessonDetail from '../quizLessonDetail';
 
-interface AddLessonProps {}
+interface AddQuizProps {}
 
-const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
+const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
+    const methods = useForm();
     const router = useRouter();
 
-    const quizAttribute: QuizLesson = {
-        id: '',
-        description: '',
-        questions: [],
-    };
-
-    const subjectTopic: SubjectTopic = {
-        id: '',
-        name: '',
-    };
-
-    const lessonDetail: LessonDetail = {
-        id: '',
-        description: '',
-        videoLink: '',
-    };
-
-    const lessonTypes: LessonType[] = [
-        { id: '1', name: 'Subject Topic', attribute: subjectTopic },
-        { id: '2', name: 'Lesson', attribute: lessonDetail },
-        { id: '3', name: 'Quiz', attribute: quizAttribute },
-    ];
-
     const _handleOnSubmit = async () => {};
-
-    const methods = useForm();
-
-    const _onChangeSubjectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.currentTarget.value);
-    };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -57,17 +27,42 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                             This information will be displayed publicly so be careful what you share.
                                         </p>
                                     </div>
-                                    <div>
-                                        <SelectField
-                                            label="Subject Type"
-                                            name="subjectType"
-                                            values={lessonTypes.map((lesson) => ({ label: lesson.name, value: lesson.id }))}
-                                            onChange={(e) => _onChangeSubjectType(e)}
-                                        />
-                                    </div>
                                 </div>
 
-                                <QuizLessonDetail />
+                                {/* <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Title
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <TextField label="" name="title" />
+                                </div>
+                            </div>
+
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Brief Info
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <textarea
+                                        {...methods.register('briefInfo')}
+                                        rows={7}
+                                        name="briefInfo"
+                                        id="briefInfo"
+                                        autoComplete="given-name"
+                                        className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
+                                    />
+                                </div>
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Details
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <QuillInput description={details} setDescription={setDetails} />
+                                </div>
+                            </div>
+                        </div> */}
                             </div>
                         </div>
 
@@ -98,4 +93,4 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
     );
 };
 
-export default AddLesson;
+export default AddQuiz;
