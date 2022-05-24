@@ -1,82 +1,71 @@
-import { CalendarIcon, CheckIcon, ChevronRightIcon, LocationMarkerIcon, UsersIcon } from '@heroicons/react/outline';
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { StoreLayout } from '../../src/packages/store';
+import { ChevronRightIcon } from '@heroicons/react/outline';
 
-interface EditBlogPageProps {
-    id: string;
-}
 const tiers = [
     {
         name: 'Hobby',
         href: '#',
         priceMonthly: 12,
         description: 'All the basics for starting a new business',
-        includedFeatures: ['Potenti felis, in cras at at ligula nunc.', 'Orci neque eget pellentesque.'],
     },
     {
         name: 'Freelancer',
         href: '#',
         priceMonthly: 24,
         description: 'All the basics for starting a new business',
-        includedFeatures: ['Potenti felis, in cras at at ligula nunc. ', 'Orci neque eget pellentesque.', 'Donec mauris sit in eu tincidunt etiam.'],
     },
     {
         name: 'Startup',
         href: '#',
         priceMonthly: 32,
         description: 'All the basics for starting a new business',
-        includedFeatures: [
-            'Potenti felis, in cras at at ligula nunc. ',
-            'Orci neque eget pellentesque.',
-            'Donec mauris sit in eu tincidunt etiam.',
-            'Faucibus volutpat magna.',
-        ],
     },
     {
         name: 'Enterprise',
         href: '#',
         priceMonthly: 48,
         description: 'All the basics for starting a new business',
-        includedFeatures: [
-            'Potenti felis, in cras at at ligula nunc. ',
-            'Orci neque eget pellentesque.',
-            'Donec mauris sit in eu tincidunt etiam.',
-            'Faucibus volutpat magna.',
-            'Id sed tellus in varius quisque.',
-            'Risus egestas faucibus.',
-            'Risus cursus ullamcorper.',
-        ],
     },
 ];
 const positions = [
     {
-        id: 1,
-        title: 'Back End Developer',
-        type: 'Quiz',
+        id: 2,
+        title: 'Chương 1: đầu tư như thé nào là chính xác?',
+        type: 'Subject topic',
+        department: '',
     },
     {
-        id: 2,
-        title: 'Front End Developer',
-        type: 'Lesson',
+        id: 1,
+        title: 'Quiz ôn tập chương 1',
+        type: 'Quiz',
+        department: '',
     },
     {
         id: 3,
-        title: 'User Interface Designer',
-        type: 'Subject',
+        title: 'Hướng dẫn cụ thể cách tạo ví stepN',
+        type: 'Lesson',
+        department: '',
     },
 ];
-const EditBlogPage: NextPage<EditBlogPageProps> = ({ id }) => {
+interface EditSliderPageProps {
+    id: string;
+}
+function classNames(...classes: any) {
+    return classes.filter(Boolean).join(' ');
+}
+const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
     return (
         <StoreLayout>
-            <div className="flex flex-col mt-10">
-                <div className="flex p-10 space-x-10 bg-white rounded-md shadow-lg">
-                    <div className="flex items-center justify-center w-1/2">
-                        <img className="h-80" src="https://www.stepn.com/img/coin.svg" />
+            <div className="flex flex-col p-10 space-y-10 bg-white rounded-md">
+                <div className="flex">
+                    <div className="flex justify-center w-1/2">
+                        <img src="https://www.stepn.com/img/coin.svg" alt="thumbnail" className="max-w-full w-96" />
                     </div>
-                    <div className="flex flex-col flex-1 space-y-5">
-                        <h1 className="text-3xl font-bold">Cách để GST to to moon cùng anh Quyết</h1>
-                        <p className="text-xl text-gray-600">
+                    <div className="flex-1 space-y-5">
+                        <h1 className="text-2xl font-bold">Cách để GST to to moon cùng anh Quyết</h1>
+                        <p className="text-gray-500">
                             Khóa học cung cấp cho học viên sẽ 1 cái nhìn toàn diện việc bảo vệ tiền số, bảo vệ thông tin tài sản. Học viên sẽ nắm được
                             những kĩ năng và kiến thức cơ bản, cần thiết về bảo vệ không chỉ tiền số mà còn là thông tin và tài sản số nói chung.
                         </p>
@@ -135,10 +124,10 @@ const EditBlogPage: NextPage<EditBlogPageProps> = ({ id }) => {
     );
 };
 
-EditBlogPage.getInitialProps = async (ctx: NextPageContext): Promise<EditBlogPageProps> => {
+EditSliderPage.getInitialProps = async (ctx: NextPageContext): Promise<EditSliderPageProps> => {
     let props = { id: ctx.query?.id || '' };
 
-    return props as EditBlogPageProps;
+    return props as EditSliderPageProps;
 };
 
-export default EditBlogPage;
+export default EditSliderPage;
