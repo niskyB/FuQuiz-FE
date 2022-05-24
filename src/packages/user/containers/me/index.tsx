@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 import { toast } from 'react-toastify';
 import { UpdateUserDto } from './interface';
+import { checkFileType } from '../../../../core/util/file';
 
 interface UpdateUserProps {}
 
@@ -65,8 +66,9 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
 
-            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setAvatarFile(file);
-            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
+            checkFileType(file, () => {
+                setAvatarFile(file);
+            });
         }
     };
 

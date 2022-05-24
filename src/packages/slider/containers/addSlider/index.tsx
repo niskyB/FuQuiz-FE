@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
+import { checkFileType } from '../../../../core/util/file';
 import { addSlider } from './action';
 import { AddSliderDTO, AddSliderInput } from './interface';
 
@@ -47,8 +48,10 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setImageFile(file);
-            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
+
+            checkFileType(file, () => {
+                setImageFile(file);
+            });
         }
     };
 
