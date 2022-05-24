@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { LessonType } from '../../../../core/models/lesson';

@@ -138,7 +138,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
                                     Cover photo
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <input id="image" name="image" type="file" className="sr-only" onChange={_onChangeImage} />
+                                    <input id="image" name="image" type="file" className="sr-only" onChange={(e) => _onChangeImage(e)} />
                                     {Boolean(!imageUrl || !imageUrl.length) ? (
                                         <div className="flex justify-center max-w-lg px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                             <div className="space-y-1 text-center">
