@@ -156,7 +156,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                                             type="file"
                                                             className="sr-only"
                                                             {...methods.register('thumbnail')}
-                                                            onChange={_onChangeThumbnail}
+                                                            onChange={(e) => _onChangeThumbnail(e)}
                                                         />
                                                     </label>
                                                     <p className="pl-1">or drag and drop</p>
