@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { Slider } from '../../../../core/models/slider';
+import { getFilterSlider } from './action';
+import { GetSliderOptionsDTO } from './interface';
 
-interface useGetSliderProps {
-    id: string;
-}
+export const useGetSliderList = (options: GetSliderOptionsDTO) => {
+    const [sliders, setSliders] = React.useState<Slider[]>([]);
+    const [count, setCount] = React.useState<number>(0);
+    React.useEffect(() => {
+        getFilterSlider(options).then((res) => {
+            setSliders(res.data);
+            setCount(res.count);
+        });
+    }, [options]);
 
-export const useGetSlider = ({ id }: useGetSliderProps) => {
-    const [slider, setSlider] = React.useState<Slider>();
-    const [imageUrl, setImageUrl] = React.useState<string>('');
-
-    React.useEffect(() => {}, [id]);
-
-    return { slider, imageUrl, setImageUrl };
+    return { sliders, count };
 };

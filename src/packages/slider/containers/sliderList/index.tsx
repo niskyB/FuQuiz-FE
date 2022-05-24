@@ -2,23 +2,20 @@ import * as React from 'react';
 import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 import { useRouter } from 'next/router';
-import { Slider } from '../../../../core/models/slider';
-import { getFilterSlider } from './action';
 import { useStoreUser } from '../../../../core/store';
 import { UserRole } from '../../../../core/models/role';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useForm } from 'react-hook-form';
 import PaginationBar from '../../../dashboard/components/paginationBar';
 import { GetSliderOptionsDTO } from './interface';
+import { useGetSliderList } from './hook';
 
 interface SliderProps extends GetSliderOptionsDTO {}
-export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt, isShow, orderBy }) => {
+export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
     const router = useRouter();
     const userState = useStoreUser();
-
-    const [userId, setUserId] = React.useState('');
-
-    const GetSliderOptions = React.useMemo(
+    const methods = useForm<SliderProps>();
+    const options = React.useMemo<GetSliderOptionsDTO>(
         () => ({
             currentPage,
             pageSize,
@@ -26,61 +23,31 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
             userId,
             isShow,
             orderBy,
-            createdAt: new Date(createdAt ? createdAt : '01/01/2022').toLocaleDateString(),
+            createdAt: createdAt,
         }),
         [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
     );
-    const methods = useForm<SliderProps>();
+    const { count, sliders } = useGetSliderList(options);
 
-    const [sliders, setSliders] = React.useState<Slider[]>([]);
-    const [count, setCount] = React.useState<number>(0);
-
-    const [filterUrl, setFilterUrl] = React.useState<string>('');
-
-    const pushWithParams = () => {
+    const pushWithParams = (options: GetSliderOptionsDTO) => {
         router.push({
             pathname: routes.sliderListUrl,
-            query: GetSliderOptions,
+            query: { ...options },
         });
-    };
-
-    //  Filter Process
-    React.useEffect(() => {
-        _fetchData();
-    }, [filterUrl]);
-
-    React.useEffect(() => {
-        pushWithParams();
-    }, [userId]);
-
-    React.useEffect(() => {
-        setFilterUrl(router.asPath.replace(`${router.route}?`, ''));
-    }, [router.asPath]);
-
-    const _fetchData = async () => {
-        const filterUrlServer = filterUrl.replace(`currentPage=${Number(currentPage)}`, `currentPage=${Number(currentPage) - 1}`);
-        const res = await getFilterSlider(filterUrlServer);
-
-        setSliders(res.data);
-        setCount(res.count);
     };
 
     // Submit filter
 
     const _handleOnSubmit = async (data: SliderProps) => {
-        router.push({
-            pathname: routes.sliderListUrl,
-            query: {
-                currentPage: 1,
-                pageSize: 12,
-                title: data.title,
-                isShow: data.isShow,
-                createdAt: data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '',
-                userId,
-            },
+        pushWithParams({
+            ...options,
+            currentPage: 1,
+            pageSize: 12,
+            title: data.title,
+            isShow: data.isShow,
+            createdAt: data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '',
         });
     };
-
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
@@ -92,10 +59,10 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
                     <button
-                        onClick={() => (userId.length ? setUserId('') : setUserId(userState.id))}
+                        onClick={() => (userId ? pushWithParams({ ...options, userId: '' }) : pushWithParams({ ...options, userId: userState.id }))}
                         className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                     >
-                        {userId.length ? 'All sliders' : 'My sliders'}
+                        {userId ? 'All sliders' : 'My sliders'}
                     </button>
                     <Link href={routes.addSliderUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">

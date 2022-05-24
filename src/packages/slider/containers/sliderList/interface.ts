@@ -6,11 +6,11 @@ export interface ListItem {
 }
 
 export interface GetSliderOptionsDTO {
-    currentPage?: number;
-    pageSize?: number;
-    title?: string;
-    userId?: string;
-    isShow?: boolean;
-    createdAt?: Date;
-    orderBy?: string;
+    currentPage: number;
+    pageSize: number;
+    title: string;
+    userId: string;
+    isShow: boolean;
+    createdAt: string;
+    orderBy: string;
 }
