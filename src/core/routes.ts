@@ -12,6 +12,7 @@ export const routes = {
     // user
     meUrl: '/user/me',
     changePasswordUrl: '/user/change-password',
+    userCourseUrl: '/user/courses',
     addUserUrl: '/dashboard/users/add',
 
     // users
@@ -29,4 +30,20 @@ export const routes = {
     addBlogUrl: '/dashboard/blog/add',
     editBlogUrl: '/dashboard/blog/edit',
     blogUrl: '/blog',
+
+    // Subject
+    subjectListUrl: '/dashboard/subject',
+    addSubjectUrl: '/dashboard/subject/add',
+    editSubjectUrl: '/dashboard/subject/edit',
+    subjectUrl: '/courses',
+
+    // Lesson
+    lessonListUrl: '/lesson',
+    addLessonUrl: '/lesson/add',
+    editLessonUrl: '/lesson/edit',
+
+    // questionList
+    questionListUrl: '/question',
+    addQuestionUrl: '/question/add',
+    editQuestionUrl: '/question/edit',
 };

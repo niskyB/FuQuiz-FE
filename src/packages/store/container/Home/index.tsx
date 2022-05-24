@@ -1,13 +1,13 @@
 import { FireIcon, HomeIcon, TrendingUpIcon, UserGroupIcon } from '@heroicons/react/outline';
 import { Slide } from '../../../slider/containers/slide';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
-import { BlogPost } from '../../../blog/container/blogPost';
 import { Blog } from '../../../../core/models/blog';
 import { defaultCurrentUser } from '../../../../core/store/user';
 import { BlogBox } from '../../../blog';
+import { routes } from '../../../../core/routes';
 
 const navigation = [
-    { name: 'Home', href: '#', icon: HomeIcon, current: true },
+    { name: 'Home', href: routes.homeUrl, icon: HomeIcon, current: true },
     { name: 'Popular', href: '#', icon: FireIcon, current: false },
     { name: 'Communities', href: '#', icon: UserGroupIcon, current: false },
     { name: 'Trending', href: '#', icon: TrendingUpIcon, current: false },
