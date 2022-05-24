@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { LessonType } from '../../../../core/models/lesson';
@@ -23,7 +22,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
     const methods = useForm();
 
     const _onChangeSubjectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.currentTarget);
+        console.log(e.currentTarget.value);
     };
 
     return (
@@ -45,7 +44,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                             label="Subject Type"
                                             name="subjectType"
                                             values={lessonTypes.map((lesson) => ({ label: lesson.name, value: lesson.id }))}
-                                            onChange={_onChangeSubjectType}
+                                            onChange={(e) => _onChangeSubjectType(e)}
                                         />
                                     </div>
                                 </div>
