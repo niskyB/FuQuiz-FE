@@ -3,6 +3,7 @@ export enum UserRole {
     MARKETING = 'marketing',
     EXPERT = 'expert',
     ADMIN = 'admin',
+    SALE = 'sale',
 }
 export interface Role {
     id: string;
