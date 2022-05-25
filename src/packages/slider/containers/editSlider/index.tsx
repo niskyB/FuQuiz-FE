@@ -51,7 +51,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
         if (slider) {
             // if user go in there are not admin or the owner of the slider, push them to sliderList page
             if (userState.role.name != UserRole.ADMIN && slider.marketing.id && slider.marketing.id !== userState.typeId) {
-                router.push(routes.sliderListUrl);
+                router.push(routes.adminSliderListUrl);
                 return;
             }
 
@@ -76,7 +76,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
             const res = await updateSlider(id, data);
             if (res) {
                 toast.success('Update slider success');
-                router.push(routes.sliderListUrl);
+                router.push(routes.adminSliderListUrl);
             }
         } catch {
             toast.error('Update slider failed');
@@ -180,7 +180,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <Link href={routes.sliderListUrl} passHref>
+                        <Link href={routes.adminSliderListUrl} passHref>
                             <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Cancel
                             </p>

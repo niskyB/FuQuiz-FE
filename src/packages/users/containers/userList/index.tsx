@@ -99,7 +99,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={routes.addUserUrl} passHref>
+                    <Link href={routes.adminAddUserUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add User
                         </p>
@@ -209,7 +209,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.editUsersUrl}/${user.id}`} passHref>
+                                                    <Link href={`${routes.adminEditUsersUrl}/${user.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </td>

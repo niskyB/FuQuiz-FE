@@ -31,7 +31,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
 
     const pushWithParams = (options: GetSliderOptionsDTO) => {
         router.push({
-            pathname: routes.sliderListUrl,
+            pathname: routes.adminSliderListUrl,
             query: { ...options },
         });
     };
@@ -64,7 +64,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                     >
                         {userId ? 'All sliders' : 'My sliders'}
                     </button>
-                    <Link href={routes.addSliderUrl} passHref>
+                    <Link href={routes.adminAddSliderUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Slider
                         </p>
@@ -150,7 +150,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
                                                     {slider.marketing.user.id === userState.id || userState.role.name === UserRole.ADMIN ? (
-                                                        <Link href={`${routes.editSliderUrl}/${slider.id}`} passHref>
+                                                        <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
                                                             <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                         </Link>
                                                     ) : null}
