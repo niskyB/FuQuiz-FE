@@ -1,4 +1,4 @@
-import { BookOpenIcon, FireIcon, HomeIcon, PencilIcon, TrendingUpIcon, UserGroupIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, FireIcon, HomeIcon, PencilIcon } from '@heroicons/react/outline';
 import { Slide } from '../../../slider/containers/slide';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
 import { Blog } from '../../../../core/models/blog';
@@ -12,8 +12,8 @@ import Link from 'next/link';
 const navigation = [
     { name: 'Home', href: routes.homeUrl, icon: HomeIcon, current: true },
     { name: 'Popular', href: '#', icon: FireIcon, current: false },
-    { name: 'Blog', href: '#', icon: PencilIcon, current: false },
-    { name: 'Course', href: '#', icon: BookOpenIcon, current: false },
+    { name: 'Blog', href: routes.blogListUrl, icon: PencilIcon, current: false },
+    { name: 'Course', href: routes.subjectListUrl, icon: BookOpenIcon, current: false },
 ];
 
 const communities = [

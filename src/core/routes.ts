@@ -30,13 +30,14 @@ export const routes = {
     adminAddBlogUrl: '/dashboard/blog/add',
     adminEditBlogUrl: '/dashboard/blog/edit',
     blogUrl: '/blog',
+    blogListUrl: '/blogs',
 
     // Subject
     adminSubjectListUrl: '/dashboard/subject',
     adminAddSubjectUrl: '/dashboard/subject/add',
     adminEditSubjectUrl: '/dashboard/subject/edit',
     subjectUrl: '/course',
-
+    subjectListUrl: '/courses',
     // Lesson
     lessonListUrl: '/lesson',
     addLessonUrl: '/lesson/add',
