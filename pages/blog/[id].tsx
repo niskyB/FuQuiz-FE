@@ -1,6 +1,5 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { RouterUnAuthProtectionWrapper } from '../../src/core/components/routerProtection';
 import { BlogPost } from '../../src/packages/blog';
 import { StoreLayout } from '../../src/packages/store';
 
@@ -10,11 +9,9 @@ interface BlogDetailPageProps {
 
 const BlogDetailPage: NextPage<BlogDetailPageProps> = ({ id }) => {
     return (
-        <RouterUnAuthProtectionWrapper>
-            <StoreLayout>
-                <BlogPost id={id} />
-            </StoreLayout>
-        </RouterUnAuthProtectionWrapper>
+        <StoreLayout>
+            <BlogPost id={id} />
+        </StoreLayout>
     );
 };
 

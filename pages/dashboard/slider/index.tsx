@@ -4,21 +4,23 @@ import { RouterProtectionWrapper } from '../../../src/core/components/routerProt
 import { UserRole } from '../../../src/core/models/role';
 import DashBoardLayout from '../../../src/packages/dashboard/components/dashboardLayout';
 import { SliderList } from '../../../src/packages/slider';
+import { GetSliderOptionsDTO } from '../../../src/packages/slider/containers/sliderList/interface';
 
-interface SliderPageProps {
-    currentPage?: number;
-    pageSize?: number;
-    title?: string;
-    userId?: string;
-    createdAt?: Date;
-    isShow?: boolean;
-}
+interface SliderPageProps extends GetSliderOptionsDTO {}
 
-const SliderPage: NextPage<SliderPageProps> = ({ createdAt, currentPage, pageSize, title, userId, isShow }) => {
+const SliderPage: NextPage<SliderPageProps> = ({ createdAt: createdAt, orderBy, currentPage, pageSize, title, userId, isShow }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <SliderList createdAt={createdAt} currentPage={currentPage} pageSize={pageSize} title={title} userId={userId} isShow={isShow} />
+                <SliderList
+                    orderBy={orderBy}
+                    createdAt={createdAt}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                    title={title}
+                    userId={userId}
+                    isShow={isShow}
+                />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
@@ -31,7 +33,8 @@ SliderPage.getInitialProps = async (ctx: NextPageContext): Promise<SliderPagePro
         title: ctx.query?.title || '',
         userId: ctx.query?.userId || '',
         isShow: ctx.query?.isShow || true,
-        createAt: ctx.query?.createDate || new Date('01-01-2022'),
+        createdAt: ctx.query?.createdAt || '01-01-2022',
+        orderBy: ctx.query?.orderBy || '',
     };
     return props as SliderPageProps;
 };

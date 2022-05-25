@@ -14,10 +14,7 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
 
-const NAV_LINK = [
-    { label: 'Dashboard', link: routes.dashboardUrl },
-    { label: 'Team', link: '/team' },
-];
+const NAV_LINK = [{ label: 'Dashboard', link: routes.dashboardUrl }];
 
 const USER_ACTION_LINK = [
     { label: 'your profile', link: routes.meUrl },

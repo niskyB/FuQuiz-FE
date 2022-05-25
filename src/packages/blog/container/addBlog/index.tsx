@@ -7,6 +7,7 @@ import { FormWrapper, QuillInput, TextField } from '../../../../core/components/
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { BlogCategory } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
+import { checkFileType } from '../../../../core/util/file';
 import { AddBlogDTO } from './interface';
 
 interface AddBlogProps {}
@@ -34,8 +35,9 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
 
-            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setThumbnailFile(file);
-            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
+            checkFileType(file, () => {
+                setThumbnailFile(file);
+            });
         }
     };
 
@@ -154,7 +156,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                                             type="file"
                                                             className="sr-only"
                                                             {...methods.register('thumbnail')}
-                                                            onChange={_onChangeThumbnail}
+                                                            onChange={(e) => _onChangeThumbnail(e)}
                                                         />
                                                     </label>
                                                     <p className="pl-1">or drag and drop</p>

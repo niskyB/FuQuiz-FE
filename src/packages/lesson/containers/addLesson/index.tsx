@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
+import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { LessonType } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 
@@ -23,7 +22,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
     const methods = useForm();
 
     const _onChangeSubjectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.currentTarget);
+        console.log(e.currentTarget.value);
     };
 
     return (
@@ -45,7 +44,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                             label="Subject Type"
                                             name="subjectType"
                                             values={lessonTypes.map((lesson) => ({ label: lesson.name, value: lesson.id }))}
-                                            onChange={_onChangeSubjectType}
+                                            onChange={(e) => _onChangeSubjectType(e)}
                                         />
                                     </div>
                                 </div>
@@ -89,7 +88,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
 
                         <div className="pt-5">
                             <div className="flex justify-end">
-                                <Link href={routes.blogListUrl} passHref>
+                                <Link href={router.asPath.replace('/lesson/add', '')} passHref>
                                     <button
                                         type="button"
                                         className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

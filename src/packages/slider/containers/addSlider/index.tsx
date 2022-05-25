@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
+import { checkFileType } from '../../../../core/util/file';
 import { addSlider } from './action';
 import { AddSliderDTO, AddSliderInput } from './interface';
 
@@ -47,8 +48,10 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setImageFile(file);
-            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
+
+            checkFileType(file, () => {
+                setImageFile(file);
+            });
         }
     };
 
@@ -82,7 +85,7 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
                                     Cover photo
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <input id="image" name="image" type="file" className="sr-only" onChange={_onChangeImage} />
+                                    <input id="image" name="image" type="file" className="sr-only" onChange={(e) => _onChangeImage(e)} />
                                     {!imageUrl.length ? (
                                         <div className="flex justify-center max-w-lg px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                             <div className="space-y-1 text-center">

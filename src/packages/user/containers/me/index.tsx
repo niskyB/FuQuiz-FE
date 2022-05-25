@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 import { toast } from 'react-toastify';
 import { UpdateUserDto } from './interface';
+import { checkFileType } from '../../../../core/util/file';
 
 interface UpdateUserProps {}
 
@@ -61,11 +62,13 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
     }, [avatarFile]);
 
     const _onChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target);
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
 
-            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setAvatarFile(file);
-            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
+            checkFileType(file, () => {
+                setAvatarFile(file);
+            });
         }
     };
 
@@ -113,7 +116,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                     </div>
                     <div className="flex flex-col items-center justify-between px-5 pt-5 space-y-4 cursor-pointer w-96">
                         <div className="relative">
-                            <input type="file" id="image" hidden {...methods.register('image')} onChange={_onChangeAvatar} />
+                            <input type="file" id="image" hidden {...methods.register('image')} onChange={(e) => _onChangeAvatar(e)} />
                             <label
                                 htmlFor="image"
                                 className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-gray-200 rounded-full opacity-0 cursor-pointer hover:bg-gray-900/50 hover:opacity-100"

@@ -5,10 +5,11 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { UserRole } from '../../../../core/models/role';
-import { Slider } from '../../../../core/models/slider';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
-import { getSliderById, updateSlider } from './action';
+import { checkFileType } from '../../../../core/util/file';
+import { updateSlider } from './action';
+import { useGetSlider } from './hooks';
 import { UpdateSliderDTO, UpdateSliderInput } from './interface';
 
 interface EditSliderProps {
@@ -39,12 +40,33 @@ const SHOWING_FIELDS = [
 
 export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => {
     const userState = useStoreUser();
-    const [slider, setSlider] = React.useState<Slider>();
+
     const [imageFile, setImageFile] = React.useState<File | null>();
-    const [imageUrl, setImageUrl] = React.useState<string>('');
+    const { imageUrl, setImageUrl, slider } = useGetSlider({ id });
 
     const methods = useForm<UpdateSliderDTO>({ defaultValues });
     const router = useRouter();
+
+    React.useEffect(() => {
+        if (slider) {
+            // if user go in there are not admin or the owner of the slider, push them to sliderList page
+            if (userState.role.name != UserRole.ADMIN && slider.marketing.id && slider.marketing.id !== userState.typeId) {
+                router.push(routes.sliderListUrl);
+                return;
+            }
+
+            methods.setValue('title', slider.title);
+            methods.setValue('backLink', slider.backLink);
+            methods.setValue('isShow', slider.isShow);
+        }
+    }, [methods, slider, router, userState]);
+
+    React.useEffect(() => {
+        if (imageFile) setImageUrl(URL.createObjectURL(imageFile));
+        return () => {
+            URL.revokeObjectURL(imageUrl);
+        };
+    }, [imageFile]);
 
     const _handleOnSubmit = async (data: UpdateSliderDTO) => {
         if (imageFile) data.image = imageFile;
@@ -52,7 +74,6 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
         try {
             const res = await updateSlider(id, data);
-
             if (res) {
                 toast.success('Update slider success');
                 router.push(routes.sliderListUrl);
@@ -62,42 +83,13 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
         }
     };
 
-    const getSlider = async () => {
-        const slider = await getSliderById(id);
-        setImageUrl(slider.imageUrl);
-        setSlider(slider);
-    };
-
-    React.useEffect(() => {
-        if (slider) {
-            if (userState.role.name != UserRole.ADMIN && slider.marketing.id && slider.marketing.id !== userState.typeId) {
-                router.push(routes.sliderListUrl);
-                return;
-            }
-
-            methods.setValue('title', slider.title);
-            methods.setValue('backLink', slider.backLink);
-            methods.setValue('isShow', slider.isShow);
-            setImageUrl(slider.imageUrl);
-        }
-    }, [methods, slider, router, userState]);
-
-    React.useEffect(() => {
-        getSlider();
-    }, []);
-
-    React.useEffect(() => {
-        if (imageFile) setImageUrl(URL.createObjectURL(imageFile));
-        return () => {
-            URL.revokeObjectURL(imageUrl);
-        };
-    }, [imageFile]);
-
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') setImageFile(file);
-            else toast.warning('Invalid file, file type should be png/jpg/jpeg');
+
+            checkFileType(file, () => {
+                setImageFile(file);
+            });
         }
     };
     return (
@@ -138,7 +130,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
                                     Cover photo
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <input id="image" name="image" type="file" className="sr-only" onChange={_onChangeImage} />
+                                    <input id="image" name="image" type="file" className="sr-only" onChange={(e) => _onChangeImage(e)} />
                                     {Boolean(!imageUrl || !imageUrl.length) ? (
                                         <div className="flex justify-center max-w-lg px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                             <div className="space-y-1 text-center">
