@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BookOpenIcon, HomeIcon, IdentificationIcon, MapIcon, AcademicCapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, HomeIcon, IdentificationIcon, MapIcon, AcademicCapIcon, ClipboardListIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 interface SideBarProps {}
 const navigation = [
+    { name: 'Dashboard', icon: ClipboardListIcon, link: '', acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     {
         name: 'Slider',
         icon: MapIcon,
