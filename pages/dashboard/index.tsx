@@ -7,7 +7,7 @@ interface DashboardPageProps {}
 
 const DashboardPage: React.FunctionComponent<DashboardPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING, UserRole.SALE]}>
             <DashBoardLayout>
                 <div>Dashboard</div>
             </DashBoardLayout>
