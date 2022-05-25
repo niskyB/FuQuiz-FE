@@ -2,20 +2,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../core/components/form';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 
-import { Registration } from '../../core/models/registration';
-import { UserRole } from '../../core/models/role';
-import { Gender } from '../../core/models/user';
-import { routes } from '../../core/routes';
-import PaginationBar from '../dashboard/components/paginationBar';
+import { Registration } from '../../../../core/models/registration';
+import { UserRole } from '../../../../core/models/role';
+import { Gender } from '../../../../core/models/user';
+import { routes } from '../../../../core/routes';
+import PaginationBar from '../../../dashboard/components/paginationBar';
 
 interface RegistrationListProps {
     currentPage?: number;
     pageSize?: number;
 }
 
-const RegistrationList: React.FunctionComponent<RegistrationListProps> = ({ currentPage, pageSize }) => {
+const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ currentPage, pageSize }) => {
     const methods = useForm();
 
     const router = useRouter();
@@ -560,4 +560,4 @@ const RegistrationList: React.FunctionComponent<RegistrationListProps> = ({ curr
     );
 };
 
-export default RegistrationList;
+export default RegistrationsList;

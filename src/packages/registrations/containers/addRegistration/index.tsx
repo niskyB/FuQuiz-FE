@@ -28,7 +28,7 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
                                 label="Subject"
                                 name="subject"
                                 values={[
-                                    { label: 'Javascript', value: '' },
+                                    { label: 'Javascript', value: '1' },
                                     { label: 'Java', value: '' },
                                     { label: 'C#', value: '' },
                                     { label: 'Marketing', value: '' },
@@ -39,7 +39,7 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
                                 name="package"
                                 values={[
                                     { label: 'Package 1 - 500,000 - 350,000', value: '' },
-                                    { label: 'Package 2 - 800,000 - 700,000', value: '' },
+                                    { label: 'Package 2 - 800,000 - 700,000', value: '2' },
                                     { label: 'Package 3 - 1,000,000 - 900,000', value: '' },
                                     { label: 'Package 4 - 3,000,000 - 2,800,000', value: '' },
                                 ]}
@@ -56,6 +56,19 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
                                     { label: 'Female', value: Gender.FEMALE },
                                 ]}
                             />
+
+                            <TextField label="Registration Time" name="registrationTime" type="date" defaultValue={'12/5/2022'} />
+                            <TextField label="Sale" name="sale" type="number" />
+                            <SelectField
+                                label="Status"
+                                name="status"
+                                values={[
+                                    { label: 'Active', value: true },
+                                    { label: 'Inactive', value: false },
+                                ]}
+                            />
+                            <TextField label="Valid From" name="validFrom" type="date" defaultValue={'12/5/2022'} />
+                            <TextField label="Valid To" name="validTo" type="date" defaultValue={'12/5/2022'} />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

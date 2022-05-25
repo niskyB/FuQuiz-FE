@@ -2,78 +2,21 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
-import { Registration } from '../../../../core/models/registration';
-import { UserRole } from '../../../../core/models/role';
-import { Gender, User } from '../../../../core/models/user';
+import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 
 interface EditRegistrationProps {}
 
 const EditRegistration: React.FunctionComponent<EditRegistrationProps> = () => {
     const methods = useForm({});
-    const [registration, setRegistration] = React.useState<Registration>({
-        id: '1asdasd-asdzv-azsde4',
-        email: 'hoanglocst900@gmail.com',
-        registrationTime: '23/5/2022',
-        subject: {
-            id: 'asdasd-123as-123aasd',
-            title: 'Subject 1',
-            tagLine: 'Tag Line',
-            description: 'Description 1',
-            subjectCategory: {
-                id: 'asdasd-asda1-123',
-                name: 'Category 1',
-            },
-            thumbnailUrl: '',
-            createAt: '14/5/2022',
-            updateAt: '14/5/2022',
-            assignTo: {
-                id: 'asdasd-aczxzx-zcbv',
-                typeId: '123',
-                fullName: 'Nguyen Hoang Loc',
-                password: '',
-                email: 'locnhse1500572fpt.edu.vn',
-                gender: Gender.MALE,
-                mobile: '08312311223',
-                token: '',
-                isActive: true,
-                createAt: '11/5/2022',
-                updateAt: '11/5/2022',
-                role: { id: 'asa-123a-asd', name: UserRole.ADMIN },
-                imageUrl: '',
-            },
-        },
-        package: {
-            id: '123-123-123',
-            originalPrice: 600000,
-            lesson: {
-                id: '123-432-323',
-                name: 'Lesson 1',
-                createAt: '13/5/2022',
-                lessonType: { id: 'mznz-mvakf', name: 'Type 1' },
-                updateAt: '13/5/2022',
-                isActive: true,
-            },
-            name: 'Package 1',
-            duration: 3,
-            isActive: true,
-            updateAt: '13/5/2022',
-            createAt: '13/5/2022',
-            salePrice: 500000,
-        },
-        totalCost: 500000,
-        status: true,
-        validForm: '23/5/2022',
-        validTo: '23/8/2022',
-    });
-
     React.useEffect(() => {
-        methods.setValue('subject', '1');
-        methods.setValue('package', '2');
-        methods.setValue('mobile', '0912312321');
-        methods.setValue('email', 'hoanglocst900@gmail.com');
-        methods.setValue('fullName', 'Trinh Van Quyet');
-        methods.setValue('gender', 'male');
+        methods.setValue('fullName', 'Nguyen Van A');
+        methods.setValue('email', 'trinhvanquyet@gmail.com');
+        methods.setValue('mobile', '09123717822');
+        methods.setValue('gender', Gender.MALE);
+        methods.setValue('registrationTime', new Date('12/5/2022'));
+        methods.setValue('sale', 500000);
+        methods.setValue('status', true);
     }, []);
 
     const _handleOnSubmit = async () => {};
@@ -120,6 +63,19 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = () => {
                                     { label: 'Female', value: Gender.FEMALE },
                                 ]}
                             />
+
+                            <TextField label="Registration Time" name="registrationTime" type="date" defaultValue={'12/5/2022'} />
+                            <TextField label="Sale" name="sale" type="number" />
+                            <SelectField
+                                label="Status"
+                                name="status"
+                                values={[
+                                    { label: 'Active', value: true },
+                                    { label: 'Inactive', value: false },
+                                ]}
+                            />
+                            <TextField label="Valid From" name="validFrom" type="date" defaultValue={'12/5/2022'} />
+                            <TextField label="Valid To" name="validTo" type="date" defaultValue={'12/5/2022'} />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">
