@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField } from '../../../../core/components/form';
-import { LessonDetail, LessonType, QuizLesson, SubjectTopic } from '../../../../core/models/lesson';
+import { LessonAttribute, LessonDetail, LessonType, QuizLesson, SubjectTopic } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 import QuizLessonDetail from '../quizLessonDetail';
 
@@ -29,10 +29,10 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
         videoLink: '',
     };
 
-    const lessonTypes: LessonType[] = [
-        { id: '1', name: 'Subject Topic', attribute: subjectTopic },
-        { id: '2', name: 'Lesson', attribute: lessonDetail },
-        { id: '3', name: 'Quiz', attribute: quizAttribute },
+    const lessonsAttribute: LessonAttribute[] = [
+        { type: { id: '1', name: LessonType.LESSON_DETAIL }, attribute: null },
+        { type: { id: '2', name: LessonType.QUIZ_LESSON }, attribute: null },
+        { type: { id: '3', name: LessonType.TOPIC_LESSON }, attribute: null },
     ];
 
     const _handleOnSubmit = async () => {};
@@ -61,7 +61,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                         <SelectField
                                             label="Subject Type"
                                             name="subjectType"
-                                            values={lessonTypes.map((lesson) => ({ label: lesson.name, value: lesson.id }))}
+                                            values={lessonsAttribute.map((lesson) => ({ label: lesson.type.name, value: lesson.type.id }))}
                                             onChange={(e) => _onChangeSubjectType(e)}
                                         />
                                     </div>
