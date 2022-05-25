@@ -3,15 +3,15 @@ import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import DashBoardLayout from '../../../src/packages/dashboard/components/dashboardLayout';
-import RegistrationsList from '../../../src/packages/registrations/containers/registrationlist';
+import SettingList from '../../../src/packages/setting/containers/settingList';
 
 interface UsersPageProps {}
 
 const UsersPage: NextPage<UsersPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.SALE]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
-                <RegistrationsList />
+                <SettingList />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );

@@ -1,20 +1,19 @@
-import { NextPage } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import DashBoardLayout from '../../../src/packages/dashboard/components/dashboardLayout';
-import RegistrationsList from '../../../src/packages/registrations/containers/registrationlist';
+import AddSetting from '../../../src/packages/setting/containers/addSetting';
 
-interface UsersPageProps {}
+interface AddSettingPageProps {}
 
-const UsersPage: NextPage<UsersPageProps> = () => {
+const AddSettingPage: React.FunctionComponent<AddSettingPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.SALE]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
-                <RegistrationsList />
+                <AddSetting />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-export default UsersPage;
+export default AddSettingPage;
