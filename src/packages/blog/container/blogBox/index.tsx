@@ -13,7 +13,7 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
     React.useEffect(() => {
         switch (mode) {
             case 'edit':
-                setRedirectLink(routes.editBlogUrl + '/asd-zxz-3512-zas');
+                setRedirectLink(routes.adminEditBlogUrl + '/asd-zxz-3512-zas');
                 break;
             case 'view':
                 setRedirectLink(routes.blogUrl + '/asd-zxz-3512-zas');
@@ -61,9 +61,9 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                             <p className="text-sm font-medium text-gray-900">
                                 <div className="hover:underline">{data.user.fullName ? data.user.fullName : 'Mr Quýt'}</div>
                             </p>
-                            <div className="flex space-x-1 text-sm text-gray-500">
+                            <div className="flex text-sm text-gray-500">
                                 <time dateTime={data.createAt}>{data.createAt}</time>
-                                <span aria-hidden="true">&middot;</span>
+                                <span aria-hidden="true">today</span>
                             </div>
                         </div>
                     </div>

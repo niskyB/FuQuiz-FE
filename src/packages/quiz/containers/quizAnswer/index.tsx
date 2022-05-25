@@ -13,9 +13,9 @@ const QuizAnswer: React.FunctionComponent<QuizAnswerProps> = ({ currentIndex, se
                 <div
                     className={`relative flex items-center justify-center text-white  rounded-lg cursor-pointer w-10 h-10 ${
                         currentIndex === index
-                            ? 'bg-orange-400 text-white'
+                            ? 'bg-gray-500 text-white'
                             : item.userAnswerId
-                            ? 'bg-gray-500'
+                            ? 'bg-green-500'
                             : 'border border-solid border-gray-500 text-black'
                     }`}
                     key={`question-${index}`}

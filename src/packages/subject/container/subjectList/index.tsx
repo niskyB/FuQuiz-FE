@@ -101,7 +101,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={routes.addSubjectUrl} passHref>
+                    <Link href={routes.adminAddSubjectUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Subject
                         </p>
@@ -198,10 +198,10 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.editSubjectUrl}/${subject.id}`} passHref>
+                                                    <Link href={`${routes.adminEditSubjectUrl}/${subject.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
-                                                    <Link href={`${routes.subjectListUrl}/${subject.id}`} passHref>
+                                                    <Link href={`${routes.adminSubjectListUrl}/${subject.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Detail</p>
                                                     </Link>
                                                 </td>

@@ -8,7 +8,7 @@ import { defaultCurrentUser } from '../../src/core/store/user';
 import { StoreLayout } from '../../src/packages/store';
 
 interface UserCoursesPageProps {}
-const blogList: Subject[] = [
+const subjectList: Subject[] = [
     {
         id: '1',
         subjectCategory: { id: '1', name: 'Coding' },
@@ -54,7 +54,7 @@ const UserCoursesPage: React.FC<UserCoursesPageProps> = () => {
                 <div className="flex flex-col-reverse flex-1">
                     <h1 className="order-1 mt-2 text-3xl font-extrabold tracking-tight text-gray-900">My courses</h1>
                     <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-3">
-                        {blogList.map((item) => (
+                        {subjectList.map((item) => (
                             <Link key={item.id} href={`${routes.subjectUrl}/${item.id}`} passHref>
                                 <div className="flex flex-col w-full overflow-hidden duration-700 rounded-lg shadow-lg cursor-pointer hover:-translate-y-5">
                                     <div className="min-w-full mx-auto bg-white">
@@ -74,9 +74,11 @@ const UserCoursesPage: React.FC<UserCoursesPageProps> = () => {
                                             </a>
                                         </div>
 
-                                        <div className="flex items-center mt-6">
+                                        <div className="flex flex-col items-start mt-6 space-y-1">
+                                            <p className="text-gray-500">Valid from : 26/5/2022 - 26/8/2022</p>
+                                            <p className="text-gray-500">Registration day : 25/5/2022</p>
                                             <p className="text-2xl font-medium text-gray-900">
-                                                <div className="text-orange-600">20.000đ - 100.000đ</div>
+                                                <div className="text-orange-600">20.000đ</div>
                                             </p>
                                         </div>
                                     </div>

@@ -13,29 +13,31 @@ export const routes = {
     meUrl: '/user/me',
     changePasswordUrl: '/user/change-password',
     userCourseUrl: '/user/courses',
-    addUserUrl: '/dashboard/users/add',
+    adminAddUserUrl: '/dashboard/users/add',
 
     // users
-    usersUrl: '/dashboard/users',
-    editUsersUrl: '/dashboard/users/edit',
-    addUsersUrl: '/dashboard/users/add',
+    adminUsersUrl: '/dashboard/users',
+    adminEditUsersUrl: '/dashboard/users/edit',
+    adminAddUsersUrl: '/dashboard/users/add',
 
     // slider
-    sliderListUrl: '/dashboard/slider',
-    editSliderUrl: '/dashboard/slider/edit',
-    addSliderUrl: '/dashboard/slider/add',
+    adminSliderListUrl: '/dashboard/slider',
+    adminEditSliderUrl: '/dashboard/slider/edit',
+    adminAddSliderUrl: '/dashboard/slider/add',
 
     // blog
-    blogListUrl: '/dashboard/blog',
-    addBlogUrl: '/dashboard/blog/add',
-    editBlogUrl: '/dashboard/blog/edit',
+    adminBlogListUrl: '/dashboard/blog',
+    adminAddBlogUrl: '/dashboard/blog/add',
+    adminEditBlogUrl: '/dashboard/blog/edit',
     blogUrl: '/blog',
+    blogListUrl: '/blogs',
 
     // Subject
-    subjectListUrl: '/dashboard/subject',
-    addSubjectUrl: '/dashboard/subject/add',
-    editSubjectUrl: '/dashboard/subject/edit',
+    adminSubjectListUrl: '/dashboard/subject',
+    adminAddSubjectUrl: '/dashboard/subject/add',
+    adminEditSubjectUrl: '/dashboard/subject/edit',
     subjectUrl: '/course',
+    subjectListUrl: '/courses',
 
     // registration
     registrationUrl: '/dashboard/registrations',
