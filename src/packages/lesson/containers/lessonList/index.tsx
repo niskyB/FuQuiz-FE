@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { Lesson } from '../../../../core/models/lesson';
+import { Lesson, LessonType } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 import PaginationBar from '../../../dashboard/components/paginationBar';
 
@@ -16,25 +16,28 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
             id: '1',
             createAt: '05/18/2022',
             isActive: true,
-            lessonType: { id: '1', name: 'Subject Topic' },
+            lessonAttribute: { type: { id: '1', name: LessonType.LESSON_DETAIL }, attribute: null },
             name: 'Bài 1: Type cơ bản',
             updateAt: '05/18/2022',
+            order: 1,
         },
         {
             id: '2',
             createAt: '05/18/2022',
             isActive: true,
-            lessonType: { id: '1', name: 'Domain' },
+            lessonAttribute: { type: { id: '1', name: LessonType.TOPIC_LESSON }, attribute: null },
             name: 'Bài 1: Type cơ bản',
             updateAt: '05/18/2022',
+            order: 2,
         },
         {
             id: '3',
             createAt: '05/18/2022',
             isActive: true,
-            lessonType: { id: '1', name: 'Quiz' },
+            lessonAttribute: { type: { id: '1', name: LessonType.QUIZ_LESSON }, attribute: null },
             name: 'Bài 1: Type cơ bản',
             updateAt: '05/18/2022',
+            order: 3,
         },
     ]);
     const [count, setCount] = React.useState<number>(4);
@@ -134,9 +137,10 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                     <div className="text-gray-900">{lesson.name}</div>
                                                 </td>
+                                                y
                                                 <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{lesson.lessonType.name}</div>
+                                                        <div className="text-gray-900">{lesson.lessonAttribute.type.name}</div>
                                                     </div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">

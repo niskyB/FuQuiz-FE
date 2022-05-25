@@ -4,7 +4,6 @@ import { Subject } from './subject';
 
 export interface LessonDetail {
     id: string;
-    // lesson: Lesson;
     description: string;
     videoLink: string;
 }
@@ -15,13 +14,14 @@ export interface QuizLesson {
     questions: Question[];
 }
 
-export interface SubjectTopic {
-    id: string;
-    name: string;
-}
+export interface SubjectTopic extends AttributeType {}
 
-export interface LessonType extends AttributeType {
-    attribute: LessonDetail | QuizLesson | SubjectTopic;
+export interface LessonAttribute {
+    type: {
+        id: string;
+        name: LessonType;
+    };
+    attribute: LessonDetail | QuizLesson | SubjectTopic | null;
 }
 
 export interface Lesson {
@@ -29,7 +29,13 @@ export interface Lesson {
     order: number;
     name: string;
     createAt: string;
-    lessonType: LessonType;
+    lessonAttribute: LessonAttribute;
     updateAt: string;
     isActive: boolean;
+}
+
+export enum LessonType {
+    QUIZ_LESSON = 'Quiz lesson',
+    TOPIC_LESSON = 'Topic subject',
+    LESSON_DETAIL = 'Lesson',
 }
