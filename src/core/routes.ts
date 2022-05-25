@@ -58,7 +58,7 @@ export const routes = {
     editQuestionUrl: '/question/edit',
 
     //quiz PracticeQuiz
-    practiceListUrl: '/quiz-practice',
-    addPracticeUrl: '/quiz-practice/add',
-    practiceDetailsUrl: '/quiz-practice/review',
+    practiceListUrl: '/practices',
+    addPracticeUrl: '/practices/add',
+    practiceDetailsUrl: '/practices/review',
 };
