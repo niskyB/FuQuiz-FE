@@ -3,9 +3,9 @@ import { useFormContext } from 'react-hook-form';
 import { QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { Answer } from '../../../../core/models/question';
 
-interface QuizLessonProps {}
+interface QuizLessonDetailProps {}
 
-const QuizLesson: React.FunctionComponent<QuizLessonProps> = () => {
+const QuizLessonDetail: React.FunctionComponent<QuizLessonDetailProps> = () => {
     const [details, setDetails] = React.useState('');
 
     const [answers, setAnswers] = React.useState<Answer[]>([
@@ -72,4 +72,4 @@ const QuizLesson: React.FunctionComponent<QuizLessonProps> = () => {
     );
 };
 
-export default QuizLesson;
+export default QuizLessonDetail;

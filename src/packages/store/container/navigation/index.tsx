@@ -19,6 +19,7 @@ const NAV_LINK = [{ label: 'Dashboard', link: routes.dashboardUrl }];
 const USER_ACTION_LINK = [
     { label: 'your profile', link: routes.meUrl },
     { label: 'My course', link: routes.userCourseUrl },
+    { label: 'Quiz Practice', link: routes.practiceListUrl },
 ];
 const GUEST_SELECTION = [
     { label: 'Sign in', link: routes.loginUrl },
