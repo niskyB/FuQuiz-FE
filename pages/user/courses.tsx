@@ -74,9 +74,11 @@ const UserCoursesPage: React.FC<UserCoursesPageProps> = () => {
                                             </a>
                                         </div>
 
-                                        <div className="flex items-center mt-6">
+                                        <div className="flex flex-col items-start mt-6 space-y-1">
+                                            <p className="text-gray-500">Valid from : 26/5/2022 - 26/8/2022</p>
+                                            <p className="text-gray-500">Registration day : 25/5/2022</p>
                                             <p className="text-2xl font-medium text-gray-900">
-                                                <div className="text-orange-600">20.000đ - 100.000đ</div>
+                                                <div className="text-orange-600">20.000đ</div>
                                             </p>
                                         </div>
                                     </div>

@@ -82,11 +82,12 @@ const BlogListPage: React.FC<BlogListPageProps> = () => {
                             name="category"
                             values={[
                                 { label: 'category 1', value: '' },
-                                { label: 'category 1', value: '' },
-                                { label: 'category 1', value: '' },
-                                { label: 'category 1', value: '' },
+                                { label: 'category 2', value: '' },
+                                { label: 'category 3', value: '' },
+                                { label: 'category 4', value: '' },
                             ]}
                         />
+
                         <TextField label="Content" name="content" />
 
                         <SelectField
