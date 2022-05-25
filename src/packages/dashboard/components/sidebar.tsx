@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BookOpenIcon, HomeIcon, IdentificationIcon, MapIcon, AcademicCapIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, HomeIcon, IdentificationIcon, MapIcon, AcademicCapIcon, PencilAltIcon, CogIcon } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
 import { useRouter } from 'next/router';
@@ -14,9 +14,11 @@ const navigation = [
         link: `${routes.adminSliderListUrl}?currentPage=1&pageSize=10&title=&userId=&isShow=true&createdAt=`,
         acceptRole: [UserRole.ADMIN, UserRole.MARKETING],
     },
-    { name: 'Blog', icon: BookOpenIcon, link: routes.adminBlogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
+    { name: 'Blog', icon: BookOpenIcon, link: routes.blogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'User', icon: IdentificationIcon, link: routes.adminUsersUrl, acceptRole: [UserRole.ADMIN] },
-    { name: 'Subject', icon: AcademicCapIcon, link: routes.adminSubjectListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
+    { name: 'Subject', icon: AcademicCapIcon, link: routes.subjectListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
+    { name: 'Registration', icon: PencilAltIcon, link: routes.registrationUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
+    { name: 'Setting', icon: CogIcon, link: routes.settingUrl, acceptRole: [UserRole.ADMIN] },
 ];
 
 const secondaryNavigation = [{ name: 'Back to store', icon: HomeIcon, link: routes.homeUrl }];
