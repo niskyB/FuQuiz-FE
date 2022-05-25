@@ -1,7 +1,9 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { StoreLayout } from '../../src/packages/store';
 import { ChevronRightIcon } from '@heroicons/react/outline';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { StoreLayout } from '../../src/packages/store';
 
 const tiers = [
     {
@@ -56,6 +58,7 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
 const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
+    const router = useRouter();
     return (
         <StoreLayout>
             <div className="flex flex-col p-10 space-y-10 bg-white rounded-md">
@@ -97,8 +100,8 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
                 <div className="overflow-hidden bg-white shadow sm:rounded-md">
                     <ul role="list" className="divide-y divide-gray-200">
                         {positions.map((position) => (
-                            <li key={position.id}>
-                                <a href="#" className="block hover:bg-gray-50">
+                            <Link href={`${router.asPath}/quiz`} key={position.id}>
+                                <a className="block hover:bg-gray-50">
                                     <div className="px-4 py-4 sm:px-6">
                                         <div className="flex items-center justify-between">
                                             <div className="flex flex-col space-y-3">
@@ -115,7 +118,7 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
                                         </div>
                                     </div>
                                 </a>
-                            </li>
+                            </Link>
                         ))}
                     </ul>
                 </div>

@@ -35,7 +35,7 @@ export const routes = {
     subjectListUrl: '/dashboard/subject',
     addSubjectUrl: '/dashboard/subject/add',
     editSubjectUrl: '/dashboard/subject/edit',
-    subjectUrl: '/courses',
+    subjectUrl: '/course',
 
     // Lesson
     lessonListUrl: '/lesson',
