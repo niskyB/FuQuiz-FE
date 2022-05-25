@@ -1,13 +1,11 @@
 import { http } from '../../../../core/api';
-import { Slider } from '../../../../core/models/slider';
+import { GetSliderOptionsDTO, ListItem } from './interface';
 
-interface ListItem {
-    count: number;
-    data: Slider[];
-}
-
-export const getFilterSlider = async (filterUrl: string) => {
-    const url = filterUrl ? `?${filterUrl}` : '';
-    const res = await http.get<ListItem>('/sliders' + url);
+export const getFilterSlider = async ({ createdAt: createdAt, currentPage, isShow, orderBy, pageSize, title, userId }: GetSliderOptionsDTO) => {
+    const res = await http.get<ListItem>(
+        `/sliders?currentPage=${
+            currentPage - 1
+        }&pageSize=${pageSize}&title=${title}&userId=${userId}&isShow=${isShow}&orderBy=${orderBy}&createdAt=${createdAt}`
+    );
     return res.data;
 };
