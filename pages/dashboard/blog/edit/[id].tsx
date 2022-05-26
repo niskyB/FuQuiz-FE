@@ -3,7 +3,7 @@ import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../src/core/models/role';
 import EditBlog from '../../../../src/packages/blog/container/editBlog';
-import DashBoardLayout from '../../../../src/packages/dashboard/components/dashboardLayout';
+import { DashBoardLayout } from '../../../../src/packages/dashboard';
 
 interface EditBlogPageProps {
     id: string;

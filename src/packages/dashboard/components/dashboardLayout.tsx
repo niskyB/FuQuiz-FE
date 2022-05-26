@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { GlobalLoading } from '../../../core/components/loading';
-import SideBar from './sidebar';
+import { SideBar } from './sidebar';
 
 interface DashBoardLayoutProps {}
 
-const DashBoardLayout: React.FunctionComponent<DashBoardLayoutProps> = ({ children }) => {
+export const DashBoardLayout: React.FunctionComponent<DashBoardLayoutProps> = ({ children }) => {
     return (
         <>
             <div className="flex h-full min-h-screen bg-gray-200">
@@ -17,4 +17,3 @@ const DashBoardLayout: React.FunctionComponent<DashBoardLayoutProps> = ({ childr
         </>
     );
 };
-export default DashBoardLayout;
