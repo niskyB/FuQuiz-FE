@@ -8,7 +8,7 @@ interface PaginationBarProps {
     routeUrl: string;
 }
 
-const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pageSize, currentPage, numberOfItem, routeUrl }) => {
+export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pageSize, currentPage, numberOfItem, routeUrl }) => {
     //variable for pagination
     let isTruncate = false; //this variable for checking is render truncated box or not
     const numLinksTwoSide = 1;
@@ -116,5 +116,3 @@ const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pageSize, 
         </div>
     );
 };
-
-export default PaginationBar;

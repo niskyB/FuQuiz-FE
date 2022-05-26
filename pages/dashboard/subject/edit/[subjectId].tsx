@@ -1,8 +1,8 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
-import DashBoardLayout from '../../../../src/packages/dashboard/components/dashboardLayout';
 import { UserRole } from '../../../../src/core/models/role';
+import { DashBoardLayout } from '../../../../src/packages/dashboard';
 import EditSubject from '../../../../src/packages/subject/container/editSubject';
 
 interface EditSubjectPageProps {

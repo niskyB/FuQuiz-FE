@@ -25,7 +25,7 @@ const secondaryNavigation = [{ name: 'Back to store', icon: HomeIcon, link: rout
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ');
 }
-const SideBar: React.FunctionComponent<SideBarProps> = () => {
+export const SideBar: React.FunctionComponent<SideBarProps> = () => {
     const userState = useStoreUser();
     const router = useRouter();
     return (
@@ -109,5 +109,3 @@ const SideBar: React.FunctionComponent<SideBarProps> = () => {
         </div>
     );
 };
-
-export default SideBar;
