@@ -7,7 +7,7 @@ import { Question } from '../../../../core/models/question';
 import { PracticeQuiz } from '../../../../core/models/quiz';
 import { Subject } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
-import PaginationBar from '../../../dashboard/components/paginationBar';
+import { PaginationBar } from '../../../dashboard';
 import { SelectSubject } from './interface';
 
 interface PracticeListProps {}
@@ -105,7 +105,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                     New Practice
                                 </p>
                             </Link>
-                            <Link href={routes.addSubjectUrl} passHref>
+                            <Link href={routes.adminAddSubjectUrl} passHref>
                                 <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                                     Simulation Exam
                                 </p>
