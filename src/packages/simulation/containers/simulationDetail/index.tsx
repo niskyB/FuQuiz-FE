@@ -175,7 +175,7 @@ const SimulationDetail: React.FunctionComponent<SimulationDetailProps> = () => {
                 }`}
                 onClick={() => setPop(false)}
             >
-                <div className="w-40 h-40 bg-red-400">Somthing</div>
+                <div className="h-40 bg-red-400 w-42">Somthing</div>
             </div>
         </>
     );
