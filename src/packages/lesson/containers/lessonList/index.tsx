@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Lesson, LessonType } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
-import PaginationBar from '../../../dashboard/components/paginationBar';
+import { PaginationBar } from '../../../dashboard';
 
 interface LessonListProps {}
 

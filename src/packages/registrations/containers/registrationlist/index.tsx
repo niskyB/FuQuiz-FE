@@ -8,7 +8,7 @@ import { Registration } from '../../../../core/models/registration';
 import { UserRole } from '../../../../core/models/role';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
-import PaginationBar from '../../../dashboard/components/paginationBar';
+import { PaginationBar } from '../../../dashboard';
 
 interface RegistrationListProps {
     currentPage?: number;

@@ -8,7 +8,7 @@ import { UserRole } from '../../../../core/models/role';
 import { Subject, SubjectCategory } from '../../../../core/models/subject';
 import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
-import PaginationBar from '../../../dashboard/components/paginationBar';
+import { PaginationBar } from '../../../dashboard';
 
 interface SubjectListProps {
     currentPage?: number;

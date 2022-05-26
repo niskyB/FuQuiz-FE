@@ -4,8 +4,7 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Answer, Question } from '../../../../core/models/question';
-import { routes } from '../../../../core/routes';
-import PaginationBar from '../../../dashboard/components/paginationBar';
+import { PaginationBar } from '../../../dashboard';
 
 interface QuestionListProps {}
 

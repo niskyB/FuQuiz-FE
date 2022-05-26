@@ -6,9 +6,9 @@ import { useStoreUser } from '../../../../core/store';
 import { UserRole } from '../../../../core/models/role';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useForm } from 'react-hook-form';
-import PaginationBar from '../../../dashboard/components/paginationBar';
 import { GetSliderOptionsDTO } from './interface';
 import { useGetSliderList } from './hook';
+import { PaginationBar } from '../../../dashboard';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {

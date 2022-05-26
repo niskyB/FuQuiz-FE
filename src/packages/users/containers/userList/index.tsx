@@ -6,7 +6,7 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { UserRole } from '../../../../core/models/role';
 import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
-import PaginationBar from '../../../dashboard/components/paginationBar';
+import { PaginationBar } from '../../../dashboard';
 
 interface UserListProps {
     currentPage?: number;

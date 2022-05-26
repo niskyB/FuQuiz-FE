@@ -7,7 +7,7 @@ import { UserRole } from '../../../../core/models/role';
 import { Setting } from '../../../../core/models/setting';
 import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
-import PaginationBar from '../../../dashboard/components/paginationBar';
+import { PaginationBar } from '../../../dashboard';
 
 interface SettingListProps {
     currentPage?: number;
