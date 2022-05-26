@@ -67,4 +67,8 @@ export const routes = {
     // quiz Simulation exam
     simulationListUrl: '/practices/simulation',
     simulationReviewListUrl: '/practices/simulation',
+
+    //quiz
+    quizUrl: '/quiz',
+    reviewQuizResultUrl: '/quiz/review',
 };
