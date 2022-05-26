@@ -13,7 +13,12 @@ export const DateField: React.FC<DateFieldProps> = ({ name, label, ...rest }) =>
     return (
         <div>
             <label htmlFor={name}>{label}</label>
-            <input {...register(name)} {...rest} type="date" />
+            <input
+                {...register(name)}
+                {...rest}
+                type="date"
+                className="py-2 border-gray-300 rounded-md outline-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
             {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
         </div>
     );
