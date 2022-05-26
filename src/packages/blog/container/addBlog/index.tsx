@@ -44,7 +44,6 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
     const _handleOnSubmit = async (data: AddBlogDTO) => {
         if (thumbnailFile) data.thumbnail = thumbnailFile;
         if (details) data.details = details;
-        console.log(data);
         //call api here
     };
 
