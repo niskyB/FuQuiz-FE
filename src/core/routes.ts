@@ -63,4 +63,8 @@ export const routes = {
     practiceListUrl: '/practices',
     addPracticeUrl: '/practices/add',
     practiceDetailsUrl: '/practices/review',
+
+    // quiz Simulation exam
+    simulationListUrl: '/practices/simulation',
+    simulationReviewListUrl: '/practices/simulation',
 };

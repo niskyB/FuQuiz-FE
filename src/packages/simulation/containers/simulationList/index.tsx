@@ -2,22 +2,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { Question } from '../../../../core/models/question';
 import { PracticeQuiz } from '../../../../core/models/quiz';
-import { Subject } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
-import { SelectSubject } from './interface';
+import { SelectSubject } from '../../../practices/containers/practiceList/interface';
 
-interface PracticeListProps {}
+interface SimulationListProps {}
 
-const PracticeList: React.FC<PracticeListProps> = () => {
+const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
     const [subjects, setSubjects] = React.useState<SelectSubject[]>([
         { id: '1', title: 'Javascript basic' },
         { id: '2', title: 'Javascript' },
         { id: '3', title: 'Master of coins' },
     ]);
+
     const [quizzes, setQuizzes] = React.useState<PracticeQuiz[]>([
         {
             id: '1',
@@ -27,7 +27,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             description: 'Something is matter',
             duration: 120,
             examLevel: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
+            quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
             subject: { id: '1', title: 'Javascript basic' },
@@ -40,7 +40,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             description: 'Something is matter',
             duration: 120,
             examLevel: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
+            quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
             subject: { id: '1', title: 'Javascript basic' },
@@ -53,7 +53,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             description: 'Something is matter',
             duration: 120,
             examLevel: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
+            quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
             subject: { id: '1', title: 'Javascript basic' },
@@ -66,7 +66,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             description: 'Something is matter',
             duration: 120,
             examLevel: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
+            quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
             subject: { id: '1', title: 'Javascript basic' },
@@ -83,9 +83,9 @@ const PracticeList: React.FC<PracticeListProps> = () => {
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Practice List</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Simulation exam List</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the quiz that you attended including their info, date taken, number of question and correct answer.
+                        A list of all the quiz that you attended including their subject info, simulation level, duration and pass rate.
                     </p>
                 </div>
             </div>
@@ -99,18 +99,6 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                 name="Subject"
                             />
                         </form>
-                        <div className="space-x-2">
-                            <Link href={routes.addPracticeUrl} passHref>
-                                <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    New Practice
-                                </p>
-                            </Link>
-                            <Link href={routes.simulationListUrl} passHref>
-                                <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    Simulation Exam
-                                </p>
-                            </Link>
-                        </div>
                     </div>
                 </FormWrapper>
             </div>
@@ -122,19 +110,22 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Practice name
+                                            Subject info
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Date taken
+                                            Simulation exam
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Type & Level
+                                            Level
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Question Info
+                                            Questions
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Correct Answer
+                                            Duration
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Pass rate
                                         </th>
                                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span className="sr-only">View Details</span>
@@ -146,28 +137,27 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                         quizzes.map((quiz) => (
                                             <tr key={quiz.id}>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    <div className="font-semibold text-gray-900">#{quiz.id}</div>
                                                     <div className="text-gray-900">{quiz.subject.title}</div>
-                                                    <div className="text-gray-900">{quiz.name}</div>
                                                 </td>
                                                 <td className="px-3 py-4 whitespace-nowrap">
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.createdAt}</div>
+                                                        <div className="text-gray-900">{quiz.examLevel.name}</div>
                                                     </div>
                                                 </td>
                                                 <td className="px-3 py-4 whitespace-nowrap">
                                                     <div className="max-w-sm">
                                                         <div className="text-gray-900">{quiz.quizLevel.name}</div>
-                                                        <div className="text-gray-900">{quiz.examLevel.name}</div>
                                                     </div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{quiz.correctAnswer} Correct</div>
                                                     <div className="text-gray-900">{quiz.questions.length} Questions</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">
-                                                        {Math.round((quiz.correctAnswer / quiz.questions.length) * 100)}%
-                                                    </div>
+                                                    <div className="text-gray-900">{quiz.duration} mins</div>
+                                                </td>
+                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                    <div className="text-gray-900">{quiz.passRate} %</div>
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
                                                     <Link href={`${routes.practiceDetailsUrl}/${quiz.id}`} passHref>
@@ -187,4 +177,4 @@ const PracticeList: React.FC<PracticeListProps> = () => {
     );
 };
 
-export default PracticeList;
+export default SimulationList;
