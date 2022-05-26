@@ -160,7 +160,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
                                                     <div className="text-gray-900">{quiz.passRate} %</div>
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.practiceDetailsUrl}/${quiz.id}`} passHref>
+                                                    <Link href={`${routes.simulationReviewListUrl}/${quiz.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
                                                     </Link>
                                                 </td>

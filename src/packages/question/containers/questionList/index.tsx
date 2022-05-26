@@ -25,7 +25,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             answers: cloneAnswers,
             content: 'Question 1',
             isActive: true,
-            lessonType: { id: 'l1', name: 'Quiz' },
+            // lessonAttribute: { id: 'l1', name: 'Quiz' },
             dimension: { id: '', description: '', name: 'Domain 1', typeId: { id: '1', name: '' } },
         },
         {
@@ -33,7 +33,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             answers: cloneAnswers,
             content: 'Question 2',
             isActive: true,
-            lessonType: { id: 'l2', name: 'Quiz' },
+            // lessonAttribute: { id: 'l2', name: 'Quiz' },
             dimension: { id: '', description: '', name: 'Domain 2', typeId: { id: '1', name: '' } },
         },
         {
@@ -41,7 +41,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             answers: cloneAnswers,
             content: 'Question 3',
             isActive: true,
-            lessonType: { id: 'l3', name: 'Quiz' },
+            // lessonAttribute: { type: { id: 'l3', name: 'Quiz' } },
             dimension: { id: '', description: '', name: 'Domain 3', typeId: { id: '1', name: '' } },
         },
         {
@@ -49,7 +49,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             answers: cloneAnswers,
             content: 'Question 4',
             isActive: true,
-            lessonType: { id: 'l4', name: 'Quiz' },
+            // lessonAttribute: { id: 'l4', name: 'Quiz' },
             dimension: { id: '', description: '', name: 'Domain 4', typeId: { id: '1', name: '' } },
         },
     ]);
