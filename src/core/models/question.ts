@@ -3,7 +3,7 @@ import { LessonType } from './lesson';
 
 export interface Question {
     id: string;
-    lessonType: LessonType;
+    // lessonType: LessonType;
     isActive: boolean;
     content: string;
     dimension: Dimension;
