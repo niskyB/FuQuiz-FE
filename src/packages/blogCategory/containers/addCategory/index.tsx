@@ -5,9 +5,9 @@ import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
 
-interface AddSettingProps {}
+interface AddBlogCategoryProps {}
 
-export const AddSetting: React.FunctionComponent<AddSettingProps> = () => {
+const AddBlogCategory: React.FunctionComponent<AddBlogCategoryProps> = () => {
     const methods = useForm({});
 
     const _handleOnSubmit = async () => {};
@@ -64,3 +64,5 @@ export const AddSetting: React.FunctionComponent<AddSettingProps> = () => {
         </div>
     );
 };
+
+export default AddBlogCategory;
