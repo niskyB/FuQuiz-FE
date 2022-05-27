@@ -45,7 +45,7 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = () => {
 
     return (
         <FormWrapper methods={methods}>
-            <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="p-10 space-y-8 divide-y divide-gray-200">
+            <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-8 divide-y divide-gray-200 ">
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
