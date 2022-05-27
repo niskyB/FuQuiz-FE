@@ -1,18 +1,18 @@
-import { XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
+import Router from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
+import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { BlogCategory } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
-import { checkFileType } from '../../../../core/util/file';
+import { addBlog } from './action';
 import { AddBlogDTO } from './interface';
 
 interface AddBlogProps {}
 const defaultValues: AddBlogDTO = {
-    blogCategoryId: '',
+    categoryId: '',
     briefInfo: '',
     details: '',
     thumbnail: null,
@@ -31,35 +31,16 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
     const [details, setDetails] = React.useState<string>('');
 
-    const _onChangeThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            const file = e.target.files[0];
-
-            checkFileType(file, () => {
-                setThumbnailFile(file);
-            });
-        }
-    };
-
     const _handleOnSubmit = async (data: AddBlogDTO) => {
         if (thumbnailFile) data.thumbnail = thumbnailFile;
         if (details) data.details = details;
+
         //call api here
+        addBlog(data).then(() => {
+            toast.success('Add new blog success!');
+        });
     };
 
-    React.useEffect(() => {
-        if (thumbnailFile) setPreviewThumbnailUrl(URL.createObjectURL(thumbnailFile));
-        return () => {
-            URL.revokeObjectURL(previewThumbnailUrl);
-        };
-    }, [thumbnailFile]);
-
-    const _onRemovePreviewAvatar = () => {
-        if (confirm('Do you really want to remove this thumbnail?')) {
-            setPreviewThumbnailUrl('');
-            setThumbnailFile(null);
-        }
-    };
     return (
         <FormWrapper methods={methods}>
             <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-8 divide-y divide-gray-200">
@@ -83,11 +64,11 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                             </div>
                             <div className="space-y-6 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="blogCategory" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Category
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectBlogCategory label="" name="blogCategoryId" values={categories} />
+                                        <SelectBlogCategory label="" name="categoryId" values={categories} />
                                     </div>
                                 </div>
                             </div>
@@ -120,50 +101,14 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                     Thumbnail
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    {previewThumbnailUrl ? (
-                                        <div onClick={_onRemovePreviewAvatar} className="relative cursor-pointer w-80">
-                                            <img src={previewThumbnailUrl} className="w-full" />
-                                            <div className="absolute p-1 text-white bg-red-500 rounded-full -top-3 -right-3 w-7 h-7">
-                                                <XIcon />
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="flex justify-center max-w-lg px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                            <div className="space-y-1 text-center">
-                                                <svg
-                                                    className="w-12 h-12 mx-auto text-gray-400"
-                                                    stroke="currentColor"
-                                                    fill="none"
-                                                    viewBox="0 0 48 48"
-                                                    aria-hidden="true"
-                                                >
-                                                    <path
-                                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                                        strokeWidth={2}
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </svg>
-                                                <div className="flex text-sm text-gray-600">
-                                                    <label
-                                                        htmlFor="file-upload"
-                                                        className="relative font-medium text-indigo-600 bg-white rounded-md cursor-pointer hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                                                    >
-                                                        <span>Upload a file</span>
-                                                        <input
-                                                            id="file-upload"
-                                                            type="file"
-                                                            className="sr-only"
-                                                            {...methods.register('thumbnail')}
-                                                            onChange={(e) => _onChangeThumbnail(e)}
-                                                        />
-                                                    </label>
-                                                    <p className="pl-1">or drag and drop</p>
-                                                </div>
-                                                <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                                            </div>
-                                        </div>
-                                    )}
+                                    <FileField
+                                        label=""
+                                        name="thumbnail"
+                                        setFile={setThumbnailFile}
+                                        file={thumbnailFile}
+                                        previewUrl={previewThumbnailUrl}
+                                        setPreviewUrl={setPreviewThumbnailUrl}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -180,14 +125,13 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                 Cancel
                             </button>
                         </Link>
-                        <Link href={routes.adminBlogListUrl} passHref>
-                            <button
-                                type="submit"
-                                className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Save
-                            </button>
-                        </Link>
+
+                        <button
+                            type="submit"
+                            className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Save
+                        </button>
                     </div>
                 </div>
             </form>

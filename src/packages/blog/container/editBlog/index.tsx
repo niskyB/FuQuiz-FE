@@ -13,13 +13,6 @@ import { EditBlogDTO } from './interface';
 //---------------------- Not official ----------------------------
 
 interface EditBlogProps {}
-// const defaultValues: EditBlogDTO = {
-//     blogCategoryId: '',
-//     briefInfo: '',
-//     details: '',
-//     thumbnail: null,
-//     title: '',
-// };
 
 const defaultValues: EditBlogDTO = {
     blogCategoryId: '1',
