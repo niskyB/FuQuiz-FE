@@ -11,8 +11,10 @@ export const DateField: React.FC<DateFieldProps> = ({ name, label, ...rest }) =>
     const { register } = useFormContext();
 
     return (
-        <div>
-            <label htmlFor={name}>{label}</label>
+        <div className="flex flex-col w-full">
+            <label className="block text-sm font-medium text-gray-700 capitalize" htmlFor={name}>
+                {label}
+            </label>
             <input
                 {...register(name)}
                 {...rest}

@@ -1,9 +1,7 @@
+import { GetListWithCount } from '../../../../core/common/interface';
 import { Slider } from '../../../../core/models/slider';
 
-export interface ListItem {
-    count: number;
-    data: Slider[];
-}
+export interface ListItem extends GetListWithCount<Slider> {}
 
 export interface GetSliderOptionsDTO {
     currentPage: number;
