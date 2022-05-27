@@ -14,7 +14,7 @@ export const TextareaField: React.FC<TextareaFieldProps> = ({ name, label, ...re
     return (
         <div className="flex flex-col w-full space-y-1">
             <label htmlFor={name} className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Description
+                {label}
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
                 <textarea
