@@ -2,6 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 
@@ -39,22 +40,7 @@ const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
                             />
                             <TextField label="Value" name="value" type="value" />
                             <TextField label="Order" name="order" type="order" />
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Description
-                                </label>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <textarea
-                                        {...methods.register('content')}
-                                        rows={7}
-                                        name="description"
-                                        id="description"
-                                        autoComplete="given-name"
-                                        defaultValue="Description 1"
-                                        className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                </div>
-                            </div>
+                            <TextareaField label="Description" name="description" aria-rowspan={8} />
                             <SelectField
                                 label="Activation"
                                 name="Activation"
