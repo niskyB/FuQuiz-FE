@@ -32,6 +32,9 @@ export const routes = {
     blogUrl: '/blog',
     blogListUrl: '/blogs',
 
+    //blog category
+    adminAddBlogCategory: '/dashboard/blog/add-category',
+
     // Subject
     adminSubjectListUrl: '/dashboard/subject',
     adminAddSubjectUrl: '/dashboard/subject/add',
