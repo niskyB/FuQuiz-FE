@@ -5,8 +5,11 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
-import { BlogCategory } from '../../../../core/models/blog';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
+import { useGetBlogCategory } from '../../../blogCategory';
 import { addBlog } from './action';
 import { AddBlogDTO } from './interface';
 
@@ -15,14 +18,10 @@ const defaultValues: AddBlogDTO = {
     categoryId: '',
     briefInfo: '',
     details: '',
-    thumbnail: null,
+    image: null,
     title: '',
 };
-const categories: BlogCategory[] = [
-    { id: '1', name: 'category 1' },
-    { id: '2', name: 'category 2' },
-    { id: '3', name: 'category 3' },
-];
+
 export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
     const methods = useForm<AddBlogDTO>({
         defaultValues,
@@ -30,13 +29,20 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
     const [details, setDetails] = React.useState<string>('');
+    const { blogCategoryList } = useGetBlogCategory();
 
     const _handleOnSubmit = async (data: AddBlogDTO) => {
-        if (thumbnailFile) data.thumbnail = thumbnailFile;
+        if (thumbnailFile) data.image = thumbnailFile;
         if (details) data.details = details;
 
         //call api here
         addBlog(data).then(() => {
+            methods.reset();
+            setPreviewThumbnailUrl('');
+            setThumbnailFile(null);
+            setDetails('');
+
+            store.dispatch(apiActions.resetState());
             toast.success('Add new blog success!');
         });
     };
@@ -68,7 +74,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                         Category
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectBlogCategory label="" name="categoryId" values={categories} />
+                                        <SelectBlogCategory label="" name="categoryId" values={blogCategoryList} />
                                     </div>
                                 </div>
                             </div>
@@ -77,14 +83,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                     Brief Info
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <textarea
-                                        {...methods.register('briefInfo')}
-                                        rows={7}
-                                        name="briefInfo"
-                                        id="briefInfo"
-                                        autoComplete="given-name"
-                                        className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
-                                    />
+                                    <TextareaField label="" name="briefInfo" />
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -103,7 +102,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField
                                         label=""
-                                        name="thumbnail"
+                                        name="image"
                                         setFile={setThumbnailFile}
                                         file={thumbnailFile}
                                         previewUrl={previewThumbnailUrl}

@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
+import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
-import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 
 interface EditSettingProps {}
 
-const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
+export const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
     const methods = useForm({});
     React.useEffect(() => {
         methods.setValue('Type', '2');
@@ -71,5 +70,3 @@ const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
         </div>
     );
 };
-
-export default EditSetting;

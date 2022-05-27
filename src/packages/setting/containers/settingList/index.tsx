@@ -3,9 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { UserRole } from '../../../../core/models/role';
 import { Setting } from '../../../../core/models/setting';
-import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 
@@ -14,7 +12,7 @@ interface SettingListProps {
     pageSize?: number;
 }
 
-const SettingList: React.FunctionComponent<SettingListProps> = ({ currentPage, pageSize }) => {
+export const SettingList: React.FunctionComponent<SettingListProps> = ({ currentPage, pageSize }) => {
     const methods = useForm();
 
     const router = useRouter();
@@ -189,5 +187,3 @@ const SettingList: React.FunctionComponent<SettingListProps> = ({ currentPage, p
         </div>
     );
 };
-
-export default SettingList;

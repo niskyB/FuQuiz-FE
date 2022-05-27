@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
+import AddBlogCategory from '../../../src/packages/blogCategory/containers/addCategory';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
-import { AddSetting } from '../../../src/packages/setting';
 
-interface AddSettingPageProps {}
+interface AddCategoryPageProps {}
 
-const AddSettingPage: React.FunctionComponent<AddSettingPageProps> = () => {
+const AddCategoryPage: React.FunctionComponent<AddCategoryPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <AddSetting />
+                <AddBlogCategory />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-export default AddSettingPage;
+export default AddCategoryPage;
