@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import { GetSliderOptionsDTO } from './interface';
 import { useGetSliderList } from './hook';
 import { PaginationBar } from '../../../dashboard';
+import { pushWithParams } from '../../../../core/util/router';
+import { route } from 'next/dist/server/router';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
@@ -29,17 +31,17 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     );
     const { count, sliders } = useGetSliderList(options);
 
-    const pushWithParams = (options: GetSliderOptionsDTO) => {
-        router.push({
-            pathname: routes.adminSliderListUrl,
-            query: { ...options },
-        });
-    };
+    // const pushWithParams = (options: GetSliderOptionsDTO) => {
+    //     router.push({
+    //         pathname: routes.adminSliderListUrl,
+    //         query: { ...options },
+    //     });
+    // };
 
     // Submit filter
 
     const _handleOnSubmit = async (data: SliderProps) => {
-        pushWithParams({
+        pushWithParams(router, routes.adminSliderListUrl, {
             ...options,
             currentPage: 1,
             pageSize: 12,
@@ -59,7 +61,11 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
                     <button
-                        onClick={() => (userId ? pushWithParams({ ...options, userId: '' }) : pushWithParams({ ...options, userId: userState.id }))}
+                        onClick={() =>
+                            userId
+                                ? pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: '' })
+                                : pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: userState.id })
+                        }
                         className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                     >
                         {userId ? 'All sliders' : 'My sliders'}
