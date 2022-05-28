@@ -1,11 +1,9 @@
-import QuizQuestion from '../../components/question';
 import * as React from 'react';
-import QuizAnswer from '../quizAnswer';
-import { QuizQuestionDTO } from './interface';
-import { findQuestionAndDoAction } from '../../../../core/util/question';
-import { ClockIcon } from '@heroicons/react/outline';
+import { QuizQuestionDTO } from '../../../quiz/containers/doQuiz/interface';
+import QuizQuestionReadonly from '../../components/QuizQuestionReadonly';
+import QuizAnswerReadonly from '../../components/QuizAnswerReadonly';
 
-interface DoQuizProps {
+interface ReviewPracticeProps {
     id: string;
 }
 const QUESTIONS_LIST: QuizQuestionDTO[] = [
@@ -16,7 +14,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
             { id: '2', answerContent: 'Impact analysis assesses the effect of a new person joining the regression test team.' },
             { id: '3', answerContent: 'Impact analysis assesses whether or not a defect found in regression testing has been fixed correctly.' },
             {
-                id: '4',
+                id: '3',
                 answerContent: 'Impact analysis assesses the effect of a change to the system to determine how much regression testing to do',
             },
         ],
@@ -25,7 +23,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
         // lessonType: { id: 'l1', name: 'Quiz' },
         dimension: { id: '', description: '', name: 'Domain 1', typeId: { id: '1', name: '' } },
         isMarked: false,
-        userAnswerId: null,
+        userAnswerId: '2',
     },
     {
         id: 'q2',
@@ -43,7 +41,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
         // lessonType: { id: 'l2', name: 'Quiz' },
         dimension: { id: '', description: '', name: 'Domain 2', typeId: { id: '1', name: '' } },
         isMarked: false,
-        userAnswerId: null,
+        userAnswerId: '4',
     },
     {
         id: 'q3',
@@ -62,7 +60,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
         // lessonType: { id: 'l3', name: 'Quiz' },
         dimension: { id: '', description: '', name: 'Domain 3', typeId: { id: '1', name: '' } },
         isMarked: false,
-        userAnswerId: null,
+        userAnswerId: '1',
     },
     {
         id: 'q4',
@@ -80,11 +78,11 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
         // lessonType: { id: 'l4', name: 'Quiz' },
         dimension: { id: '', description: '', name: 'Domain 4', typeId: { id: '1', name: '' } },
         isMarked: false,
-        userAnswerId: null,
+        userAnswerId: '1',
     },
 ];
 
-export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
+export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ id }) => {
     const [questionList, setQuestionList] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
 
@@ -108,51 +106,18 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         }
     };
 
-    const onSetQuestionAnswer = (updateQuestionId: string, updateAnswerId: string | null) => {
-        findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
-            const newQuestionList = [...questionList];
-            newQuestionList[i].userAnswerId = updateAnswerId;
-            setQuestionList(newQuestionList);
-        });
-    };
-
-    const onToggleMarkQuestion = (updateQuestionId: string) => {
-        findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
-            const newQuestionList = [...questionList];
-            newQuestionList[i].isMarked = !newQuestionList[i].isMarked;
-            setQuestionList(newQuestionList);
-        });
-    };
     return (
         <div className="flex space-x-10">
             <div className="flex flex-col flex-1 space-y-5">
                 {questionList.map((item, index) => (
-                    <QuizQuestion
-                        onToggleMarkQuestion={onToggleMarkQuestion}
-                        onSetQuestionAnswer={onSetQuestionAnswer}
-                        key={item.id}
-                        data={item}
-                        index={index}
-                        isShow={currentIndex === index}
-                    />
+                    <QuizQuestionReadonly key={item.id} data={item} index={index} isShow={currentIndex === index} rightAnswer={'1'} />
                 ))}
             </div>
             <div className="flex flex-col space-y-5">
-                <div className="flex justify-between p-5 bg-white rounded-md">
-                    <p className="font-semibold">
-                        Total done: {totalDone}/{questionList.length}
-                    </p>
-                    <div className="flex items-center space-x-1">
-                        <div className="w-6 h-6">
-                            <ClockIcon />
-                        </div>
-                        <time className="font-semibold tracking-wider">00:10:48</time>
-                    </div>
-                </div>
                 <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">
                     <h1 className="text-xl font-semibold">Quiz progress : </h1>
                     <div className="grid grid-cols-10 gap-3 w-fit h-fit">
-                        <QuizAnswer data={questionList} setCurrentIndex={setCurrentIndex} currentIndex={currentIndex} />
+                        <QuizAnswerReadonly data={questionList} setCurrentIndex={setCurrentIndex} currentIndex={currentIndex} rightAnswer={'1'} />
                     </div>
                 </div>
                 <div className="flex justify-end space-x-5">
