@@ -1,46 +1,53 @@
-import { XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
-import { BlogCategory } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
-import { checkFileType } from '../../../../core/util/file';
+import { useGetBlogCategory } from '../../../blogCategory';
+import { updateBlog } from './action';
+import { useGetBlog } from './hook';
 import { EditBlogDTO } from './interface';
 
 //---------------------- Not official ----------------------------
 
-interface EditBlogProps {}
+interface EditBlogProps {
+    id: string;
+}
 
-const defaultValues: EditBlogDTO = {
-    blogCategoryId: '1',
-    briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-    details: 'details 1',
-    thumbnail: null,
-    title: 'Giá Green Satoshi Token (GST)',
-};
-
-const categories: BlogCategory[] = [
-    { id: '1', name: 'category 1' },
-    { id: '2', name: 'category 2' },
-    { id: '3', name: 'category 3' },
-];
-const EditBlog: React.FunctionComponent<EditBlogProps> = () => {
-    const methods = useForm<EditBlogDTO>({
-        defaultValues,
-    });
-    const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png');
+const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
+    const { blog } = useGetBlog(id);
+    const { blogCategoryList } = useGetBlogCategory();
+    const methods = useForm<EditBlogDTO>({});
+    const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>(blog?.thumbnailUrl || '');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
-    const [details, setDetails] = React.useState<string>('details 1');
+    const [details, setDetails] = React.useState<string>('');
+
+    React.useEffect(() => {
+        if (blog) {
+            methods.setValue('briefInfo', blog.briefInfo);
+            methods.setValue('title', blog.title);
+            methods.setValue('category', blog.category.id);
+            methods.setValue('details', blog.details);
+
+            setDetails(blog.details);
+            setPreviewThumbnailUrl(blog.thumbnailUrl);
+        }
+        return () => {};
+    }, [blog]);
 
     const _handleOnSubmit = async (data: EditBlogDTO) => {
-        if (thumbnailFile) data.thumbnail = thumbnailFile;
+        if (thumbnailFile) data.image = thumbnailFile;
+        else data.image = new File([], '');
         if (details) data.details = details;
-        console.log(data);
 
         //call api here
+        updateBlog(id, data).then((res) => {
+            if (res) {
+                toast.success('Update success!');
+            }
+        });
     };
 
     return (
@@ -66,11 +73,11 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = () => {
                             </div>
                             <div className="space-y-6 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="blogCategory" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Category
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectBlogCategory label="" name="blogCategoryId" values={categories} />
+                                        <SelectBlogCategory label="" name="category" values={blogCategoryList} />
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +112,7 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = () => {
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField
                                         label=""
-                                        name="thumbnail"
+                                        name="image"
                                         setFile={setThumbnailFile}
                                         file={thumbnailFile}
                                         previewUrl={previewThumbnailUrl}
