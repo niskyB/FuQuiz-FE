@@ -13,10 +13,10 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
     React.useEffect(() => {
         switch (mode) {
             case 'edit':
-                setRedirectLink(routes.adminEditBlogUrl + '/asd-zxz-3512-zas');
+                setRedirectLink(`${routes.adminEditBlogUrl}/${data.id}`);
                 break;
             case 'view':
-                setRedirectLink(routes.blogUrl + '/asd-zxz-3512-zas');
+                setRedirectLink(`${routes.blogUrl}/${data.id}`);
                 break;
         }
 

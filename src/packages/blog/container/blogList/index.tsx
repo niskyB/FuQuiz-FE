@@ -1,10 +1,7 @@
 import Link from 'next/link';
 import { routes } from '../../../../core/routes';
-import { defaultCurrentUser } from '../../../../core/store/user';
 import * as React from 'react';
-import {} from '../../index';
 import { BlogBox } from '../blogBox';
-import { Blog } from '../../../../core/models/blog';
 import { useForm } from 'react-hook-form';
 import { FilterBlogListDTO, FilterBlogListFormDTO } from './interface';
 import { DateField, FormWrapper, SelectBlogCategory, SelectField, TextField } from '../../../../core/components/form';
@@ -14,24 +11,7 @@ import { pushWithParams } from '../../../../core/util/router';
 import { useRouter } from 'next/router';
 import { useGetBlogList } from './hook';
 interface BlogListProps extends FilterBlogListDTO {}
-// const blogData: Blog[] = [
-//     {
-//         id: '1',
-//         category: { id: '1', name: 'Learning' },
-//         briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-//         createAt: '',
-//         details: 'details 1',
-//         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-//         title: 'Giá Green Satoshi Token (GST)',
-//         updateAt: '',
-//         marketing: { ...defaultCurrentUser },
-//     },
-// ];
-const defaultValues: FilterBlogListFormDTO = {
-    category: '',
-    createdAt: '',
-    title: '',
-};
+
 export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
     const options = React.useMemo(
         () => ({ category, createdAt, currentPage, isShow, pageSize, title, userId }),
@@ -43,7 +23,12 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
     const { blogCategoryList } = useGetBlogCategory();
 
     const methods = useForm<FilterBlogListFormDTO>({
-        defaultValues,
+        defaultValues: {
+            title,
+            category,
+            createdAt,
+            isShow,
+        },
     });
 
     const _handleOnSubmit = async (data: FilterBlogListFormDTO) => {
@@ -54,6 +39,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
         if (userId) pushWithParams(router, routes.adminBlogListUrl, { ...options, userId: '' });
         else pushWithParams(router, routes.adminBlogListUrl, { ...options, userId: userState.id });
     };
+
     return (
         <FormWrapper methods={methods}>
             <div className="px-4 space-y-5 sm:px-6 lg:px-8">
