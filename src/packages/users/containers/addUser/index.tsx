@@ -1,18 +1,41 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { off } from 'process';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { UserRole } from '../../../../core/models/role';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
+import { adminAddNewUser } from './action';
+import { AddUserDTO } from './interface';
 
 interface AddUserProps {}
-
+const defaultValues: AddUserDTO = {
+    email: '',
+    fullName: '',
+    gender: Gender.MALE,
+    mobile: '',
+    password: '',
+    role: '',
+};
 const AddUser: React.FunctionComponent<AddUserProps> = () => {
-    const methods = useForm({});
+    const methods = useForm<AddUserDTO>({
+        defaultValues,
+    });
 
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: AddUserDTO) => {
+        adminAddNewUser(data).then((res) => {
+            if (res) {
+                methods.reset();
+                store.dispatch(apiActions.resetState());
+
+                toast.success('Add success!');
+            }
+        });
+    };
 
     return (
         <div className="flex flex-col justify-center flex-1 py-12 sm:px-6 lg:px-8 intro-y">
