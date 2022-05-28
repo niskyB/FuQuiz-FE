@@ -1,9 +1,7 @@
+import { AttributeType } from '../common/interface';
 import { User } from './user';
 
-export interface BlogCategory {
-    id: string;
-    name: string;
-}
+export interface BlogCategory extends AttributeType {}
 
 export interface Blog {
     id: string;

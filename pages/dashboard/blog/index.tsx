@@ -1,19 +1,40 @@
+import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import { BlogList } from '../../../src/packages/blog';
+import { FilterBlogListDTO } from '../../../src/packages/blog/container/blogList/interface';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
 
-interface BlogPageProps {}
+interface BlogPageProps extends FilterBlogListDTO {}
 
-const BlogPage: React.FunctionComponent<BlogPageProps> = () => {
+const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <BlogList />
+                <BlogList
+                    category={category}
+                    createdAt={createdAt}
+                    currentPage={currentPage}
+                    isShow={isShow}
+                    pageSize={pageSize}
+                    title={title}
+                    userId={userId}
+                />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
-
+BlogPage.getInitialProps = async (ctx: NextPageContext): Promise<BlogPageProps> => {
+    let props = {
+        currentPage: ctx.query?.currentPage || 1,
+        pageSize: ctx.query?.pageSize || 12,
+        title: ctx.query?.title || '',
+        userId: ctx.query?.userId || '',
+        isShow: ctx.query?.isShow || true,
+        createdAt: ctx.query?.createdAt || '01-01-2022',
+        category: ctx.query?.category || '',
+    };
+    return props as BlogPageProps;
+};
 export default BlogPage;
