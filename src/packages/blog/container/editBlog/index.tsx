@@ -1,8 +1,6 @@
-import { XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { BlogCategory } from '../../../../core/models/blog';
@@ -15,7 +13,7 @@ import { EditBlogDTO } from './interface';
 interface EditBlogProps {}
 
 const defaultValues: EditBlogDTO = {
-    blogCategoryId: '1',
+    category: '1',
     briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
     details: 'details 1',
     thumbnail: null,

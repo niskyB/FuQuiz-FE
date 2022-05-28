@@ -1,5 +1,3 @@
-import { Blog } from '../../../../core/models/blog';
-
 interface BlogPostProps {
     id: string;
 }

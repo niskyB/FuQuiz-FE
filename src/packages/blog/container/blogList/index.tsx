@@ -14,52 +14,19 @@ import { pushWithParams } from '../../../../core/util/router';
 import { useRouter } from 'next/router';
 import { useGetBlogList } from './hook';
 interface BlogListProps extends FilterBlogListDTO {}
-const blogData: Blog[] = [
-    {
-        id: '1',
-        blogCategory: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        user: { ...defaultCurrentUser },
-    },
-    {
-        id: '1',
-        blogCategory: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        user: { ...defaultCurrentUser },
-    },
-    {
-        id: '1',
-        blogCategory: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        user: { ...defaultCurrentUser },
-    },
-    {
-        id: '1',
-        blogCategory: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        user: { ...defaultCurrentUser },
-    },
-];
+// const blogData: Blog[] = [
+//     {
+//         id: '1',
+//         category: { id: '1', name: 'Learning' },
+//         briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
+//         createAt: '',
+//         details: 'details 1',
+//         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
+//         title: 'Giá Green Satoshi Token (GST)',
+//         updateAt: '',
+//         marketing: { ...defaultCurrentUser },
+//     },
+// ];
 const defaultValues: FilterBlogListFormDTO = {
     category: '',
     createdAt: '',
@@ -127,7 +94,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
                             />
                         </div>
                         <div className="">
-                            <SelectBlogCategory label="Category" name="category" values={blogCategoryList} />
+                            <SelectBlogCategory label="Category" name="category" values={[{ id: '', name: 'All' }, ...blogCategoryList]} />
                         </div>
                         <div className="">
                             <DateField label="Create at" name="createdAt" />
