@@ -8,6 +8,7 @@ import { routes } from '../../../../core/routes';
 import * as React from 'react';
 import { Subject } from '../../../../core/models/subject';
 import Link from 'next/link';
+import { useGetBlogList } from '../../../blog/container/blogList/hook';
 
 const navigation = [
     { name: 'Home', href: routes.homeUrl, icon: HomeIcon, current: true },
@@ -179,7 +180,10 @@ function classNames(...classes: any) {
 interface HomeProps {}
 
 export const Home: React.FunctionComponent<HomeProps> = () => {
+    const options = React.useMemo(() => ({ category: '', createdAt: '', currentPage: 0, isShow: true, pageSize: 10, title: '', userId: '' }), []);
+    const { blogList } = useGetBlogList(options);
     const [tabOpening, setTabOpening] = React.useState<'blog' | 'course'>('blog');
+
     const renderContent = () => {
         switch (tabOpening) {
             case 'blog':
@@ -286,9 +290,7 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                                 {tabOpening === 'blog' && (
                                     <>
                                         <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-2">
-                                            {blogList.map((item) => (
-                                                <BlogBox key={item.id} data={item} mode="view" />
-                                            ))}
+                                            {blogList && blogList.map((item) => <BlogBox key={item.id} data={item} mode="view" />)}
                                         </div>
                                     </>
                                 )}
