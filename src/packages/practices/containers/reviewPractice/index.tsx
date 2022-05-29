@@ -1,7 +1,11 @@
 import * as React from 'react';
+import { findQuestionAndDoAction } from '../../../../core/util/question';
+import { ClockIcon } from '@heroicons/react/outline';
 import { QuizQuestionDTO } from '../../../quiz/containers/doQuiz/interface';
+
 import QuizQuestionReadonly from '../../components/QuizQuestionReadonly';
 import QuizAnswerReadonly from '../../components/QuizAnswerReadonly';
+import HintAnswer from '../../components/hintAnswer';
 
 interface ReviewPracticeProps {
     id: string;
@@ -14,7 +18,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
             { id: '2', answerContent: 'Impact analysis assesses the effect of a new person joining the regression test team.' },
             { id: '3', answerContent: 'Impact analysis assesses whether or not a defect found in regression testing has been fixed correctly.' },
             {
-                id: '3',
+                id: '4',
                 answerContent: 'Impact analysis assesses the effect of a change to the system to determine how much regression testing to do',
             },
         ],
@@ -85,6 +89,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
 export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ id }) => {
     const [questionList, setQuestionList] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
+    const [hint, setHint] = React.useState<boolean>(false);
 
     const totalDone = React.useMemo(
         () =>
@@ -108,16 +113,38 @@ export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ i
 
     return (
         <div className="flex space-x-10">
-            <div className="flex flex-col flex-1 space-y-5">
+            <div className="flex flex-col flex-1">
                 {questionList.map((item, index) => (
-                    <QuizQuestionReadonly key={item.id} data={item} index={index} isShow={currentIndex === index} rightAnswer={'1'} />
+                    <div key={item.id}>
+                        <QuizQuestionReadonly
+                            data={item}
+                            index={index}
+                            isShow={currentIndex === index}
+                            rightAnswer={'1'}
+                            _onUpdateHintQuestion={() => setHint(!hint)}
+                        />
+                        {hint ? (
+                            <HintAnswer
+                                key={`hint-${index}`}
+                                isShow={currentIndex === index}
+                                data={{ content: 'Something explain', domain: 'Domain 1', source: 'Page 23' }}
+                            />
+                        ) : (
+                            <></>
+                        )}
+                    </div>
                 ))}
             </div>
             <div className="flex flex-col space-y-5">
                 <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">
                     <h1 className="text-xl font-semibold">Quiz progress : </h1>
                     <div className="grid grid-cols-10 gap-3 w-fit h-fit">
-                        <QuizAnswerReadonly data={questionList} setCurrentIndex={setCurrentIndex} currentIndex={currentIndex} rightAnswer={'1'} />
+                        <QuizAnswerReadonly
+                            data={questionList}
+                            setCurrentIndex={setCurrentIndex}
+                            currentIndex={currentIndex}
+                            rightAnswer={{ answerContent: '', id: '1' }}
+                        />
                     </div>
                 </div>
                 <div className="flex justify-end space-x-5">
