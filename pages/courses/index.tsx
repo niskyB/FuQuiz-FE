@@ -9,6 +9,7 @@ import { AllRole } from '../../src/core/models/user';
 import { routes } from '../../src/core/routes';
 import { defaultCurrentUser } from '../../src/core/store/user';
 import { BlogBox } from '../../src/packages/blog';
+import { PaginationBar } from '../../src/packages/dashboard';
 import { StoreLayout } from '../../src/packages/store';
 
 interface CourseListPageProps {}
@@ -128,6 +129,7 @@ const CourseListPage: React.FC<CourseListPageProps> = () => {
                         </Link>
                     ))}
                 </div>
+                <PaginationBar currentPage={1} numberOfItem={3} pageSize={10} routeUrl={''} />
             </StoreLayout>
         </RouterProtectionWrapper>
     );

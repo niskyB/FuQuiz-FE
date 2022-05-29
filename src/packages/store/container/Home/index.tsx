@@ -41,7 +41,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
     {
         id: '1',
@@ -52,7 +53,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
     {
         id: '1',
@@ -63,7 +65,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
     {
         id: '1',
@@ -74,7 +77,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
 ];
 
