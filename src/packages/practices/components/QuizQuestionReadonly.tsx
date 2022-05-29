@@ -1,27 +1,34 @@
 import * as React from 'react';
 import { QuizQuestionDTO } from '../../quiz/containers/doQuiz/interface';
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, LightBulbIcon, XCircleIcon } from '@heroicons/react/outline';
 
 interface QuizQuestionReadonlyProps {
     data: QuizQuestionDTO;
     index: number;
     isShow: boolean;
     rightAnswer: string;
+    _onUpdateHintQuestion: Function;
 }
 
-const QuizQuestionReadonly: React.FunctionComponent<QuizQuestionReadonlyProps> = ({ data, index, isShow, rightAnswer }) => {
+const QuizQuestionReadonly: React.FunctionComponent<QuizQuestionReadonlyProps> = ({ data, index, isShow, rightAnswer, _onUpdateHintQuestion }) => {
     if (isShow)
         return (
             <div className="px-5 py-5 space-y-2 text-base bg-white rounded-md">
                 <div className="flex justify-between">
                     <h1 className="font-bold">Question {index + 1}</h1>
+                    <div
+                        onClick={() => _onUpdateHintQuestion()}
+                        className={`w-8 h-8 cursor-pointer ${data.isMarked ? 'text-orange-500 ' : 'text-gray-500'}`}
+                    >
+                        <LightBulbIcon />
+                    </div>
                 </div>
                 <div className="flex flex-col space-y-1">
                     <p className="font-semibold">{data.content}</p>
                     <fieldset className="space-y-5">
                         <legend className="sr-only">Notifications</legend>
                         {data.answers.map((item) => (
-                            <div key={item.id} className="relative flex items-center">
+                            <div key={`answer-${item.id}`} className="relative flex items-center">
                                 <div className="flex items-center h-5">
                                     <input
                                         id={item.id}
