@@ -13,7 +13,7 @@ const EditBlogPage: NextPage<EditBlogPageProps> = ({ id }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
-                <EditBlog />
+                <EditBlog id={id} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );

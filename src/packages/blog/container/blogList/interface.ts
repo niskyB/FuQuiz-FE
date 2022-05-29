@@ -11,6 +11,6 @@ export interface FilterBlogListDTO {
     createdAt: string;
 }
 
-export interface FilterBlogListFormDTO extends Pick<FilterBlogListDTO, 'title' | 'category' | 'createdAt'> {}
+export interface FilterBlogListFormDTO extends Pick<FilterBlogListDTO, 'title' | 'category' | 'createdAt' | 'isShow'> {}
 
 export interface GetListBlogWithCount extends GetListWithCount<Blog> {}

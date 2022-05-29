@@ -1,5 +1,5 @@
 import { AttributeType } from '../common/interface';
-import { User } from './user';
+import { Marketing } from './marketing';
 
 export interface BlogCategory extends AttributeType {}
 
@@ -9,8 +9,9 @@ export interface Blog {
     updateAt: string;
     briefInfo: string;
     createAt: string;
-    user: User;
+    marketing: Marketing;
     title: string;
     thumbnailUrl: string;
-    blogCategory: BlogCategory;
+    category: BlogCategory;
+    isShow: boolean;
 }
