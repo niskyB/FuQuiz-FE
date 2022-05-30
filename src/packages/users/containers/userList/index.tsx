@@ -2,19 +2,48 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { allFieldData, genderFieldData, OrderBy, OrderByFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { UserRole } from '../../../../core/models/role';
 import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
+import { userFieldDataParser } from '../../../../core/util/user';
 import { PaginationBar } from '../../../dashboard';
+import { FilterUserFormDTO } from './interface';
 
-interface UserListProps {
-    currentPage?: number;
-    pageSize?: number;
+interface UserListProps extends FilterUserFormDTO {
+    currentPage: number;
+    pageSize: number;
 }
 
-const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSize }) => {
-    const methods = useForm();
+const defaultValues: FilterUserFormDTO = {
+    email: '',
+    fullName: '',
+    gender: '',
+    isActive: '',
+    mobile: '',
+    order: 'createdAt',
+    orderBy: OrderBy.DESC,
+    role: '',
+};
+
+const UserList: React.FunctionComponent<UserListProps> = ({
+    currentPage,
+    pageSize,
+    email,
+    fullName,
+    gender,
+    isActive,
+    mobile,
+    order,
+    orderBy,
+    role,
+}) => {
+    const options: UserListProps = React.useMemo(
+        () => ({ currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role }),
+        [currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role]
+    );
+    const methods = useForm<FilterUserFormDTO>({ defaultValues });
 
     const router = useRouter();
 
@@ -23,7 +52,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
             imageUrl:
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
             email: 'kainesv86@gmail.com',
-            createAt: '05/18/2022',
+            createdAt: '05/18/2022',
             fullName: 'Trịnh Văn Quyết',
             gender: Gender.MALE,
             isActive: true,
@@ -39,7 +68,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
             imageUrl:
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
             email: 'kainesv86@gmail.com',
-            createAt: '05/18/2022',
+            createdAt: '05/18/2022',
             fullName: 'Trịnh Văn Quyết',
             gender: Gender.MALE,
             isActive: true,
@@ -55,7 +84,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
             imageUrl:
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
             email: 'kainesv86@gmail.com',
-            createAt: '05/18/2022',
+            createdAt: '05/18/2022',
             fullName: 'Trịnh Văn Quyết',
             gender: Gender.MALE,
             isActive: true,
@@ -71,7 +100,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
             imageUrl:
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
             email: 'kainesv86@gmail.com',
-            createAt: '05/18/2022',
+            createdAt: '05/18/2022',
             fullName: 'Trịnh Văn Quyết',
             gender: Gender.MALE,
             isActive: true,
@@ -111,25 +140,16 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
                             <TextField name="email" label="email" />
-                            <TextField name="Fullname" label="fullName" />
-                            <TextField name="createdAt" label="Create From" type={'date'} />
+                            <TextField name="fullName" label="Full name" />
+                            <TextField name="mobile" label="Mobile" />
+                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
+                            <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" />
+                            <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" />
+                            <SelectField label="Order by" values={[...OrderByFieldData]} name="orderBy" />
                             <SelectField
-                                label="Active"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                name="isActive"
-                            />
-                            <SelectField
-                                label="Role"
-                                values={[
-                                    { label: 'Customer', value: UserRole.CUSTOMER },
-                                    { label: 'Expert', value: UserRole.EXPERT },
-                                    { label: 'Marketing', value: UserRole.MARKETING },
-                                    { label: 'Admin', value: UserRole.ADMIN },
-                                ]}
-                                name="role"
+                                label="Order"
+                                values={userFieldDataParser(['email', 'fullName', 'createdAt', 'mobile', 'updateAt'])}
+                                name="order"
                             />
                         </div>
                         <div className="flex justify-end">
@@ -194,7 +214,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({ currentPage, pageSiz
                                                     <div className="text-gray-900">{user.role.name}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{user.createAt}</div>
+                                                    <div className="text-gray-900">{user.createdAt}</div>
                                                     <div className="text-gray-900">{user.updateAt}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">

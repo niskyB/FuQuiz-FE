@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { SelectionFieldValues } from '../../common/interface';
 import { useStoreApi } from '../../store';
 
 interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     name: string;
     label: string;
-    values: Array<{ label: string; value: any }>;
+    values: Array<SelectionFieldValues<any>>;
     defaultValue?: any;
 }
 

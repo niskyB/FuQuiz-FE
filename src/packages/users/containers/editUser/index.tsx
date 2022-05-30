@@ -15,7 +15,7 @@ const EditUser: React.FunctionComponent<EditUserProps> = () => {
         imageUrl:
             'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
         email: 'kainesv86@gmail.com',
-        createAt: '05/18/2022',
+        createdAt: '05/18/2022',
         fullName: 'Trịnh Văn Quyết',
         gender: Gender.MALE,
         isActive: true,

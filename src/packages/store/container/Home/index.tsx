@@ -1,7 +1,6 @@
 import { BookOpenIcon, FireIcon, HomeIcon, PencilIcon } from '@heroicons/react/outline';
 import { Slide } from '../../../slider/containers/slide';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
-import { Blog } from '../../../../core/models/blog';
 import { defaultCurrentUser } from '../../../../core/store/user';
 import { BlogBox } from '../../../blog';
 import { routes } from '../../../../core/routes';
@@ -30,56 +29,6 @@ const communities = [
 const tabs = [
     { id: 'blog', name: 'Blog', href: '#', current: true },
     { id: 'course', name: 'Course', href: '#', current: false },
-];
-const blogList: Blog[] = [
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
 ];
 
 const slideList: SliderWithoutAuthDTO[] = [
@@ -177,26 +126,62 @@ const subjectList: Subject[] = [
         assignTo: defaultCurrentUser,
     },
 ];
+
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
 
 interface HomeProps {}
 
+type TabContent = 'blog' | 'course';
+
 export const Home: React.FunctionComponent<HomeProps> = () => {
     const options = React.useMemo(() => ({ category: '', createdAt: '', currentPage: 0, isShow: true, pageSize: 10, title: '', userId: '' }), []);
     const { blogList } = useGetBlogList(options);
-    const [tabOpening, setTabOpening] = React.useState<'blog' | 'course'>('blog');
+    const [tabOpening, setTabOpening] = React.useState<TabContent>('course');
 
     const renderContent = () => {
         switch (tabOpening) {
             case 'blog':
-                break;
+                return (
+                    <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-2">
+                        {blogList && blogList.map((item) => <BlogBox key={item.id} data={item} mode="view" />)}
+                    </div>
+                );
             case 'course':
-                break;
+                return (
+                    <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-2">
+                        {subjectList.map((item) => (
+                            <Link key={item.id} href={`${routes.subjectUrl}/${item.id}`} passHref>
+                                <div className="flex flex-col w-full overflow-hidden duration-700 rounded-lg shadow-lg cursor-pointer hover:-translate-y-5">
+                                    <div className="min-w-full mx-auto bg-white">
+                                        <img className="object-cover h-48 py-3 mx-auto" src={item.thumbnailUrl} alt="thumbnail" />
+                                    </div>
 
-            default:
-                break;
+                                    <div className="flex flex-col justify-between flex-1 p-6 bg-white">
+                                        <div className="flex-1">
+                                            <p className="text-sm font-medium text-indigo-600">
+                                                <Link href={''}>
+                                                    <a className="hover:underline">{item.subjectCategory.name}</a>
+                                                </Link>
+                                            </p>
+                                            <a href={''} className="block mt-2">
+                                                <p className="text-xl font-semibold text-gray-900">{item.title}</p>
+                                                <p className="mt-3 text-base text-gray-500">{item.description.substring(0, 100) + '...'}</p>
+                                            </a>
+                                        </div>
+
+                                        <div className="flex items-center mt-6">
+                                            <p className="text-2xl font-medium text-gray-900">
+                                                <div className="text-orange-600">20.000đ - 100.000đ</div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                );
         }
     };
     return (
@@ -290,52 +275,7 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-4 space-y-5">
-                                {tabOpening === 'blog' && (
-                                    <>
-                                        <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-2">
-                                            {blogList && blogList.map((item) => <BlogBox key={item.id} data={item} mode="view" />)}
-                                        </div>
-                                    </>
-                                )}
-                                {tabOpening === 'course' && (
-                                    <>
-                                        <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-2">
-                                            {subjectList.map((item) => (
-                                                <Link key={item.id} href={`${routes.subjectUrl}/${item.id}`} passHref>
-                                                    <div className="flex flex-col w-full overflow-hidden duration-700 rounded-lg shadow-lg cursor-pointer hover:-translate-y-5">
-                                                        <div className="min-w-full mx-auto bg-white">
-                                                            <img className="object-cover h-48 py-3 mx-auto" src={item.thumbnailUrl} alt="thumbnail" />
-                                                        </div>
-
-                                                        <div className="flex flex-col justify-between flex-1 p-6 bg-white">
-                                                            <div className="flex-1">
-                                                                <p className="text-sm font-medium text-indigo-600">
-                                                                    <Link href={''}>
-                                                                        <a className="hover:underline">{item.subjectCategory.name}</a>
-                                                                    </Link>
-                                                                </p>
-                                                                <a href={''} className="block mt-2">
-                                                                    <p className="text-xl font-semibold text-gray-900">{item.title}</p>
-                                                                    <p className="mt-3 text-base text-gray-500">
-                                                                        {item.description.substring(0, 100) + '...'}
-                                                                    </p>
-                                                                </a>
-                                                            </div>
-
-                                                            <div className="flex items-center mt-6">
-                                                                <p className="text-2xl font-medium text-gray-900">
-                                                                    <div className="text-orange-600">20.000đ - 100.000đ</div>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-                            </div>
+                            <div className="mt-4 space-y-5">{renderContent()}</div>
                         </main>
                     </div>
                 </div>
