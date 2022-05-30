@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
-function useInterval(callback: () => void, delay: number | null) {
+export function useInterval(callback: () => void, delay: number | null) {
     const savedCallback = useRef(callback);
 
     useLayoutEffect(() => {
@@ -17,5 +17,3 @@ function useInterval(callback: () => void, delay: number | null) {
         return () => clearInterval(id);
     }, [delay]);
 }
-
-export default useInterval;

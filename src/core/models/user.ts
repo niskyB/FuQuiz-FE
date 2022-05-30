@@ -21,7 +21,7 @@ export interface User {
     mobile: string;
     token: string;
     isActive: boolean;
-    createAt: string;
+    createdAt: string;
     updateAt: string;
     role: Role;
     imageUrl: string;

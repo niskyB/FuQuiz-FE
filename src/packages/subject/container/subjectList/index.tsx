@@ -17,7 +17,7 @@ interface SubjectListProps {
 
 const user: User = {
     email: '',
-    createAt: '',
+    createdAt: '',
     fullName: 'Trịnh Văn Quyết',
     gender: Gender.MALE,
     id: '',

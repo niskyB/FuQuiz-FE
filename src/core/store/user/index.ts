@@ -10,7 +10,7 @@ export interface UserState extends User {
     isLogin: boolean;
 }
 export const defaultCurrentUser: User = {
-    createAt: '',
+    createdAt: '',
     email: '',
     fullName: '',
     gender: Gender.MALE,
