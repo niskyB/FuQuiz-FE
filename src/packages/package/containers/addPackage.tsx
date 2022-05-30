@@ -17,15 +17,15 @@ const AddPackage: React.FunctionComponent<AddPackageProps> = () => {
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Add Dimension</h3>
-                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new dimension in current subject</p>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Add Package</h3>
+                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new package in current subject</p>
                         </div>
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Type
+                                        Name
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="type" />
@@ -33,25 +33,26 @@ const AddPackage: React.FunctionComponent<AddPackageProps> = () => {
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Dimension
+                                        Duration
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="Dimension" />
+                                        <TextField label="" name="duration" type="number" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Description
+                                        List Price
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <textarea
-                                            {...methods.register('content')}
-                                            rows={7}
-                                            name="content"
-                                            id="content"
-                                            autoComplete="given-name"
-                                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        />
+                                        <TextField label="" name="listPrice" type="number" />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Sale Price
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <TextField label="" name="salePrice" type="number" />
                                     </div>
                                 </div>
                             </div>
