@@ -80,4 +80,6 @@ export const routes = {
     adminAddDimensionUrl: '/add',
 
     // Package
+    adminPackageListUrl: '/package',
+    adminAddPackageUrl: '/add',
 };
