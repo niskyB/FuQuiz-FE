@@ -8,6 +8,7 @@ export const updateBlog = async (id: string, data: EditBlogDTO) => {
     const res = await http.put(`/blog/${id}`, form, SendFormRequestConfig());
     return res;
 };
+
 export const getBlog = async (id: string) => {
     const res = await http.get<Blog>(`/blog/${id}`);
     return res.data;
