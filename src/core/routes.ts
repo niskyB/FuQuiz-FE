@@ -76,6 +76,8 @@ export const routes = {
     reviewQuizResultUrl: '/quiz/review',
 
     //Dimension
-    dimensionListUrl: '/dimension',
-    addDimensionUrl: '/dimension/add',
+    adminDimensionListUrl: '/dimension',
+    adminAddDimensionUrl: '/add',
+
+    // Package
 };

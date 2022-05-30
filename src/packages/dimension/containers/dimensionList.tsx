@@ -17,7 +17,12 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ currentPag
     const methods = useForm();
     const [count, setCount] = React.useState<number>(4);
     const router = useRouter();
-    const [dimensions, setDimension] = React.useState<Dimension[]>([]);
+    const [dimensions, setDimension] = React.useState<Dimension[]>([
+        { id: '1', description: 'Description 1', name: 'Business', typeId: { id: '1', name: 'Domain' } },
+        { id: '2', description: 'Description 2', name: 'Process', typeId: { id: '2', name: 'Domain' } },
+        { id: '3', description: 'Description 3', name: 'People', typeId: { id: '3', name: 'Group' } },
+        { id: '4', description: 'Description 4', name: 'Initiating', typeId: { id: '4', name: 'Group' } },
+    ]);
 
     const _handleOnSubmit = () => {};
 
@@ -31,39 +36,19 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ currentPag
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={routes.adminAddSliderUrl} passHref>
+                    <Link href={router.asPath.replace(routes.adminDimensionListUrl, '')} passHref>
+                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                            Back to subject detail
+                        </p>
+                    </Link>
+                    <Link href={router.asPath + routes.adminAddDimensionUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Dimension
                         </p>
                     </Link>
                 </div>
             </div>
-            <div>
-                <FormWrapper methods={methods}>
-                    <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
-                        <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
-                            <TextField name="createdAt" label="Create From" type={'date'} />
-                            <SelectField
-                                label="Showing"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                name="isShow"
-                            />
-                        </div>
-                        <div className="flex justify-end">
-                            <button
-                                type="submit"
-                                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Search
-                            </button>
-                        </div>
-                    </form>
-                </FormWrapper>
-            </div>
+
             <div className="flex flex-col mt-8">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -75,11 +60,12 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ currentPag
                                             ID
                                         </th>
                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Name
+                                            Type
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Description
+                                            Dimension
                                         </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -90,10 +76,20 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ currentPag
                                                     <div className="text-gray-900">{dimension.id}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{dimension.name}</div>
+                                                    <div className="text-gray-900">{dimension.typeId.name}</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                     <div className="text-gray-900">{dimension.description}</div>
+                                                </td>
+                                                <td className="px-3 py-4 text-sm font-semibold whitespace-nowrap">
+                                                    <div>
+                                                        <Link href={`${routes.adminEditSliderUrl}/`} passHref>
+                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                        </Link>
+                                                        <Link href={`${routes.adminEditSliderUrl}/`} passHref>
+                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Delete</p>
+                                                        </Link>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}

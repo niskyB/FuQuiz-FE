@@ -2,18 +2,18 @@ import React from 'react';
 import { RouterProtectionWrapper } from '../../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../../src/packages/dashboard';
-import DimensionList from '../../../../../src/packages/dimension/containers/dimensionList';
+import AddDimension from '../../../../../src/packages/dimension/containers/addDimension';
 
-interface DimensionPageProps {}
+interface AddDimensionPageProps {}
 
-const DimensionPage: React.FunctionComponent<DimensionPageProps> = () => {
+const AddDimensionPage: React.FunctionComponent<AddDimensionPageProps> = () => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
-                <DimensionList currentPage={1} orderBy="" pageSize={10} />
+                <AddDimension />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-export default DimensionPage;
+export default AddDimensionPage;
