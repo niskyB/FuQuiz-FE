@@ -9,6 +9,7 @@ interface BlogBoxProps {
 }
 
 export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) => {
+    console.log(data);
     const [redirectLink, setRedirectLink] = React.useState<string>('');
     React.useEffect(() => {
         switch (mode) {
@@ -45,11 +46,10 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                     <div className="flex items-center mt-6">
                         <div className="flex-shrink-0">
                             <div>
-                                <span className="sr-only">{data.marketing.user.fullName}</span>
                                 <img
                                     className="w-10 h-10 rounded-full"
                                     src={
-                                        data.marketing.user.imageUrl
+                                        data.marketing && data.marketing.user.imageUrl
                                             ? data.marketing.user.imageUrl
                                             : 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg'
                                     }
@@ -59,11 +59,10 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-gray-900">
-                                <div className="hover:underline">{data.marketing.user.fullName}</div>
+                                <div className="hover:underline">{data.marketing ? data.marketing.user.fullName : 'Admin'}</div>
                             </p>
                             <div className="flex text-sm text-gray-500">
-                                <time dateTime={data.createAt}>{data.createAt}</time>
-                                <span aria-hidden="true">today</span>
+                                <time dateTime={data.createdAt}>{new Date(data.createdAt).toLocaleDateString()}</time>
                             </div>
                         </div>
                     </div>

@@ -8,8 +8,8 @@ export interface Blog {
     details: string;
     updateAt: string;
     briefInfo: string;
-    createAt: string;
-    marketing: Marketing;
+    createdAt: string;
+    marketing: Marketing | null;
     title: string;
     thumbnailUrl: string;
     category: BlogCategory;
