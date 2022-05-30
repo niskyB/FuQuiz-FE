@@ -8,7 +8,7 @@ export interface Blog {
     details: string;
     updateAt: string;
     briefInfo: string;
-    createAt: string;
+    createdAt: string;
     marketing: Marketing;
     title: string;
     thumbnailUrl: string;

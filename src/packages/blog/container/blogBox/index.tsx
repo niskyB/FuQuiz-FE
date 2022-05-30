@@ -62,7 +62,7 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                                 <div className="hover:underline">{data.marketing.user.fullName}</div>
                             </p>
                             <div className="flex text-sm text-gray-500">
-                                <time dateTime={data.createAt}>{data.createAt}</time>
+                                <time dateTime={data.createdAt}>{data.createdAt}</time>
                                 <span aria-hidden="true">today</span>
                             </div>
                         </div>
