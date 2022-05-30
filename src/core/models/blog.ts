@@ -9,7 +9,7 @@ export interface Blog {
     updateAt: string;
     briefInfo: string;
     createdAt: string;
-    marketing: Marketing;
+    marketing: Marketing | null;
     title: string;
     thumbnailUrl: string;
     category: BlogCategory;
