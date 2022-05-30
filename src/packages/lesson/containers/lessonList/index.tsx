@@ -54,17 +54,31 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                         A list of all lesson of subject in home website including their title, lesson type, date and activation.
                     </p>
                 </div>
-                <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={router.asPath + routes.addLessonUrl} passHref>
-                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                            Add Lesson
-                        </p>
-                    </Link>
-                    <Link href={routes.adminAddSubjectUrl} passHref>
-                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                            Add Dimension
-                        </p>
-                    </Link>
+                <div className="flex flex-col items-end mt-4 space-y-2 sm:mt-0 sm:ml-16">
+                    <div className="space-x-2">
+                        <Link href={routes.adminAddSubjectUrl} passHref>
+                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                Dimension
+                            </p>
+                        </Link>
+                        <Link href={routes.adminAddSubjectUrl} passHref>
+                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                Package
+                            </p>
+                        </Link>
+                        <Link href={routes.adminAddSubjectUrl} passHref>
+                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                Question
+                            </p>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link href={router.asPath + routes.addLessonUrl} passHref>
+                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                Add Lesson
+                            </p>
+                        </Link>
+                    </div>
                 </div>
             </div>
             <div>
@@ -137,7 +151,7 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                     <div className="text-gray-900">{lesson.name}</div>
                                                 </td>
-                                                y
+
                                                 <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
                                                     <div className="max-w-sm">
                                                         <div className="text-gray-900">{lesson.lessonAttribute.type.name}</div>

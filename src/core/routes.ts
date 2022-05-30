@@ -74,4 +74,8 @@ export const routes = {
     //quiz
     quizUrl: '/quiz',
     reviewQuizResultUrl: '/quiz/review',
+
+    //Dimension
+    dimensionListUrl: '/dimension',
+    addDimensionUrl: '/dimension/add',
 };
