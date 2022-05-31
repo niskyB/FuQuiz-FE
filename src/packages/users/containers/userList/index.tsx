@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { allFieldData, genderFieldData, Order, OrderFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
 import { userFieldDataParser } from '../../../../core/util/user';
 import { PaginationBar } from '../../../dashboard';
 import { useAdminGetUserList } from './hook';
@@ -36,7 +37,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
     role,
 }) => {
     const options: UserListProps = React.useMemo(
-        () => ({ currentPage: currentPage - 1, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role }),
+        () => ({ currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role }),
         [currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role]
     );
     const methods = useForm<FilterUserFormDTO>({ defaultValues });
@@ -45,7 +46,9 @@ const UserList: React.FunctionComponent<UserListProps> = ({
 
     const { count, userList } = useAdminGetUserList(options);
 
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: FilterUserFormDTO) => {
+        pushWithParams(router, routes.adminUsersUrl, { ...options, ...data });
+    };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
