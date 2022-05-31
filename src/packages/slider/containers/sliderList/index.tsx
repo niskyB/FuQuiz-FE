@@ -18,7 +18,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     const methods = useForm<SliderProps>();
     const options = React.useMemo<GetSliderOptionsDTO>(
         () => ({
-            currentPage: currentPage - 1,
+            currentPage,
             pageSize,
             title,
             userId,

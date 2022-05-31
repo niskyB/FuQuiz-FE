@@ -16,7 +16,7 @@ interface BlogListProps extends FilterBlogListDTO {}
 
 export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
     const options = React.useMemo(
-        () => ({ category, createdAt, currentPage: currentPage - 1, isShow, pageSize, title, userId }),
+        () => ({ category, createdAt, currentPage, isShow, pageSize, title, userId }),
         [category, createdAt, currentPage, isShow, pageSize, title, userId]
     );
     const { blogList, count } = useGetBlogList(options);

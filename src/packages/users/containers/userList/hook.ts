@@ -11,7 +11,7 @@ export const useAdminGetUserList = (options: FilterUserDTO) => {
             setUserList(res.data);
             setCount(res.count);
         });
-    }, []);
+    }, [options]);
 
     return { count, userList };
 };
