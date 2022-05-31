@@ -51,7 +51,7 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                                     src={
                                         data.marketing && data.marketing.user.imageUrl
                                             ? data.marketing.user.imageUrl
-                                            : 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg'
+                                            : '/asset/images/default-avatar.png'
                                     }
                                     alt=""
                                 />

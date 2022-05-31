@@ -7,7 +7,7 @@ export interface Slider {
     imageUrl: string;
     backLink: string;
     isShow: boolean;
-    marketing: Marketing;
+    marketing: Marketing | null;
 }
 
 export interface SliderWithoutAuthDTO extends Omit<Slider, 'marketing'> {}

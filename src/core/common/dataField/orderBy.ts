@@ -1,11 +1,11 @@
 import { SelectionFieldValues } from '../interface';
 
-export enum OrderBy {
+export enum Order {
     ASC = 'ASC',
     DESC = 'DESC',
 }
 
-export const OrderByFieldData: SelectionFieldValues<OrderBy>[] = [
-    { label: 'Ascending', value: OrderBy.ASC },
-    { label: 'Descending', value: OrderBy.DESC },
+export const OrderFieldData: SelectionFieldValues<Order>[] = [
+    { label: 'Ascending', value: Order.ASC },
+    { label: 'Descending', value: Order.DESC },
 ];

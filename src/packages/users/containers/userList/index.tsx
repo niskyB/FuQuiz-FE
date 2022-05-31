@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { allFieldData, genderFieldData, OrderBy, OrderByFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { allFieldData, genderFieldData, Order, OrderFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { userFieldDataParser } from '../../../../core/util/user';
@@ -18,8 +18,8 @@ const defaultValues: FilterUserFormDTO = {
     gender: '',
     isActive: true,
     mobile: '',
-    order: 'createdAt',
-    orderBy: OrderBy.DESC,
+    order: Order.DESC,
+    orderBy: 'createdAt',
     role: '',
 };
 
@@ -36,14 +36,14 @@ const UserList: React.FunctionComponent<UserListProps> = ({
     role,
 }) => {
     const options: UserListProps = React.useMemo(
-        () => ({ currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role }),
+        () => ({ currentPage: currentPage - 1, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role }),
         [currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role]
     );
     const methods = useForm<FilterUserFormDTO>({ defaultValues });
 
     const router = useRouter();
 
-    const { count, userList } = useAdminGetUserList({ ...options, currentPage: options.currentPage - 1 });
+    const { count, userList } = useAdminGetUserList(options);
 
     const _handleOnSubmit = async () => {};
 
@@ -77,11 +77,11 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                             <div className="flex space-x-4">
                                 <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" />
                                 <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" />
-                                <SelectField label="Order by" values={[...OrderByFieldData]} name="orderBy" />
+                                <SelectField label="Sort" values={[...OrderFieldData]} name="order" />
                                 <SelectField
-                                    label="Order"
+                                    label="OrderBy"
                                     values={userFieldDataParser(['email', 'fullName', 'createdAt', 'mobile', 'updateAt'])}
-                                    name="order"
+                                    name="orderBy"
                                 />
                             </div>
                         </div>
@@ -131,7 +131,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                         <tr key={user.id}>
                                             <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
                                                 <div className="max-w-sm">
-                                                    <img className="w-10 h-10" src={user.imageUrl} alt="" />
+                                                    <img className="w-10 h-10" src={user.imageUrl || '/asset/images/default-avatar.png'} alt="" />
                                                 </div>
                                             </td>
                                             <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">

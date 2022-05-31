@@ -10,7 +10,6 @@ import { GetSliderOptionsDTO } from './interface';
 import { useGetSliderList } from './hook';
 import { PaginationBar } from '../../../dashboard';
 import { pushWithParams } from '../../../../core/util/router';
-import { route } from 'next/dist/server/router';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
@@ -19,7 +18,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
     const methods = useForm<SliderProps>();
     const options = React.useMemo<GetSliderOptionsDTO>(
         () => ({
-            currentPage,
+            currentPage: currentPage - 1,
             pageSize,
             title,
             userId,
@@ -30,15 +29,6 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
         [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
     );
     const { count, sliders } = useGetSliderList(options);
-
-    // const pushWithParams = (options: GetSliderOptionsDTO) => {
-    //     router.push({
-    //         pathname: routes.adminSliderListUrl,
-    //         query: { ...options },
-    //     });
-    // };
-
-    // Submit filter
 
     const _handleOnSubmit = async (data: SliderProps) => {
         pushWithParams(router, routes.adminSliderListUrl, {
@@ -155,7 +145,8 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                                     )}
                                                 </td>
                                                 <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    {slider.marketing.user.id === userState.id || userState.role.name === UserRole.ADMIN ? (
+                                                    {(slider.marketing && slider.marketing.user.id === userState.id) ||
+                                                    userState.role.name === UserRole.ADMIN ? (
                                                         <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
                                                             <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                         </Link>
