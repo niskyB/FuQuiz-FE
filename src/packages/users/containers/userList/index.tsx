@@ -138,19 +138,23 @@ const UserList: React.FunctionComponent<UserListProps> = ({
             <div>
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
-                        <div className="flex space-x-4">
-                            <TextField name="email" label="email" />
-                            <TextField name="fullName" label="Full name" />
-                            <TextField name="mobile" label="Mobile" />
-                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
-                            <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" />
-                            <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" />
-                            <SelectField label="Order by" values={[...OrderByFieldData]} name="orderBy" />
-                            <SelectField
-                                label="Order"
-                                values={userFieldDataParser(['email', 'fullName', 'createdAt', 'mobile', 'updateAt'])}
-                                name="order"
-                            />
+                        <div className="flex flex-col space-y-4">
+                            <div className="flex space-x-4">
+                                <TextField name="email" label="email" />
+                                <TextField name="fullName" label="Full name" />
+                                <TextField name="mobile" label="Mobile" />
+                                <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
+                            </div>
+                            <div className="flex space-x-4">
+                                <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" />
+                                <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" />
+                                <SelectField label="Order by" values={[...OrderByFieldData]} name="orderBy" />
+                                <SelectField
+                                    label="Order"
+                                    values={userFieldDataParser(['email', 'fullName', 'createdAt', 'mobile', 'updateAt'])}
+                                    name="order"
+                                />
+                            </div>
                         </div>
                         <div className="flex justify-end">
                             <button
