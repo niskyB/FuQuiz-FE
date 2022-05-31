@@ -35,7 +35,7 @@ UsersPage.getInitialProps = async (ctx: NextPageContext): Promise<FilterUserDTO>
         email: ctx.query?.email || '',
         fullName: ctx.query?.fullName || '',
         gender: ctx.query?.gender || '',
-        isActive: ctx.query?.isActive || '',
+        isActive: Boolean(ctx.query?.isActive) || true,
         mobile: ctx.query?.mobile || '',
         order: ctx.query?.order || '',
         role: ctx.query?.role || '',

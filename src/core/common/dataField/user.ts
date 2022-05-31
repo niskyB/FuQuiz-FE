@@ -1,7 +1,7 @@
 import { User } from '../../models/user';
 import { SelectionFieldValues } from '../interface';
 
-export const userOrderFieldData: SelectionFieldValues<keyof User>[] = [
+export const userOrderByFieldData: SelectionFieldValues<keyof User>[] = [
     { label: 'Create At', value: 'createdAt' },
     { label: 'Email', value: 'email' },
     { label: 'Full name', value: 'fullName' },
