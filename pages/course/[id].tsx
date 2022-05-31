@@ -64,7 +64,7 @@ function classNames(...classes: any) {
 const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
     const router = useRouter();
     const methods = useForm();
-    const [popUp, setPopUp] = React.useState<boolean>(false);
+    const [popUp, setPopUp] = React.useState<boolean>(true);
 
     const _handleOnSubmit = () => {};
 
@@ -72,40 +72,41 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
         <StoreLayout>
             {/* pup */}
             {popUp ? (
-                <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-gray-900/50">
-                    <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8 intro-y">
-                        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                            <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-                                <FormWrapper methods={methods}>
-                                    <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
-                                        <TextField label="Fullname" name="fullName" type="text" />
-                                        <TextField label="Email" name="Email" type="email" />
-                                        <TextField label="Phone number" name="mobile" type="text" />
-                                        <SelectField
-                                            name="gender"
-                                            label="Gender"
-                                            values={[
-                                                { label: 'Male', value: Gender.MALE },
-                                                { label: 'Female', value: Gender.FEMALE },
-                                            ]}
-                                        />
+                <div className="fixed inset-0 flex items-center justify-center w-screen h-screen">
+                    <div className="fixed w-screen h-screen cursor-pointer bg-black/80" onClick={() => setPopUp(false)}></div>
+                    <div className="z-20 flex flex-col w-full max-w-2xl px-10 py-8 space-y-10 bg-white rounded-lg shadow">
+                        <h1 className="text-3xl font-bold text-center">Registration form</h1>
+                        <FormWrapper methods={methods}>
+                            <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="w-full space-y-5">
+                                <TextField label="Fullname" name="fullName" type="text" />
+                                <TextField label="Email" name="Email" type="email" />
+                                <TextField label="Phone number" name="mobile" type="text" />
+                                <SelectField
+                                    name="gender"
+                                    label="Gender"
+                                    values={[
+                                        { label: 'Male', value: Gender.MALE },
+                                        { label: 'Female', value: Gender.FEMALE },
+                                    ]}
+                                />
 
-                                        <div className="flex flex-col items-center space-y-4">
-                                            <button
-                                                type="submit"
-                                                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                            >
-                                                Register Subject
-                                            </button>
-                                        </div>
-                                    </form>
-                                </FormWrapper>
-                            </div>
-                        </div>
+                                <div className="flex items-center space-x-5">
+                                    <button
+                                        className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                        onClick={() => setPopUp(false)}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                        Register Subject
+                                    </button>
+                                </div>
+                            </form>
+                        </FormWrapper>
                     </div>
-                    <button className="px-2 py-1 font-medium text-white bg-indigo-700 rounded-md" onClick={() => setPopUp(false)}>
-                        Cancel
-                    </button>
                 </div>
             ) : (
                 <></>
