@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField } from '../../../../core/components/form';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Question } from '../../../../core/models/question';
 import { PracticeQuiz } from '../../../../core/models/quiz';
 import { routes } from '../../../../core/routes';
@@ -92,12 +92,19 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             <div className="space-y-2">
                 <FormWrapper methods={methods}>
                     <div className="flex items-end justify-between">
-                        <form className="max-w-xs">
+                        <form className="flex items-end space-x-2">
                             <SelectField
                                 label="Subject"
                                 values={subjects.map((subject) => ({ label: subject.title, value: subject.id }))}
                                 name="Subject"
                             />
+                            <TextField name="examName" label="Exam name" />
+                            <button
+                                type="button"
+                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Search
+                            </button>
                         </form>
                     </div>
                 </FormWrapper>

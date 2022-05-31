@@ -74,4 +74,12 @@ export const routes = {
     //quiz
     quizUrl: '/quiz',
     reviewQuizResultUrl: '/quiz/review',
+
+    //Dimension
+    adminDimensionListUrl: '/dimension',
+    adminAddDimensionUrl: '/add',
+
+    // Package
+    adminPackageListUrl: '/package',
+    adminAddPackageUrl: '/add',
 };

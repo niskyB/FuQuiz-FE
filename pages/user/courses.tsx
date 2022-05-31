@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { FormWrapper, SelectField, TextField } from '../../src/core/components/form';
 import { RouterProtectionWrapper } from '../../src/core/components/routerProtection';
 import { Subject } from '../../src/core/models/subject';
 import { AllRole } from '../../src/core/models/user';
@@ -48,9 +50,35 @@ const subjectList: Subject[] = [
     },
 ];
 const UserCoursesPage: React.FC<UserCoursesPageProps> = () => {
+    const methods = useForm();
     return (
         <RouterProtectionWrapper acceptRoles={AllRole}>
             <StoreLayout>
+                <FormWrapper methods={methods}>
+                    <div className="flex items-end p-5 space-x-5 bg-white rounded-md">
+                        <div className="max-w-2xl">
+                            <TextField label="Name" name="name" />
+                        </div>
+                        <div className="w-max">
+                            <SelectField
+                                label="category"
+                                name="category"
+                                values={[
+                                    { label: 'category 1', value: '' },
+                                    { label: 'category 2', value: '' },
+                                    { label: 'category 3', value: '' },
+                                    { label: 'category 4', value: '' },
+                                ]}
+                            />
+                        </div>
+                        <button
+                            type="button"
+                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </FormWrapper>
                 <div className="flex flex-col-reverse flex-1">
                     <h1 className="order-1 mt-2 text-3xl font-extrabold tracking-tight text-gray-900">My courses</h1>
                     <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-3">
@@ -64,6 +92,7 @@ const UserCoursesPage: React.FC<UserCoursesPageProps> = () => {
                                     <div className="flex flex-col justify-between flex-1 p-6 bg-white">
                                         <div className="flex-1">
                                             <p className="text-sm font-medium text-indigo-600">
+                                                <p>#{item.id}</p>
                                                 <Link href={''}>
                                                     <a className="hover:underline">{item.subjectCategory.name}</a>
                                                 </Link>
@@ -75,8 +104,10 @@ const UserCoursesPage: React.FC<UserCoursesPageProps> = () => {
                                         </div>
 
                                         <div className="flex flex-col items-start mt-6 space-y-1">
-                                            <p className="text-gray-500">Valid from : 26/5/2022 - 26/8/2022</p>
-                                            <p className="text-gray-500">Registration day : 25/5/2022</p>
+                                            <p className="text-gray-500">Package: Premium access</p>
+                                            <p className="text-gray-500">Status: Active</p>
+                                            <p className="text-gray-500">Valid: 26/5/2022 - 26/8/2022</p>
+                                            <p className="text-gray-500">Registration day: 25/5/2022</p>
                                             <p className="text-2xl font-medium text-gray-900">
                                                 <div className="text-orange-600">20.000đ</div>
                                             </p>

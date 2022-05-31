@@ -19,7 +19,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
     {
         id: '1',
@@ -30,7 +31,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
     {
         id: '1',
@@ -41,7 +43,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
     {
         id: '1',
@@ -52,7 +55,8 @@ const blogList: Blog[] = [
         thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
         title: 'Giá Green Satoshi Token (GST)',
         updateAt: '',
-        marketing: { ...defaultCurrentUser },
+        marketing: { user: defaultCurrentUser, id: '1' },
+        isShow: true,
     },
 ];
 
@@ -72,48 +76,48 @@ const BlogListPage: React.FC<BlogListPageProps> = () => {
         defaultValues,
     });
     return (
-        <RouterProtectionWrapper acceptRoles={AllRole}>
-            <StoreLayout>
-                <h1 className="mb-5 text-2xl font-bold">New blog:</h1>
-                <FormWrapper methods={methods}>
-                    <div className="flex items-end p-5 space-x-5 bg-white rounded-md">
-                        <SelectField
-                            label="category"
-                            name="category"
-                            values={[
-                                { label: 'category 1', value: '' },
-                                { label: 'category 2', value: '' },
-                                { label: 'category 3', value: '' },
-                                { label: 'category 4', value: '' },
-                            ]}
-                        />
+        // <RouterProtectionWrapper acceptRoles={AllRole}>
+        <StoreLayout>
+            <h1 className="mb-5 text-2xl font-bold">New blog:</h1>
+            <FormWrapper methods={methods}>
+                <div className="flex items-end p-5 space-x-5 bg-white rounded-md">
+                    <SelectField
+                        label="category"
+                        name="category"
+                        values={[
+                            { label: 'category 1', value: '' },
+                            { label: 'category 2', value: '' },
+                            { label: 'category 3', value: '' },
+                            { label: 'category 4', value: '' },
+                        ]}
+                    />
 
-                        <TextField label="Content" name="content" />
+                    <TextField label="Content" name="content" />
 
-                        <SelectField
-                            label="Sort"
-                            name="sort"
-                            values={[
-                                { label: 'Oldest', value: 'ASC' },
-                                { label: 'Newest', value: 'DESC' },
-                            ]}
-                        />
+                    <SelectField
+                        label="Sort"
+                        name="sort"
+                        values={[
+                            { label: 'Oldest', value: 'ASC' },
+                            { label: 'Newest', value: 'DESC' },
+                        ]}
+                    />
 
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Search
-                        </button>
-                    </div>
-                </FormWrapper>
-                <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-3">
-                    {blogList.map((item) => (
-                        <BlogBox key={item.id} data={item} mode="view" />
-                    ))}
+                    <button
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Search
+                    </button>
                 </div>
-            </StoreLayout>
-        </RouterProtectionWrapper>
+            </FormWrapper>
+            <div className="grid grid-cols-1 gap-5 mt-8 md:grid-cols-3">
+                {blogList.map((item) => (
+                    <BlogBox key={item.id} data={item} mode="view" />
+                ))}
+            </div>
+        </StoreLayout>
+        // </RouterProtectionWrapper>
     );
 };
 

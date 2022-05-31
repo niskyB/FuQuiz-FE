@@ -175,13 +175,14 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                                                     <div className="text-gray-900">{subject.title}</div>
                                                     <div className="text-gray-900">{new Date(subject.createAt).toLocaleDateString()}</div>
                                                 </td>
-                                                <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+                                                <td className="py-4 pl-4 whitespace-nowrap sm:pl-6">
                                                     <div className="max-w-sm">
                                                         <div className="text-gray-900">{subject.subjectCategory.name}</div>
                                                     </div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                     <div className="text-gray-900">{subject.description}</div>
+                                                    <div className="text-gray-900">36 lessons</div>
                                                 </td>
                                                 <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                     <div className="text-gray-900">{subject.assignTo.fullName}</div>

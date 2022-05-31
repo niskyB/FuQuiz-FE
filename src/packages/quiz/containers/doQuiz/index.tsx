@@ -4,6 +4,8 @@ import QuizAnswer from '../quizAnswer';
 import { QuizQuestionDTO } from './interface';
 import { findQuestionAndDoAction } from '../../../../core/util/question';
 import { ClockIcon } from '@heroicons/react/outline';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { useForm } from 'react-hook-form';
 
 interface DoQuizProps {
     id: string;
@@ -87,6 +89,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
 export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const [questionList, setQuestionList] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
+    const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(
         () =>
@@ -123,8 +126,50 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
             setQuestionList(newQuestionList);
         });
     };
+
+    const methods = useForm();
+    const _handleOnSubmit = () => {};
+
     return (
         <div className="flex space-x-10">
+            {popUp ? (
+                <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-gray-900/50">
+                    <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8 intro-y">
+                        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                            <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
+                                <FormWrapper methods={methods}>
+                                    <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
+                                        <div className="flex flex-col space-y-4">
+                                            <p className="text-lg font-semibold">Exit Exam?</p>
+                                            <p className="">
+                                                You have not answer any questions. By clicking on the [Submit now] button below, you will completed
+                                                your current exam and be return to the dashboard
+                                            </p>
+                                            <div className="flex space-x-2">
+                                                <button
+                                                    type="submit"
+                                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                >
+                                                    Submit now
+                                                </button>
+                                                <button
+                                                    onClick={() => setPopUp(false)}
+                                                    type="submit"
+                                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </FormWrapper>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
             <div className="flex flex-col flex-1 space-y-5">
                 {questionList.map((item, index) => (
                     <QuizQuestion
@@ -175,6 +220,13 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                         } inline-flex items-center px-4 py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  `}
                     >
                         Next
+                    </button>
+                    <button
+                        onClick={() => setPopUp(true)}
+                        type="button"
+                        className={`bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 inline-flex items-center px-4 py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  `}
+                    >
+                        Score Exam now
                     </button>
                 </div>
             </div>
