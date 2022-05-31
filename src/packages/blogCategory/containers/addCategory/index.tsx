@@ -1,15 +1,30 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
+import { addBlogCategory } from './action';
+import { AddBlogCategoryDTO } from './interface';
 
 interface AddBlogCategoryProps {}
+const defaultValues: AddBlogCategoryDTO = {
+    name: '',
+};
 
 const AddBlogCategory: React.FunctionComponent<AddBlogCategoryProps> = () => {
-    const methods = useForm({});
+    const methods = useForm<AddBlogCategoryDTO>({ defaultValues });
+    const router = useRouter();
 
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: AddBlogCategoryDTO) => {
+        const res = await addBlogCategory(data);
+
+        if (res) {
+            router.push(routes.adminBlogListUrl);
+            toast.success('Add category blog success!');
+        }
+    };
 
     return (
         <div className="flex flex-col justify-center flex-1 py-12 sm:px-6 lg:px-8 intro-y">
@@ -21,7 +36,7 @@ const AddBlogCategory: React.FunctionComponent<AddBlogCategoryProps> = () => {
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
-                            <TextField label="Value" name="value" type="value" />
+                            <TextField label="Name" name="name" type="text" />
 
                             <div className="flex space-x-2">
                                 <Link href={routes.adminBlogListUrl} passHref>
