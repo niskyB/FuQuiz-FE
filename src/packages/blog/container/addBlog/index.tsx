@@ -28,6 +28,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
     const [details, setDetails] = React.useState<string>('');
+    
     const { blogCategoryList } = useGetBlogCategory();
 
     const _handleOnSubmit = async (data: AddBlogDTO) => {

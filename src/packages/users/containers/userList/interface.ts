@@ -3,7 +3,7 @@ import { UserRole } from '../../../../core/models/role';
 import { Gender, User } from '../../../../core/models/user';
 
 export interface FilterUserDTO extends Pick<User, 'fullName' | 'email' | 'mobile'> {
-    isActive: boolean | '';
+    isActive: boolean;
     gender: Gender | '';
     role: UserRole | '';
     currentPage: number;

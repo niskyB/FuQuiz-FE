@@ -3,24 +3,20 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { allFieldData, genderFieldData, OrderBy, OrderByFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
-import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { UserRole } from '../../../../core/models/role';
-import { Gender, User } from '../../../../core/models/user';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { userFieldDataParser } from '../../../../core/util/user';
 import { PaginationBar } from '../../../dashboard';
-import { FilterUserFormDTO } from './interface';
+import { useAdminGetUserList } from './hook';
+import { FilterUserDTO, FilterUserFormDTO } from './interface';
 
-interface UserListProps extends FilterUserFormDTO {
-    currentPage: number;
-    pageSize: number;
-}
+interface UserListProps extends FilterUserDTO {}
 
 const defaultValues: FilterUserFormDTO = {
     email: '',
     fullName: '',
     gender: '',
-    isActive: '',
+    isActive: true,
     mobile: '',
     order: 'createdAt',
     orderBy: OrderBy.DESC,
@@ -47,74 +43,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
 
     const router = useRouter();
 
-    const [users, setUsers] = React.useState<User[]>([
-        {
-            imageUrl:
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
-            email: 'kainesv86@gmail.com',
-            createdAt: '05/18/2022',
-            fullName: 'Trịnh Văn Quyết',
-            gender: Gender.MALE,
-            isActive: true,
-            mobile: '0986609813',
-            password: '',
-            role: { id: '6', name: UserRole.ADMIN },
-            id: '1asdasd-asdzv-azsde4',
-            token: '',
-            typeId: '1',
-            updateAt: '05/17/2022',
-        },
-        {
-            imageUrl:
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
-            email: 'kainesv86@gmail.com',
-            createdAt: '05/18/2022',
-            fullName: 'Trịnh Văn Quyết',
-            gender: Gender.MALE,
-            isActive: true,
-            mobile: '0986609813',
-            password: '',
-            role: { id: '6', name: UserRole.ADMIN },
-            id: '1asdasd-asdzv-azsde4',
-            token: '',
-            typeId: '1',
-            updateAt: '05/17/2022',
-        },
-        {
-            imageUrl:
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
-            email: 'kainesv86@gmail.com',
-            createdAt: '05/18/2022',
-            fullName: 'Trịnh Văn Quyết',
-            gender: Gender.MALE,
-            isActive: true,
-            mobile: '0986609813',
-            password: '',
-            role: { id: '6', name: UserRole.ADMIN },
-            id: '1asdasd-asdzv-azsde4',
-            token: '',
-            typeId: '1',
-            updateAt: '05/17/2022',
-        },
-        {
-            imageUrl:
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
-            email: 'kainesv86@gmail.com',
-            createdAt: '05/18/2022',
-            fullName: 'Trịnh Văn Quyết',
-            gender: Gender.MALE,
-            isActive: true,
-            mobile: '0986609813',
-            password: '',
-            role: { id: '6', name: UserRole.ADMIN },
-            id: '1asdasd-asdzv-azsde4',
-            token: '',
-            typeId: '1',
-            updateAt: '05/17/2022',
-        },
-    ]);
-
-    const [count, setCount] = React.useState(4);
+    const { count, userList } = useAdminGetUserList({ ...options, currentPage: options.currentPage - 1 });
 
     const _handleOnSubmit = async () => {};
 
@@ -143,7 +72,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                 <TextField name="email" label="email" />
                                 <TextField name="fullName" label="Full name" />
                                 <TextField name="mobile" label="Mobile" />
-                                <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
+                                <SelectField label="Active" values={[...statusFieldData]} name="isActive" />
                             </div>
                             <div className="flex space-x-4">
                                 <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" />
@@ -198,47 +127,46 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {Boolean(count && users) &&
-                                        users.map((user) => (
-                                            <tr key={user.id}>
-                                                <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
-                                                    <div className="max-w-sm">
-                                                        <img className="w-10 h-10" src={user.imageUrl} alt="" />
-                                                    </div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{user.email}</div>
-                                                    <div className="text-gray-900">{user.fullName}</div>
-                                                    <div className="text-gray-900">{user.mobile}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{user.gender}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{user.role.name}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    <div className="text-gray-900">{user.createdAt}</div>
-                                                    <div className="text-gray-900">{user.updateAt}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                    {user.isActive ? (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                            Active
-                                                        </span>
-                                                    ) : (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                            Inactive
-                                                        </span>
-                                                    )}
-                                                </td>
-                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-                                                    <Link href={`${routes.adminEditUsersUrl}/${user.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                    {userList.map((user) => (
+                                        <tr key={user.id}>
+                                            <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+                                                <div className="max-w-sm">
+                                                    <img className="w-10 h-10" src={user.imageUrl} alt="" />
+                                                </div>
+                                            </td>
+                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <div className="text-gray-900">{user.email}</div>
+                                                <div className="text-gray-900">{user.fullName}</div>
+                                                <div className="text-gray-900">{user.mobile}</div>
+                                            </td>
+                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <div className="text-gray-900">{user.gender}</div>
+                                            </td>
+                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <div className="text-gray-900">{user.role.name}</div>
+                                            </td>
+                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <div className="text-gray-900">{user.createdAt}</div>
+                                                <div className="text-gray-900">{user.updateAt}</div>
+                                            </td>
+                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                {user.isActive ? (
+                                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                        Active
+                                                    </span>
+                                                ) : (
+                                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                        Inactive
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                <Link href={`${routes.adminEditUsersUrl}/${user.id}`} passHref>
+                                                    <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
