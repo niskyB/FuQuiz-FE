@@ -12,6 +12,8 @@ import { PaginationBar } from '../../../dashboard';
 import { pushWithParams } from '../../../../core/util/router';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
+import { useGetList } from '../../../../core/common/hooks/useGetList';
+import { Slider } from '../../../../core/models/slider';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
@@ -30,6 +32,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
         }),
         [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
     );
+
     const { count, sliders } = useGetSliderList(options);
 
     const _handleOnSubmit = async (data: SliderProps) => {

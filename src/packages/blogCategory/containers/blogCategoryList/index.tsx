@@ -1,14 +1,23 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 
-interface BlogCategoryListProps {}
+interface BlogCategoryListProps {
+    currentPage?: number;
+    pageSize?: number;
+}
 
-const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = () => {
+const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = ({ currentPage, pageSize }) => {
+    const methods = useForm();
+    const router = useRouter();
+
+    const _handleOnSubmit = async () => {};
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
@@ -19,16 +28,6 @@ const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = () => {
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <button
-                        onClick={() =>
-                            userId
-                                ? pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: '' })
-                                : pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: userState.id })
-                        }
-                        className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                    >
-                        {userId ? 'All sliders' : 'My sliders'}
-                    </button>
                     <Link href={routes.adminAddSliderUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Slider
@@ -69,7 +68,7 @@ const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = () => {
                             <Table>
                                 <TableHead fields={['Image', 'Title/Date', 'Back link', 'Showing', '']} />
                                 <TableBody>
-                                    {sliders.map((slider) => (
+                                    {/* {sliders.map((slider) => (
                                         <TableRow key={slider.id}>
                                             <TableDescription>
                                                 <div className="max-w-sm">
@@ -103,7 +102,7 @@ const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = () => {
                                                 ) : null}
                                             </TableDescription>
                                         </TableRow>
-                                    ))}
+                                    ))} */}
                                 </TableBody>
                             </Table>
                         </div>
