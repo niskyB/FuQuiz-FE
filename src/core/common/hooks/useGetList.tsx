@@ -4,11 +4,11 @@ import { urlQueryParser } from '../../util';
 import { ApiListRoutes } from '../enum';
 import { GetListWithCount } from '../interface';
 
-export const useGetList = <T, Options>(options: Options, apiRoute: ApiListRoutes) => {
+export const useGetList = <T, Options>(apiRoute: ApiListRoutes, options?: Options) => {
     const [list, setList] = React.useState<T[]>([]);
     const [count, setCount] = React.useState<number>(0);
     React.useEffect(() => {
-        getFilter<T, Options>(options, apiRoute).then((res) => {
+        getFilter<T, Options>(apiRoute, options).then((res) => {
             setList(res.data);
             setCount(res.count);
         });
@@ -17,7 +17,8 @@ export const useGetList = <T, Options>(options: Options, apiRoute: ApiListRoutes
     return { list, count };
 };
 
-export const getFilter = async <T, Options>(options: Options, apiRoute: string) => {
-    const res = await http.get<GetListWithCount<T>>(`/${apiRoute}?${urlQueryParser(options)}`);
+export const getFilter = async <T, Options>(apiRoute: string, options?: Options) => {
+    console.log(`/${apiRoute}${urlQueryParser(options)}`);
+    const res = await http.get<GetListWithCount<T>>(`/${apiRoute}${urlQueryParser(options)}`);
     return res.data;
 };
