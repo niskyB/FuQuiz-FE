@@ -2,9 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { genderFieldData } from '../../../../core/common/dataField';
-import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
-import { UserRole } from '../../../../core/models/role';
-import { Gender, User } from '../../../../core/models/user';
+import { FormErrorMessage, FormWrapper, RadioField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { useGetUserById } from './hook';
 

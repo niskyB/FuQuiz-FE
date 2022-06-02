@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
 import { Lesson, LessonType } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
@@ -121,49 +123,28 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Title
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Lesson Type
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Create at
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Update date
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Activation
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                            <Table>
+                                <TableHead fields={['Title', 'Lesson Type', 'Create at', 'Update date', 'Activation', '']} />
+                                <TableBody>
                                     {Boolean(count && lessons) &&
                                         lessons.map((lesson) => (
-                                            <tr key={lesson.id}>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <TableRow key={lesson.id}>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{lesson.name}</div>
-                                                </td>
+                                                </TableDescription>
 
-                                                <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+                                                <TableDescription>
                                                     <div className="max-w-sm">
                                                         <div className="text-gray-900">{lesson.lessonAttribute.type.name}</div>
                                                     </div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{lesson.createAt}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{lesson.updateAt}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     {lesson.isActive ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
@@ -173,8 +154,8 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                                                             Inactive
                                                         </span>
                                                     )}
-                                                </td>
-                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <Link href={`${router.asPath}${routes.editLessonUrl}/${lesson.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
@@ -184,11 +165,11 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                                                     >
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Detail</p>
                                                     </Link>
-                                                </td>
-                                            </tr>
+                                                </TableDescription>
+                                            </TableRow>
                                         ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>

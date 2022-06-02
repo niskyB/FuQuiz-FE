@@ -10,6 +10,8 @@ import { GetSliderOptionsDTO } from './interface';
 import { useGetSliderList } from './hook';
 import { PaginationBar } from '../../../dashboard';
 import { pushWithParams } from '../../../../core/util/router';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
@@ -97,43 +99,26 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Image
-                                        </th>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Title/Date
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Back link
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Showing
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                            <Table>
+                                <TableHead fields={['Image', 'Title/Date', 'Back link', 'Showing', '']} />
+
+                                <TableBody>
                                     {Boolean(count && sliders) &&
                                         sliders.map((slider) => (
-                                            <tr key={slider.id}>
-                                                <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+                                            <TableRow key={slider.id}>
+                                                <TableDescription>
                                                     <div className="max-w-sm">
                                                         <img className="w-10 h-10" src={slider.imageUrl} alt="" />
                                                     </div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{slider.title}</div>
                                                     <div className="text-gray-900">{new Date(slider.createdAt).toLocaleDateString()}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{slider.backLink}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     {slider.isShow ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
@@ -143,19 +128,19 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                                             Inactive
                                                         </span>
                                                     )}
-                                                </td>
-                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     {(slider.marketing && slider.marketing.user.id === userState.id) ||
                                                     userState.role.name === UserRole.ADMIN ? (
                                                         <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
                                                             <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                         </Link>
                                                     ) : null}
-                                                </td>
-                                            </tr>
+                                                </TableDescription>
+                                            </TableRow>
                                         ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>

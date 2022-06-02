@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../core/components/form';
+import { Table, TableDescription, TableHead, TableRow } from '../../../core/components/table';
+import { TableBody } from '../../../core/components/table/tableBody';
 import { Dimension } from '../../../core/models/dimension';
 import { routes } from '../../../core/routes';
 import { PaginationBar } from '../../dashboard';
@@ -53,35 +55,23 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ currentPag
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            ID
-                                        </th>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Type
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Dimension
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                            <Table>
+                                <TableHead fields={['ID', 'Type', 'Dimension', '']} />
+
+                                <TableBody>
                                     {Boolean(count && dimensions) &&
                                         dimensions.map((dimension) => (
-                                            <tr key={dimension.id}>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <TableRow key={dimension.id}>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{dimension.id}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{dimension.typeId.name}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{dimension.description}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm font-semibold whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div>
                                                         <Link href={`${routes.adminEditSliderUrl}/`} passHref>
                                                             <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
@@ -90,11 +80,11 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ currentPag
                                                             <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Delete</p>
                                                         </Link>
                                                     </div>
-                                                </td>
-                                            </tr>
+                                                </TableDescription>
+                                            </TableRow>
                                         ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>
