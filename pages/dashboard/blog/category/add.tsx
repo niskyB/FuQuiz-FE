@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
-import { UserRole } from '../../../src/core/models/role';
-import AddBlogCategory from '../../../src/packages/blogCategory/containers/addCategory';
-import { DashBoardLayout } from '../../../src/packages/dashboard';
+import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
+import { UserRole } from '../../../../src/core/models/role';
+import AddBlogCategory from '../../../../src/packages/blogCategory/containers/addCategory';
+import { DashBoardLayout } from '../../../../src/packages/dashboard';
 
 interface AddCategoryPageProps {}
 
