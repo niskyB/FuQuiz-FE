@@ -3,4 +3,5 @@ export enum ApiListRoutes {
     BLOGS = 'blogs',
     BLOGS_CATEGORIES = 'blog-categories',
     USERS = 'admin/users',
+    SUBJECT_CATEGORIES = 'subject-categories',
 }

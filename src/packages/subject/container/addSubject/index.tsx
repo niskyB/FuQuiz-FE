@@ -2,7 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetList } from '../../../../core/common/hooks';
+import { useGetListWithCount } from '../../../../core/common/hooks';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { SubjectCategory } from '../../../../core/models/subject';
