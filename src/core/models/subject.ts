@@ -2,7 +2,7 @@ import { User } from './user';
 
 export interface Subject {
     id: string;
-    title: string;
+    name: string;
     tagLine: string;
     description: string;
     subjectCategory: SubjectCategory;

@@ -22,7 +22,7 @@ const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
     ]);
 
     const [subject, setSubject] = React.useState<Subject>({
-        title: 'Javascript basic',
+        name: 'Javascript basic',
         id: '1aasd-asdzxc',
         assignTo: 'Trịnh Văn Quyết',
         briefInfo: 'Learn javascript from zero to hero',
