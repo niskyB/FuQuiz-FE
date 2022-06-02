@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
 
 import { Registration } from '../../../../core/models/registration';
 import { UserRole } from '../../../../core/models/role';
@@ -462,67 +464,46 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Id
-                                        </th>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Email
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Registration Time
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Subject
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Package
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Total Cost
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Status
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Valid From
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Valid To
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Last Updated By
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                            <Table>
+                                <TableHead
+                                    fields={[
+                                        'ID',
+                                        'Email',
+                                        'Registration Time',
+                                        'Subject',
+                                        'Package',
+                                        'Total Cost',
+                                        'Status',
+                                        'Valid From',
+                                        'Valid To',
+                                        'Last Updated By',
+                                        '',
+                                    ]}
+                                />
+
+                                <TableBody>
                                     {Boolean(count && registrations) &&
                                         registrations.map((registration) => (
-                                            <tr key={registration.id}>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <TableRow key={registration.id}>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.id}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.email}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.registrationTime}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.subject.title}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.package.name}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.totalCost}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     {registration.status ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
@@ -532,25 +513,25 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                                             Inactive
                                                         </span>
                                                     )}
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.validForm}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{registration.validTo}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">Hoang Loc</div>
-                                                </td>
-                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <Link href={`${routes.editRegistrationUrl}/${registration.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
-                                                </td>
-                                            </tr>
+                                                </TableDescription>
+                                            </TableRow>
                                         ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>

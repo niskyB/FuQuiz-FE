@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
 import { Answer, Question } from '../../../../core/models/question';
 import { PaginationBar } from '../../../dashboard';
 
@@ -113,36 +115,21 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Question
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Dimension
-                                        </th>
+                            <Table>
+                                <TableHead fields={['Question', 'Dimension', 'Activation', '']} />
 
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Activation
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                                <TableBody>
                                     {Boolean(count && questions) &&
                                         questions.map((question, index) => (
-                                            <tr key={question.id}>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <TableRow key={question.id}>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{question.content}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{question.dimension.name}</div>
-                                                </td>
+                                                </TableDescription>
 
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <TableDescription>
                                                     {question.isActive ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
@@ -152,16 +139,16 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                                                             Inactive
                                                         </span>
                                                     )}
-                                                </td>
-                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <Link href={`${router.asPath}/edit/${question.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
-                                                </td>
-                                            </tr>
+                                                </TableDescription>
+                                            </TableRow>
                                         ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>

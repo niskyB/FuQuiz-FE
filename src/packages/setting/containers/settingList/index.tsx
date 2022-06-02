@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
 import { Setting } from '../../../../core/models/setting';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
@@ -106,49 +108,26 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Id
-                                        </th>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Type
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Value
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Order
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Activation
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Activation</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                            <Table>
+                                <TableHead fields={['ID', 'Type', 'Value', 'Order', 'Activation', '', '']} />
+
+                                <TableBody>
                                     {Boolean(count && settings) &&
                                         settings.map((setting) => (
-                                            <tr key={setting.id}>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <TableRow key={setting.id}>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{setting.id}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{setting.type.name}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{setting.value}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{setting.order}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     {setting.isActivate ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
@@ -158,13 +137,13 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                                             Inactive
                                                         </span>
                                                     )}
-                                                </td>
-                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <Link href={`${routes.editSettingUrl}/${setting.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     {setting.isActivate ? (
                                                         <button className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-400 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2">
                                                             Deactivate
@@ -174,11 +153,11 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                                             Activate
                                                         </button>
                                                     )}
-                                                </td>
-                                            </tr>
+                                                </TableDescription>
+                                            </TableRow>
                                         ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>

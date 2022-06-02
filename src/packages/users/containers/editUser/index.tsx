@@ -1,40 +1,28 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
-import { UserRole } from '../../../../core/models/role';
-import { Gender, User } from '../../../../core/models/user';
+import { genderFieldData } from '../../../../core/common/dataField';
+import { FormErrorMessage, FormWrapper, RadioField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
+import { useGetUserById } from './hook';
 
-interface EditUserProps {}
+interface EditUserProps {
+    id: string;
+}
 
-const EditUser: React.FunctionComponent<EditUserProps> = () => {
+const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
     const methods = useForm({});
-    const [user, setUser] = React.useState<User>({
-        imageUrl:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg/1024px-Tr%E1%BB%8Bnh_V%C4%83n_Quy%E1%BA%BFt.jpg',
-        email: 'kainesv86@gmail.com',
-        createdAt: '05/18/2022',
-        fullName: 'Trịnh Văn Quyết',
-        gender: Gender.MALE,
-        isActive: true,
-        mobile: '0986609813',
-        password: '',
-        role: { id: '6', name: UserRole.ADMIN },
-        id: '1asdasd-asdzv-azsde4',
-        token: '',
-        typeId: '1',
-        updateAt: '05/17/2022',
-    });
+    const { user } = useGetUserById(id);
 
     React.useEffect(() => {
-        methods.setValue('fullName', user.fullName);
-        methods.setValue('email', user.email);
-        methods.setValue('mobile', user.mobile);
-        methods.setValue('role', user.role.name);
-        methods.setValue('gender', user.gender);
-    }, []);
+        if (user) {
+            methods.setValue('fullName', user.fullName);
+            methods.setValue('email', user.email);
+            methods.setValue('mobile', user.mobile);
+            methods.setValue('role', user.role.name);
+            methods.setValue('gender', user.gender);
+        }
+    }, [user]);
 
     const _handleOnSubmit = async () => {};
 
@@ -54,14 +42,7 @@ const EditUser: React.FunctionComponent<EditUserProps> = () => {
                             <TextField label="New password" name="password" type="password" />
                             <TextField label="Confirm password" name="confirmPassword" type="password" />
                             <TextField label="Role" name="role" readOnly={true} />
-                            <RadioField
-                                label="sex"
-                                name="gender"
-                                values={[
-                                    { label: 'Male', value: Gender.MALE },
-                                    { label: 'Female', value: Gender.FEMALE },
-                                ]}
-                            />
+                            <RadioField label="sex" name="gender" values={genderFieldData} />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

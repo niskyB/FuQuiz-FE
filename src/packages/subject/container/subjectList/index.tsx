@@ -4,6 +4,8 @@ import * as React from 'react';
 import { Component } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
 import { UserRole } from '../../../../core/models/role';
 import { Subject, SubjectCategory } from '../../../../core/models/subject';
 import { Gender, User } from '../../../../core/models/user';
@@ -144,50 +146,30 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Title
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Category
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Info
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Expert
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Activation
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                            <Table>
+                                <TableHead fields={['Title', 'Category', 'Info', 'Expert', 'Activation', '']} />
+
+                                <TableBody>
                                     {Boolean(count && subjects) &&
                                         subjects.map((subject) => (
-                                            <tr key={subject.id}>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <TableRow key={subject.id}>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{subject.title}</div>
                                                     <div className="text-gray-900">{new Date(subject.createAt).toLocaleDateString()}</div>
-                                                </td>
-                                                <td className="py-4 pl-4 whitespace-nowrap sm:pl-6">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="max-w-sm">
                                                         <div className="text-gray-900">{subject.subjectCategory.name}</div>
                                                     </div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{subject.description}</div>
                                                     <div className="text-gray-900">36 lessons</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{subject.assignTo.fullName}</div>
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     {subject ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
@@ -197,19 +179,19 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                                                             Inactive
                                                         </span>
                                                     )}
-                                                </td>
-                                                <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <Link href={`${routes.adminEditSubjectUrl}/${subject.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                     <Link href={`${routes.adminSubjectListUrl}/${subject.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Detail</p>
                                                     </Link>
-                                                </td>
-                                            </tr>
+                                                </TableDescription>
+                                            </TableRow>
                                         ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>
