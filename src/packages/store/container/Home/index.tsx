@@ -138,7 +138,7 @@ type TabContent = 'blog' | 'course';
 export const Home: React.FunctionComponent<HomeProps> = () => {
     const options = React.useMemo(() => ({ category: '', createdAt: '', currentPage: 0, isShow: true, pageSize: 10, title: '', userId: '' }), []);
     const { blogList } = useGetBlogList(options);
-    const [tabOpening, setTabOpening] = React.useState<TabContent>('course');
+    const [tabOpening, setTabOpening] = React.useState<TabContent>('blog');
 
     const renderContent = () => {
         switch (tabOpening) {

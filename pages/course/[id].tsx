@@ -70,7 +70,6 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
 
     return (
         <StoreLayout>
-            {/* pup */}
             {popUp ? (
                 <div className="fixed inset-0 flex items-center justify-center w-screen h-screen">
                     <div className="fixed w-screen h-screen cursor-pointer bg-black/80" onClick={() => setPopUp(false)}></div>

@@ -4,6 +4,8 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { allFieldData, genderFieldData, Order, OrderFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { userFieldDataParser } from '../../../../core/util/user';
@@ -103,56 +105,32 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Image
-                                        </th>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Information
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Gender
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Role
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Create Date / Last Update
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Activation
-                                        </th>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                            <Table>
+                                <TableHead fields={['Image', 'Information', 'Gender', 'Role', 'Create Date / Last Update', 'Activation', '']} />
+                                <TableBody>
                                     {userList.map((user) => (
-                                        <tr key={user.id}>
-                                            <td className="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+                                        <TableRow key={user.id}>
+                                            <TableDescription>
                                                 <div className="max-w-sm">
                                                     <img className="w-10 h-10" src={user.imageUrl || '/asset/images/default-avatar.png'} alt="" />
                                                 </div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            </TableDescription>
+                                            <TableDescription>
                                                 <div className="text-gray-900">{user.email}</div>
                                                 <div className="text-gray-900">{user.fullName}</div>
                                                 <div className="text-gray-900">{user.mobile}</div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            </TableDescription>
+                                            <TableDescription>
                                                 <div className="text-gray-900">{user.gender}</div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            </TableDescription>
+                                            <TableDescription>
                                                 <div className="text-gray-900">{user.role.name}</div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            </TableDescription>
+                                            <TableDescription>
                                                 <div className="text-gray-900">{user.createdAt}</div>
                                                 <div className="text-gray-900">{user.updateAt}</div>
-                                            </td>
-                                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            </TableDescription>
+                                            <TableDescription>
                                                 {user.isActive ? (
                                                     <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                         Active
@@ -162,16 +140,16 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                                         Inactive
                                                     </span>
                                                 )}
-                                            </td>
-                                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                            </TableDescription>
+                                            <TableDescription>
                                                 <Link href={`${routes.adminEditUsersUrl}/${user.id}`} passHref>
                                                     <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                 </Link>
-                                            </td>
-                                        </tr>
+                                            </TableDescription>
+                                        </TableRow>
                                     ))}
-                                </tbody>
-                            </table>
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </div>
