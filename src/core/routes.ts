@@ -33,7 +33,8 @@ export const routes = {
     blogListUrl: '/blogs',
 
     //blog category
-    adminAddBlogCategory: '/dashboard/blog/add-category',
+    adminAddBlogCategory: '/dashboard/blog/category/add',
+    adminListBlogCategory: '/dashboard/blog/category',
 
     // Subject
     adminSubjectListUrl: '/dashboard/subject',
