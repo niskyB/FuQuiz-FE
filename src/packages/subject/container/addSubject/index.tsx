@@ -2,9 +2,12 @@ import Link from 'next/link';
 import * as React from 'react';
 import { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { useGetListWithCount } from '../../../../core/common/hooks';
+import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { SubjectCategory } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
+import { AddSubjectDTO } from './interface';
 
 interface AddSubjectProps {}
 
@@ -12,8 +15,18 @@ const mapFields = [
     { label: 'Title', name: 'title' },
     { label: 'Expert', name: 'assignTo' },
 ];
-
+const defaultValues: AddSubjectDTO = {
+    assignTo: '',
+    category: '',
+    description: '',
+    image: null,
+    name: '',
+    tagLine: '',
+};
 const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
+    const [file, setFile] = React.useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = React.useState<string>('');
+
     const [categories, setCategories] = React.useState<SubjectCategory[]>([
         { id: '1', name: 'Javascript' },
         { id: '2', name: 'React' },
@@ -21,7 +34,9 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
         { id: '4', name: 'Dotnet' },
     ]);
 
-    const methods = useForm();
+    const methods = useForm<AddSubjectDTO>({
+        defaultValues,
+    });
 
     const _handleOnSubmit = async () => {};
 
@@ -36,19 +51,22 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                         </div>
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
-                            {mapFields.map((item) => (
-                                <div
-                                    key={item.name}
-                                    className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-                                >
-                                    <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        {item.label}
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name={item.name} type="text" />
-                                    </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Title
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <TextField label="" name="title" type="text" />
                                 </div>
-                            ))}
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="tagLine" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Tag line
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <TextField label="" name="tagLine" type="text" />
+                                </div>
+                            </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Category
@@ -60,32 +78,36 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                 />
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Brief Info
+                                <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Assign to
                                 </label>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <textarea
-                                        {...methods.register('briefInfo')}
-                                        rows={7}
-                                        name="briefInfo"
-                                        id="briefInfo"
-                                        autoComplete="given-name"
-                                        className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
-                                    />
-                                </div>
+                                <SelectField
+                                    label=""
+                                    values={categories.map((category) => ({ label: category.name, value: category.name }))}
+                                    name="assignTo"
+                                />
                             </div>
+
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Description
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <textarea
-                                        {...methods.register('Description')}
-                                        rows={7}
-                                        name="briefInfo"
-                                        id="briefInfo"
-                                        autoComplete="given-name"
-                                        className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
+                                    <TextareaField label="" name="description" />
+                                </div>
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Thumbnail
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <FileField
+                                        file={file}
+                                        label=""
+                                        name="image"
+                                        previewUrl={previewUrl}
+                                        setFile={setFile}
+                                        setPreviewUrl={setPreviewUrl}
                                     />
                                 </div>
                             </div>

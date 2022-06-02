@@ -1,6 +1,7 @@
-import { SubjectCategory } from '../../../../core/models/subject';
+import { Subject } from '../../../../core/models/subject';
 
-export interface AddSubjectFormDTO {
-    title: string;
-    category: SubjectCategory;
+export interface AddSubjectDTO extends Pick<Subject, 'name' | 'tagLine' | 'description'> {
+    category: string;
+    assignTo: string;
+    image: File | null;
 }

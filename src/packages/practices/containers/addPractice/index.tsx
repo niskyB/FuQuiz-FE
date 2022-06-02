@@ -16,9 +16,9 @@ const dimensions = [
 const AddPractice: React.FunctionComponent<AddPracticeProps> = () => {
     const methods = useForm();
     const [subjects, setSubjects] = React.useState<Pick<Subject, 'title' | 'id'>[]>([
-        { id: '1', title: 'Subject 1' },
-        { id: '2', title: 'Subject 2' },
-        { id: '3', title: 'Subject 3' },
+        { id: '1', name: 'Subject 1' },
+        { id: '2', name: 'Subject 2' },
+        { id: '3', name: 'Subject 3' },
     ]);
 
     const _handleOnSubmit = async () => {};
@@ -31,7 +31,7 @@ const AddPractice: React.FunctionComponent<AddPracticeProps> = () => {
                             <SelectField
                                 name="subject"
                                 label="Subject"
-                                values={subjects.map((subject) => ({ label: subject.title, value: subject.id }))}
+                                values={subjects.map((subject) => ({ label: subject.name, value: subject.id }))}
                             />
                             <TextField label="Number of practicing questions" name="numberQuestions" type="number" />
                             <SelectField name="dimension" label="Question are selected by topic(s) or a dimension?" values={dimensions} />

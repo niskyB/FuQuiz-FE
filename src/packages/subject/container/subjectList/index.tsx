@@ -43,7 +43,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
     const [count, setCount] = React.useState<number>(4);
     const [subjects, setSubjects] = React.useState<Subject[]>([
         {
-            title: 'Javascript basic',
+            name: 'Javascript basic',
             id: '1aasd-asdzxc',
             assignTo: user,
             description: 'Learn javascript from zero to hero',
@@ -54,7 +54,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
             thumbnailUrl: '',
         },
         {
-            title: 'Javascript basic',
+            name: 'Javascript basic',
             id: '1aasd-asdzxc',
             assignTo: user,
             description: 'Learn javascript from zero to hero',
@@ -65,7 +65,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
             thumbnailUrl: '',
         },
         {
-            title: 'Javascript basic',
+            name: 'Javascript basic',
             id: '1aasd-asdzxc',
             assignTo: user,
             description: 'Learn javascript from zero to hero',
@@ -76,7 +76,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
             thumbnailUrl: '',
         },
         {
-            title: 'Javascript basic',
+            name: 'Javascript basic',
             id: '1aasd-asdzxc',
             assignTo: user,
             description: 'Learn javascript from zero to hero',
@@ -154,7 +154,7 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
                                         subjects.map((subject) => (
                                             <TableRow key={subject.id}>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{subject.title}</div>
+                                                    <div className="text-gray-900">{subject.name}</div>
                                                     <div className="text-gray-900">{new Date(subject.createAt).toLocaleDateString()}</div>
                                                 </TableDescription>
                                                 <TableDescription>

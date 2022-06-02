@@ -16,9 +16,9 @@ interface PracticeListProps {}
 
 const PracticeList: React.FC<PracticeListProps> = () => {
     const [subjects, setSubjects] = React.useState<SelectSubject[]>([
-        { id: '1', title: 'Javascript basic' },
-        { id: '2', title: 'Javascript' },
-        { id: '3', title: 'Master of coins' },
+        { id: '1', name: 'Javascript basic' },
+        { id: '2', name: 'Javascript' },
+        { id: '3', name: 'Master of coins' },
     ]);
     const [quizzes, setQuizzes] = React.useState<PracticeQuiz[]>([
         {
@@ -32,7 +32,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
         {
             id: '2',
@@ -45,7 +45,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
         {
             id: '3',
@@ -58,7 +58,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
         {
             id: '4',
@@ -71,7 +71,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
     ]);
     const [count, setCount] = React.useState<number>(4);
@@ -97,7 +97,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                         <form className="max-w-xs">
                             <SelectField
                                 label="Subject"
-                                values={subjects.map((subject) => ({ label: subject.title, value: subject.id }))}
+                                values={subjects.map((subject) => ({ label: subject.name, value: subject.id }))}
                                 name="Subject"
                             />
                         </form>
@@ -128,7 +128,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                         quizzes.map((quiz) => (
                                             <TableRow key={quiz.id}>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{quiz.subject.title}</div>
+                                                    <div className="text-gray-900">{quiz.subject.name}</div>
                                                     <div className="text-gray-900">{quiz.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>

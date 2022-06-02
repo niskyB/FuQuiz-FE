@@ -29,7 +29,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
             registrationTime: '23/5/2022',
             subject: {
                 id: 'asdasd-123as-123aasd',
-                title: 'Subject 1',
+                name: 'Subject 1',
                 tagLine: 'Tag Line',
                 description: 'Description 1',
                 subjectCategory: {
@@ -84,7 +84,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
             registrationTime: '23/5/2022',
             subject: {
                 id: 'asdasd-123as-123aasd',
-                title: 'Subject 1',
+                name: 'Subject 1',
                 tagLine: 'Tag Line',
                 description: 'Description 1',
                 subjectCategory: {
@@ -139,7 +139,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
             registrationTime: '23/5/2022',
             subject: {
                 id: 'asdasd-123as-123aasd',
-                title: 'Subject 1',
+                name: 'Subject 1',
                 tagLine: 'Tag Line',
                 description: 'Description 1',
                 subjectCategory: {
@@ -194,7 +194,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
             registrationTime: '23/5/2022',
             subject: {
                 id: 'asdasd-123as-123aasd',
-                title: 'Subject 1',
+                name: 'Subject 1',
                 tagLine: 'Tag Line',
                 description: 'Description 1',
                 subjectCategory: {
@@ -249,7 +249,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
             registrationTime: '23/5/2022',
             subject: {
                 id: 'asdasd-123as-123aasd',
-                title: 'Subject 1',
+                name: 'Subject 1',
                 tagLine: 'Tag Line',
                 description: 'Description 1',
                 subjectCategory: {
@@ -304,7 +304,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
             registrationTime: '23/5/2022',
             subject: {
                 id: 'asdasd-123as-123aasd',
-                title: 'Subject 1',
+                name: 'Subject 1',
                 tagLine: 'Tag Line',
                 description: 'Description 1',
                 subjectCategory: {
@@ -359,7 +359,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
             registrationTime: '23/5/2022',
             subject: {
                 id: 'asdasd-123as-123aasd',
-                title: 'Subject 1',
+                name: 'Subject 1',
                 tagLine: 'Tag Line',
                 description: 'Description 1',
                 subjectCategory: {
@@ -495,7 +495,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                                     <div className="text-gray-900">{registration.registrationTime}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{registration.subject.title}</div>
+                                                    <div className="text-gray-900">{registration.subject.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{registration.package.name}</div>

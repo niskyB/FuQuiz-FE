@@ -15,9 +15,9 @@ interface SimulationListProps {}
 
 const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
     const [subjects, setSubjects] = React.useState<SelectSubject[]>([
-        { id: '1', title: 'Javascript basic' },
-        { id: '2', title: 'Javascript' },
-        { id: '3', title: 'Master of coins' },
+        { id: '1', name: 'Javascript basic' },
+        { id: '2', name: 'Javascript' },
+        { id: '3', name: 'Master of coins' },
     ]);
 
     const [quizzes, setQuizzes] = React.useState<PracticeQuiz[]>([
@@ -32,7 +32,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
         {
             id: '2',
@@ -45,7 +45,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
         {
             id: '3',
@@ -58,7 +58,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
         {
             id: '4',
@@ -71,7 +71,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
-            subject: { id: '1', title: 'Javascript basic' },
+            subject: { id: '1', name: 'Javascript basic' },
         },
     ]);
     const [count, setCount] = React.useState<number>(4);
@@ -97,7 +97,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
                         <form className="flex items-end space-x-2">
                             <SelectField
                                 label="Subject"
-                                values={subjects.map((subject) => ({ label: subject.title, value: subject.id }))}
+                                values={subjects.map((subject) => ({ label: subject.name, value: subject.id }))}
                                 name="Subject"
                             />
                             <TextField name="examName" label="Exam name" />
@@ -124,7 +124,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
                                             <TableRow key={quiz.id}>
                                                 <TableDescription>
                                                     <div className="font-semibold text-gray-900">#{quiz.id}</div>
-                                                    <div className="text-gray-900">{quiz.subject.title}</div>
+                                                    <div className="text-gray-900">{quiz.subject.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
