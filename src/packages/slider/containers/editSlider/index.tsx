@@ -50,7 +50,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     React.useEffect(() => {
         if (slider) {
             // if user go in there are not admin or the owner of the slider, push them to sliderList page
-            if (userState.role.name != UserRole.ADMIN && slider.marketing.id && slider.marketing.id !== userState.typeId) {
+            if (userState.role.name != UserRole.ADMIN && slider.marketing && slider.marketing.id && slider.marketing.id !== userState.typeId) {
                 router.push(routes.adminSliderListUrl);
                 return;
             }
@@ -162,7 +162,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
                                     ) : (
                                         <div className="w-full max-w-2xl h-96 max-h-96">
                                             <div className="relative">
-                                                <img src={imageUrl} alt="" className="max-w-full max-h-full" />
+                                                <img src={imageUrl} alt="Image is not available now" className="block max-w-full max-h-full " />
                                                 <label
                                                     htmlFor="image"
                                                     className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-lg opacity-0 cursor-pointer bg-gray-900/50 text-gray-50 hover:opacity-100"
@@ -180,7 +180,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <Link href={routes.adminSliderListUrl} passHref>
+                        <Link href={routes.adminSliderListUrl + routes.adminParamSliderUrl} passHref>
                             <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Cancel
                             </p>
