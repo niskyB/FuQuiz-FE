@@ -85,7 +85,7 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
                             isTruncate = false;
                             return (
                                 <Link key={index} passHref href={routeUrl.replace(`currentPage=${currentPage}`, `currentPage=${index + 1}`)}>
-                                    <p
+                                    <a
                                         className={`${
                                             index + 1 === currentPage
                                                 ? 'z-10 inline-flex items-center text-indigo-600 border border-indigo-500 bg-indigo-50'
@@ -93,7 +93,7 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
                                         } relative px-4 py-2 text-sm font-medium cursor-pointer`}
                                     >
                                         {index + 1}
-                                    </p>
+                                    </a>
                                 </Link>
                             );
                         })}
