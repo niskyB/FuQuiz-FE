@@ -154,7 +154,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
+            {/* <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} /> */}
         </div>
     );
 };
