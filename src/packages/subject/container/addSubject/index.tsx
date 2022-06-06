@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetListWithCount } from '../../../../core/common/hooks';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { SubjectCategory } from '../../../../core/models/subject';
@@ -11,10 +9,6 @@ import { AddSubjectDTO } from './interface';
 
 interface AddSubjectProps {}
 
-const mapFields = [
-    { label: 'Title', name: 'title' },
-    { label: 'Expert', name: 'assignTo' },
-];
 const defaultValues: AddSubjectDTO = {
     assignTo: '',
     category: '',
