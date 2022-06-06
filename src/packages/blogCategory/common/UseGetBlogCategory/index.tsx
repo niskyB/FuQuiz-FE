@@ -1,14 +1,9 @@
-import * as React from 'react';
+import { ApiListRoutes } from '../../../../core/common/enum';
+import { useGetList } from '../../../../core/common/hooks';
 import { BlogCategory } from '../../../../core/models/blog';
-import { getAllBlogCategory } from './action';
 
 export const useGetBlogCategory = () => {
-    const [blogCategoryList, setBlogCategoryList] = React.useState<BlogCategory[]>([]);
-    React.useEffect(() => {
-        getAllBlogCategory().then((data) => {
-            setBlogCategoryList(data);
-        });
-    }, []);
+    const { list: blogCategoryList } = useGetList<BlogCategory, null>(ApiListRoutes.BLOGS_CATEGORIES);
 
     return { blogCategoryList };
 };

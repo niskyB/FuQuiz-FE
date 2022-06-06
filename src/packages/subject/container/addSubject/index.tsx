@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetListWithCount } from '../../../../core/common/hooks';
+import { useGetExpertFieldData } from '../../../../core/common/dataField/expert';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
+import { UserRole } from '../../../../core/models/role';
 import { SubjectCategory } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
+import { useAdminGetUserList } from '../../../users/containers/userList/hook';
 import { AddSubjectDTO } from './interface';
 
 interface AddSubjectProps {}
@@ -37,6 +38,8 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const methods = useForm<AddSubjectDTO>({
         defaultValues,
     });
+
+    const { expertsFieldData } = useGetExpertFieldData();
 
     const _handleOnSubmit = async () => {};
 
@@ -79,13 +82,9 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Assign to
+                                    Owner
                                 </label>
-                                <SelectField
-                                    label=""
-                                    values={categories.map((category) => ({ label: category.name, value: category.name }))}
-                                    name="assignTo"
-                                />
+                                <SelectField label="" values={[...expertsFieldData]} name="Owner" />
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
