@@ -8,14 +8,11 @@ import { UserRole } from '../../../../core/models/role';
 import { SubjectCategory } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
 import { useAdminGetUserList } from '../../../users/containers/userList/hook';
+import { useGetSubjectCategory } from './hook';
 import { AddSubjectDTO } from './interface';
 
 interface AddSubjectProps {}
 
-const mapFields = [
-    { label: 'Title', name: 'title' },
-    { label: 'Expert', name: 'assignTo' },
-];
 const defaultValues: AddSubjectDTO = {
     assignTo: '',
     category: '',
@@ -28,12 +25,9 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const [file, setFile] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
 
-    const [categories, setCategories] = React.useState<SubjectCategory[]>([
-        { id: '1', name: 'Javascript' },
-        { id: '2', name: 'React' },
-        { id: '3', name: 'C#' },
-        { id: '4', name: 'Dotnet' },
-    ]);
+    const { list: categories } = useGetSubjectCategory();
+    const options = React.useMemo(() => ({ role: UserRole.EXPERT }), []);
+    const { count, userList } = useAdminGetUserList({ role: UserRole.EXPERT });
 
     const methods = useForm<AddSubjectDTO>({
         defaultValues,
@@ -84,7 +78,7 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                 <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Owner
                                 </label>
-                                <SelectField label="" values={[...expertsFieldData]} name="Owner" />
+                                <SelectField label="" values={userList.map((user) => ({ label: user.fullName, value: user.id }))} name="assignTo" />
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
