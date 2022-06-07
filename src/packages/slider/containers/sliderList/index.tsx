@@ -7,11 +7,11 @@ import { UserRole } from '../../../../core/models/role';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useForm } from 'react-hook-form';
 import { GetSliderOptionsDTO } from './interface';
-import { useGetSliderList } from './hook';
 import { PaginationBar } from '../../../dashboard';
 import { pushWithParams } from '../../../../core/util/router';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
+import { useGetSliderList } from '../../common/hooks/useGetSliderList';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Slider } from '../../../../core/models/slider';
-import { getSliderById } from './action';
+import { getSliderById } from '../../containers/editSlider/action';
 
 interface useGetSliderProps {
     id: string;
