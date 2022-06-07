@@ -1,5 +1,5 @@
-import { useGetBlog } from '../editBlog/hook';
 import * as React from 'react';
+import { useGetBlog } from '../../component/hooks/useGetBlog';
 
 interface BlogPostProps {
     id: string;

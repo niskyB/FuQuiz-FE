@@ -8,11 +8,11 @@ import { DateField, FormWrapper, SelectBlogCategory, SelectField, TextField } fr
 import { useStoreUser } from '../../../../core/store';
 import { pushWithParams } from '../../../../core/util/router';
 import { useRouter } from 'next/router';
-import { useGetBlogList } from './hook';
 import { UserRole } from '../../../../core/models/role';
 import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { PaginationBar } from '../../../dashboard';
 import { useGetBlogCategory } from '../../../blogCategory';
+import { useGetBlogList } from '../../component/hooks/useGetBlogList';
 interface BlogListProps extends FilterBlogListDTO {}
 
 export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
