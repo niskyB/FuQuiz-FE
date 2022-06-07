@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
-import { useGetBlogCategory } from '../../common/hooks/useGetBlogCategory';
+import { useGetBlogCategoryList } from '../../common/hooks/useGetBlogCategory';
 import { useGetBlogCategoryById } from '../../common/hooks/useGetBlogCategoryById';
 import { editBlogCategory } from './action';
 import { EditBlogCategoryDTO } from './interface';
