@@ -9,6 +9,6 @@ export interface GetListWithCount<T> {
 }
 
 export interface SelectionFieldValues<T> {
-    label: string;
+    label: any;
     value: T;
 }
