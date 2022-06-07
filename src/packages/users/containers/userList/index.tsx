@@ -9,8 +9,7 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { userFieldDataParser } from '../../../../core/util/user';
-import { PaginationBar } from '../../../dashboard';
-import { useAdminGetUserList } from './hook';
+import { useAdminGetUserList } from '../../';
 import { FilterUserDTO, FilterUserFormDTO } from './interface';
 
 interface UserListProps extends FilterUserDTO {}

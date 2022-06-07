@@ -8,7 +8,7 @@ import { SubjectCategory } from '../../../../core/models/subject';
 import { User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
-import { useAdminGetUserList } from '../../../users/containers/userList/hook';
+import { useAdminGetUserList } from '../../../users';
 import { useGetSubjectCategory } from './hook';
 import { AddSubjectDTO } from './interface';
 
