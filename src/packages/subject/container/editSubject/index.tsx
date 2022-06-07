@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Subject, SubjectCategory } from '../../../../core/models/subject';
@@ -13,7 +12,7 @@ const mapFields = [
     { label: 'Expert', name: 'assignTo' },
 ];
 
-const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
+export const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
     const [categories, setCategories] = React.useState<SubjectCategory[]>([
         { id: '1', name: 'Javascript' },
         { id: '2', name: 'React' },
@@ -143,5 +142,3 @@ const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
         </FormWrapper>
     );
 };
-
-export default EditSubject;

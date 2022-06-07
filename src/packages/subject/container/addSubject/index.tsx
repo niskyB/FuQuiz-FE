@@ -9,7 +9,7 @@ import { User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
 import { useAdminGetUserList } from '../../../users';
-import { useGetSubjectCategory } from './hook';
+import { useGetSubjectCategory } from '../../';
 import { AddSubjectDTO } from './interface';
 
 interface AddSubjectProps {}
@@ -22,7 +22,7 @@ const defaultValues: AddSubjectDTO = {
     name: '',
     tagLine: '',
 };
-const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
+export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const [file, setFile] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
 
@@ -123,5 +123,3 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
         </FormWrapper>
     );
 };
-
-export default AddSubject;
