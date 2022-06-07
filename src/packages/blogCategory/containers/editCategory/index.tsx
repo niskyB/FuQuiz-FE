@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
+import { useGetBlogCategory } from '../../common/hooks/useGetBlogCategory';
+import { useGetBlogCategoryById } from '../../common/hooks/useGetBlogCategoryById';
 import { editBlogCategory } from './action';
 import { EditBlogCategoryDTO } from './interface';
 
@@ -15,6 +17,7 @@ interface EditBlogCategoryProps {
 const EditBlogCategory: React.FunctionComponent<EditBlogCategoryProps> = ({ id }) => {
     const methods = useForm<EditBlogCategoryDTO>();
     const router = useRouter();
+    const { category } = useGetBlogCategoryById(id);
 
     const _handleOnSubmit = async (data: EditBlogCategoryDTO) => {
         const res = await editBlogCategory(id, data);
@@ -24,6 +27,12 @@ const EditBlogCategory: React.FunctionComponent<EditBlogCategoryProps> = ({ id }
             toast.success('Edit category blog success!');
         }
     };
+
+    React.useEffect(() => {
+        console.log(category);
+        if (category) methods.setValue('name', category.name);
+        return () => {};
+    }, [category]);
 
     return (
         <div className="flex flex-col justify-center flex-1 py-12 sm:px-6 lg:px-8 intro-y">

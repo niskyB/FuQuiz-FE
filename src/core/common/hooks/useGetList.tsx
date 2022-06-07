@@ -37,3 +37,19 @@ export const getFilter = async <T, Options>(apiRoute: string, options?: Options)
     const res = await http.get<T[]>(`/${apiRoute}${urlQueryParser(options)}`);
     return res.data;
 };
+
+export const useGetDataById = <T,>(apiRoute: ApiListRoutes, id: string) => {
+    const [data, setData] = React.useState<T>();
+    React.useEffect(() => {
+        getDataById<T>(apiRoute, id).then((data) => {
+            setData(data);
+        });
+    }, [id]);
+
+    return { data };
+};
+
+export const getDataById = async <T,>(apiRoute: string, id: string) => {
+    const res = await http.get<T>(`/${apiRoute}/${id}`);
+    return res.data;
+};
