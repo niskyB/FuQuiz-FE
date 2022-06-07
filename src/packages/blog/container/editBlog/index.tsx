@@ -18,7 +18,7 @@ interface EditBlogProps {
 
 const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     const { blog } = useGetBlog(id);
-    const { blogCategoryList } = useGetBlogCategory();
+    const { categories } = useGetBlogCategory();
     const methods = useForm<EditBlogDTO>({});
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>(blog?.thumbnailUrl || '');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
@@ -77,7 +77,7 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                         Category
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectBlogCategory label="" name="category" values={blogCategoryList} />
+                                        <SelectBlogCategory label="" name="category" values={categories} />
                                     </div>
                                 </div>
                             </div>

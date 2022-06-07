@@ -5,7 +5,6 @@ import { BlogBox } from '../blogBox';
 import { useForm } from 'react-hook-form';
 import { FilterBlogListDTO, FilterBlogListFormDTO } from './interface';
 import { DateField, FormWrapper, SelectBlogCategory, SelectField, TextField } from '../../../../core/components/form';
-import { useGetBlogCategory } from '../../../blogCategory';
 import { useStoreUser } from '../../../../core/store';
 import { pushWithParams } from '../../../../core/util/router';
 import { useRouter } from 'next/router';
@@ -13,6 +12,7 @@ import { useGetBlogList } from './hook';
 import { UserRole } from '../../../../core/models/role';
 import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { PaginationBar } from '../../../dashboard';
+import { useGetBlogCategory } from '../../../blogCategory';
 interface BlogListProps extends FilterBlogListDTO {}
 
 export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
@@ -23,7 +23,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
     const { blogList, count } = useGetBlogList(options);
     const router = useRouter();
     const userState = useStoreUser();
-    const { blogCategoryList } = useGetBlogCategory();
+    const { categories } = useGetBlogCategory();
 
     const methods = useForm<FilterBlogListFormDTO>({
         defaultValues: {
@@ -76,7 +76,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
                             <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} />
                         </div>
                         <div className="">
-                            <SelectBlogCategory label="Category" name="category" values={[{ id: '', name: 'All' }, ...blogCategoryList]} />
+                            <SelectBlogCategory label="Category" name="category" values={[{ id: '', name: 'All' }, ...categories]} />
                         </div>
                         <div className="">
                             <DateField label="Create at" name="createdAt" />

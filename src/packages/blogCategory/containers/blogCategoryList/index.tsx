@@ -1,18 +1,14 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
-import { PaginationBar } from '../../../dashboard';
-import { useGetBlogCategoriesList } from './hook';
+import { useGetBlogCategory } from '../../common/hooks/useGetBlogCategory';
 
 interface BlogCategoryListProps {}
 
 const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = () => {
-    const { categories } = useGetBlogCategoriesList();
+    const { categories } = useGetBlogCategory();
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
