@@ -4,12 +4,10 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useBlogCategoriesFieldData } from '../../../../core/common/dataField/blogCategory';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
-import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
-import { useGetBlogCategory } from '../../../blogCategory';
 import { addBlog } from './action';
 import { AddBlogDTO } from './interface';
 

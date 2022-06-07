@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetExpertFieldData } from '../../../../core/common/dataField/expert';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { UserRole } from '../../../../core/models/role';
 import { SubjectCategory } from '../../../../core/models/subject';
+import { User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
-import { useAdminGetUserList } from '../../../users/containers/userList/hook';
-import { useGetSubjectCategory } from './hook';
+import { dataParser } from '../../../../core/util/data';
+import { useAdminGetUserList } from '../../../users';
+import { useGetSubjectCategory } from '../../';
 import { AddSubjectDTO } from './interface';
 
 interface AddSubjectProps {}
@@ -21,19 +22,18 @@ const defaultValues: AddSubjectDTO = {
     name: '',
     tagLine: '',
 };
-const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
+export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const [file, setFile] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
 
-    const { list: categories } = useGetSubjectCategory();
     const options = React.useMemo(() => ({ role: UserRole.EXPERT }), []);
-    const { count, userList } = useAdminGetUserList({ role: UserRole.EXPERT });
+
+    const { list: categories } = useGetSubjectCategory();
+    const { userList: expertList } = useAdminGetUserList(options);
 
     const methods = useForm<AddSubjectDTO>({
         defaultValues,
     });
-
-    const { expertsFieldData } = useGetExpertFieldData();
 
     const _handleOnSubmit = async () => {};
 
@@ -68,17 +68,13 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Category
                                 </label>
-                                <SelectField
-                                    label=""
-                                    values={categories.map((category) => ({ label: category.name, value: category.name }))}
-                                    name="category"
-                                />
+                                <SelectField label="" values={dataParser<SubjectCategory>(categories, 'name', 'id')} name="category" />
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Owner
                                 </label>
-                                <SelectField label="" values={userList.map((user) => ({ label: user.fullName, value: user.id }))} name="assignTo" />
+                                <SelectField label="" values={dataParser<User>(expertList, 'fullName', 'id')} name="assignTo" />
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -127,5 +123,3 @@ const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
         </FormWrapper>
     );
 };
-
-export default AddSubject;

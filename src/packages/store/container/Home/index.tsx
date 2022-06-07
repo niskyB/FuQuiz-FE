@@ -2,12 +2,11 @@ import { BookOpenIcon, FireIcon, HomeIcon, PencilIcon } from '@heroicons/react/o
 import { Slide } from '../../../slider/containers/slide';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
 import { defaultCurrentUser } from '../../../../core/store/user';
-import { BlogBox } from '../../../blog';
+import { BlogBox, useGetBlogList } from '../../../blog';
 import { routes } from '../../../../core/routes';
 import * as React from 'react';
 import { Subject } from '../../../../core/models/subject';
 import Link from 'next/link';
-import { useGetBlogList } from '../../../blog/container/blogList/hook';
 
 const navigation = [
     { name: 'Home', href: routes.homeUrl, icon: HomeIcon, current: true },

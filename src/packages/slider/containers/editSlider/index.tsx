@@ -8,8 +8,8 @@ import { UserRole } from '../../../../core/models/role';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { checkFileType } from '../../../../core/util/file';
+import { useGetSlider } from '../../common/hooks/useGetSlider';
 import { updateSlider } from './action';
-import { useGetSlider } from './hooks';
 import { UpdateSliderDTO, UpdateSliderInput } from './interface';
 
 interface EditSliderProps {

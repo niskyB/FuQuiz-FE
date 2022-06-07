@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { genderFieldData } from '../../../../core/common/dataField';
 import { FormErrorMessage, FormWrapper, RadioField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
-import { useGetUserById } from './hook';
+import { useGetUserById } from '../../';
 
 interface EditUserProps {
     id: string;

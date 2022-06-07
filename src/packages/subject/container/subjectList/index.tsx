@@ -33,7 +33,7 @@ const user: User = {
     updateAt: '',
 };
 
-const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize }) => {
+export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize }) => {
     const [categories, setCategories] = React.useState<SubjectCategory[]>([
         { id: '1', name: 'Javascript' },
         { id: '2', name: 'React' },
@@ -200,5 +200,3 @@ const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, p
         </div>
     );
 };
-
-export default SubjectList;
