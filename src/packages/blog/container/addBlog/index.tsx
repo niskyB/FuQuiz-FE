@@ -2,7 +2,8 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
+import { useBlogCategoriesFieldData } from '../../../../core/common/dataField/blogCategory';
+import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
@@ -28,8 +29,9 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
     const [details, setDetails] = React.useState<string>('');
-    
-    const { blogCategoryList } = useGetBlogCategory();
+
+    // const { blogCategoryList } = useGetBlogCategory();
+    const { blogCategoriesFieldData } = useBlogCategoriesFieldData();
 
     const _handleOnSubmit = async (data: AddBlogDTO) => {
         if (thumbnailFile) data.image = thumbnailFile;
@@ -74,7 +76,8 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                         Category
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectBlogCategory label="" name="categoryId" values={blogCategoryList} />
+                                        <SelectField name="categoryId" label="" values={[...blogCategoriesFieldData]} />
+                                        {/* <SelectBlogCategory label="" name="categoryId" values={blogCategoryList} /> */}
                                     </div>
                                 </div>
                             </div>

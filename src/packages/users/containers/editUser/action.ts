@@ -6,4 +6,4 @@ export const getUserById = async (id: string) => {
     return res;
 };
 
-export const updateUser = async () => {};
+export const updateUserById = async (id: string) => {};
