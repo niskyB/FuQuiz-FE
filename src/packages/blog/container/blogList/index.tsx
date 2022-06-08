@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { UserRole } from '../../../../core/models/role';
 import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { PaginationBar } from '../../../dashboard';
-import { useGetBlogCategory } from '../../../blogCategory';
+import { useGetBlogCategoryList } from '../../../blogCategory';
 import { useGetBlogList } from '../../component/hooks/useGetBlogList';
 interface BlogListProps extends FilterBlogListDTO {}
 
@@ -23,7 +23,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
     const { blogList, count } = useGetBlogList(options);
     const router = useRouter();
     const userState = useStoreUser();
-    const { categories } = useGetBlogCategory();
+    const { categories } = useGetBlogCategoryList();
 
     const methods = useForm<FilterBlogListFormDTO>({
         defaultValues: {

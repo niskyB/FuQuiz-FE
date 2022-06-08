@@ -25,11 +25,11 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
         id: '1aasd-asdzxc',
         assignTo: 'Trịnh Văn Quyết',
         briefInfo: 'Learn javascript from zero to hero',
-        createAt: '5/18/2022',
+        createdAt: '5/18/2022',
         description: 'Javascript for newbie',
         subjectCategory: categories[0],
         tagLine: '',
-        updateAt: '5/18/2022',
+        updatedAt: '5/18/2022',
     });
 
     const methods = useForm({ defaultValues: subject });
