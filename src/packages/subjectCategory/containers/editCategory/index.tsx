@@ -28,7 +28,6 @@ const EditSubjectCategory: React.FunctionComponent<EditSubjectCategoryProps> = (
     };
 
     React.useEffect(() => {
-        console.log(category);
         if (category) methods.setValue('name', category.name);
         return () => {};
     }, [category]);
