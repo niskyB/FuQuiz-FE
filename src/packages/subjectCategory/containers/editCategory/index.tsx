@@ -22,13 +22,12 @@ const EditSubjectCategory: React.FunctionComponent<EditSubjectCategoryProps> = (
         const res = await editSubjectCategory(id, data);
 
         if (res) {
-            router.push(routes.adminSubjectListUrl);
+            router.push(routes.adminSubjectCategoryListUrl);
             toast.success('Edit category subject success!');
         }
     };
 
     React.useEffect(() => {
-        console.log(category);
         if (category) methods.setValue('name', category.name);
         return () => {};
     }, [category]);
@@ -46,7 +45,7 @@ const EditSubjectCategory: React.FunctionComponent<EditSubjectCategoryProps> = (
                             <TextField label="Name" name="name" type="text" />
 
                             <div className="flex space-x-2">
-                                <Link href={routes.adminSubjectListUrl} passHref>
+                                <Link href={routes.adminSubjectCategoryListUrl} passHref>
                                     <div className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                         Cancel
                                     </div>
