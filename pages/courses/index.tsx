@@ -13,7 +13,7 @@ import { PaginationBar } from '../../src/packages/dashboard';
 import { StoreLayout } from '../../src/packages/store';
 
 interface CourseListPageProps {}
-const subjectList: Subject[] = [
+const subjectList = [
     {
         id: '1',
         subjectCategory: { id: '1', name: 'Coding' },

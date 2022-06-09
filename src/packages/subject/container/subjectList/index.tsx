@@ -12,6 +12,7 @@ import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { useGetBlogCategoryList } from '../../../blogCategory';
 import { PaginationBar } from '../../../dashboard';
+import { useGetSubjectCategory } from '../../common/hooks/useGetSubjectCategory';
 import { useGetSubjectList } from '../../common/hooks/useGetSubjectList';
 import { SubjectFilterDTO, SubjectFilterFormDTO } from './interface';
 
@@ -41,7 +42,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
         [currentPage, pageSize, category, createdAt, isActive, name]
     );
 
-    const { categories } = useGetBlogCategoryList();
+    const { list: categories } = useGetSubjectCategory();
 
     const { subjects, count } = useGetSubjectList(options);
     React.useEffect(() => {
