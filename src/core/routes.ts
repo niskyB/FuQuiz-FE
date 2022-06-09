@@ -42,9 +42,11 @@ export const routes = {
     adminSubjectListUrl: '/dashboard/subject',
     adminAddSubjectUrl: '/dashboard/subject/add',
     adminEditSubjectUrl: '/dashboard/subject/edit',
+    adminEditSubjectCategoryUrl: '/dashboard/subject/category/edit',
+    adminAddSubjectCategoryUrl: '/dashboard/subject/category/add',
     subjectUrl: '/course',
     subjectListUrl: '/courses',
-
+    adminSubjectCategoryListUrl: '/dashboard/subject/category',
     // registration
     registrationUrl: '/dashboard/registrations',
     addRegistrationUrl: '/dashboard/registrations/add',
