@@ -5,6 +5,5 @@ import { SubjectFilterDTO } from '../../container/subjectList/interface';
 
 export const useGetSubjectList = (options: SubjectFilterDTO) => {
     const { list: subjects, count } = useGetListWithCount<Subject, SubjectFilterDTO>(ApiListRoutes.SUBJECTS, options);
-    console.log(subjects);
     return { subjects, count };
 };

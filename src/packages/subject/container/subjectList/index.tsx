@@ -35,7 +35,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
             pageSize,
             category,
             createdAt,
-            isActive,
+            isActive: isActive || true,
             name,
         }),
         [currentPage, pageSize, category, createdAt, isActive, name]
@@ -46,9 +46,9 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
     const { subjects, count } = useGetSubjectList(options);
     React.useEffect(() => {
         methods.setValue('name', name);
-        methods.setValue('category', category);
+        methods.setValue('category', category || '');
         methods.setValue('createdAt', createdAt);
-        methods.setValue('isActive', isActive);
+        methods.setValue('isActive', isActive || true);
     }, [options]);
 
     const _handleOnSubmit = async (data: any) => {
@@ -82,7 +82,11 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                         <div className="flex space-x-4">
                             <TextField name="name" label="Subject name" />
                             <DateField name="createdAt" label="Create From" />
-                            <SelectField label="Category" values={dataParser<BlogCategory>(categories, 'name', 'id')} name="category" />
+                            <SelectField
+                                label="Category"
+                                values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
+                                name="category"
+                            />
                             <SelectField label="Active" values={statusFieldData} name="isActive" />
                         </div>
                         <div className="flex justify-end">
