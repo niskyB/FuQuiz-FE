@@ -30,7 +30,7 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
 
     const options = React.useMemo(() => ({ role: UserRole.EXPERT }), []);
 
-    const { list: categories } = useGetSubjectCategory();
+    const { categories } = useGetSubjectCategory();
     const { userList: expertList } = useAdminGetUserList(options);
 
     const methods = useForm<AddSubjectFormDTO>({
