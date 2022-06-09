@@ -7,9 +7,10 @@ export interface Subject {
     description: string;
     subjectCategory: SubjectCategory;
     thumbnailUrl: string;
-    createAt: string;
-    updateAt: string;
+    createdAt: string;
+    updatedAt: string;
     assignTo: User;
+    isActive: boolean;
 }
 
 export interface SubjectCategory {

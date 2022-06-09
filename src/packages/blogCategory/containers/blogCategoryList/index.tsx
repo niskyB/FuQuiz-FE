@@ -3,12 +3,12 @@ import * as React from 'react';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
-import { useGetBlogCategory } from '../../common/hooks/useGetBlogCategory';
+import { useGetBlogCategoryList } from '../../common/hooks/useGetBlogCategory';
 
 interface BlogCategoryListProps {}
 
 const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = () => {
-    const { categories } = useGetBlogCategory();
+    const { categories } = useGetBlogCategoryList();
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
