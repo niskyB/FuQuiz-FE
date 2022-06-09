@@ -27,7 +27,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
         briefInfo: 'Learn javascript from zero to hero',
         createdAt: '5/18/2022',
         description: 'Javascript for newbie',
-        subjectCategory: categories[0],
+        category: categories[0],
         tagLine: '',
         updatedAt: '5/18/2022',
     });

@@ -20,7 +20,7 @@ interface SubjectListProps extends SubjectFilterDTO {}
 const defaultValues: SubjectFilterFormDTO = {
     category: '',
     createdAt: '',
-    isActive: '',
+    isActive: true,
     name: '',
 };
 
@@ -83,7 +83,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                             <TextField name="name" label="Subject name" />
                             <DateField name="createdAt" label="Create From" />
                             <SelectField label="Category" values={dataParser<BlogCategory>(categories, 'name', 'id')} name="category" />
-                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
+                            <SelectField label="Active" values={statusFieldData} name="isActive" />
                         </div>
                         <div className="flex justify-end">
                             <button
@@ -113,7 +113,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{subject.subjectCategory.name}</div>
+                                                        <div className="text-gray-900">{subject.category.name}</div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
@@ -121,7 +121,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     <div className="text-gray-900">36 lessons</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{subject.assignTo.fullName}</div>
+                                                    <div className="text-gray-900">{subject.assignTo.user.fullName}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     {subject ? (
