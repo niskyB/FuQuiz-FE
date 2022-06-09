@@ -1,98 +1,59 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Component } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { UserRole } from '../../../../core/models/role';
-import { Subject, SubjectCategory } from '../../../../core/models/subject';
-import { Gender, User } from '../../../../core/models/user';
+import { BlogCategory } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
+import { dataParser } from '../../../../core/util/data';
+import { useGetBlogCategoryList } from '../../../blogCategory';
 import { PaginationBar } from '../../../dashboard';
+import { useGetSubjectList } from '../../common/hooks/useGetSubjectList';
+import { SubjectFilterDTO, SubjectFilterFormDTO } from './interface';
 
-interface SubjectListProps {
-    currentPage?: number;
-    pageSize?: number;
-}
+interface SubjectListProps extends SubjectFilterDTO {}
 
-const user: User = {
-    email: '',
+const defaultValues: SubjectFilterFormDTO = {
+    category: '',
     createdAt: '',
-    fullName: 'Trịnh Văn Quyết',
-    gender: Gender.MALE,
-    id: '',
-    imageUrl: '',
-    isActive: true,
-    mobile: '',
-    password: '',
-    role: { id: '', name: UserRole.EXPERT },
-    token: '',
-    typeId: '',
-    updateAt: '',
+    isActive: '',
+    name: '',
 };
 
-export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize }) => {
-    const [categories, setCategories] = React.useState<SubjectCategory[]>([
-        { id: '1', name: 'Javascript' },
-        { id: '2', name: 'React' },
-        { id: '3', name: 'C#' },
-        { id: '4', name: 'Dotnet' },
-    ]);
-    const [count, setCount] = React.useState<number>(4);
-    const [subjects, setSubjects] = React.useState<Subject[]>([
-        {
-            name: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-        {
-            name: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-        {
-            name: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-        {
-            name: 'Javascript basic',
-            id: '1aasd-asdzxc',
-            assignTo: user,
-            description: 'Learn javascript from zero to hero',
-            createAt: '5/18/2022',
-            subjectCategory: categories[0],
-            tagLine: '',
-            updateAt: '5/18/2022',
-            thumbnailUrl: '',
-        },
-    ]);
-    const methods = useForm();
-
-    const _handleOnSubmit = async () => {};
-
+export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize, category, createdAt, isActive, name }) => {
     const router = useRouter();
+    const methods = useForm<SubjectFilterFormDTO>({
+        defaultValues,
+    });
+    const options: SubjectFilterDTO = React.useMemo(
+        () => ({
+            currentPage,
+            pageSize,
+            category,
+            createdAt,
+            isActive,
+            name,
+        }),
+        [currentPage, pageSize, category, createdAt, isActive, name]
+    );
 
+    const { categories } = useGetBlogCategoryList();
+
+    const { subjects, count } = useGetSubjectList(options);
+    React.useEffect(() => {
+        methods.setValue('name', name);
+        methods.setValue('category', category);
+        methods.setValue('createdAt', createdAt);
+        methods.setValue('isActive', isActive);
+    }, [options]);
+
+    const _handleOnSubmit = async (data: any) => {
+        pushWithParams(router, routes.adminSubjectListUrl, { ...options, ...data });
+    };
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
@@ -114,22 +75,10 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
-                            <TextField name="createdAt" label="Create From" type={'date'} />
-                            <TextField name="assignTo" label="Expert" />
-                            <SelectField
-                                label="Category"
-                                values={categories.map((category) => ({ label: category.name, value: category.name }))}
-                                name="isShow"
-                            />
-                            <SelectField
-                                label="Active"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                name="isActive"
-                            />
+                            <TextField name="name" label="Subject name" />
+                            <DateField name="createdAt" label="Create From" />
+                            <SelectField label="Category" values={dataParser<BlogCategory>(categories, 'name', 'id')} name="category" />
+                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
                         </div>
                         <div className="flex justify-end">
                             <button
@@ -155,7 +104,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                             <TableRow key={subject.id}>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{subject.name}</div>
-                                                    <div className="text-gray-900">{new Date(subject.createAt).toLocaleDateString()}</div>
+                                                    <div className="text-gray-900">{new Date(subject.createdAt).toLocaleDateString()}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">

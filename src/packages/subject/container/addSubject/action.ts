@@ -1,7 +1,9 @@
 import { http } from '../../../../core/api';
+import { FormParser, SendFormRequestConfig } from '../../../../core/util/form';
 import { AddSubjectDTO } from './interface';
 
-export const adminAddNewUser = async (data: AddSubjectDTO) => {
-    const res = await http.post('/admin/user', data);
+export const addSubject = async (data: AddSubjectDTO) => {
+    const form = FormParser(data);
+    const res = await http.post('/subject', form, SendFormRequestConfig());
     return res;
 };

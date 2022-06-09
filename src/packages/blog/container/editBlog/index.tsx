@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { routes } from '../../../../core/routes';
-import { useGetBlogCategory } from '../../../blogCategory';
+import { useGetBlogCategoryList } from '../../../blogCategory';
 import { useGetBlog } from '../../component/hooks/useGetBlog';
 import { updateBlog } from './action';
 import { EditBlogDTO } from './interface';
@@ -18,7 +18,7 @@ interface EditBlogProps {
 
 const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     const { blog } = useGetBlog(id);
-    const { categories } = useGetBlogCategory();
+    const { categories } = useGetBlogCategoryList();
     const methods = useForm<EditBlogDTO>({});
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>(blog?.thumbnailUrl || '');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
