@@ -24,6 +24,7 @@ const defaultValues: AddSubjectFormDTO = {
     name: '',
     tagLine: '',
 };
+
 export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const [file, setFile] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
