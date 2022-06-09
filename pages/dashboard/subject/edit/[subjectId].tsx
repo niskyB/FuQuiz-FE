@@ -13,7 +13,7 @@ const EditSubjectPage: NextPage<EditSubjectPageProps> = ({ subjectId }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
-                <EditSubject />
+                <EditSubject id={subjectId} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );

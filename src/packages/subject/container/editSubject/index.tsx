@@ -1,40 +1,82 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { toast } from 'react-toastify';
+import { statusFieldData } from '../../../../core/common/dataField';
+import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Subject, SubjectCategory } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
+import { checkFileType } from '../../../../core/util';
+import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
+import { useGetSubjectCategoryById } from '../../../subjectCategory';
+import { useGetSubjectCategory } from '../../common/hooks/useGetSubjectCategory';
+import { updateSubject } from './action';
+import { EditSubjectFormDTO } from './interface';
 
-interface EditSubjectProps {}
+interface EditSubjectProps {
+    id: string;
+}
 
 const mapFields = [
-    { label: 'Title', name: 'title' },
-    { label: 'Expert', name: 'assignTo' },
+    { label: 'Title', name: 'name' },
+    { label: 'Tag Line', name: 'tagLine' },
 ];
 
-export const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
-    const [categories, setCategories] = React.useState<SubjectCategory[]>([
-        { id: '1', name: 'Javascript' },
-        { id: '2', name: 'React' },
-        { id: '3', name: 'C#' },
-        { id: '4', name: 'Dotnet' },
-    ]);
+const defaultValues: EditSubjectFormDTO = {
+    description: '',
+    image: null,
+    name: '',
+    tagLine: '',
+};
 
-    const [subject, setSubject] = React.useState<Subject>({
-        name: 'Javascript basic',
-        id: '1aasd-asdzxc',
-        assignTo: 'Trịnh Văn Quyết',
-        briefInfo: 'Learn javascript from zero to hero',
-        createdAt: '5/18/2022',
-        description: 'Javascript for newbie',
-        category: categories[0],
-        tagLine: '',
-        updatedAt: '5/18/2022',
-    });
+export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) => {
+    const [previewUrl, setPreviewUrl] = React.useState<string>('');
+    const [file, setFile] = React.useState<File | null>(null);
+    const { subject, imageUrl, setImageUrl } = useGetSubject({ id });
+    const router = useRouter();
 
-    const methods = useForm({ defaultValues: subject });
+    const methods = useForm<EditSubjectFormDTO>({ defaultValues });
 
-    const _handleOnSubmit = async () => {};
+    React.useEffect(() => {
+        if (subject) {
+            // if user go in there are not admin or the owner of the slider, push them to sliderList page
+
+            methods.setValue('name', subject.name);
+            methods.setValue('tagLine', subject.tagLine);
+            methods.setValue('description', subject.description);
+            setPreviewUrl(imageUrl);
+        }
+    }, [methods, subject, router]);
+
+    React.useEffect(() => {
+        if (file) setImageUrl(URL.createObjectURL(file));
+        return () => {
+            URL.revokeObjectURL(imageUrl);
+        };
+    }, [file]);
+
+    const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+
+            checkFileType(file, () => {
+                setFile(file);
+            });
+        }
+    };
+
+    const _handleOnSubmit = async (data: EditSubjectFormDTO) => {
+        if (file) data.image = file;
+        else data.image = new File([], '');
+
+        //call api here
+        updateSubject(id, data).then((res) => {
+            if (res) {
+                toast.success('Update success!');
+            }
+        });
+    };
 
     return (
         <FormWrapper methods={methods}>
@@ -60,50 +102,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
                                     </div>
                                 </div>
                             ))}
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Category
-                                </label>
-                                <SelectField
-                                    label=""
-                                    values={categories.map((category) => ({ label: category.name, value: category.name }))}
-                                    name="category"
-                                />
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Active
-                                </label>
-                                <SelectField
-                                    label=""
-                                    values={[
-                                        {
-                                            label: 'Active',
-                                            value: true,
-                                        },
-                                        {
-                                            label: 'Inactive',
-                                            value: false,
-                                        },
-                                    ]}
-                                    name="isActive"
-                                />
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Brief Info
-                                </label>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <textarea
-                                        {...methods.register('briefInfo')}
-                                        rows={7}
-                                        name="briefInfo"
-                                        id="briefInfo"
-                                        autoComplete="given-name"
-                                        className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
-                                    />
-                                </div>
-                            </div>
+
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Description
@@ -112,13 +111,34 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = () => {
                                     <textarea
                                         {...methods.register('description')}
                                         rows={7}
-                                        name="briefInfo"
-                                        id="briefInfo"
+                                        id="description"
                                         autoComplete="given-name"
                                         className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
                                     />
                                 </div>
                             </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Thumbnail
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <FileField
+                                        file={file}
+                                        label=""
+                                        name="image"
+                                        previewUrl={previewUrl}
+                                        setFile={setFile}
+                                        setPreviewUrl={setPreviewUrl}
+                                        onChange={(e) => _onChangeImage(e)}
+                                    />
+                                </div>
+                            </div>
+                            {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Active
+                                </label>
+                                <SelectField label="" values={[...statusFieldData]} name="isActive" />
+                            </div> */}
                         </div>
                     </div>
                 </div>

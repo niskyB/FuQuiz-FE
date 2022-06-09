@@ -42,11 +42,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
         [currentPage, pageSize, category, createdAt, isActive, name]
     );
 
-<<<<<<< HEAD
-    const { list: categories } = useGetSubjectCategory();
-=======
     const { categories } = useGetSubjectCategory();
->>>>>>> main/master
 
     const { subjects, count } = useGetSubjectList(options);
     React.useEffect(() => {

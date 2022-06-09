@@ -10,8 +10,6 @@ import { useGetBlog } from '../../component/hooks/useGetBlog';
 import { updateBlog } from './action';
 import { EditBlogDTO } from './interface';
 
-//---------------------- Not official ----------------------------
-
 interface EditBlogProps {
     id: string;
 }
