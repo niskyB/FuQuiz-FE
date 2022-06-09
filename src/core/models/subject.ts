@@ -5,12 +5,17 @@ export interface Subject {
     name: string;
     tagLine: string;
     description: string;
-    subjectCategory: SubjectCategory;
+    category: SubjectCategory;
     thumbnailUrl: string;
     createdAt: string;
     updatedAt: string;
-    assignTo: User;
+    assignTo: AssignTo;
     isActive: boolean;
+}
+
+export interface AssignTo {
+    id: string;
+    user: User;
 }
 
 export interface SubjectCategory {

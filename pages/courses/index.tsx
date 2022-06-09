@@ -16,7 +16,7 @@ interface CourseListPageProps {}
 const subjectList = [
     {
         id: '1',
-        subjectCategory: { id: '1', name: 'Coding' },
+        category: { id: '1', name: 'Coding' },
         createdAt: '',
         description:
             'Nếu như vài năm trước đây JavaScript chỉ là một ngôn ngữ lập trình ít người quan tâm thì gần đây cùng với sự phát triển mạnh mẽ của HTML5, Boostrap, NodeJs đã biến JavaScript thành một trong 2 ngôn ngữ lập trình, thiết kế web quan trọng nhất. Do vậy, nắm rõ về JavaScript sẽ giúp bạn có lợi thế lớn trong công việc. <br/> Hiểu được nhu cầu tìm hiểu về JavaScript ngày càng lớn hiện nay, tôi cùng Edumall đã hợp tác sản suất khóa học "Một giờ học JavaScript" nhằm giúp các bạn nắm được kiến thức và lập trình được các chương trình cơ bản chỉ trong 1 giờ. ',
@@ -29,7 +29,7 @@ const subjectList = [
     },
     {
         id: '2',
-        subjectCategory: { id: '2', name: 'Crypyo' },
+        category: { id: '2', name: 'Crypyo' },
         createdAt: '',
         description:
             'Khóa học cung cấp cho học viên sẽ 1 cái nhìn toàn diện việc bảo vệ tiền số, bảo vệ thông tin tài sản. Học viên sẽ nắm được những kĩ năng và kiến thức cơ bản, cần thiết về bảo vệ không chỉ tiền số mà còn là thông tin và tài sản số nói chung.',
@@ -41,7 +41,7 @@ const subjectList = [
     },
     {
         id: '3',
-        subjectCategory: { id: '2', name: 'Health care' },
+        category: { id: '2', name: 'Health care' },
         createdAt: '',
         description:
             'Kỹ thuật chạy bộ đúng cách sẽ giúp bạn nhận được nhiều lợi ích sức khỏe, cảm thấy cơ thể thư giãn, rèn luyện được sức bền lâu hơn và ngăn ngừa nguy cơ gặp chấn thương. Vậy làm thế nào để bạn chạy bộ đúng cách nhằm bảo vệ sức khỏe tốt hơn?',
@@ -110,7 +110,7 @@ const CourseListPage: React.FC<CourseListPageProps> = () => {
                                     <div className="flex-1">
                                         <p className="text-sm font-medium text-indigo-600">
                                             <Link href={''}>
-                                                <a className="hover:underline">{item.subjectCategory.name}</a>
+                                                <a className="hover:underline">{item.category.name}</a>
                                             </Link>
                                         </p>
                                         <a href={''} className="block mt-2">
