@@ -7,9 +7,6 @@ import { DateField, FormWrapper, SelectField, TextField } from '../../../../core
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { BlogCategory } from '../../../../core/models/blog';
-import { UserRole } from '../../../../core/models/role';
-import { Subject, SubjectCategory } from '../../../../core/models/subject';
-import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
@@ -54,7 +51,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
         methods.setValue('isActive', isActive);
     }, [options]);
 
-    const _handleOnSubmit = async (data: SubjectFilterFormDTO) => {
+    const _handleOnSubmit = async (data: any) => {
         pushWithParams(router, routes.adminSubjectListUrl, { ...options, ...data });
     };
     return (

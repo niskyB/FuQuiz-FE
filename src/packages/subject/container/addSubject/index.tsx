@@ -10,11 +10,13 @@ import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
 import { useAdminGetUserList } from '../../../users';
 import { useGetSubjectCategory } from '../../';
-import { AddSubjectDTO } from './interface';
+import { AddSubjectFormDTO } from './interface';
+import { addSubject } from './action';
+import { toast } from 'react-toastify';
 
 interface AddSubjectProps {}
 
-const defaultValues: AddSubjectDTO = {
+const defaultValues: AddSubjectFormDTO = {
     assignTo: '',
     category: '',
     description: '',
@@ -31,11 +33,21 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const { list: categories } = useGetSubjectCategory();
     const { userList: expertList } = useAdminGetUserList(options);
 
-    const methods = useForm<AddSubjectDTO>({
+    const methods = useForm<AddSubjectFormDTO>({
         defaultValues,
     });
 
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: AddSubjectFormDTO) => {
+        if (file) data.image = file;
+        addSubject(data).then((res) => {
+            if (res) {
+                setPreviewUrl('');
+                setFile(null);
+                methods.reset();
+                toast.success('Add subject success!');
+            }
+        });
+    };
 
     return (
         <FormWrapper methods={methods}>
@@ -53,7 +65,7 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                     Title
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextField label="" name="title" type="text" />
+                                    <TextField label="" name="name" type="text" />
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -68,13 +80,21 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Category
                                 </label>
-                                <SelectField label="" values={dataParser<SubjectCategory>(categories, 'name', 'id')} name="category" />
+                                <SelectField
+                                    label=""
+                                    values={[{ label: 'Unset', value: '' }, ...dataParser<SubjectCategory>(categories, 'name', 'id')]}
+                                    name="category"
+                                />
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Owner
                                 </label>
-                                <SelectField label="" values={dataParser<User>(expertList, 'fullName', 'id')} name="assignTo" />
+                                <SelectField
+                                    label=""
+                                    values={[{ label: 'Unset', value: '' }, ...dataParser<User>(expertList, 'fullName', 'id')]}
+                                    name="assignTo"
+                                />
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
