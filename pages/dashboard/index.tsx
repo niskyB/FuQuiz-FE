@@ -9,7 +9,7 @@ interface DashboardPageProps {}
 
 const DashboardPage: React.FunctionComponent<DashboardPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING, UserRole.SALE]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING, UserRole.SALE, UserRole.EXPERT]}>
             <DashBoardLayout>
                 <div className="flex flex-wrap items-start justify-start">
                     <div className="flex flex-col items-start justify-center w-1/2 space-y-5">

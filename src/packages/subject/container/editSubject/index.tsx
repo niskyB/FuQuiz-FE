@@ -5,14 +5,19 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { UserRole } from '../../../../core/models/role';
 import { Subject, SubjectCategory } from '../../../../core/models/subject';
+import { User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
+import { useStoreUser } from '../../../../core/store';
 import { checkFileType } from '../../../../core/util';
+import { dataParser } from '../../../../core/util/data';
 import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
 import { useGetSubjectCategoryById } from '../../../subjectCategory';
+import { useAdminGetUserList } from '../../../users';
 import { useGetSubjectCategory } from '../../common/hooks/useGetSubjectCategory';
-import { updateSubject } from './action';
-import { EditSubjectFormDTO } from './interface';
+import { adminUpdateSubject, expertUpdateSubject } from './action';
+import { AdminEditSubjectFormDTO, EditSubjectDTO } from './interface';
 
 interface EditSubjectProps {
     id: string;
@@ -23,31 +28,46 @@ const mapFields = [
     { label: 'Tag Line', name: 'tagLine' },
 ];
 
-const defaultValues: EditSubjectFormDTO = {
+const defaultValues: EditSubjectDTO = {
     description: '',
     image: null,
     name: '',
     tagLine: '',
+    assignTo: '',
+    category: '',
+    isActive: true,
+    isFeature: true,
 };
 
 export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) => {
+    const userState = useStoreUser();
+
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
     const [file, setFile] = React.useState<File | null>(null);
     const { subject, imageUrl, setImageUrl } = useGetSubject({ id });
     const router = useRouter();
 
-    const methods = useForm<EditSubjectFormDTO>({ defaultValues });
+    const methods = useForm<EditSubjectDTO>({ defaultValues });
+
+    const options = React.useMemo(() => ({ role: UserRole.EXPERT }), []);
+
+    const { categories } = useGetSubjectCategory();
+    const { userList: expertList } = useAdminGetUserList(options);
 
     React.useEffect(() => {
         if (subject) {
             // if user go in there are not admin or the owner of the slider, push them to sliderList page
-
             methods.setValue('name', subject.name);
             methods.setValue('tagLine', subject.tagLine);
             methods.setValue('description', subject.description);
+            methods.setValue('assignTo', subject.assignTo.user.id);
+            methods.setValue('category', subject.category.id);
+            methods.setValue('isFeature', subject.isFeature);
+            methods.setValue('isActive', subject.isActive);
+
             setPreviewUrl(imageUrl);
         }
-    }, [methods, subject, router]);
+    }, [methods, subject, router, categories]);
 
     React.useEffect(() => {
         if (file) setImageUrl(URL.createObjectURL(file));
@@ -66,18 +86,47 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
         }
     };
 
-    const _handleOnSubmit = async (data: EditSubjectFormDTO) => {
+    const _handleOnSubmit = async (data: EditSubjectDTO) => {
         if (file) data.image = file;
         else data.image = new File([], '');
 
-        //call api here
-        updateSubject(id, data).then((res) => {
-            if (res) {
-                toast.success('Update success!');
-            }
-        });
-    };
+        const { assignTo, isActive, ...expertUpdateField } = data;
+        //
+        let res1, res2;
+        if (userState.role.name === UserRole.ADMIN) res1 = await adminUpdateSubject(id, { assignTo, isActive });
 
+        res2 = await expertUpdateSubject(id, expertUpdateField);
+
+        if (res1 && res2) {
+            toast.success('Update success!');
+        }
+    };
+    const _renderField = () => {
+        if (userState.role.name === UserRole.ADMIN) {
+            return (
+                <>
+                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                            Owner
+                        </label>
+                        <SelectField label="" values={[...dataParser<User>(expertList, 'fullName', 'id')]} name="assignTo" />
+                    </div>
+                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                            Future
+                        </label>
+                        <SelectField label="" values={statusFieldData} name="isFeature" />
+                    </div>
+                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                            Active
+                        </label>
+                        <SelectField label="" values={statusFieldData} name="isActive" />
+                    </div>
+                </>
+            );
+        }
+    };
     return (
         <FormWrapper methods={methods}>
             <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
@@ -102,7 +151,13 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                     </div>
                                 </div>
                             ))}
-
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Category
+                                </label>
+                                <SelectField label="" values={[...dataParser<SubjectCategory>(categories, 'name', 'id')]} name="category" />
+                            </div>
+                            {_renderField()}
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Description
@@ -117,6 +172,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                     />
                                 </div>
                             </div>
+
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Thumbnail
@@ -133,12 +189,6 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                     />
                                 </div>
                             </div>
-                            {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Active
-                                </label>
-                                <SelectField label="" values={[...statusFieldData]} name="isActive" />
-                            </div> */}
                         </div>
                     </div>
                 </div>

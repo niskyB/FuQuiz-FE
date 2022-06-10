@@ -6,6 +6,9 @@ export enum ApiListRoutes {
     SUBJECT_CATEGORIES = 'subject-categories',
     SUBJECT_CATEGORY = 'subject-category',
 
+    PRICE_PACKAGE = 'price-package',
+    PRICE_PACKAGES = 'price-packages',
+
     BLOGS = 'blogs',
     BLOGS_CATEGORIES = 'blog-categories',
     BLOG_CATEGORY = 'blog-category',

@@ -2,16 +2,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField } from '../../../../core/components/form';
+import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { LessonAttribute, LessonDetail, LessonType, QuizLesson, SubjectTopic } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
-import QuizLessonDetail from '../quizLessonDetail';
 
 interface AddLessonProps {}
 
 const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
     const router = useRouter();
-
+    const [description, setDescription] = React.useState<string>('');
+    const [formType, setFormType] = React.useState<LessonType>(LessonType.LESSON_DETAIL);
     const quizAttribute: QuizLesson = {
         id: '',
         description: '',
@@ -40,11 +40,36 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
     const methods = useForm();
 
     const _onChangeSubjectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.currentTarget.value);
+        for (let i = 0; i < lessonsAttribute.length; i++) {
+            const item = lessonsAttribute[i];
+            if (item.type.id === e.target.value) {
+                setFormType(item.type.name);
+            }
+        }
     };
+    const _onRenderForm = () => {
+        switch (formType) {
+            case LessonType.LESSON_DETAIL:
+                return;
 
+            case LessonType.QUIZ_LESSON:
+                return (
+                    <>
+                        <TextField label="Video link" name="videoLink" />
+                        <QuillInput label="Description" description={description} setDescription={setDescription} />
+                    </>
+                );
+            case LessonType.TOPIC_LESSON:
+                return (
+                    <>
+                        <SelectField label="Quiz" name="quiz" values={[]} />
+                        <QuillInput label="Description" description={description} setDescription={setDescription} />
+                    </>
+                );
+        }
+    };
     return (
-        <div className="px-4 space-y-4 sm:px-6 lg:px-4">
+        <div className="max-w-4xl px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="flex flex-col mt-8">
                 <FormWrapper methods={methods}>
                     <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-8 divide-y divide-gray-200">
@@ -66,11 +91,19 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                         />
                                     </div>
                                 </div>
-
-                                <QuizLessonDetail />
                             </div>
                         </div>
+                        <div className="space-y-5 ">
+                            <TextField label="name" name="name" />
+                            <div className="flex space-x-5">
+                                <SelectField label="Topic" name="topic" values={[]} />
+                                <div className="">
+                                    <TextField label="order" name="order" type={'number'} />
+                                </div>
+                            </div>
 
+                            {_onRenderForm()}
+                        </div>
                         <div className="pt-5">
                             <div className="flex justify-end">
                                 <Link href={router.asPath.replace('/lesson/add', '')} passHref>

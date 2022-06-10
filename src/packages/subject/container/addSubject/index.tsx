@@ -13,6 +13,9 @@ import { useGetSubjectCategory } from '../../';
 import { AddSubjectFormDTO } from './interface';
 import { addSubject } from './action';
 import { toast } from 'react-toastify';
+import { statusFieldData } from '../../../../core/common/dataField';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
 
 interface AddSubjectProps {}
 
@@ -23,6 +26,8 @@ const defaultValues: AddSubjectFormDTO = {
     image: null,
     name: '',
     tagLine: '',
+    isFeature: '',
+    isActive: '',
 };
 
 export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
@@ -45,6 +50,7 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                 setPreviewUrl('');
                 setFile(null);
                 methods.reset();
+                store.dispatch(apiActions.resetState());
                 toast.success('Add subject success!');
             }
         });
@@ -96,6 +102,18 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                     values={[{ label: 'Unset', value: '' }, ...dataParser<User>(expertList, 'fullName', 'id')]}
                                     name="assignTo"
                                 />
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Active
+                                </label>
+                                <SelectField label="" values={[{ label: 'Unset', value: '' }, ...statusFieldData]} name="isActive" />
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="isFeature" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Future
+                                </label>
+                                <SelectField label="" values={[{ label: 'Unset', value: '' }, ...statusFieldData]} name="isFeature" />
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">

@@ -55,12 +55,15 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
                 {slideList.map((item) => {
                     if (item.isShow)
                         return (
-                            <Link key={item.id} href={item.backLink} passHref>
-                                <div className="w-full px-3 space-y-2 cursor-pointer md:w-1/2 lg:w-1/3 snap-center shrink-0">
-                                    <img className="w-full shrink-0" src={item.imageUrl} />
-                                    <div className="text-base font-semibold text-center capitalize">{item.title}</div>
-                                </div>
-                            </Link>
+                            <a
+                                key={item.id}
+                                href={item.backLink}
+                                target="_blank"
+                                className="w-full px-3 mx-auto space-y-2 cursor-pointer snap-center shrink-0 h-72"
+                            >
+                                <img className=" h-[90%] w-auto mx-auto shrink-0" src={item.imageUrl} />
+                                <div className="text-base font-semibold text-center capitalize">{item.title}</div>
+                            </a>
                         );
                 })}
             </div>
