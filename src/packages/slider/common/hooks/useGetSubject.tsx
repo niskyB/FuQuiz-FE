@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Slider } from '../../../../core/models/slider';
 import { Subject } from '../../../../core/models/subject';
 import { getSubjectById } from '../../../subject/container/editSubject/action';
 

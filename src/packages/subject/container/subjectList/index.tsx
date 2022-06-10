@@ -7,10 +7,11 @@ import { DateField, FormWrapper, SelectField, TextField } from '../../../../core
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { BlogCategory } from '../../../../core/models/blog';
+import { UserRole } from '../../../../core/models/role';
 import { routes } from '../../../../core/routes';
+import { useStoreUser } from '../../../../core/store';
 import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
-import { useGetBlogCategoryList } from '../../../blogCategory';
 import { PaginationBar } from '../../../dashboard';
 import { useGetSubjectCategory } from '../../common/hooks/useGetSubjectCategory';
 import { useGetSubjectList } from '../../common/hooks/useGetSubjectList';
@@ -21,11 +22,13 @@ interface SubjectListProps extends SubjectFilterDTO {}
 const defaultValues: SubjectFilterFormDTO = {
     category: '',
     createdAt: '',
-    isActive: true,
+    isActive: '',
     name: '',
+    isFeature: '',
 };
 
-export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize, category, createdAt, isActive, name }) => {
+export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize, category, createdAt, isActive, name, isFeature }) => {
+    const userState = useStoreUser();
     const router = useRouter();
     const methods = useForm<SubjectFilterFormDTO>({
         defaultValues,
@@ -36,10 +39,11 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
             pageSize,
             category,
             createdAt,
-            isActive: isActive || true,
+            isActive,
             name,
+            isFeature,
         }),
-        [currentPage, pageSize, category, createdAt, isActive, name]
+        [currentPage, pageSize, category, createdAt, isActive, name, isFeature]
     );
 
     const { categories } = useGetSubjectCategory();
@@ -49,7 +53,8 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
         methods.setValue('name', name);
         methods.setValue('category', category || '');
         methods.setValue('createdAt', createdAt);
-        methods.setValue('isActive', isActive || true);
+        methods.setValue('isActive', isActive || '');
+        methods.setValue('isFeature', isFeature || '');
     }, [options]);
 
     const _handleOnSubmit = async (data: any) => {
@@ -64,18 +69,20 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                         A list of all the subject in home website including their title, category, info and expert.
                     </p>
                 </div>
-                <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={routes.adminSubjectCategoryListUrl} passHref>
-                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                            Subject category
-                        </p>
-                    </Link>
-                    <Link href={routes.adminAddSubjectUrl} passHref>
-                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                            Add Subject
-                        </p>
-                    </Link>
-                </div>
+                {userState.role.name === UserRole.ADMIN && (
+                    <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
+                        <Link href={routes.adminSubjectCategoryListUrl} passHref>
+                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                Subject category
+                            </p>
+                        </Link>
+                        <Link href={routes.adminAddSubjectUrl} passHref>
+                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                Add Subject
+                            </p>
+                        </Link>
+                    </div>
+                )}
             </div>
             <div>
                 <FormWrapper methods={methods}>
@@ -88,7 +95,8 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                 values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
                                 name="category"
                             />
-                            <SelectField label="Active" values={statusFieldData} name="isActive" />
+                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
+                            <SelectField label="Future" values={[allFieldData, ...statusFieldData]} name="isFeature" />
                         </div>
                         <div className="flex justify-end">
                             <button
@@ -106,7 +114,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Title', 'Category', 'Info', 'Expert', 'Activation', '']} />
+                                <TableHead fields={['Title', 'Category', 'Info', 'Expert', 'Activation', 'Future', '']} />
 
                                 <TableBody>
                                     {Boolean(count && subjects) &&
@@ -129,15 +137,14 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     <div className="text-gray-900">{subject.assignTo.user.fullName}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    {subject ? (
+                                                    {subject.isActive && (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
                                                         </span>
-                                                    ) : (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                            Inactive
-                                                        </span>
                                                     )}
+                                                </TableDescription>
+                                                <TableDescription>
+                                                    {subject.isFeature ? <span className="">x</span> : <span className=""></span>}
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <Link href={`${routes.adminEditSubjectUrl}/${subject.id}`} passHref>

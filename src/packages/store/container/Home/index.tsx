@@ -7,6 +7,8 @@ import { routes } from '../../../../core/routes';
 import * as React from 'react';
 import { Subject } from '../../../../core/models/subject';
 import Link from 'next/link';
+import { useGetSliderList } from '../../../slider';
+import { GetSliderOptionsDTO } from '../../../slider/containers/sliderList/interface';
 
 const navigation = [
     { name: 'Home', href: routes.homeUrl, icon: HomeIcon, current: true },
@@ -98,7 +100,11 @@ const subjectList: Subject[] = [
         name: 'Nhập môn ngôn ngữ lập trình Javascript',
         updatedAt: '',
         tagLine: '',
-        assignTo: defaultCurrentUser,
+        assignTo: {
+            id: '',
+            user: defaultCurrentUser,
+        },
+        isActive: true,
     },
     {
         id: '2',
@@ -110,7 +116,11 @@ const subjectList: Subject[] = [
         name: 'Cách để GST to to moon cùng anh Quyết',
         updatedAt: '',
         tagLine: '',
-        assignTo: defaultCurrentUser,
+        assignTo: {
+            id: '',
+            user: defaultCurrentUser,
+        },
+        isActive: true,
     },
     {
         id: '3',
@@ -122,7 +132,11 @@ const subjectList: Subject[] = [
         name: 'Mẹo chaỵ bộ 10km không mệt nghỉ bằng giấc ngủ',
         updatedAt: '',
         tagLine: '',
-        assignTo: defaultCurrentUser,
+        assignTo: {
+            id: '',
+            user: defaultCurrentUser,
+        },
+        isActive: true,
     },
 ];
 
@@ -136,9 +150,10 @@ type TabContent = 'blog' | 'course';
 
 export const Home: React.FunctionComponent<HomeProps> = () => {
     const options = React.useMemo(() => ({ category: '', createdAt: '', currentPage: 0, isShow: true, pageSize: 10, title: '', userId: '' }), []);
+    const sliderOptions = React.useMemo<Partial<GetSliderOptionsDTO>>(() => ({ isShow: true, currentPage: 0, pageSize: 20 }), []);
     const { blogList } = useGetBlogList(options);
     const [tabOpening, setTabOpening] = React.useState<TabContent>('blog');
-
+    const { sliders } = useGetSliderList(sliderOptions);
     const renderContent = () => {
         switch (tabOpening) {
             case 'blog':
@@ -231,7 +246,7 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                             </nav>
                         </div>
                         <main className="space-y-10 lg:col-span-9 xl:col-span-9">
-                            <Slide slideList={slideList} />
+                            <Slide slideList={sliders} />
                             <div className="px-4 sm:px-0">
                                 <div className="sm:hidden">
                                     <label htmlFor="question-tabs" className="sr-only">

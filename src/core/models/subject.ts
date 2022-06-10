@@ -11,6 +11,7 @@ export interface Subject {
     updatedAt: string;
     assignTo: AssignTo;
     isActive: boolean;
+    isFeature: boolean;
 }
 
 export interface AssignTo {

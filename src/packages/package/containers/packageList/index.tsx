@@ -1,26 +1,21 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Table, TableDescription, TableHead, TableRow } from '../../../core/components/table';
-import { TableBody } from '../../../core/components/table/tableBody';
-import { PackageSubject } from '../../../core/models/package';
-import { routes } from '../../../core/routes';
-import { PaginationBar } from '../../dashboard';
+import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
+import { TableBody } from '../../../../core/components/table/tableBody';
+import { routes } from '../../../../core/routes';
+import { PaginationBar } from '../../../dashboard';
+import { useGetPricePackageListById } from '../../common/hooks/useGetPricePackageListBySubjectId';
 
 interface PackageListProps {
-    currentPage: number;
-    pageSize: number;
-    orderBy: string;
+    subjectId: string;
 }
 
-const PackageList: React.FunctionComponent<PackageListProps> = ({ currentPage, orderBy, pageSize }) => {
+const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) => {
     const router = useRouter();
     const [count, setCount] = React.useState<number>(3);
-    const [packages, setPackages] = React.useState<PackageSubject[]>([
-        { id: '1', name: '3 months', duration: 3, listPrice: 3600, salePrice: 3200, status: { id: '1', name: 'Active' } },
-        { id: '2', name: '6 months', duration: 6, listPrice: 5000, salePrice: 4500, status: { id: '1', name: 'Active' } },
-        { id: '3', name: '6 months', duration: null, listPrice: 10000, salePrice: 9800, status: { id: '1', name: 'Active' } },
-    ]);
+
+    const { pricePackageList } = useGetPricePackageListById(subjectId);
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
@@ -52,8 +47,8 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ currentPage, o
                                 <TableHead fields={['ID', 'Package', 'Duration', 'List Price', 'Sale Price', 'Status', '']} />
 
                                 <TableBody>
-                                    {Boolean(count && packages) &&
-                                        packages.map((packageSubject) => (
+                                    {pricePackageList &&
+                                        pricePackageList.map((packageSubject) => (
                                             <TableRow key={packageSubject.id}>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{packageSubject.id}</div>
@@ -65,13 +60,13 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ currentPage, o
                                                     <div className="text-gray-900">{packageSubject.duration ? packageSubject.duration : ''}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{packageSubject.listPrice}</div>
+                                                    <div className="text-gray-900">{packageSubject.originalPrice}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{packageSubject.salePrice}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{packageSubject.status.name}</div>
+                                                    <div className="text-gray-900">{packageSubject.isActive}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div>
@@ -91,7 +86,6 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ currentPage, o
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(currentPage)} numberOfItem={3} pageSize={Number(pageSize)} routeUrl={router.asPath} />
         </div>
     );
 };
