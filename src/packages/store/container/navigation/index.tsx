@@ -14,7 +14,12 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
 
-const NAV_LINK = [{ label: 'Dashboard', link: routes.dashboardUrl }];
+const NAV_LINK = [
+    { label: 'Home', link: routes.homeUrl },
+    { label: 'Blog', link: routes.blogListUrl },
+    { label: 'Course', link: routes.subjectListUrl },
+    { label: 'Dashboard', link: routes.dashboardUrl },
+];
 
 const USER_ACTION_LINK = [
     { label: 'your profile', link: routes.meUrl },
@@ -43,7 +48,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                 <Link href={routes.homeUrl} passHref>
                                     <div className="flex items-center flex-shrink-0 cursor-pointer">
                                         <img className="block w-auto h-full " src="/asset/icons/logo-image.png" />
-                                        <img className="hidden block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.png" />
+                                        <img className="block w-auto h-full -ml-3  md:block" src="/asset/icons/logo-text.png" />
                                     </div>
                                 </Link>
                                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
