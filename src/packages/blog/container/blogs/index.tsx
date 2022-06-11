@@ -7,6 +7,7 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { Blog, BlogCategory } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
 import { defaultCurrentUser } from '../../../../core/store/user';
+import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { useGetBlogCategoryList } from '../../../blogCategory';
 import { PaginationBar } from '../../../dashboard';
@@ -19,76 +20,25 @@ import { FilterBlogsDTO } from './interface';
 
 interface BlogsProps extends FilterBlogsDTO {}
 
-const blogList: Blog[] = [
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createdAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createdAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createdAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
-    {
-        id: '1',
-        category: { id: '1', name: 'Learning' },
-        briefInfo: 'Giá Green Satoshi Token(GST). Lưu ý: Coin này không được niêm yết trên Binance để dùng trong giao dịch và dịch vụ.',
-        createdAt: '',
-        details: 'details 1',
-        thumbnailUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/16352.png',
-        title: 'Giá Green Satoshi Token (GST)',
-        updateAt: '',
-        marketing: { user: defaultCurrentUser, id: '1' },
-        isShow: true,
-    },
-];
-
 const defaultValues: FilterBlogsDTO = {
     title: '',
     currentPage: 1,
     pageSize: 12,
     category: '',
-    sort: Order.ASC,
+    order: Order.ASC,
 };
 
-const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSize, title, category, sort }) => {
+export const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSize, title, category, order }) => {
     const { categories } = useGetBlogCategoryList();
     const router = useRouter();
 
-    const blogListLatestOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 0, isShow: true, pageSize: 5 }), []);
+    const blogListLatestOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 1, isShow: true, pageSize: 5 }), []);
     const options = React.useMemo<FilterBlogListDTO>(
-        () => ({ category, currentPage, pageSize, title, sort, createdAt: '', isShow: true, userId: '' }),
-        [category, currentPage, pageSize, title, sort]
+        () => ({ category, currentPage, pageSize, title, order, createdAt: '', isShow: true, userId: '' }),
+        [category, currentPage, pageSize, title, order]
     );
 
-    useUrlParams({ defaultPath: routes.blogListUrl, query: { currentPage, pageSize, title, category, sort } });
+    useUrlParams({ defaultPath: routes.blogListUrl, query: { currentPage, pageSize, title, category, order } });
 
     const { blogList, count } = useGetBlogs(options);
     const { blogList: latestBlogList } = useGetBlogList(blogListLatestOptions);
@@ -97,13 +47,21 @@ const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSize, tit
         defaultValues,
     });
 
+    const _handleOnSubmit = async (data: FilterBlogsDTO) => {
+        const { currentPage, pageSize, title, category } = options;
+        pushWithParams(router, routes.blogListUrl, { ...{ currentPage, pageSize, title, category }, ...data });
+    };
+
     return (
         <div className="flex flex-col space-y-10">
             <h1 className="mb-5 text-4xl font-bold text-center text-gray-800">New blog</h1>
             <div className="flex space-x-4">
                 <div className="flex flex-col w-full max-w-sm space-y-10">
                     <FormWrapper methods={methods}>
-                        <form className="flex flex-col px-4 py-8 space-y-4 bg-white rounded-md h-fit">
+                        <form
+                            className="flex flex-col px-4 py-8 space-y-4 bg-white rounded-md h-fit"
+                            onSubmit={methods.handleSubmit(_handleOnSubmit)}
+                        >
                             <h2 className="text-xl font-medium">Blog Filter</h2>
                             <SelectField
                                 label="Blog Category"
@@ -115,15 +73,15 @@ const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSize, tit
 
                             <SelectField
                                 label="Sort"
-                                name="sort"
+                                name="order"
                                 values={[
-                                    { label: 'Oldest', value: Order.ASC },
                                     { label: 'Newest', value: Order.DESC },
+                                    { label: 'Oldest', value: Order.ASC },
                                 ]}
                             />
 
                             <button
-                                type="button"
+                                type="submit"
                                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Search
@@ -144,5 +102,3 @@ const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSize, tit
         </div>
     );
 };
-
-export default Blogs;
