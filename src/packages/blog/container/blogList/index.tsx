@@ -16,12 +16,12 @@ import { useGetBlogList } from '../../common/hooks/useGetBlogList';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 interface BlogListProps extends FilterBlogListDTO {}
 
-export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
+export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId, order }) => {
     const router = useRouter();
     const userState = useStoreUser();
     const options = React.useMemo(
-        () => ({ category, createdAt, currentPage, isShow, pageSize, title, userId }),
-        [category, createdAt, currentPage, isShow, pageSize, title, userId]
+        () => ({ category, createdAt, currentPage, isShow, pageSize, title, userId, order }),
+        [category, createdAt, currentPage, isShow, pageSize, title, userId, order]
     );
 
     const { blogList, count } = useGetBlogList(options);
@@ -38,7 +38,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
 
     useUrlParams({
         defaultPath: routes.adminBlogListUrl,
-        query: { ...router.query, category, createdAt, currentPage, isShow, pageSize, title, userId },
+        query: { ...router.query, category, createdAt, currentPage, isShow, pageSize, title, userId, order },
     });
 
     const _handleOnSubmit = async (data: FilterBlogListFormDTO) => {

@@ -1,5 +1,6 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
+import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import { BlogList } from '../../../src/packages/blog';
@@ -29,13 +30,13 @@ const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, i
 BlogPage.getInitialProps = async (ctx: NextPageContext): Promise<BlogPageProps> => {
     let props = {
         currentPage: ctx.query?.currentPage || 1,
-        pageSize: ctx.query?.pageSize || 2,
+        pageSize: ctx.query?.pageSize || 12,
         title: ctx.query?.title || '',
         userId: ctx.query?.userId || '',
         isShow: ctx.query?.isShow || true,
         createdAt: ctx.query?.createdAt || '01-01-2022',
         category: ctx.query?.category || '',
-        order: ctx.query?.order || '',
+        order: ctx.query?.order || Order.DESC,
     } as BlogPageProps;
     return props;
 };

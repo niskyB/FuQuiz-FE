@@ -9,11 +9,8 @@ import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { useGetBlogCategoryList } from '../../../blogCategory';
 import Contact from '../../../store/container/Contact';
-import { FilterBlogListDTO } from '../../container/blogList/interface';
-import { BlogsProps } from '../../container/blogs';
 import { FilterBlogsDTO } from '../../container/blogs/interface';
 import { SideBlog } from '../../container/sideBlog';
-import { useGetBlogList } from '../hooks/useGetBlogList';
 
 interface SearchBlogBarProps {
     options?: FilterBlogsDTO;
@@ -28,11 +25,6 @@ const defaultValues: FilterBlogsDTO = {
 };
 
 const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options }) => {
-    const blogListLatestOptions = React.useMemo<Partial<FilterBlogListDTO>>(
-        () => ({ currentPage: 1, isShow: true, pageSize: 5, order: Order.DESC }),
-        []
-    );
-    const { blogList: latestBlogList } = useGetBlogList(blogListLatestOptions);
     const methods = useForm<FilterBlogsDTO>({
         defaultValues,
     });
@@ -42,7 +34,12 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
     const router = useRouter();
 
     const _handleOnSubmit = async (data: FilterBlogsDTO) => {
-        pushWithParams(router, routes.blogListUrl, { ...router.query, options, ...data });
+        if (options) {
+            const { category, currentPage, order, pageSize, title } = options;
+            pushWithParams(router, routes.blogListUrl, { ...data, category, currentPage, order, pageSize, title });
+            return;
+        }
+        pushWithParams(router, routes.blogListUrl, { ...data });
     };
 
     return (
@@ -62,7 +59,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                         label="Sort"
                         name="order"
                         values={[
-                            { label: 'Newest', value: Order.DESC },
+                            { label: 'Newest', value: Order.DESC, isSelect: true },
                             { label: 'Oldest', value: Order.ASC },
                         ]}
                     />
@@ -75,7 +72,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                     </button>
                 </form>
             </FormWrapper>
-            <SideBlog blogList={latestBlogList} />
+            <SideBlog />
             <Contact />
         </nav>
     );
