@@ -14,4 +14,10 @@ export enum ApiListRoutes {
     BLOG_CATEGORY = 'blog-category',
 
     USERS = 'admin/users',
+
+    DIMENSION = 'dimension',
+    DIMENSIONS = 'dimensions',
+
+    DIMENSION_TYPE = 'dimension-type',
+    DIMENSION_TYPES = 'dimension-types',
 }
