@@ -34,7 +34,8 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
                 <div>
                     <p className="text-sm text-gray-700">
                         Showing <span className="font-medium">{pageSize * (currentPage - 1) + 1}</span> to{' '}
-                        <span className="font-medium">{pageSize * currentPage}</span> of <span className="font-medium">{numberOfItem}</span> orders
+                        <span className="font-medium">{pageSize * currentPage > numberOfItem ? numberOfItem : pageSize * currentPage}</span> of{' '}
+                        <span className="font-medium">{numberOfItem}</span> orders
                     </p>
                 </div>
                 <div>
