@@ -16,6 +16,7 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) =
     const [count, setCount] = React.useState<number>(3);
 
     const { pricePackageList } = useGetPricePackageListById(subjectId);
+    console.log(pricePackageList);
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
@@ -44,7 +45,7 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) =
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['ID', 'Package', 'Duration', 'List Price', 'Sale Price', 'Status', '']} />
+                                <TableHead fields={['ID', 'Package', 'Description', 'Duration', 'List Price', 'Sale Price', 'Status', '']} />
 
                                 <TableBody>
                                     {pricePackageList &&
@@ -57,6 +58,9 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) =
                                                     <div className="text-gray-900">{packageSubject.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
+                                                    <div className="text-gray-900">{packageSubject.description}</div>
+                                                </TableDescription>
+                                                <TableDescription>
                                                     <div className="text-gray-900">{packageSubject.duration ? packageSubject.duration : ''}</div>
                                                 </TableDescription>
                                                 <TableDescription>
@@ -66,15 +70,18 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) =
                                                     <div className="text-gray-900">{packageSubject.salePrice}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{packageSubject.isActive}</div>
+                                                    <div className="text-gray-900">
+                                                        {packageSubject.isActive ? (
+                                                            <div className="px-2 py-1 text-white bg-green-500 rounded-full w-fit">Active</div>
+                                                        ) : (
+                                                            <div className="px-2 py-1 text-white bg-red-500 rounded-full w-fit">Deactivate</div>
+                                                        )}
+                                                    </div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div>
-                                                        <Link href={`${routes.adminEditSliderUrl}/`} passHref>
+                                                        <Link href={`${router.asPath}/edit/${packageSubject.id}`} passHref>
                                                             <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                        </Link>
-                                                        <Link href={`${routes.adminEditSliderUrl}/`} passHref>
-                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Deactivate</p>
                                                         </Link>
                                                     </div>
                                                 </TableDescription>
