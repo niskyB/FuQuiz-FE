@@ -4,10 +4,13 @@ import { ChevronRightIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { StoreLayout } from '../../src/packages/store';
-import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../src/core/components/form';
+import { FormWrapper, SelectField, TextField } from '../../src/core/components/form';
 import { useForm } from 'react-hook-form';
-import { routes } from '../../src/core/routes';
-import { Gender } from '../../src/core/models/user';
+import { useGetSubject } from '../../src/packages/slider/common/hooks/useGetSubject';
+import { genderFieldData } from '../../src/core/common/dataField';
+import { UserFilter } from '../../src/packages/subject';
+import { SubjectFilterDTO } from '../../src/packages/subject/container/subjectList/interface';
+import Contact from '../../src/packages/store/container/Contact';
 
 const tiers = [
     {
@@ -55,22 +58,29 @@ const positions = [
         department: '',
     },
 ];
-interface EditSliderPageProps {
+interface EditSliderPageProps extends SubjectFilterDTO {
     id: string;
 }
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
-const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
+const EditSliderPage: NextPage<EditSliderPageProps> = ({ id, category, createdAt, currentPage, isActive, isFeature, name, pageSize }) => {
     const router = useRouter();
     const methods = useForm();
-    const [popUp, setPopUp] = React.useState<boolean>(true);
+    const [popUp, setPopUp] = React.useState<boolean>(false);
+
+    const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
+        () => ({ isActive: true, isFeature, currentPage, pageSize, category, name }),
+        [category, currentPage, isFeature, name, pageSize]
+    );
+
+    const { subject } = useGetSubject(id);
 
     const _handleOnSubmit = () => {};
 
     return (
         <StoreLayout>
-            {popUp ? (
+            {popUp && (
                 <div className="fixed inset-0 flex items-center justify-center w-screen h-screen">
                     <div className="fixed w-screen h-screen cursor-pointer bg-black/80" onClick={() => setPopUp(false)}></div>
                     <div className="z-20 flex flex-col w-full max-w-2xl px-10 py-8 space-y-10 bg-white rounded-lg shadow">
@@ -80,14 +90,7 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
                                 <TextField label="Fullname" name="fullName" type="text" />
                                 <TextField label="Email" name="Email" type="email" />
                                 <TextField label="Phone number" name="mobile" type="text" />
-                                <SelectField
-                                    name="gender"
-                                    label="Gender"
-                                    values={[
-                                        { label: 'Male', value: Gender.MALE },
-                                        { label: 'Female', value: Gender.FEMALE },
-                                    ]}
-                                />
+                                <SelectField name="gender" label="Gender" values={genderFieldData} />
 
                                 <div className="flex items-center space-x-5">
                                     <button
@@ -107,54 +110,28 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
                         </FormWrapper>
                     </div>
                 </div>
-            ) : (
-                <></>
             )}
-            <div className="space-y-4">
-                <FormWrapper methods={methods}>
-                    <div className="flex items-end p-5 space-x-5 bg-white rounded-md">
-                        <div className="max-w-2xl">
-                            <TextField label="Name" name="name" />
-                        </div>
-                        <div className="w-max">
-                            <SelectField
-                                label="category"
-                                name="category"
-                                values={[
-                                    { label: 'category 1', value: '' },
-                                    { label: 'category 2', value: '' },
-                                    { label: 'category 3', value: '' },
-                                    { label: 'category 4', value: '' },
-                                ]}
-                            />
-                        </div>
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Search
-                        </button>
-                    </div>
-                </FormWrapper>
-
-                <div className="flex flex-col p-10 space-y-10 bg-white rounded-md">
+            <div className="flex space-x-10">
+                <div className="w-full max-w-xs space-y-10">
+                    <UserFilter subjectOption={subjectOption} />
+                    <Contact />
+                </div>
+                <div className="flex flex-col flex-1 p-10 space-y-10 bg-white rounded-md">
                     <div className="flex">
                         <div className="flex justify-center w-1/2">
-                            <img src="https://www.stepn.com/img/coin.svg" alt="thumbnail" className="max-w-full w-96" />
+                            <img src={subject?.thumbnailUrl} alt="thumbnail" className="max-w-full w-96" />
                         </div>
-                        <div className="flex-1 space-y-5">
-                            <h1 className="text-2xl font-bold">Cách để GST to to moon cùng anh Quyết</h1>
-                            <p className="text-gray-500">
-                                Khóa học cung cấp cho học viên sẽ 1 cái nhìn toàn diện việc bảo vệ tiền số, bảo vệ thông tin tài sản. Học viên sẽ nắm
-                                được những kĩ năng và kiến thức cơ bản, cần thiết về bảo vệ không chỉ tiền số mà còn là thông tin và tài sản số nói
-                                chung.
-                            </p>
+                        <div className="flex-1 ">
+                            <h1 className="text-2xl font-bold">{subject?.name}</h1>
+                            <p className="mt-1 font-semibold text-indigo-500">{subject?.category.name}</p>
+                            <p className="mt-1 text-gray-500">{subject?.tagLine}</p>
+                            <p className="mt-3 text-gray-500">{subject?.description}</p>
                         </div>
                     </div>
                     <h1 className="mt-12 text-3xl font-bold sm:mt-16">Package</h1>
                     <div className="mt-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-4">
                         {tiers.map((tier) => (
-                            <div key={tier.name} className="bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm shadow-lg">
+                            <div key={tier.name} className="bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-lg">
                                 <div className="p-6">
                                     <h2 className="text-lg font-medium leading-6 text-gray-900">{tier.name}</h2>
                                     <p className="mt-4 text-sm text-gray-500">{tier.description}</p>
@@ -163,7 +140,6 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
                                         <span className="text-base font-medium text-gray-500">/mo</span>
                                     </p>
                                     <button
-                                        // href={tier.href}
                                         onClick={() => setPopUp(true)}
                                         className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white bg-blue-500 border border-blue-600 rounded-md hover:bg-blue-800"
                                     >

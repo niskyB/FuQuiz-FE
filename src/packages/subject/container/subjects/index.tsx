@@ -1,74 +1,34 @@
 import { SubjectFilterDTO } from '../subjectList/interface';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useGetSubjectCategoryList } from '../../../subjectCategory';
 import { useGetSubjectList } from '../../common/hooks/useGetSubjectList';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { dataParser } from '../../../../core/util/data';
-import { BlogCategory } from '../../../../core/models/blog';
 import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 import { BlogListFilterDTO } from './interface';
 import { SideBox } from '../../../store/components/sideBox';
 import Contact from '../../../store/container/Contact';
-import { pushWithParams } from '../../../../core/util';
-import { useRouter } from 'next/router';
-import { allFieldData } from '../../../../core/common/dataField';
+import { UserFilter } from '../../components/userFilter';
 interface SubjectsProps extends BlogListFilterDTO {}
 
-const defaultValues: BlogListFilterDTO = {
-    category: '',
-    currentPage: 1,
-    isFeature: '',
-    name: '',
-    pageSize: 12,
-};
 export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, currentPage, isFeature, name, pageSize }) => {
-    const router = useRouter();
-
-    const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ isActive: true, isFeature, currentPage, pageSize, category, name }), []);
     const featureSubjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
         () => ({ isActive: true, isFeature: true, currentPage: 1, pageSize: 3 }),
         []
     );
+    const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
+        () => ({ isActive: true, isFeature, currentPage, pageSize, category, name }),
+        [category, currentPage, isFeature, name, pageSize]
+    );
 
-    const methods = useForm<BlogListFilterDTO>({
-        defaultValues,
-    });
-    const { categories } = useGetSubjectCategoryList();
     const { subjects, count } = useGetSubjectList(subjectOption);
     const { subjects: featureSubjects } = useGetSubjectList(featureSubjectOption);
 
-    const _handleOnSubmit = (data: BlogListFilterDTO) => {
-        pushWithParams(router, routes.subjectListUrl, { ...subjectOption, ...data });
-    };
     return (
         <>
             <h1 className="mb-5 text-4xl font-bold text-center">New Course</h1>
             <div className="flex space-x-10">
                 <div className="flex flex-col w-full max-w-xs space-y-7">
-                    <FormWrapper methods={methods}>
-                        <form
-                            onSubmit={methods.handleSubmit(_handleOnSubmit)}
-                            className="flex flex-col items-end w-full p-5 space-y-5 bg-white rounded-md"
-                        >
-                            <TextField label="Name" name="name" />
-
-                            <SelectField
-                                label="category"
-                                name="category"
-                                values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
-                            />
-
-                            <button
-                                type="submit"
-                                className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Search
-                            </button>
-                        </form>
-                    </FormWrapper>
+                    <UserFilter subjectOption={subjectOption} />
                     <div className="space-y-3">
                         <h2 className="text-2xl font-semibold">Feature course</h2>
                         {featureSubjects.map((subject) => (
