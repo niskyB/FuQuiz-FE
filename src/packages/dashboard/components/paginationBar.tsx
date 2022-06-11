@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
-
+import React from 'react';
 interface PaginationBarProps {
     currentPage: number;
     pageSize: number;
@@ -45,7 +45,7 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
                                 <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
                             </a>
                         </Link>
-                        {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
+
                         {[...Array(totalPage)].map((value, index) => {
                             const pos = index + 1;
                             //truncate left

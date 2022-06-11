@@ -17,13 +17,15 @@ import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 interface BlogListProps extends FilterBlogListDTO {}
 
 export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
+    const router = useRouter();
+    const userState = useStoreUser();
+
     const options = React.useMemo(
         () => ({ category, createdAt, currentPage, isShow, pageSize, title, userId }),
         [category, createdAt, currentPage, isShow, pageSize, title, userId]
     );
+
     const { blogList, count } = useGetBlogList(options);
-    const router = useRouter();
-    const userState = useStoreUser();
     const { categories } = useGetBlogCategoryList();
 
     const methods = useForm<FilterBlogListFormDTO>({
