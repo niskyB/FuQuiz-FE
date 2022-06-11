@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import { Order } from '../../../../core/common/dataField';
 import { Blog } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
 import { useGetBlogList } from '../../common/hooks/useGetBlogList';
@@ -7,7 +8,10 @@ import { FilterBlogListDTO } from '../blogList/interface';
 interface BlogListProps {}
 
 export const SideBlog: React.FunctionComponent<BlogListProps> = () => {
-    const blogListLatestOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 1, isShow: true, pageSize: 3 }), []);
+    const blogListLatestOptions = React.useMemo<Partial<FilterBlogListDTO>>(
+        () => ({ currentPage: 1, isShow: true, pageSize: 3, order: Order.DESC }),
+        []
+    );
     const { blogList } = useGetBlogList(blogListLatestOptions);
     return (
         <div className="flex flex-col space-y-5 divide-y-2">

@@ -20,7 +20,7 @@ BlogListPage.getInitialProps = async (ctx: NextPageContext): Promise<BlogsPagePr
         currentPage: ctx.query?.currentPage || 1,
         pageSize: ctx.query?.pageSize || 12,
         title: ctx.query?.title || '',
-        order: ctx.query?.order || Order.ASC,
+        order: ctx.query?.order || Order.DESC,
         category: ctx.query?.category || '',
     };
     return props as BlogsPageProps;

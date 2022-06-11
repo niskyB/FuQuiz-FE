@@ -34,7 +34,12 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
     const router = useRouter();
 
     const _handleOnSubmit = async (data: FilterBlogsDTO) => {
-        pushWithParams(router, routes.blogListUrl, { ...router.query, options, ...data });
+        if (options) {
+            const { category, currentPage, order, pageSize, title } = options;
+            pushWithParams(router, routes.blogListUrl, { ...data, category, currentPage, order, pageSize, title });
+            return;
+        }
+        pushWithParams(router, routes.blogListUrl, { ...data });
     };
 
     return (
@@ -54,7 +59,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                         label="Sort"
                         name="order"
                         values={[
-                            { label: 'Newest', value: Order.DESC },
+                            { label: 'Newest', value: Order.DESC, isSelect: true },
                             { label: 'Oldest', value: Order.ASC },
                         ]}
                     />

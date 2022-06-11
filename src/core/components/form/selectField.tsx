@@ -27,7 +27,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
                 defaultValue={defaultValue}
             >
                 {values.map((item) => (
-                    <option key={item.value} value={item.value}>
+                    <option key={item.value} value={item.value} selected={item.isSelect ? item.isSelect : false}>
                         {item.label}
                     </option>
                 ))}
