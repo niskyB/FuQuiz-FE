@@ -10,4 +10,5 @@ export interface PricePackage {
     updateAt: string;
     createAt: string;
     salePrice: number;
+    description: string;
 }
