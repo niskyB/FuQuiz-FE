@@ -8,7 +8,7 @@ import { DashBoardLayout } from '../../../src/packages/dashboard';
 
 interface BlogPageProps extends FilterBlogListDTO {}
 
-const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
+const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId, order }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
@@ -20,6 +20,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, i
                     pageSize={pageSize}
                     title={title}
                     userId={userId}
+                    order={order}
                 />
             </DashBoardLayout>
         </RouterProtectionWrapper>
@@ -28,13 +29,14 @@ const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, i
 BlogPage.getInitialProps = async (ctx: NextPageContext): Promise<BlogPageProps> => {
     let props = {
         currentPage: ctx.query?.currentPage || 1,
-        pageSize: ctx.query?.pageSize || 12,
+        pageSize: ctx.query?.pageSize || 2,
         title: ctx.query?.title || '',
         userId: ctx.query?.userId || '',
         isShow: ctx.query?.isShow || true,
         createdAt: ctx.query?.createdAt || '01-01-2022',
         category: ctx.query?.category || '',
-    };
-    return props as BlogPageProps;
+        order: ctx.query?.order || '',
+    } as BlogPageProps;
+    return props;
 };
 export default BlogPage;

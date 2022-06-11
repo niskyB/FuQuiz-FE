@@ -1,23 +1,12 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { allFieldData, Order } from '../../../../core/common/dataField';
+import React from 'react';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { Blog, BlogCategory } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
-import { defaultCurrentUser } from '../../../../core/store/user';
-import { pushWithParams } from '../../../../core/util';
-import { dataParser } from '../../../../core/util/data';
-import { useGetBlogCategoryList } from '../../../blogCategory';
 import { PaginationBar } from '../../../dashboard';
-import Contact from '../../../store/container/Contact';
 import SearchBlogBar from '../../common/component/SearchBlogBar';
-import { useGetBlogList } from '../../common/hooks/useGetBlogList';
 import { useGetBlogs } from '../../common/hooks/useGetBlogs';
 import { BlogBox } from '../blogBox';
 import { FilterBlogListDTO } from '../blogList/interface';
-import { SideBlog } from '../sideBlog';
 import { FilterBlogsDTO } from './interface';
 
 export interface BlogsProps extends FilterBlogsDTO {}
