@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, TextField } from '../../../core/components/form';
+import { FormWrapper, TextField } from '../../../../core/components/form';
 
 interface AddPackageProps {}
 

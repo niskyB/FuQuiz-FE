@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from '../src/core/store';
 import { GetCurrentUserWrapper } from '../src/core/components/routerProtection';
 import { ToastContainer } from 'react-toastify';
+import { ResetForm } from '../src/core/common/HOC/resetForm';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (

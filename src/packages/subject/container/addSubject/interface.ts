@@ -4,4 +4,6 @@ export interface AddSubjectFormDTO extends Pick<Subject, 'name' | 'tagLine' | 'd
     category: string;
     assignTo: string;
     image: File | null;
+    isFeature: boolean | '';
+    isActive: boolean | '';
 }
