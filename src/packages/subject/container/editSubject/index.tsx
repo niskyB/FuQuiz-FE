@@ -6,18 +6,17 @@ import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { UserRole } from '../../../../core/models/role';
-import { Subject, SubjectCategory } from '../../../../core/models/subject';
+import { SubjectCategory } from '../../../../core/models/subject';
 import { User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { checkFileType } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
-import { useGetSubjectCategoryById } from '../../../subjectCategory';
 import { useAdminGetUserList } from '../../../users';
 import { useGetSubjectCategory } from '../../common/hooks/useGetSubjectCategory';
 import { adminUpdateSubject, expertUpdateSubject } from './action';
-import { AdminEditSubjectFormDTO, EditSubjectDTO } from './interface';
+import { EditSubjectDTO } from './interface';
 
 interface EditSubjectProps {
     id: string;
@@ -44,7 +43,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
 
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
     const [file, setFile] = React.useState<File | null>(null);
-    const { subject, imageUrl, setImageUrl } = useGetSubject({ id });
+    const { subject, imageUrl, setImageUrl } = useGetSubject(id);
     const router = useRouter();
 
     const methods = useForm<EditSubjectDTO>({ defaultValues });
