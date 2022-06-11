@@ -50,14 +50,16 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                     <SelectField
                         label="Blog Category"
                         name="category"
+                        require={false}
                         values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
                     />
 
-                    <TextField label="Title" name="title" />
+                    <TextField label="Title" name="title" require={false} />
 
                     <SelectField
                         label="Sort"
                         name="order"
+                        require={false}
                         values={[
                             { label: 'Newest', value: Order.DESC, isSelect: true },
                             { label: 'Oldest', value: Order.ASC },

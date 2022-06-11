@@ -4,18 +4,33 @@ import { useStoreApi } from '../../store';
 
 interface TextareaFieldProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
     name: string;
-    label: string;
+    label?: string;
+    require?: boolean;
 }
 
-export const TextareaField: React.FC<TextareaFieldProps> = ({ name, label, ...rest }) => {
+export const TextareaField: React.FC<TextareaFieldProps> = ({ name, label, require = true, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
         <div className="flex flex-col w-full space-y-1">
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                {label}
-            </label>
+            {label ? (
+                <div className="flex justify-start space-x-2">
+                    <label htmlFor={name} className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                        {label}
+                    </label>
+                    {require ? (
+                        <p className="inline-flex text-red-500" id="require">
+                            *
+                        </p>
+                    ) : (
+                        ''
+                    )}
+                </div>
+            ) : (
+                ''
+            )}
+
             <div className="mt-1 sm:mt-0 sm:col-span-2">
                 <textarea
                     {...register(name)}

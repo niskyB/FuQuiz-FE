@@ -77,10 +77,10 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
                     <h2 className="text-xl font-semibold">Filter</h2>
                     <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="flex items-end justify-start space-x-5">
                         <div className="min-w-[300px]">
-                            <TextField label="Title" name="title" />
+                            <TextField label="Title" name="title" require={false} />
                         </div>
                         <div className="">
-                            <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} />
+                            <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} require={false} />
                         </div>
                         <div className="">
                             <SelectBlogCategory label="Category" name="category" values={[{ id: '', name: 'All' }, ...categories]} />

@@ -5,20 +5,36 @@ import { useStoreApi } from '../../store';
 
 interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     name: string;
-    label: string;
+    label?: string;
     values: Array<SelectionFieldValues<any>>;
     defaultValue?: any;
+    require?: boolean;
 }
 
-export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue, ...rest }) => {
+export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue, require = true, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
         <div className="w-full">
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-                {label}
-            </label>
+            {label ? (
+                <div className="flex justify-start space-x-2">
+                    <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+                        {label}
+                    </label>
+
+                    {require ? (
+                        <p className="inline-flex text-red-500" id="require">
+                            *
+                        </p>
+                    ) : (
+                        ''
+                    )}
+                </div>
+            ) : (
+                ''
+            )}
+
             <select
                 {...register(name)}
                 {...rest}

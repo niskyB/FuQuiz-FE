@@ -80,8 +80,8 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
-                            <TextField name="createdAt" label="Create From" type={'date'} />
+                            <TextField name="title" label="Title" require={false} />
+                            <TextField name="createdAt" label="Create From" type={'date'} require={false} />
                             <SelectField
                                 label="Showing"
                                 values={[
@@ -89,6 +89,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                     { label: 'Inactive', value: false },
                                 ]}
                                 name="isShow"
+                                require={false}
                             />
                         </div>
                         <div className="flex justify-end">
