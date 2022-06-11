@@ -3,7 +3,7 @@ import React from 'react';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
-import SearchBlogBar from '../../common/component/SearchBlogBar';
+import SearchBlogBar from '../../component/SearchBlogBar';
 import { useGetBlogs } from '../../common/hooks/useGetBlogs';
 import { BlogBox } from '../blogBox';
 import { FilterBlogListDTO } from '../blogList/interface';
@@ -28,7 +28,7 @@ export const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSi
             <h1 className="mb-5 text-4xl font-bold text-center text-gray-800">New Blogs</h1>
             <div className="flex space-x-4">
                 <SearchBlogBar options={{ category, currentPage, order, pageSize, title }} />
-                <div className="flex flex-col w-full space-y-4">
+                <div className="flex flex-col flex-1 w-full space-y-4">
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                         {blogList.map((item) => (
                             <BlogBox key={item.id} data={item} mode="view" />

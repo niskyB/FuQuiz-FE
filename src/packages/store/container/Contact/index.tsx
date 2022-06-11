@@ -1,12 +1,10 @@
-import { EyeIcon } from '@heroicons/react/outline';
-
 interface ContactProps {}
 
 const Contact: React.FunctionComponent<ContactProps> = () => {
     return (
         <div className="flex flex-col space-y-5">
             <h2 className="text-2xl font-semibold">Contact information</h2>
-            <a target={'_blank'} href="facebook.com/duc.dau.731">
+            <a target={'_blank'} href="https://www.facebook.com/duc.dau.731">
                 <div className="flex items-center space-x-4">
                     <div className="w-6 h-6">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
