@@ -24,7 +24,7 @@ export const routes = {
     adminSliderListUrl: '/dashboard/slider',
     adminEditSliderUrl: '/dashboard/slider/edit',
     adminAddSliderUrl: '/dashboard/slider/add',
-    adminParamSliderUrl: '?currentPage=1&pageSize=10&title=&userId=&isShow=true&createdAt=',
+    // adminParamSliderUrl: '?currentPage=1&pageSize=10&title=&userId=&isShow=true&createdAt=',
 
     // blog
     adminBlogListUrl: '/dashboard/blog',

@@ -12,6 +12,7 @@ import { pushWithParams } from '../../../../core/util/router';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { useGetSliderList } from '../../common/hooks/useGetSliderList';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
@@ -30,6 +31,11 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
         }),
         [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
     );
+
+    useUrlParams({
+        defaultPath: routes.adminSliderListUrl,
+        query: { ...router.query, title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId },
+    });
 
     const { count, sliders } = useGetSliderList(options);
 
