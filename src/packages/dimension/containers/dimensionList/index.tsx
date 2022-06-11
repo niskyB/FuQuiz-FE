@@ -70,11 +70,8 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ subjectId,
                                             </TableDescription>
                                             <TableDescription>
                                                 <div>
-                                                    <Link href={`${routes.adminEditSliderUrl}/`} passHref>
+                                                    <Link href={`${routes.adminSubjectListUrl}/${subjectId}/dimension/edit/${dimension.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                    </Link>
-                                                    <Link href={`${routes.adminEditSliderUrl}/`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Delete</p>
                                                     </Link>
                                                 </div>
                                             </TableDescription>
