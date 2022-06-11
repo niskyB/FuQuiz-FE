@@ -39,7 +39,7 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                         </p>
                         <a href={''} className="block mt-2">
                             <p className="text-xl font-semibold text-gray-900">{data.title}</p>
-                            <p className="mt-3 text-base text-gray-500">{data.briefInfo}</p>
+                            <p className="mt-3 text-base text-gray-500 line-clamp-3">{data.briefInfo}</p>
                         </a>
                     </div>
                     <div className="flex items-center mt-6">

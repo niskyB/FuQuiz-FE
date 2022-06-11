@@ -12,7 +12,8 @@ import { UserRole } from '../../../../core/models/role';
 import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { PaginationBar } from '../../../dashboard';
 import { useGetBlogCategoryList } from '../../../blogCategory';
-import { useGetBlogList } from '../../component/hooks/useGetBlogList';
+import { useGetBlogList } from '../../common/hooks/useGetBlogList';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 interface BlogListProps extends FilterBlogListDTO {}
 
 export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
@@ -32,6 +33,11 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
             createdAt,
             isShow,
         },
+    });
+
+    useUrlParams({
+        defaultPath: routes.adminBlogListUrl,
+        query: { ...router.query, category, createdAt, currentPage, isShow, pageSize, title, userId },
     });
 
     const _handleOnSubmit = async (data: FilterBlogListFormDTO) => {

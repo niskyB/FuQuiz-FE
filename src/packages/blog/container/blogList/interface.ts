@@ -1,7 +1,9 @@
+import { Order } from '../../../../core/common/dataField';
 import { GetListWithCount } from '../../../../core/common/interface';
 import { Blog } from '../../../../core/models/blog';
 
 export interface FilterBlogListDTO {
+    order: Order;
     title: string;
     isShow: boolean;
     userId: string;

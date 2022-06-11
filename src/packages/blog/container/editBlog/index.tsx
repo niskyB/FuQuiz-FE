@@ -6,7 +6,7 @@ import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { routes } from '../../../../core/routes';
 import { useGetBlogCategoryList } from '../../../blogCategory';
-import { useGetBlog } from '../../component/hooks/useGetBlog';
+import { useGetBlog } from '../../common/hooks/useGetBlog';
 import { updateBlog } from './action';
 import { EditBlogDTO } from './interface';
 
