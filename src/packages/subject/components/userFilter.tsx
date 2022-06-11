@@ -38,7 +38,7 @@ export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOp
             >
                 <TextField label="Name" name="name" />
                 <SelectField label="category" name="category" values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]} />
-                <SelectField label="Future" name="isFeature" values={[allFieldData, ...FeatureFieldData]} />
+                <SelectField label="Feature" name="isFeature" values={[allFieldData, ...FeatureFieldData]} />
 
                 <button
                     type="submit"

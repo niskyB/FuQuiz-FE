@@ -96,7 +96,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                 name="category"
                             />
                             <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
-                            <SelectField label="Future" values={[allFieldData, ...statusFieldData]} name="isFeature" />
+                            <SelectField label="Feature" values={[allFieldData, ...statusFieldData]} name="isFeature" />
                         </div>
                         <div className="flex justify-end">
                             <button
@@ -114,7 +114,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Id', 'Title', 'Category', 'Info', 'Expert', 'Activation', 'Future', '']} />
+                                <TableHead fields={['Id', 'Title', 'Category', 'Info', 'Expert', 'Activation', 'Feature', '']} />
 
                                 <TableBody>
                                     {Boolean(count && subjects) &&
