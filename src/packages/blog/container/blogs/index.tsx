@@ -11,6 +11,7 @@ import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { useGetBlogCategoryList } from '../../../blogCategory';
 import { PaginationBar } from '../../../dashboard';
+import Contact from '../../../store/container/Contact';
 import { useGetBlogList } from '../../component/hooks/useGetBlogList';
 import { useGetBlogs } from '../../component/hooks/useGetBlogs';
 import { BlogBox } from '../blogBox';
@@ -38,7 +39,7 @@ export const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSi
         [category, currentPage, pageSize, title, order]
     );
 
-    useUrlParams({ defaultPath: routes.blogListUrl, query: { currentPage, pageSize, title, category, order } });
+    useUrlParams({ defaultPath: routes.blogListUrl, query: { ...router.query, currentPage, pageSize, title, category, order } });
 
     const { blogList, count } = useGetBlogs(options);
     const { blogList: latestBlogList } = useGetBlogList(blogListLatestOptions);
@@ -49,14 +50,14 @@ export const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSi
 
     const _handleOnSubmit = async (data: FilterBlogsDTO) => {
         const { currentPage, pageSize, title, category } = options;
-        pushWithParams(router, routes.blogListUrl, { ...{ currentPage, pageSize, title, category }, ...data });
+        pushWithParams(router, routes.blogListUrl, { ...router.query, ...{ currentPage, pageSize, title, category }, ...data });
     };
 
     return (
         <div className="flex flex-col space-y-10">
             <h1 className="mb-5 text-4xl font-bold text-center text-gray-800">New blog</h1>
             <div className="flex space-x-4">
-                <div className="flex flex-col w-full max-w-sm space-y-10">
+                <nav className="flex flex-col w-full max-w-sm space-y-10">
                     <FormWrapper methods={methods}>
                         <form
                             className="flex flex-col px-4 py-8 space-y-4 bg-white rounded-md h-fit"
@@ -89,7 +90,8 @@ export const Blogs: React.FunctionComponent<BlogsProps> = ({ currentPage, pageSi
                         </form>
                     </FormWrapper>
                     <SideBlog blogList={latestBlogList} />
-                </div>
+                    <Contact />
+                </nav>
                 <div className="flex flex-col w-full space-y-4">
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                         {blogList.map((item) => (

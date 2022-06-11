@@ -11,6 +11,7 @@ import { pushWithParams } from '../../../../core/util';
 import { userFieldDataParser } from '../../../../core/util/user';
 import { useAdminGetUserList } from '../../';
 import { FilterUserDTO, FilterUserFormDTO } from './interface';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 
 interface UserListProps extends FilterUserDTO {}
 
@@ -46,6 +47,11 @@ const UserList: React.FunctionComponent<UserListProps> = ({
     const router = useRouter();
 
     const { count, userList } = useAdminGetUserList(options);
+
+    useUrlParams({
+        defaultPath: routes.adminUsersUrl,
+        query: { ...router.query, currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role },
+    });
 
     const _handleOnSubmit = async (data: FilterUserFormDTO) => {
         pushWithParams(router, routes.adminUsersUrl, { ...options, ...data });
