@@ -2,16 +2,39 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { allFieldData } from '../../../../core/common/dataField';
+import { toast } from 'react-toastify';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
+import { DimensionType } from '../../../../core/models/dimension';
+import { dataParser } from '../../../../core/util/data';
+import { useGetDimensionType } from '../../common/hooks/useGetDimensionTypes';
+import { addDimension } from './action';
+import { AddDimensionDTO, AddDimensionFormDTO } from './interface';
 
-interface AddDimensionProps {}
-
-export const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
-    const methods = useForm();
-    const _handleOnSubmit = () => {};
+interface AddDimensionProps {
+    subjectId: string;
+}
+const defaultValues: AddDimensionDTO = {
+    description: '',
+    name: '',
+    subject: '',
+    type: '',
+};
+export const AddDimension: React.FunctionComponent<AddDimensionProps> = ({ subjectId }) => {
     const router = useRouter();
 
+    const methods = useForm<AddDimensionFormDTO>({ defaultValues });
+
+    const { dimensionTypes } = useGetDimensionType();
+
+    const _handleOnSubmit = (data: AddDimensionFormDTO) => {
+        addDimension({ ...data, subject: subjectId }).then((res) => {
+            if (res) {
+                router.push(router.asPath.replace('/add', ''));
+                toast.success('Add dimension success!');
+            }
+        });
+    };
     return (
         <FormWrapper methods={methods}>
             <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
@@ -29,7 +52,7 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
                                         Type
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField name="type" label="" values={[allFieldData]} />
+                                        <SelectField name="type" label="" values={dataParser<DimensionType>(dimensionTypes, 'name', 'id')} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -45,14 +68,7 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
                                         Description
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <textarea
-                                            {...methods.register('content')}
-                                            rows={7}
-                                            name="content"
-                                            id="content"
-                                            autoComplete="given-name"
-                                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        />
+                                        <TextareaField name="description" label="" />
                                     </div>
                                 </div>
                             </div>
