@@ -13,7 +13,7 @@ import { AddBlogDTO } from './interface';
 
 interface AddBlogProps {}
 const defaultValues: AddBlogDTO = {
-    categoryId: '',
+    category: '',
     briefInfo: '',
     details: '',
     image: null,
@@ -74,7 +74,7 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                         Category
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField name="categoryId" label="" values={[...blogCategoriesFieldData]} />
+                                        <SelectField name="category" label="" values={[...blogCategoriesFieldData]} />
                                         {/* <SelectBlogCategory label="" name="categoryId" values={blogCategoryList} /> */}
                                     </div>
                                 </div>
