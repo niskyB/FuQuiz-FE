@@ -29,12 +29,12 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
     const [tabOpening, setTabOpening] = React.useState<TabContent>('blog');
 
     const blogListOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 1, isShow: true, pageSize: 10 }), []);
-    const blogListLatestOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 1, isShow: true, pageSize: 3 }), []);
+
     const subjectFilter = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ currentPage: 1, pageSize: 10, isActive: true }), []);
     const sliderOptions = React.useMemo<Partial<GetSliderOptionsDTO>>(() => ({ isShow: true, currentPage: 1, pageSize: 20 }), []);
 
     const { blogList } = useGetBlogList(blogListOptions);
-    const { blogList: latestBlogList } = useGetBlogList(blogListLatestOptions);
+
     const { sliders } = useGetSliderList(sliderOptions);
     const { subjects } = useGetSubjectList(subjectFilter);
 
@@ -91,7 +91,7 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                         <div className="block lg:col-span-4">
                             <nav aria-label="Sidebar" className="sticky divide-y divide-gray-300 top-4">
                                 <div className="pb-8 space-y-10">
-                                    <SideBlog blogList={latestBlogList} />
+                                    <SideBlog />
                                     <Contact />
                                 </div>
                             </nav>

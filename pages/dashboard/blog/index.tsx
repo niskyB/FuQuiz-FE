@@ -29,7 +29,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, i
 BlogPage.getInitialProps = async (ctx: NextPageContext): Promise<BlogPageProps> => {
     let props = {
         currentPage: ctx.query?.currentPage || 1,
-        pageSize: ctx.query?.pageSize || 2,
+        pageSize: ctx.query?.pageSize || 12,
         title: ctx.query?.title || '',
         userId: ctx.query?.userId || '',
         isShow: ctx.query?.isShow || true,

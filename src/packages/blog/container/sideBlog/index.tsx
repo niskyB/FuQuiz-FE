@@ -2,11 +2,13 @@ import Link from 'next/link';
 import React from 'react';
 import { Blog } from '../../../../core/models/blog';
 import { routes } from '../../../../core/routes';
-interface BlogListProps {
-    blogList: Blog[];
-}
+import { useGetBlogList } from '../../common/hooks/useGetBlogList';
+import { FilterBlogListDTO } from '../blogList/interface';
+interface BlogListProps {}
 
-export const SideBlog: React.FunctionComponent<BlogListProps> = ({ blogList }) => {
+export const SideBlog: React.FunctionComponent<BlogListProps> = () => {
+    const blogListLatestOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 1, isShow: true, pageSize: 3 }), []);
+    const { blogList } = useGetBlogList(blogListLatestOptions);
     return (
         <div className="flex flex-col space-y-5 divide-y-2">
             <h2 className="text-2xl font-semibold">Latest post</h2>
