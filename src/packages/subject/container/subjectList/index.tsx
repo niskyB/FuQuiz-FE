@@ -114,12 +114,15 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Title', 'Category', 'Info', 'Expert', 'Activation', 'Future', '']} />
+                                <TableHead fields={['Id', 'Title', 'Category', 'Info', 'Expert', 'Activation', 'Future', '']} />
 
                                 <TableBody>
                                     {Boolean(count && subjects) &&
                                         subjects.map((subject) => (
                                             <TableRow key={subject.id}>
+                                                <TableDescription>
+                                                    <div className="text-gray-900">{subject.id}</div>
+                                                </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{subject.name}</div>
                                                     <div className="text-gray-900">{new Date(subject.createdAt).toLocaleDateString()}</div>
@@ -131,7 +134,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{subject.description}</div>
-                                                    <div className="text-gray-900">36 lessons</div>
+                                                    <div className="text-gray-900">36 lessons </div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{subject.assignTo.user.fullName}</div>
