@@ -32,7 +32,7 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ currentPag
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Sliders</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Dimensions</h1>
                     <p className="mt-2 text-sm text-gray-700">
                         A list of all the Dimension from subject website including their name and description.
                     </p>

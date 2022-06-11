@@ -2,11 +2,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, TextField } from '../../../core/components/form';
+import { allFieldData } from '../../../../core/common/dataField';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 
 interface AddDimensionProps {}
 
-const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
+export const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
     const methods = useForm();
     const _handleOnSubmit = () => {};
     const router = useRouter();
@@ -28,15 +29,15 @@ const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
                                         Type
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="type" />
+                                        <SelectField name="type" label="" values={[allFieldData]} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Dimension
+                                        Name
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="Dimension" />
+                                        <TextField label="" name="name" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -78,5 +79,3 @@ const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
         </FormWrapper>
     );
 };
-
-export default AddDimension;

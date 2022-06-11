@@ -9,7 +9,6 @@ interface BlogBoxProps {
 }
 
 export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) => {
-    console.log(data);
     const [redirectLink, setRedirectLink] = React.useState<string>('');
     React.useEffect(() => {
         switch (mode) {
@@ -58,9 +57,9 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                             </div>
                         </div>
                         <div className="ml-3">
-                            <p className="text-sm font-medium text-gray-900">
-                                <div className="hover:underline">{data.marketing ? data.marketing.user.fullName : 'Admin'}</div>
-                            </p>
+                            <div className="text-sm font-medium text-gray-900">
+                                <p className="hover:underline">{data.marketing ? data.marketing.user.fullName : 'Admin'}</p>
+                            </div>
                             <div className="flex text-sm text-gray-500">
                                 <time dateTime={data.createdAt}>{new Date(data.createdAt).toLocaleDateString()}</time>
                             </div>

@@ -2,7 +2,9 @@ import { AttributeType } from '../common/interface';
 
 export interface Dimension {
     id: string;
-    typeId: AttributeType;
+    type: DimensionType;
     name: string;
     description: string;
 }
+
+export interface DimensionType extends AttributeType {}
