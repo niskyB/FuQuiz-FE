@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SearchBlogBar from '../../common/component/SearchBlogBar';
+import SearchBlogBar from '../../component/SearchBlogBar';
 import { useGetBlog } from '../../common/hooks/useGetBlog';
 
 interface BlogPostProps {
