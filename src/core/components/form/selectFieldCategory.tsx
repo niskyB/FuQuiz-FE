@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { RedStar } from '../../../packages/store';
 import { BlogCategory } from '../../models/blog';
 import { useStoreApi } from '../../store';
 
@@ -7,16 +8,17 @@ interface SelectBlogCategoryProps {
     name: string;
     label: string;
     values: Array<BlogCategory>;
+    require?: boolean;
 }
 
-export const SelectBlogCategory: React.FC<SelectBlogCategoryProps> = ({ name, label, values }) => {
+export const SelectBlogCategory: React.FC<SelectBlogCategoryProps> = ({ name, label, values, require = true }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
         <div className="w-full">
             <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-                {label}
+                {label} {require ? <RedStar /> : ''}
             </label>
             <select
                 id={name}

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
+import { RedStar } from '../../../store';
 import { addBlog } from './action';
 import { AddPackageFormDTO } from './interface';
 
@@ -46,31 +47,42 @@ const AddPackage: React.FunctionComponent<AddPackageProps> = ({ subjectId }) => 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Name</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Name <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="name" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Duration</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Duration <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="duration" type="number" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Original price</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Original price <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="originalPrice" type="number" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Sale Price</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Sale Price <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="salePrice" type="number" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Description</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Description
+                                        <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextareaField label="" name="description" />
                                     </div>

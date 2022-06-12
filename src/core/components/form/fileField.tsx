@@ -1,6 +1,7 @@
 import { XIcon } from '@heroicons/react/outline';
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { RedStar } from '../../../packages/store';
 import { useStoreApi } from '../../store';
 import { checkFileType } from '../../util/file';
 
@@ -12,6 +13,7 @@ interface FileFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     setFile: React.Dispatch<React.SetStateAction<File | null>>;
     confirmMessage?: string;
     file: File | null;
+    require?: boolean;
 }
 // 'Do you really want to remove this thumbnail?';
 export const FileField: React.FC<FileFieldProps> = ({
@@ -20,8 +22,9 @@ export const FileField: React.FC<FileFieldProps> = ({
     previewUrl,
     setPreviewUrl,
     setFile,
-    confirmMessage = 'do you really want to remove this image?',
+    confirmMessage = 'Do you really want to remove this image?',
     file,
+    require,
     ...rest
 }) => {
     const { errorDetails } = useStoreApi();
@@ -55,7 +58,7 @@ export const FileField: React.FC<FileFieldProps> = ({
     return (
         <>
             <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-                {label}
+                {label} {require ? <RedStar /> : ''}
             </label>
             {previewUrl ? (
                 <div onClick={_onRemovePreview} className="relative cursor-pointer w-80">

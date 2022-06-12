@@ -50,16 +50,17 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="subject" label="subject" />
-                            <TextField name="email" label="email" />
-                            <TextField name="createdAt" label="Registration From" type={'date'} />
-                            <TextField name="createdAt" label="Registration To" type={'date'} />
+                            <TextField require={false} name="subject" label="subject" />
+                            <TextField require={false} name="email" label="email" />
+                            <TextField require={false} name="createdAt" label="Registration From" type={'date'} />
+                            <TextField require={false} name="createdAt" label="Registration To" type={'date'} />
                             <SelectField
                                 label="Status"
                                 values={[
                                     { label: 'Active', value: true },
                                     { label: 'Inactive', value: false },
                                 ]}
+                                require={false}
                                 name="isActive"
                             />
                         </div>

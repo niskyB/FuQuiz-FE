@@ -46,7 +46,6 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
         <nav className="flex flex-col w-full max-w-xs space-y-10">
             <FormWrapper methods={methods}>
                 <form className="flex flex-col px-4 py-8 space-y-4 bg-white rounded-md h-fit" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
-                    <h2 className="text-xl font-medium">Blog Filter</h2>
                     <SelectField
                         label="Blog Category"
                         name="category"

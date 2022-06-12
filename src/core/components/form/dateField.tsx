@@ -1,19 +1,21 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { RedStar } from '../../../packages/store';
 import { useStoreApi } from '../../store';
 interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;
+    require?: boolean;
 }
 
-export const DateField: React.FC<DateFieldProps> = ({ name, label, ...rest }) => {
+export const DateField: React.FC<DateFieldProps> = ({ name, label, require, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
         <div className="flex flex-col w-full">
             <label className="block text-sm font-medium text-gray-700 capitalize" htmlFor={name}>
-                {label}
+                {label} {require ? <RedStar /> : ''}
             </label>
             <input
                 {...register(name)}
