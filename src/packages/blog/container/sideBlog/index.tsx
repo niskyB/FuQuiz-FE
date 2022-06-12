@@ -15,9 +15,11 @@ export const SideBlog: React.FunctionComponent<BlogListProps> = () => {
     return (
         <div className="flex flex-col space-y-5 divide-y-2">
             <h2 className="text-2xl font-semibold">Latest post</h2>
-            {blogList.map((blog) => (
-                <SideBox key={blog.id} href={`${routes.blogUrl}/${blog.id}`} image={blog.thumbnailUrl} title={blog.title} />
-            ))}
+            <div className="flex flex-col space-y-3">
+                {blogList.map((blog) => (
+                    <SideBox key={blog.id} href={`${routes.blogUrl}/${blog.id}`} image={blog.thumbnailUrl} title={blog.title} />
+                ))}
+            </div>
         </div>
     );
 };
