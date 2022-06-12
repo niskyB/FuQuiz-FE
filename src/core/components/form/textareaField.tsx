@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { RedStar } from '../../../packages/store';
 import { useStoreApi } from '../../store';
 
 interface TextareaFieldProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
@@ -19,13 +20,7 @@ export const TextareaField: React.FC<TextareaFieldProps> = ({ name, label, requi
                     <label htmlFor={name} className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                         {label}
                     </label>
-                    {require ? (
-                        <p className="inline-flex text-red-500" id="require">
-                            *
-                        </p>
-                    ) : (
-                        ''
-                    )}
+                    {require ? <RedStar /> : ''}
                 </div>
             ) : (
                 ''

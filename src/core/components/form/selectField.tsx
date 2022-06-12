@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { RedStar } from '../../../packages/store';
 import { SelectionFieldValues } from '../../common/interface';
 import { useStoreApi } from '../../store';
 
@@ -23,13 +24,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
                         {label}
                     </label>
 
-                    {require ? (
-                        <p className="inline-flex text-red-500" id="require">
-                            *
-                        </p>
-                    ) : (
-                        ''
-                    )}
+                    {require ? <RedStar /> : ''}
                 </div>
             ) : (
                 ''

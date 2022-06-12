@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { RedStar } from '../../../packages/store';
 import { useStoreApi } from '../../store';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -8,15 +9,16 @@ interface QuillInputProps {
     setDescription: React.Dispatch<React.SetStateAction<string>>;
     label?: string;
     name?: string;
+    require?: boolean;
 }
 
-export const QuillInput: React.FC<QuillInputProps> = ({ description, setDescription, name = '', label = '' }) => {
+export const QuillInput: React.FC<QuillInputProps> = ({ description, setDescription, name = '', label = '', require = true }) => {
     const { errorDetails } = useStoreApi();
     return (
         <>
             <div className="w-full">
                 <label htmlFor={name} className="block text-sm font-medium text-gray-700 capitalize">
-                    {label}
+                    {label} {require ? <RedStar /> : ''}
                 </label>
                 <div className="mt-1">
                     <ReactQuill

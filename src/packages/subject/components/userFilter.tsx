@@ -36,9 +36,14 @@ export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOp
                 onSubmit={methods.handleSubmit(_handleOnSubmit)}
                 className="flex flex-col items-end w-full max-w-xs p-5 space-y-5 bg-white rounded-md h-fit"
             >
-                <TextField label="Name" name="name" />
-                <SelectField label="category" name="category" values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]} />
-                <SelectField label="Feature" name="isFeature" values={[allFieldData, ...FeatureFieldData]} />
+                <TextField label="Name" name="name" require={false} />
+                <SelectField
+                    label="category"
+                    name="category"
+                    require={false}
+                    values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
+                />
+                <SelectField label="Feature" name="isFeature" require={false} values={[allFieldData, ...FeatureFieldData]} />
 
                 <button
                     type="submit"

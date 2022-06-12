@@ -22,6 +22,7 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
                     <SelectField
                         label="Sort"
                         name="sort"
+                        require={false}
                         values={[
                             { label: 'Newest', value: 'DESC' },
                             { label: 'Oldest', value: 'ASC' },
