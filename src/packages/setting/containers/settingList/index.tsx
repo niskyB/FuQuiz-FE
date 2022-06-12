@@ -75,13 +75,14 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="value" label="value" />
+                            <TextField require={false} name="value" label="value" />
                             <SelectField
                                 label="Type"
                                 values={[
                                     { label: 'Type 1', value: '1' },
                                     { label: 'Type 2', value: '2' },
                                 ]}
+                                require={false}
                                 name="type"
                             />
                             <SelectField
@@ -90,6 +91,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                     { label: 'Active', value: true },
                                     { label: 'Inactive', value: false },
                                 ]}
+                                require={false}
                                 name="isActive"
                             />
                         </div>

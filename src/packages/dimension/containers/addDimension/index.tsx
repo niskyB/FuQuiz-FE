@@ -7,6 +7,7 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { DimensionType } from '../../../../core/models/dimension';
 import { dataParser } from '../../../../core/util/data';
+import { RedStar } from '../../../store';
 import { useGetDimensionType } from '../../common/hooks/useGetDimensionTypes';
 import { addDimension } from './action';
 import { AddDimensionDTO, AddDimensionFormDTO } from './interface';
@@ -49,7 +50,7 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = ({ subje
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Type
+                                        Type <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField name="type" label="" values={dataParser<DimensionType>(dimensionTypes, 'name', 'id')} />
@@ -57,7 +58,7 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = ({ subje
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Name
+                                        Name <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="name" />
@@ -65,7 +66,7 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = ({ subje
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Description
+                                        Description <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextareaField name="description" label="" />

@@ -13,6 +13,7 @@ import { useStoreUser } from '../../../../core/store';
 import { checkFileType } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
+import { RedStar } from '../../../store';
 import { useAdminGetUserList } from '../../../users';
 import { useGetSubjectCategory } from '../../common/hooks/useGetSubjectCategory';
 import { adminUpdateSubject, expertUpdateSubject } from './action';
@@ -106,19 +107,19 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                 <>
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Owner
+                            Owner <RedStar />
                         </label>
                         <SelectField label="" values={[...dataParser<User>(expertList, 'fullName', 'id')]} name="assignTo" />
                     </div>
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Feature
+                            Feature <RedStar />
                         </label>
                         <SelectField label="" values={statusFieldData} name="isFeature" />
                     </div>
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                         <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Active
+                            Active <RedStar />
                         </label>
                         <SelectField label="" values={statusFieldData} name="isActive" />
                     </div>
@@ -157,7 +158,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                     className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
                                 >
                                     <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        {item.label}
+                                        {item.label} <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name={item.name} type="text" />
@@ -166,14 +167,14 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                             ))}
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Category
+                                    Category <RedStar />
                                 </label>
                                 <SelectField label="" values={[...dataParser<SubjectCategory>(categories, 'name', 'id')]} name="category" />
                             </div>
                             {_renderField()}
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Description
+                                    Description <RedStar />
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <textarea
@@ -188,7 +189,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Thumbnail
+                                    Thumbnail <RedStar />
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField
