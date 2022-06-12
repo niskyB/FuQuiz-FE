@@ -66,7 +66,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Subjects</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the subject in home website including their title, category, info and expert.
+                        A list of all the subject in home website including their name, category, info and expert.
                     </p>
                 </div>
                 {userState.role.name === UserRole.ADMIN && (
@@ -114,7 +114,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Id', 'Title', 'Category', 'Info', 'Expert', 'Activation', 'Feature', '']} />
+                                <TableHead fields={['Id', 'Name', 'Category', 'Info', 'Expert', 'Activation', 'Feature', '']} />
 
                                 <TableBody>
                                     {Boolean(count && subjects) &&
