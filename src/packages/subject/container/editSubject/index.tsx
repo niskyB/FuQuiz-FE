@@ -131,9 +131,23 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
             <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
-                        <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Subject</h3>
-                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be edit old subject</p>
+                        <div className="flex justify-between">
+                            <div>
+                                <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Subject</h3>
+                                <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be edit old subject</p>
+                            </div>
+                            <div className="space-x-2">
+                                <Link href={routes.adminSubjectListUrl + `/${id}` + routes.adminDimensionListUrl} passHref>
+                                    <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                        Dimension
+                                    </p>
+                                </Link>
+                                <Link href={routes.adminSubjectListUrl + `/${id}` + routes.adminPackageListUrl} passHref>
+                                    <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                        Package
+                                    </p>
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">

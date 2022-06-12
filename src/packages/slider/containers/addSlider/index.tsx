@@ -71,9 +71,14 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
                                     key={item.name}
                                     className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
                                 >
-                                    <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        {item.label}
-                                    </label>
+                                    <div className="flex justify-start space-x-2">
+                                        <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                            {item.label}
+                                        </label>
+                                        <p className="inline-flex text-red-500" id="require">
+                                            *
+                                        </p>
+                                    </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name={item.name} type="text" />
                                     </div>
@@ -81,9 +86,14 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
                             ))}
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="cover-photo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Cover photo
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="cover-photo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Cover photo
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <input id="image" name="image" type="file" className="sr-only" onChange={(e) => _onChangeImage(e)} />
                                     {!imageUrl.length ? (
@@ -135,7 +145,7 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <Link href={routes.adminSliderListUrl + routes.adminParamSliderUrl} passHref>
+                        <Link href={routes.adminSliderListUrl} passHref>
                             <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Cancel
                             </p>

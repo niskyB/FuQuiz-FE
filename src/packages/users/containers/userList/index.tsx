@@ -79,19 +79,20 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex flex-col space-y-4">
                             <div className="flex space-x-4">
-                                <TextField name="email" label="email" />
-                                <TextField name="fullName" label="Full name" />
-                                <TextField name="mobile" label="Mobile" />
-                                <SelectField label="Active" values={[...statusFieldData]} name="isActive" />
+                                <TextField name="email" label="email" require={false} />
+                                <TextField name="fullName" label="Full name" require={false} />
+                                <TextField name="mobile" label="Mobile" require={false} />
+                                <SelectField label="Active" values={[...statusFieldData]} name="isActive" require={false} />
                             </div>
                             <div className="flex space-x-4">
-                                <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" />
-                                <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" />
-                                <SelectField label="Sort" values={[...OrderFieldData]} name="order" />
+                                <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" require={false} />
+                                <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" require={false} />
+                                <SelectField label="Sort" values={[...OrderFieldData]} name="order" require={false} />
                                 <SelectField
                                     label="OrderBy"
                                     values={userFieldDataParser(['email', 'fullName', 'createdAt', 'mobile', 'updateAt'])}
                                     name="orderBy"
+                                    require={false}
                                 />
                             </div>
                         </div>
