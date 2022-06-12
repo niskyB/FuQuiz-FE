@@ -1,4 +1,6 @@
 export enum ApiListRoutes {
+    LESSONS = 'lessons',
+
     SLIDERS = 'sliders',
 
     SUBJECTS = 'subjects',

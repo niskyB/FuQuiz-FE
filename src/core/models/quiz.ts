@@ -12,7 +12,7 @@ export interface QuizType extends AttributeType {}
 export interface PracticeQuiz extends QuizAttribute {
     id: string;
     name: string;
-    subject: Pick<Subject, 'id' | 'title'>;
+    subject: Pick<Subject, 'id' | 'name'>;
     examLevel: AttributeType;
     quizLevel: QuizType;
     correctAnswer: number;
