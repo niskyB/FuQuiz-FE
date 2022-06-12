@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Lesson, LessonType } from '../../../../core/models/lesson';
+import { Lesson, LessonType, SubjectTopic } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 
@@ -13,7 +13,7 @@ interface LessonListProps {}
 
 export const LessonList: React.FunctionComponent<LessonListProps> = () => {
     const methods = useForm();
-    const [lessons, setLessons] = React.useState<Lesson[]>([
+    const [lessons, setLessons] = React.useState<Lesson<SubjectTopic | any>[]>([
         {
             id: '1',
             createAt: '05/18/2022',
@@ -51,34 +51,20 @@ export const LessonList: React.FunctionComponent<LessonListProps> = () => {
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Subject Details</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Subject Lessons</h1>
                     <p className="mt-2 text-sm text-gray-700">
                         A list of all lesson of subject including their title, lesson type, date and activation.
                     </p>
                 </div>
                 <div className="flex flex-col items-end mt-4 space-y-2 sm:mt-0 sm:ml-16">
-                    <Link href={routes.adminSubjectListUrl} passHref>
-                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">
-                            Back to subject list
-                        </p>
-                    </Link>
                     <div className="space-x-2">
-                        <Link href={router.asPath + routes.adminDimensionListUrl} passHref>
+                        <Link href={router.asPath.replace(routes.lessonListUrl, '')} passHref>
                             <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                Dimension
-                            </p>
-                        </Link>
-                        <Link href={router.asPath + routes.adminPackageListUrl} passHref>
-                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                Package
-                            </p>
-                        </Link>
-                        <Link href={router.asPath + routes.adminQuestionListUrl} passHref>
-                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                Question
+                                Overview
                             </p>
                         </Link>
                     </div>
+
                     <Link href={router.asPath + routes.addLessonUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Lesson
@@ -168,7 +154,9 @@ export const LessonList: React.FunctionComponent<LessonListProps> = () => {
                                                         href={`${router.asPath}${routes.lessonListUrl}/${lesson.id}${routes.questionListUrl}`}
                                                         passHref
                                                     >
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Detail</p>
+                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">
+                                                            {lesson ? 'Deactive' : 'Active'}
+                                                        </p>
                                                     </Link>
                                                 </TableDescription>
                                             </TableRow>

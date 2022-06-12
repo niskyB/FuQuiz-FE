@@ -57,11 +57,12 @@ const UserCoursesPage: React.FC<UserCoursesPageProps> = () => {
                 <FormWrapper methods={methods}>
                     <div className="flex items-end p-5 space-x-5 bg-white rounded-md">
                         <div className="max-w-2xl">
-                            <TextField label="Name" name="name" />
+                            <TextField label="Name" name="name" require={false} />
                         </div>
                         <div className="w-max">
                             <SelectField
-                                label="category"
+                                require={false}
+                                label="Category"
                                 name="category"
                                 values={[
                                     { label: 'category 1', value: '' },

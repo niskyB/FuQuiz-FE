@@ -96,7 +96,12 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                 <dl className="sm:divide-y sm:divide-gray-200">
                                     {PROFILE_FIELD.map((item) => (
                                         <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
-                                            <dt className="flex items-center text-sm font-medium text-gray-500">{item.label}</dt>
+                                            <dt className="flex items-center text-sm font-medium text-gray-500 space-x-2">
+                                                <p>{item.label}</p>
+                                                <p className="inline-flex text-red-500" id="require">
+                                                    *
+                                                </p>
+                                            </dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                 <TextField label="" name={item.name} type="text" readOnly={item.readonly} />
                                             </dd>
@@ -104,7 +109,12 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                     ))}
 
                                     <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                                        <dt className="flex items-center text-sm font-medium text-gray-500">Gender</dt>
+                                        <dt className="flex items-center text-sm font-medium text-gray-500 space-x-2">
+                                            <p>Gender</p>
+                                            <p className="inline-flex text-red-500" id="require">
+                                                *
+                                            </p>
+                                        </dt>
                                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                             <SelectField label="" name="gender" values={GENDER_FIELD} defaultValue={userState.gender} />
                                         </dd>

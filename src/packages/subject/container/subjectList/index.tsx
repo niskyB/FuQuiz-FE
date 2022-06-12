@@ -134,7 +134,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">69 lesson</div>
+                                                    <div className="text-gray-900">9 lesson</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{subject.assignTo.user.fullName}</div>
@@ -162,11 +162,11 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     )}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${routes.adminEditSubjectUrl}/${subject.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                    <Link href={`${router.asPath}/${subject.id}`} passHref>
+                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Overview</p>
                                                     </Link>
-                                                    <Link href={`${routes.adminSubjectListUrl}/${subject.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Detail</p>
+                                                    <Link href={`${routes.adminSubjectListUrl}/${subject.id}${routes.lessonListUrl}`} passHref>
+                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Lessons</p>
                                                     </Link>
                                                 </TableDescription>
                                             </TableRow>
