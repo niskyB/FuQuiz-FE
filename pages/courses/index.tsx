@@ -15,11 +15,9 @@ interface CourseListPageProps {
 
 const CourseListPage: NextPage<CourseListPageProps> = ({ category, currentPage, isFeature, name, pageSize }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={AllRole}>
-            <StoreLayout>
-                <Subjects category={category} currentPage={currentPage} isFeature={isFeature} name={name} pageSize={pageSize} />
-            </StoreLayout>
-        </RouterProtectionWrapper>
+        <StoreLayout>
+            <Subjects category={category} currentPage={currentPage} isFeature={isFeature} name={name} pageSize={pageSize} />
+        </StoreLayout>
     );
 };
 CourseListPage.getInitialProps = async (ctx: NextPageContext): Promise<CourseListPageProps> => {
