@@ -2,7 +2,9 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { unsetData } from '../../../../core/common/dataField/unset';
+import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { routes } from '../../../../core/routes';
 import { useGetBlogCategoryList } from '../../../blogCategory';
@@ -14,20 +16,33 @@ interface EditBlogProps {
     id: string;
 }
 
-const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
+const defaultValues: EditBlogDTO = {
+    title: '',
+    category: '',
+    briefInfo: '',
+    details: '',
+    image: null,
+    isFeature: true,
+    isShow: true,
+};
+
+export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     const { blog } = useGetBlog(id);
     const { categories } = useGetBlogCategoryList();
-    const methods = useForm<EditBlogDTO>({});
+    const methods = useForm<EditBlogDTO>({ defaultValues });
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>(blog?.thumbnailUrl || '');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
     const [details, setDetails] = React.useState<string>('');
 
     React.useEffect(() => {
         if (blog) {
+            console.log();
             methods.setValue('briefInfo', blog.briefInfo);
             methods.setValue('title', blog.title);
             methods.setValue('category', blog.category.id);
             methods.setValue('details', blog.details);
+            methods.setValue('isShow', blog.isShow);
+            methods.setValue('isFeature', blog.isFeature);
 
             setDetails(blog.details);
             setPreviewThumbnailUrl(blog.thumbnailUrl);
@@ -118,6 +133,22 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                     />
                                 </div>
                             </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Showing
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <SelectField name="isShow" values={[...statusFieldData]} require={false} />
+                                </div>
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Feature
+                                </label>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <SelectField name="isFeature" values={[...statusFieldData]} require={false} />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -145,5 +176,3 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
         </FormWrapper>
     );
 };
-
-export default EditBlog;

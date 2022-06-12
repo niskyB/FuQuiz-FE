@@ -11,7 +11,7 @@ import { PaginationBar } from '../../../dashboard';
 
 interface LessonListProps {}
 
-const LessonList: React.FunctionComponent<LessonListProps> = () => {
+export const LessonList: React.FunctionComponent<LessonListProps> = () => {
     const methods = useForm();
     const [lessons, setLessons] = React.useState<Lesson[]>([
         {
@@ -51,12 +51,17 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Subject Lessons</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Subject Details</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all lesson of subject in home website including their title, lesson type, date and activation.
+                        A list of all lesson of subject including their title, lesson type, date and activation.
                     </p>
                 </div>
                 <div className="flex flex-col items-end mt-4 space-y-2 sm:mt-0 sm:ml-16">
+                    <Link href={routes.adminSubjectListUrl} passHref>
+                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">
+                            Back to subject list
+                        </p>
+                    </Link>
                     <div className="space-x-2">
                         <Link href={router.asPath + routes.adminDimensionListUrl} passHref>
                             <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
@@ -74,20 +79,18 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                             </p>
                         </Link>
                     </div>
-                    <div>
-                        <Link href={router.asPath + routes.addLessonUrl} passHref>
-                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                Add Lesson
-                            </p>
-                        </Link>
-                    </div>
+                    <Link href={router.asPath + routes.addLessonUrl} passHref>
+                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                            Add Lesson
+                        </p>
+                    </Link>
                 </div>
             </div>
             <div>
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
+                            <TextField name="title" label="Title" require={false} />
                             <SelectField
                                 label="Lesson Type"
                                 values={[
@@ -96,9 +99,10 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                                     { label: 'Quiz', value: 'domain 2' },
                                 ]}
                                 name="isActive"
+                                require={false}
                             />
-                            <TextField name="createdAt" label="Create From" type={'date'} />
-                            <TextField name="updateAt" label="Update date" type={'date'} />
+                            <TextField name="createdAt" label="Create From" type={'date'} require={false} />
+                            <TextField name="updateAt" label="Update date" type={'date'} require={false} />
                             <SelectField
                                 label="Active"
                                 values={[
@@ -106,6 +110,7 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
                                     { label: 'Inactive', value: false },
                                 ]}
                                 name="isActive"
+                                require={false}
                             />
                         </div>
                         <div className="flex justify-end">
@@ -178,5 +183,3 @@ const LessonList: React.FunctionComponent<LessonListProps> = () => {
         </div>
     );
 };
-
-export default LessonList;
