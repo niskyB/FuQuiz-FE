@@ -66,7 +66,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Subjects</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the subject in home website including their name, category, info and expert.
+                        A list of all the subject in home website including their name, category, number of lesson and expert.
                     </p>
                 </div>
                 {userState.role.name === UserRole.ADMIN && (
@@ -88,15 +88,16 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="name" label="Subject name" />
+                            <TextField name="name" label="Subject name" require={false} />
                             <DateField name="createdAt" label="Create From" />
                             <SelectField
                                 label="Category"
                                 values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
                                 name="category"
+                                require={false}
                             />
-                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
-                            <SelectField label="Feature" values={[allFieldData, ...statusFieldData]} name="isFeature" />
+                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" require={false} />
+                            <SelectField label="Feature" values={[allFieldData, ...statusFieldData]} name="isFeature" require={false} />
                         </div>
                         <div className="flex justify-end">
                             <button
@@ -114,7 +115,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Id', 'Name', 'Category', 'Info', 'Expert', 'Activation', 'Feature', '']} />
+                                <TableHead fields={['Id', 'Name', 'Category', 'Lessons', 'Expert', 'Activation', 'Feature', '']} />
 
                                 <TableBody>
                                     {Boolean(count && subjects) &&
@@ -133,21 +134,32 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{subject.description}</div>
-                                                    <div className="text-gray-900">36 lessons </div>
+                                                    <div className="text-gray-900">69 lesson</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{subject.assignTo.user.fullName}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    {subject.isActive && (
+                                                    {subject.isActive ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                            Inactive
                                                         </span>
                                                     )}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    {subject.isFeature ? <span className="">x</span> : <span className=""></span>}
+                                                    {subject.isFeature ? (
+                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                            Active
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                            Inactive
+                                                        </span>
+                                                    )}
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <Link href={`${routes.adminEditSubjectUrl}/${subject.id}`} passHref>
