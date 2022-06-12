@@ -9,7 +9,6 @@ import { routes } from '../../../../core/routes';
 interface AddQuestionProps {}
 
 const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
-    const [details, setDetails] = React.useState('');
     const router = useRouter();
 
     const subjectId = React.useMemo(() => {
