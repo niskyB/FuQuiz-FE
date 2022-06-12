@@ -2,6 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { statusFieldData } from '../../../../core/common/dataField';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { UserRole } from '../../../../core/models/role';
 import { Gender } from '../../../../core/models/user';
@@ -46,11 +47,12 @@ const AddUser: React.FunctionComponent<AddUserProps> = () => {
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
+                            <div className="flex justify-center">
+                                <img className="h-36 w-36" src={'https://fuquiz.s3.ap-southeast-1.amazonaws.com/avatar-among-us-3.png'} />
+                            </div>
                             <TextField label="Full name" name="fullName" type="fullName" />
                             <TextField label="Email address" name="email" type="email" />
                             <TextField label="phone number" name="mobile" type="text" />
-                            <TextField label="Password" name="password" type="password" />
-                            <TextField label="Confirm Password" name="confirmPassword" type="password" />
                             <SelectField
                                 label="Role"
                                 name="role"
@@ -61,6 +63,7 @@ const AddUser: React.FunctionComponent<AddUserProps> = () => {
                                     { label: 'Marketing', value: UserRole.MARKETING },
                                 ]}
                             />
+                            <SelectField label="Status" name="isActive" values={[...statusFieldData]} />
                             <RadioField
                                 label="sex"
                                 name="gender"

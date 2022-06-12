@@ -12,6 +12,7 @@ import { userFieldDataParser } from '../../../../core/util/user';
 import { useAdminGetUserList } from '../../';
 import { FilterUserDTO, FilterUserFormDTO } from './interface';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
+import { PaginationBar } from '../../../dashboard';
 
 interface UserListProps extends FilterUserDTO {}
 
@@ -90,7 +91,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                 <SelectField label="Sort" values={[...OrderFieldData]} name="order" require={false} />
                                 <SelectField
                                     label="OrderBy"
-                                    values={userFieldDataParser(['email', 'fullName', 'createdAt', 'mobile', 'updateAt'])}
+                                    values={userFieldDataParser(['email', 'fullName', 'mobile'])}
                                     name="orderBy"
                                     require={false}
                                 />
@@ -112,17 +113,22 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Image', 'Information', 'Gender', 'Role', 'Create Date / Last Update', 'Activation', '']} />
+                                <TableHead fields={['Image', 'ID', 'Email', 'Information', 'Gender', 'Role', 'Activation', '']} />
                                 <TableBody>
                                     {userList.map((user) => (
                                         <TableRow key={user.id}>
                                             <TableDescription>
-                                                <div className="max-w-sm">
+                                                <div className="">
                                                     <img className="w-10 h-10" src={user.imageUrl || '/asset/images/default-avatar.png'} alt="" />
                                                 </div>
                                             </TableDescription>
                                             <TableDescription>
+                                                <div className="text-gray-900">{user.id}</div>
+                                            </TableDescription>
+                                            <TableDescription>
                                                 <div className="text-gray-900">{user.email}</div>
+                                            </TableDescription>
+                                            <TableDescription>
                                                 <div className="text-gray-900">{user.fullName}</div>
                                                 <div className="text-gray-900">{user.mobile}</div>
                                             </TableDescription>
@@ -131,10 +137,6 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                             </TableDescription>
                                             <TableDescription>
                                                 <div className="text-gray-900">{user.role.name}</div>
-                                            </TableDescription>
-                                            <TableDescription>
-                                                <div className="text-gray-900">{user.createdAt}</div>
-                                                <div className="text-gray-900">{user.updateAt}</div>
                                             </TableDescription>
                                             <TableDescription>
                                                 {user.isActive ? (
@@ -149,6 +151,9 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                             </TableDescription>
                                             <TableDescription>
                                                 <Link href={`${routes.adminEditUsersUrl}/${user.id}`} passHref>
+                                                    <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View</p>
+                                                </Link>
+                                                <Link href={`${routes.adminEditUsersUrl}/${user.id}`} passHref>
                                                     <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                 </Link>
                                             </TableDescription>
@@ -160,7 +165,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                     </div>
                 </div>
             </div>
-            {/* <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} /> */}
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };
