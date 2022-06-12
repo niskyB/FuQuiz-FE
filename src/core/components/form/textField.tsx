@@ -1,21 +1,31 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { RedStar } from '../../../packages/store';
 import { useStoreApi } from '../../store';
 
 interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
-    label: string;
+    label?: string;
+    require?: boolean;
 }
 
-export const TextField: React.FC<TextFieldProps> = ({ name, label, ...rest }) => {
+export const TextField: React.FC<TextFieldProps> = ({ name, label, require = true, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
         <div className="w-full">
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700 capitalize">
-                {label}
-            </label>
+            {label ? (
+                <div className="flex justify-start space-x-2">
+                    <label htmlFor={name} className="block text-sm font-medium text-gray-700 capitalize">
+                        {label}
+                    </label>
+                    {require ? <RedStar /> : ''}
+                </div>
+            ) : (
+                ''
+            )}
+
             <div className="mt-1">
                 <input
                     {...register(name)}

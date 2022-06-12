@@ -1,5 +1,6 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
+import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import { BlogList } from '../../../src/packages/blog';
@@ -8,7 +9,7 @@ import { DashBoardLayout } from '../../../src/packages/dashboard';
 
 interface BlogPageProps extends FilterBlogListDTO {}
 
-const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
+const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId, order }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
@@ -20,6 +21,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ category, createdAt, currentPage, i
                     pageSize={pageSize}
                     title={title}
                     userId={userId}
+                    order={order}
                 />
             </DashBoardLayout>
         </RouterProtectionWrapper>
@@ -34,7 +36,8 @@ BlogPage.getInitialProps = async (ctx: NextPageContext): Promise<BlogPageProps> 
         isShow: ctx.query?.isShow || true,
         createdAt: ctx.query?.createdAt || '01-01-2022',
         category: ctx.query?.category || '',
-    };
-    return props as BlogPageProps;
+        order: ctx.query?.order || Order.DESC,
+    } as BlogPageProps;
+    return props;
 };
 export default BlogPage;

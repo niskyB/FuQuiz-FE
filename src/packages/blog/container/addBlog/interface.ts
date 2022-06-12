@@ -1,6 +1,6 @@
 import { Blog } from '../../../../core/models/blog';
 
 export interface AddBlogDTO extends Pick<Blog, 'details' | 'briefInfo' | 'title'> {
-    categoryId: string;
+    category: string;
     image: File | null;
 }

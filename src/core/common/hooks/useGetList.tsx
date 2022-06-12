@@ -4,7 +4,7 @@ import { urlQueryParser } from '../../util';
 import { ApiListRoutes } from '../enum';
 import { GetListWithCount } from '../interface';
 
-export const useGetListWithCount = <T, Options>(apiRoute: ApiListRoutes, options?: Options) => {
+export const useGetListWithCount = <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
     const [list, setList] = React.useState<T[]>([]);
     const [count, setCount] = React.useState<number>(0);
     React.useEffect(() => {
@@ -17,12 +17,12 @@ export const useGetListWithCount = <T, Options>(apiRoute: ApiListRoutes, options
     return { list, count };
 };
 
-export const getFilterWithCount = async <T, Options>(apiRoute: string, options?: Options) => {
+export const getFilterWithCount = async <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
     const res = await http.get<GetListWithCount<T>>(`/${apiRoute}${urlQueryParser(options)}`);
     return res.data;
 };
 
-export const useGetList = <T, Options>(apiRoute: ApiListRoutes, options?: Options) => {
+export const useGetList = <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
     const [list, setList] = React.useState<T[]>([]);
     React.useEffect(() => {
         getFilter<T, Options>(apiRoute, options).then((data) => {
@@ -33,12 +33,12 @@ export const useGetList = <T, Options>(apiRoute: ApiListRoutes, options?: Option
     return { list };
 };
 
-export const getFilter = async <T, Options>(apiRoute: string, options?: Options) => {
+export const getFilter = async <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
     const res = await http.get<T[]>(`/${apiRoute}${urlQueryParser(options)}`);
     return res.data;
 };
 
-export const useGetDataById = <T,>(apiRoute: ApiListRoutes, id: string) => {
+export const useGetDataById = <T,>(apiRoute: ApiListRoutes | string, id: string) => {
     const [data, setData] = React.useState<T>();
     React.useEffect(() => {
         getDataById<T>(apiRoute, id).then((data) => {
@@ -49,7 +49,7 @@ export const useGetDataById = <T,>(apiRoute: ApiListRoutes, id: string) => {
     return { data };
 };
 
-export const getDataById = async <T,>(apiRoute: string, id: string) => {
+export const getDataById = async <T,>(apiRoute: ApiListRoutes | string, id: string) => {
     const res = await http.get<T>(`/${apiRoute}/${id}`);
     return res.data;
 };

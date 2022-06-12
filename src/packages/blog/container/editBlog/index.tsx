@@ -2,34 +2,47 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FileField, FormWrapper, QuillInput, TextField } from '../../../../core/components/form';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { unsetData } from '../../../../core/common/dataField/unset';
+import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { routes } from '../../../../core/routes';
 import { useGetBlogCategoryList } from '../../../blogCategory';
-import { useGetBlog } from '../../component/hooks/useGetBlog';
+import { useGetBlog } from '../../common/hooks/useGetBlog';
 import { updateBlog } from './action';
 import { EditBlogDTO } from './interface';
-
-//---------------------- Not official ----------------------------
 
 interface EditBlogProps {
     id: string;
 }
 
-const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
+const defaultValues: EditBlogDTO = {
+    title: '',
+    category: '',
+    briefInfo: '',
+    details: '',
+    image: null,
+    isFeature: true,
+    isShow: true,
+};
+
+export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     const { blog } = useGetBlog(id);
     const { categories } = useGetBlogCategoryList();
-    const methods = useForm<EditBlogDTO>({});
+    const methods = useForm<EditBlogDTO>({ defaultValues });
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>(blog?.thumbnailUrl || '');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
     const [details, setDetails] = React.useState<string>('');
 
     React.useEffect(() => {
         if (blog) {
+            console.log();
             methods.setValue('briefInfo', blog.briefInfo);
             methods.setValue('title', blog.title);
             methods.setValue('category', blog.category.id);
             methods.setValue('details', blog.details);
+            methods.setValue('isShow', blog.isShow);
+            methods.setValue('isFeature', blog.isFeature);
 
             setDetails(blog.details);
             setPreviewThumbnailUrl(blog.thumbnailUrl);
@@ -64,27 +77,42 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
 
                         <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Title
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Title
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <TextField label="" name="title" />
                                 </div>
                             </div>
                             <div className="space-y-6 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Category
-                                    </label>
+                                    <div className="flex justify-start space-x-2">
+                                        <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                            Category
+                                        </label>
+                                        <p className="inline-flex text-red-500" id="require">
+                                            *
+                                        </p>
+                                    </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectBlogCategory label="" name="category" values={categories} />
                                     </div>
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Brief Info
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Brief Info
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <textarea
                                         {...methods.register('briefInfo')}
@@ -97,18 +125,28 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Details
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Details
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <QuillInput description={details} setDescription={setDetails} />
                                 </div>
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Thumbnail
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Thumbnail
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField
                                         label=""
@@ -118,6 +156,32 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                         previewUrl={previewThumbnailUrl}
                                         setPreviewUrl={setPreviewThumbnailUrl}
                                     />
+                                </div>
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Showing
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <SelectField name="isShow" values={[...statusFieldData]} require={false} />
+                                </div>
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Feature
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <SelectField name="isFeature" values={[...statusFieldData]} require={false} />
                                 </div>
                             </div>
                         </div>
@@ -147,5 +211,3 @@ const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
         </FormWrapper>
     );
 };
-
-export default EditBlog;

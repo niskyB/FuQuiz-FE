@@ -13,7 +13,7 @@ import { AddBlogDTO } from './interface';
 
 interface AddBlogProps {}
 const defaultValues: AddBlogDTO = {
-    categoryId: '',
+    category: '',
     briefInfo: '',
     details: '',
     image: null,
@@ -61,45 +61,71 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
 
                         <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Title
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Title
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextField label="" name="title" />
+                                    <TextField name="title" />
                                 </div>
                             </div>
                             <div className="space-y-6 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Category
-                                    </label>
+                                    <div className="flex justify-start space-x-2">
+                                        <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                            Category
+                                        </label>
+                                        <p className="inline-flex text-red-500" id="require">
+                                            *
+                                        </p>
+                                    </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField name="categoryId" label="" values={[...blogCategoriesFieldData]} />
+                                        <SelectField name="category" values={[...blogCategoriesFieldData]} />
                                         {/* <SelectBlogCategory label="" name="categoryId" values={blogCategoryList} /> */}
                                     </div>
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Brief Info
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Brief Info
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextareaField label="" name="briefInfo" />
+                                    <TextareaField name="briefInfo" />
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Details
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Details
+                                    </label>
+
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <QuillInput description={details} setDescription={setDetails} />
                                 </div>
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Thumbnail
-                                </label>
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Thumbnail
+                                    </label>
+                                    <p className="inline-flex text-red-500" id="require">
+                                        *
+                                    </p>
+                                </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField
                                         label=""

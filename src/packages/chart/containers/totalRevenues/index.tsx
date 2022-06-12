@@ -21,6 +21,7 @@ export const TotalRevenuesStatistics: React.FunctionComponent<TotalRevenuesStati
                         <SelectField
                             label="Category"
                             name="category"
+                            require={false}
                             values={[
                                 { label: 'Category 1', value: '1' },
                                 { label: 'Category 2', value: '2' },

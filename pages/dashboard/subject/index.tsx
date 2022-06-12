@@ -6,7 +6,7 @@ import { DashBoardLayout } from '../../../src/packages/dashboard';
 import { SubjectList } from '../../../src/packages/subject';
 import { SubjectFilterDTO } from '../../../src/packages/subject/container/subjectList/interface';
 
-const SubjectPage: NextPage<SubjectFilterDTO> = ({ category, createdAt, currentPage, isActive, name, pageSize }) => {
+const SubjectPage: NextPage<SubjectFilterDTO> = ({ category, createdAt, currentPage, isActive, name, pageSize, isFeature }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
@@ -17,6 +17,7 @@ const SubjectPage: NextPage<SubjectFilterDTO> = ({ category, createdAt, currentP
                     isActive={isActive}
                     name={name}
                     pageSize={pageSize}
+                    isFeature={isFeature}
                 />
             </DashBoardLayout>
         </RouterProtectionWrapper>
@@ -31,9 +32,10 @@ SubjectPage.getInitialProps = async (ctx: NextPageContext): Promise<SubjectFilte
         currentPage: ctx.query?.currentPage || 1,
         isActive: ctx.query?.isActive || '',
         pageSize: ctx.query?.pageSize || 12,
-    };
+        isFeature: ctx.query?.isFeature || '',
+    } as SubjectFilterDTO;
 
-    return props as SubjectFilterDTO;
+    return props;
 };
 
 export default SubjectPage;

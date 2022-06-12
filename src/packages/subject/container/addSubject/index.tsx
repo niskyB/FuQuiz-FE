@@ -10,32 +10,52 @@ import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
 import { useAdminGetUserList } from '../../../users';
 import { useGetSubjectCategory } from '../../';
-import { AddSubjectDTO } from './interface';
+import { AddSubjectFormDTO } from './interface';
+import { addSubject } from './action';
+import { toast } from 'react-toastify';
+import { statusFieldData } from '../../../../core/common/dataField';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
+import { RedStar } from '../../../store';
 
 interface AddSubjectProps {}
 
-const defaultValues: AddSubjectDTO = {
+const defaultValues: AddSubjectFormDTO = {
     assignTo: '',
     category: '',
     description: '',
     image: null,
     name: '',
     tagLine: '',
+    isFeature: '',
+    isActive: '',
 };
+
 export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const [file, setFile] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
 
     const options = React.useMemo(() => ({ role: UserRole.EXPERT }), []);
 
-    const { list: categories } = useGetSubjectCategory();
+    const { categories } = useGetSubjectCategory();
     const { userList: expertList } = useAdminGetUserList(options);
 
-    const methods = useForm<AddSubjectDTO>({
+    const methods = useForm<AddSubjectFormDTO>({
         defaultValues,
     });
 
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: AddSubjectFormDTO) => {
+        if (file) data.image = file;
+        addSubject(data).then((res) => {
+            if (res) {
+                setPreviewUrl('');
+                setFile(null);
+                methods.reset();
+                store.dispatch(apiActions.resetState());
+                toast.success('Add subject success!');
+            }
+        });
+    };
 
     return (
         <FormWrapper methods={methods}>
@@ -49,16 +69,16 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Title
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Name <RedStar />
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextField label="" name="title" type="text" />
+                                    <TextField label="" name="name" type="text" />
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="tagLine" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Tag line
+                                    Tag line <RedStar />
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <TextField label="" name="tagLine" type="text" />
@@ -66,20 +86,40 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Category
+                                    Category <RedStar />
                                 </label>
-                                <SelectField label="" values={dataParser<SubjectCategory>(categories, 'name', 'id')} name="category" />
+                                <SelectField
+                                    label=""
+                                    values={[{ label: 'Unset', value: '' }, ...dataParser<SubjectCategory>(categories, 'name', 'id')]}
+                                    name="category"
+                                />
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Owner
+                                    Owner <RedStar />
                                 </label>
-                                <SelectField label="" values={dataParser<User>(expertList, 'fullName', 'id')} name="assignTo" />
+                                <SelectField
+                                    label=""
+                                    values={[{ label: 'Unset', value: '' }, ...dataParser<User>(expertList, 'fullName', 'id')]}
+                                    name="assignTo"
+                                />
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Active <RedStar />
+                                </label>
+                                <SelectField label="" values={[{ label: 'Unset', value: '' }, ...statusFieldData]} name="isActive" />
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label htmlFor="isFeature" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Feature <RedStar />
+                                </label>
+                                <SelectField label="" values={[{ label: 'Unset', value: '' }, ...statusFieldData]} name="isFeature" />
                             </div>
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Description
+                                    Description <RedStar />
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <TextareaField label="" name="description" />
@@ -87,7 +127,7 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Thumbnail
+                                    Thumbnail <RedStar />
                                 </label>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField

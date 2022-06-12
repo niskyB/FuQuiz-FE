@@ -12,17 +12,19 @@ import { UserRole } from '../../../../core/models/role';
 import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { PaginationBar } from '../../../dashboard';
 import { useGetBlogCategoryList } from '../../../blogCategory';
-import { useGetBlogList } from '../../component/hooks/useGetBlogList';
+import { useGetBlogList } from '../../common/hooks/useGetBlogList';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 interface BlogListProps extends FilterBlogListDTO {}
 
-export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId }) => {
-    const options = React.useMemo(
-        () => ({ category, createdAt, currentPage, isShow, pageSize, title, userId }),
-        [category, createdAt, currentPage, isShow, pageSize, title, userId]
-    );
-    const { blogList, count } = useGetBlogList(options);
+export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId, order }) => {
     const router = useRouter();
     const userState = useStoreUser();
+    const options = React.useMemo(
+        () => ({ category, createdAt, currentPage, isShow, pageSize, title, userId, order }),
+        [category, createdAt, currentPage, isShow, pageSize, title, userId, order]
+    );
+
+    const { blogList, count } = useGetBlogList(options);
     const { categories } = useGetBlogCategoryList();
 
     const methods = useForm<FilterBlogListFormDTO>({
@@ -32,6 +34,11 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
             createdAt,
             isShow,
         },
+    });
+
+    useUrlParams({
+        defaultPath: routes.adminBlogListUrl,
+        query: { ...router.query, category, createdAt, currentPage, isShow, pageSize, title, userId, order },
     });
 
     const _handleOnSubmit = async (data: FilterBlogListFormDTO) => {
@@ -70,10 +77,10 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
                     <h2 className="text-xl font-semibold">Filter</h2>
                     <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="flex items-end justify-start space-x-5">
                         <div className="min-w-[300px]">
-                            <TextField label="Title" name="title" />
+                            <TextField label="Title" name="title" require={false} />
                         </div>
                         <div className="">
-                            <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} />
+                            <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} require={false} />
                         </div>
                         <div className="">
                             <SelectBlogCategory label="Category" name="category" values={[{ id: '', name: 'All' }, ...categories]} />

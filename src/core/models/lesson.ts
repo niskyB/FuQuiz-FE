@@ -11,7 +11,6 @@ export interface LessonDetail {
 export interface QuizLesson {
     id: string;
     description: string;
-    questions: Question[];
 }
 
 export interface SubjectTopic extends AttributeType {}
@@ -24,12 +23,12 @@ export interface LessonAttribute {
     attribute: LessonDetail | QuizLesson | SubjectTopic | null;
 }
 
-export interface Lesson {
+export interface Lesson<T> {
     id: string;
     order: number;
     name: string;
     createAt: string;
-    lessonAttribute: LessonAttribute;
+    lessonAttribute: T;
     updateAt: string;
     isActive: boolean;
 }

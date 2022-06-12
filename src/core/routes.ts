@@ -24,7 +24,7 @@ export const routes = {
     adminSliderListUrl: '/dashboard/slider',
     adminEditSliderUrl: '/dashboard/slider/edit',
     adminAddSliderUrl: '/dashboard/slider/add',
-    adminParamSliderUrl: '?currentPage=1&pageSize=10&title=&userId=&isShow=true&createdAt=',
+    // adminParamSliderUrl: '?currentPage=1&pageSize=10&title=&userId=&isShow=true&createdAt=',
 
     // blog
     adminBlogListUrl: '/dashboard/blog',
@@ -42,9 +42,11 @@ export const routes = {
     adminSubjectListUrl: '/dashboard/subject',
     adminAddSubjectUrl: '/dashboard/subject/add',
     adminEditSubjectUrl: '/dashboard/subject/edit',
+    adminEditSubjectCategoryUrl: '/dashboard/subject/category/edit',
+    adminAddSubjectCategoryUrl: '/dashboard/subject/category/add',
     subjectUrl: '/course',
     subjectListUrl: '/courses',
-
+    adminSubjectCategoryListUrl: '/dashboard/subject/category',
     // registration
     registrationUrl: '/dashboard/registrations',
     addRegistrationUrl: '/dashboard/registrations/add',

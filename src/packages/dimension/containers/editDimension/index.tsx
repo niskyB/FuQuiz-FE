@@ -2,22 +2,59 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, TextField } from '../../../core/components/form';
+import { toast } from 'react-toastify';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
+import { DimensionType } from '../../../../core/models/dimension';
+import { dataParser } from '../../../../core/util/data';
+import { EditSubject } from '../../../subject';
+import { useGetDimensionById } from '../../common/hooks/useGetDimensionById';
+import { useGetDimensionType } from '../../common/hooks/useGetDimensionTypes';
+import { editDimension } from './action';
+import { EditDimensionFormDTO } from './inteface';
 
-interface AddDimensionProps {}
-
-const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
-    const methods = useForm();
-    const _handleOnSubmit = () => {};
+interface EditDimensionProps {
+    subjectId: string;
+    dimensionId: string;
+}
+const defaultValues: EditDimensionFormDTO = {
+    description: '',
+    name: '',
+    type: '',
+};
+export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ subjectId, dimensionId }) => {
     const router = useRouter();
 
+    const methods = useForm<EditDimensionFormDTO>({ defaultValues });
+
+    const { dimensionTypes } = useGetDimensionType();
+    const { dimension } = useGetDimensionById(dimensionId);
+    console.log(dimension);
+    React.useEffect(() => {
+        if (dimension) {
+            methods.setValue('description', dimension.description);
+            methods.setValue('name', dimension.name);
+            methods.setValue('type', dimension.type.id);
+        }
+
+        return () => {};
+    }, [dimension]);
+
+    const _handleOnSubmit = (data: EditDimensionFormDTO) => {
+        editDimension(dimensionId, data).then((res) => {
+            if (res) {
+                router.push(router.asPath.replace(`/edit/${dimensionId}`, ''));
+                toast.success('Update dimension success!');
+            }
+        });
+    };
     return (
         <FormWrapper methods={methods}>
             <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Add Dimension</h3>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Dimension</h3>
                             <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new dimension in current subject</p>
                         </div>
 
@@ -28,15 +65,15 @@ const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
                                         Type
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="type" />
+                                        <SelectField name="type" label="" values={dataParser<DimensionType>(dimensionTypes, 'name', 'id')} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Dimension
+                                        Name
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="Dimension" />
+                                        <TextField label="" name="name" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -44,14 +81,7 @@ const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
                                         Description
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <textarea
-                                            {...methods.register('content')}
-                                            rows={7}
-                                            name="content"
-                                            id="content"
-                                            autoComplete="given-name"
-                                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        />
+                                        <TextareaField name="description" label="" />
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +91,7 @@ const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
 
                 <div className="pt-5">
                     <div className="flex justify-end">
-                        <Link href={router.asPath.replace('/add', '')} passHref>
+                        <Link href={router.asPath.replace(`/edit/${dimensionId}`, '')} passHref>
                             <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Cancel
                             </p>
@@ -78,5 +108,3 @@ const AddDimension: React.FunctionComponent<AddDimensionProps> = () => {
         </FormWrapper>
     );
 };
-
-export default AddDimension;

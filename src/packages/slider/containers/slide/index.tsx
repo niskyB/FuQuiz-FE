@@ -1,5 +1,4 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
-import Link from 'next/link';
 import { SliderWithoutAuthDTO } from '../../../../core/models/slider';
 import * as React from 'react';
 
@@ -55,12 +54,15 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
                 {slideList.map((item) => {
                     if (item.isShow)
                         return (
-                            <Link key={item.id} href={item.backLink} passHref>
-                                <div className="w-full px-3 space-y-2 cursor-pointer md:w-1/2 lg:w-1/3 snap-center shrink-0">
-                                    <img className="w-full shrink-0" src={item.imageUrl} />
-                                    <div className="text-base font-semibold text-center capitalize">{item.title}</div>
-                                </div>
-                            </Link>
+                            <a
+                                key={item.id}
+                                href={item.backLink}
+                                target="_blank"
+                                className="w-full h-auto px-3 mx-auto space-y-5 cursor-pointer snap-center shrink-0"
+                            >
+                                <div className="text-2xl font-semibold text-center capitalize">{item.title}</div>
+                                <img className="object-cover w-full mx-auto h-72 shrink-0" src={item.imageUrl} />
+                            </a>
                         );
                 })}
             </div>

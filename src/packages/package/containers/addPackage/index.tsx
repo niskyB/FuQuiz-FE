@@ -2,18 +2,41 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, TextField } from '../../../core/components/form';
+import { toast } from 'react-toastify';
+import { FormWrapper, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
+import { routes } from '../../../../core/routes';
+import { RedStar } from '../../../store';
+import { addBlog } from './action';
+import { AddPackageFormDTO } from './interface';
 
-interface AddPackageProps {}
+interface AddPackageProps {
+    subjectId: string;
+}
 
-const AddPackage: React.FunctionComponent<AddPackageProps> = () => {
-    const methods = useForm();
-    const _handleOnSubmit = () => {};
+const defaultValues: AddPackageFormDTO = {
+    description: '',
+    duration: 0,
+    name: '',
+    originalPrice: 0,
+    salePrice: 0,
+};
+
+const AddPackage: React.FunctionComponent<AddPackageProps> = ({ subjectId }) => {
     const router = useRouter();
+
+    const methods = useForm<AddPackageFormDTO>({ defaultValues });
+    const _handleOnSubmit = async (data: AddPackageFormDTO) => {
+        const res = await addBlog(subjectId, data);
+        if (res) {
+            router.push(router.asPath.replace('/add', ''));
+            toast.success('Add package success!');
+        }
+    };
 
     return (
         <FormWrapper methods={methods}>
-            <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+            <form className="max-w-2xl space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
@@ -24,35 +47,44 @@ const AddPackage: React.FunctionComponent<AddPackageProps> = () => {
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Name
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Name <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="type" />
+                                        <TextField label="" name="name" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Duration
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Duration <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="duration" type="number" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        List Price
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Original price <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="listPrice" type="number" />
+                                        <TextField label="" name="originalPrice" type="number" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Sale Price
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Sale Price <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="salePrice" type="number" />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Description
+                                        <RedStar />
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <TextareaField label="" name="description" />
                                     </div>
                                 </div>
                             </div>

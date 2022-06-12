@@ -12,6 +12,7 @@ import { pushWithParams } from '../../../../core/util/router';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { useGetSliderList } from '../../common/hooks/useGetSliderList';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
@@ -30,6 +31,11 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
         }),
         [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
     );
+
+    useUrlParams({
+        defaultPath: routes.adminSliderListUrl,
+        query: { ...router.query, title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId },
+    });
 
     const { count, sliders } = useGetSliderList(options);
 
@@ -74,8 +80,8 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" />
-                            <TextField name="createdAt" label="Create From" type={'date'} />
+                            <TextField name="title" label="Title" require={false} />
+                            <TextField name="createdAt" label="Create From" type={'date'} require={false} />
                             <SelectField
                                 label="Showing"
                                 values={[
@@ -83,6 +89,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                     { label: 'Inactive', value: false },
                                 ]}
                                 name="isShow"
+                                require={false}
                             />
                         </div>
                         <div className="flex justify-end">

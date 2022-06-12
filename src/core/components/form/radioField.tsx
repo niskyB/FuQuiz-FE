@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { RedStar } from '../../../packages/store';
 import { Gender } from '../../models/user';
 import { useStoreApi } from '../../store';
 
@@ -7,16 +8,17 @@ interface RadioFieldProps {
     name: string;
     label: string;
     values: Array<{ label: string; value: Gender }>;
+    require?: boolean;
 }
 
-export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values }) => {
+export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values, require = true }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
         <div>
             <label htmlFor={name} className="block text-sm font-medium text-gray-700 capitalize">
-                {label}
+                {label} {require ? <RedStar /> : ''}
             </label>
             <div className="flex mt-1 space-x-5">
                 {values.map((item) => (

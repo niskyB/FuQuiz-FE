@@ -14,4 +14,5 @@ export interface Blog {
     thumbnailUrl: string;
     category: BlogCategory;
     isShow: boolean;
+    isFeature: boolean;
 }

@@ -27,7 +27,7 @@ const navigation = [
     {
         name: 'Slider',
         icon: MapIcon,
-        link: `${routes.adminSliderListUrl}${routes.adminParamSliderUrl}`,
+        link: routes.adminSliderListUrl,
         acceptRole: [UserRole.ADMIN, UserRole.MARKETING],
     },
     { name: 'Blog', icon: BookOpenIcon, link: routes.adminBlogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
