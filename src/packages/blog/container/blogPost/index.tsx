@@ -20,7 +20,9 @@ export const BlogPost: React.FunctionComponent<BlogPostProps> = ({ id }) => {
                                 <img className="w-10 h-10 rounded-full" src={blog?.thumbnailUrl} alt={blog?.title + 'thumbnail'} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-gray-900">{blog?.marketing ? blog.marketing.user.fullName : 'Admin'}</p>
+                                <p className="text-sm font-medium text-gray-900">
+                                    {blog?.marketing && blog?.marketing.user ? blog.marketing.user.fullName : 'Admin'}
+                                </p>
                                 <p className="text-sm text-gray-500">
                                     <time>{new Date(blog?.createdAt || '').toLocaleDateString()}</time>
                                 </p>
