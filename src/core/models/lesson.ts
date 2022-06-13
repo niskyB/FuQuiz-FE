@@ -23,12 +23,12 @@ export interface LessonAttribute {
     attribute: LessonDetail | QuizLesson | SubjectTopic | null;
 }
 
-export interface Lesson<T> {
+export interface Lesson {
     id: string;
     order: number;
     name: string;
     createAt: string;
-    lessonAttribute: T;
+    lessonAttribute: LessonAttribute;
     updateAt: string;
     isActive: boolean;
 }

@@ -1,45 +1,18 @@
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import React from 'react';
 import { SubjectFilterDTO } from '../subjectList/interface';
 import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { genderFieldData } from '../../../../core/common/dataField';
 import { UserFilter } from '../../components/userFilter';
 import Contact from '../../../store/container/Contact';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/outline';
-import { useGetPricePackageById } from '../../../package/common/hooks/useGetPricePackageBySubjectId';
 import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
+import { store, useStoreUser } from '../../../../core/store';
+import { formActions } from '../../../../core/store/form';
 interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
-const tiers = [
-    {
-        name: 'Hobby',
-        href: '#',
-        priceMonthly: 12,
-        description: 'All the basics for starting a new business',
-    },
-    {
-        name: 'Freelancer',
-        href: '#',
-        priceMonthly: 24,
-        description: 'All the basics for starting a new business',
-    },
-    {
-        name: 'Startup',
-        href: '#',
-        priceMonthly: 32,
-        description: 'All the basics for starting a new business',
-    },
-    {
-        name: 'Enterprise',
-        href: '#',
-        priceMonthly: 48,
-        description: 'All the basics for starting a new business',
-    },
-];
+
 const positions = [
     {
         id: 2,
@@ -71,50 +44,15 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
     pageSize,
 }) => {
     const router = useRouter();
-    const methods = useForm();
-    const [popUp, setPopUp] = React.useState<boolean>(false);
-
+    const userState = useStoreUser();
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
         () => ({ isActive: true, isFeature, currentPage, pageSize, category, name }),
         [category, currentPage, isFeature, name, pageSize]
     );
     const { pricePackageList } = useGetPricePackageListById(id);
     const { subject } = useGetSubject(id);
-
-    const _handleOnSubmit = () => {};
     return (
         <>
-            {popUp && (
-                <div className="fixed inset-0 flex items-center justify-center w-screen h-screen">
-                    <div className="fixed w-screen h-screen cursor-pointer bg-black/80" onClick={() => setPopUp(false)}></div>
-                    <div className="z-20 flex flex-col w-full max-w-2xl px-10 py-8 space-y-10 bg-white rounded-lg shadow">
-                        <h1 className="text-3xl font-bold text-center">Registration form</h1>
-                        <FormWrapper methods={methods}>
-                            <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="w-full space-y-5">
-                                <TextField label="Fullname" name="fullName" type="text" />
-                                <TextField label="Email" name="Email" type="email" />
-                                <TextField label="Phone number" name="mobile" type="text" />
-                                <SelectField name="gender" label="Gender" values={genderFieldData} />
-
-                                <div className="flex items-center space-x-5">
-                                    <button
-                                        className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                        onClick={() => setPopUp(false)}
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    >
-                                        Register Subject
-                                    </button>
-                                </div>
-                            </form>
-                        </FormWrapper>
-                    </div>
-                </div>
-            )}
             <div className="flex space-x-10">
                 <div className="w-full max-w-xs space-y-10">
                     <UserFilter subjectOption={subjectOption} />
@@ -146,7 +84,17 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                 <span className="text-base font-medium text-gray-500">/mo</span>
                                             </p>
                                             <button
-                                                onClick={() => setPopUp(true)}
+                                                onClick={() => {
+                                                    if (subject && !userState.id) {
+                                                        store.dispatch(
+                                                            formActions.setRegistrationForm({
+                                                                pricePackage: pricePackageList,
+                                                                subjectId: subject.id,
+                                                                subjectName: subject?.name,
+                                                            })
+                                                        );
+                                                    }
+                                                }}
                                                 className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white bg-blue-500 border border-blue-600 rounded-md hover:bg-blue-800"
                                             >
                                                 Buy
