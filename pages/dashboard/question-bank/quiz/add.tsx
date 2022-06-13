@@ -2,18 +2,18 @@ import React from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../src/packages/dashboard';
-import { QuizList } from '../../../../src/packages/quiz/containers/quizList';
+import { AddQuiz } from '../../../../src/packages/quiz/containers/addQuiz';
 
-interface QuizListPageProps {}
+interface AddQuizPageProps {}
 
-const QuizListPage: React.FunctionComponent<QuizListPageProps> = () => {
+const AddQuizPage: React.FunctionComponent<AddQuizPageProps> = () => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
-                <QuizList />
+                <AddQuiz />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-export default QuizListPage;
+export default AddQuizPage;
