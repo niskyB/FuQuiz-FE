@@ -137,7 +137,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                         {pricePackageList && pricePackageList.length > 0 ? (
                             <div className="mt-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-3">
                                 {pricePackageList.map((tier) => (
-                                    <div key={tier.name} className="bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-lg">
+                                    <div key={tier.name} className="bg-white border border-gray-300 divide-y divide-gray-200 rounded-lg shadow-lg">
                                         <div className="p-6">
                                             <h2 className="text-lg font-medium leading-6 text-gray-900">{tier.name}</h2>
                                             <p className="mt-4 text-sm text-gray-500">{tier.description}</p>
