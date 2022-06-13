@@ -110,16 +110,13 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                                             <Link href="#">
                                                                 <div
                                                                     onClick={() => {
-                                                                        if (userState.id) {
-                                                                        } else {
-                                                                            store.dispatch(
-                                                                                formActions.setRegistrationForm({
-                                                                                    pricePackage: [],
-                                                                                    subjectId: item.id,
-                                                                                    subjectName: item.name,
-                                                                                })
-                                                                            );
-                                                                        }
+                                                                        store.dispatch(
+                                                                            formActions.setRegistrationForm({
+                                                                                pricePackage: [],
+                                                                                subjectId: item.id,
+                                                                                subjectName: item.name,
+                                                                            })
+                                                                        );
                                                                     }}
                                                                     className={classNames(
                                                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -137,16 +134,13 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                                             <Link href="#">
                                                                 <div
                                                                     onClick={() => {
-                                                                        if (userState.id) {
-                                                                        } else {
-                                                                            store.dispatch(
-                                                                                formActions.setRegistrationForm({
-                                                                                    pricePackage: [],
-                                                                                    subjectId: item.id,
-                                                                                    subjectName: item.name,
-                                                                                })
-                                                                            );
-                                                                        }
+                                                                        store.dispatch(
+                                                                            formActions.setRegistrationForm({
+                                                                                pricePackage: [],
+                                                                                subjectId: item.id,
+                                                                                subjectName: item.name,
+                                                                            })
+                                                                        );
                                                                     }}
                                                                     className={classNames(
                                                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',

@@ -7,8 +7,8 @@ import {
     AcademicCapIcon,
     PencilAltIcon,
     CogIcon,
-    ChartBarIcon,
     ChartSquareBarIcon,
+    LibraryIcon,
 } from '@heroicons/react/outline';
 import { routes } from '../../../core/routes';
 import { useStoreUser } from '../../../core/store';
@@ -31,9 +31,10 @@ const navigation = [
         acceptRole: [UserRole.ADMIN, UserRole.MARKETING],
     },
     { name: 'Blog', icon: BookOpenIcon, link: routes.adminBlogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
-    { name: 'User', icon: IdentificationIcon, link: routes.adminUsersUrl, acceptRole: [UserRole.ADMIN] },
     { name: 'Subject', icon: AcademicCapIcon, link: routes.adminSubjectListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
     { name: 'Registration', icon: PencilAltIcon, link: routes.registrationUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
+    { name: 'Question Bank', icon: LibraryIcon, link: routes.adminQuestionListUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
+    { name: 'User', icon: IdentificationIcon, link: routes.adminUsersUrl, acceptRole: [UserRole.ADMIN] },
     { name: 'Setting', icon: CogIcon, link: routes.settingUrl, acceptRole: [UserRole.ADMIN] },
 ];
 

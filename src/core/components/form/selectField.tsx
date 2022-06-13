@@ -21,10 +21,8 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
             {label ? (
                 <div className="flex justify-start space-x-2">
                     <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-                        {label}
+                        {label} {require ? <RedStar /> : ''}
                     </label>
-
-                    {require ? <RedStar /> : ''}
                 </div>
             ) : (
                 ''
