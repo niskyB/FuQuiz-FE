@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
+import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { Lesson, LessonAttribute, LessonDetail, LessonType, QuizLesson, SubjectTopic } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 
@@ -11,27 +13,20 @@ interface AddLessonProps {}
 const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
     const router = useRouter();
     const [description, setDescription] = React.useState<string>('');
-    const [formType, setFormType] = React.useState<LessonType>(LessonType.LESSON_DETAIL);
-    // const quizAttribute: QuizLesson = {
-    //     id: '',
-    //     description: '',
-    //     questions: [],
-    // };
+    const [formType, setFormType] = React.useState<LessonType>(LessonType.LESSON);
 
-    const subjectTopic: SubjectTopic = {
-        id: '',
-        name: '',
-    };
+    const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>({ label: 'Quiz 1', value: '1' });
+    const [selectedQuizList, setSelectedQuizList] = React.useState<SelectionFieldValues<any>[]>([]);
 
     const lessonsAttribute: LessonAttribute[] = [
-        { type: { id: '1', name: LessonType.LESSON_DETAIL }, attribute: null },
-        { type: { id: '2', name: LessonType.QUIZ_LESSON }, attribute: null },
-        { type: { id: '3', name: LessonType.TOPIC_LESSON }, attribute: null },
+        { type: { id: '1', name: LessonType.LESSON }, attribute: null },
+        { type: { id: '2', name: LessonType.QUIZ }, attribute: null },
+        { type: { id: '3', name: LessonType.SUBJECT_TOPIC }, attribute: null },
     ];
 
-    const _handleOnSubmit = async (data: Lesson<SubjectTopic>) => {};
+    const _handleOnSubmit = async (data: Lesson) => {};
 
-    const methods = useForm<Lesson<SubjectTopic>>({ defaultValues: { order: 0, name: '', lessonAttribute: { name: '' } } });
+    const methods = useForm<Lesson>();
 
     const _onChangeSubjectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
         for (let i = 0; i < lessonsAttribute.length; i++) {
@@ -41,25 +36,44 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
             }
         }
     };
+
     const _onRenderForm = () => {
         switch (formType) {
-            case LessonType.LESSON_DETAIL:
-                return;
-
-            case LessonType.QUIZ_LESSON:
+            case LessonType.LESSON:
                 return (
                     <>
                         <TextField label="Video link" name="videoLink" />
-                        <QuillInput label="Description" description={description} setDescription={setDescription} />
+                        <QuillInput label="HTML Content" description={description} setDescription={setDescription} />
                     </>
                 );
-            case LessonType.TOPIC_LESSON:
+
+            case LessonType.QUIZ:
                 return (
                     <>
-                        <SelectField label="Quiz" name="quiz" values={[]} />
-                        <QuillInput label="Description" description={description} setDescription={setDescription} />
+                        <SelectField
+                            label="Quiz"
+                            name="quiz"
+                            values={lessonsAttribute.map((lesson) => ({ label: lesson.type.name, value: lesson.type.id }))}
+                            onChange={(e) => _onChangeSubjectType(e)}
+                        />
+                        <MultiSelectBox
+                            label="Quiz"
+                            selected={selectedQuiz}
+                            setSelected={setSelectedQuiz}
+                            selectedList={selectedQuizList}
+                            setSelectedList={setSelectedQuizList}
+                            values={[
+                                { label: 'Quiz 1', value: '1' },
+                                { label: 'Quiz 2', value: '2' },
+                                { label: 'Quiz 3', value: '3' },
+                                { label: 'Quiz 4', value: '4' },
+                            ]}
+                        />
+                        <QuillInput label="HTML Content" description={description} setDescription={setDescription} />
                     </>
                 );
+            case LessonType.SUBJECT_TOPIC:
+                return <></>;
         }
     };
     return (
@@ -71,14 +85,14 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                             <div>
                                 <div className="flex justify-between">
                                     <div>
-                                        <h3 className="text-lg font-medium leading-6 text-gray-900">Add new lesson subject</h3>
+                                        <h3 className="text-lg font-medium leading-6 text-gray-900 capitalize">Add new lesson</h3>
                                         <p className="max-w-2xl mt-1 text-sm text-gray-500">
                                             This information will be displayed publicly so be careful what you share.
                                         </p>
                                     </div>
                                     <div>
                                         <SelectField
-                                            label="Subject Type"
+                                            label="Lessons Type"
                                             name="type"
                                             values={lessonsAttribute.map((lesson) => ({ label: lesson.type.name, value: lesson.type.id }))}
                                             onChange={(e) => _onChangeSubjectType(e)}
@@ -90,7 +104,8 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                         <div className="space-y-5 ">
                             <TextField label="name" name="name" />
                             <div className="flex space-x-5">
-                                {/* <SelectField
+                                <SelectField
+                                    require={false}
                                     label="Topic"
                                     name="topic"
                                     values={[
@@ -98,10 +113,9 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                         { label: 'Topic 2', value: 'topic 2' },
                                         { label: 'Topic 3', value: 'topic 3' },
                                     ]}
-                                /> */}
+                                />
                                 <TextField label="order" name="order" type={'number'} min={1} />
                             </div>
-
                             {_onRenderForm()}
                         </div>
                         <div className="pt-5">

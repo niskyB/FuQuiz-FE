@@ -34,7 +34,7 @@ export interface Lesson {
 }
 
 export enum LessonType {
-    QUIZ_LESSON = 'Quiz lesson',
-    TOPIC_LESSON = 'Topic subject',
-    LESSON_DETAIL = 'Lesson',
+    QUIZ = 'Quiz',
+    SUBJECT_TOPIC = 'Subject Topic',
+    LESSON = 'Lesson',
 }
