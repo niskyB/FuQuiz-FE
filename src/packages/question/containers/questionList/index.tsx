@@ -15,12 +15,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
     const methods = useForm();
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [
-        { id: '1', answerContent: 'Answer 1' },
-        { id: '2', answerContent: 'Answer 2' },
-        { id: '3', answerContent: 'Answer 3' },
-        { id: '4', answerContent: 'Answer 4' },
-    ];
+    const cloneAnswers: Answer[] = [{ id: '1', answerContent: 'Answer 1' }];
 
     const [questions, setQuestions] = React.useState<Question[]>([
         {
@@ -65,9 +60,9 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Questions</h1>
+                    <h1 className="text-xl font-semibold text-gray-900">Question List</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all question in current quiz including Question, Dimension, and active status.
+                        A list of all question in current quiz including Subject, Lesson, Dimension, Content, Level and active status.
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
