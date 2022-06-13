@@ -3,11 +3,13 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useBlogCategoriesFieldData } from '../../../../core/common/dataField/blogCategory';
+import { FeatureFieldData } from '../../../../core/common/dataField/feature';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
+import { RedStar } from '../../../store';
 import { addBlog } from './action';
 import { AddBlogDTO } from './interface';
 
@@ -76,16 +78,26 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                             <div className="space-y-6 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <div className="flex justify-start space-x-2">
-                                        <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                             Category
                                         </label>
-                                        <p className="inline-flex text-red-500" id="require">
-                                            *
-                                        </p>
+                                        <RedStar />
                                     </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField name="category" values={[...blogCategoriesFieldData]} />
-                                        {/* <SelectBlogCategory label="" name="categoryId" values={blogCategoryList} /> */}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="space-y-6 sm:space-y-5">
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <div className="flex justify-start space-x-2">
+                                        <label htmlFor="isFeature" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                            Feature
+                                        </label>
+                                        <RedStar />
+                                    </div>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <SelectField name="isFeature" values={[...FeatureFieldData]} />
                                     </div>
                                 </div>
                             </div>
