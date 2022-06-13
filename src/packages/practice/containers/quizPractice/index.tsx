@@ -7,7 +7,7 @@ import { QuizQuestionDTO } from '../../../quiz/containers/doQuiz/interface';
 import QuizQuestion from '../../../quiz/components/question';
 import QuizAnswer from '../../../quiz/containers/quizAnswer';
 import HintAnswer from '../../../practices/components/hintAnswer';
-import { QuizPracticeQuestion } from '../../components/QuizPracticeQuestion';
+import { QuizPracticeQuestion } from '../../components/quizPracticeQuestion';
 
 interface QuizPracticeProps {
     id: string;

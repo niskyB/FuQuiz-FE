@@ -13,10 +13,8 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const router = useRouter();
 
     const subjectId = React.useMemo(() => {
-        return router.asPath.replace(`${routes.adminSubjectListUrl}/`, '').replace(routes.addQuestionUrl, '');
+        return router.asPath.replace(`${routes.adminAddQuestionUrl}`, '');
     }, [router.asPath]);
-
-    console.log(subjectId);
 
     const [answers, setAnswers] = React.useState<Answer[]>([
         { id: '1', answerContent: 'Answer 1' },
@@ -24,7 +22,6 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         { id: '3', answerContent: 'Answer 3' },
         { id: '4', answerContent: 'Answer 4' },
     ]);
-    console.log(router.asPath.replace(`${routes.adminSubjectListUrl}/`, '').replace(routes.addQuestionUrl, ''));
 
     const _handleOnSubmit = async () => {};
 
@@ -41,21 +38,6 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Content <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <textarea
-                                            {...methods.register('content')}
-                                            rows={7}
-                                            name="content"
-                                            id="content"
-                                            autoComplete="given-name"
-                                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Subject <RedStar />
@@ -107,6 +89,79 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         />
                                     </div>
                                 </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Level <RedStar />
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <SelectField
+                                            label=""
+                                            name="level"
+                                            values={[
+                                                { label: 'Easy', value: '1' },
+                                                { label: 'Domain 2', value: '2' },
+                                                { label: 'Domain 3', value: '3' },
+                                                { label: 'Domain 4', value: '4' },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Status <RedStar />
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <SelectField
+                                            label=""
+                                            name="level"
+                                            values={[
+                                                { label: 'Easy', value: '1' },
+                                                { label: 'Domain 2', value: '2' },
+                                                { label: 'Domain 3', value: '3' },
+                                                { label: 'Domain 4', value: '4' },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Image Url
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <TextField label="" name="title" />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Video Url
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <TextField label="" name="title" />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Audio Url
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <TextField label="" name="title" />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Content <RedStar />
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <textarea
+                                            {...methods.register('content')}
+                                            rows={7}
+                                            name="content"
+                                            id="content"
+                                            autoComplete="given-name"
+                                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                    </div>
+                                </div>
                                 {answers.map((answer, index) => (
                                     <div
                                         key={answer.id}
@@ -122,13 +177,16 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                 ))}
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Right Answer <RedStar />
+                                        Explanation <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="rightAnswer"
-                                            values={answers.map((answer) => ({ label: `Answer ${answer.id}`, value: answer.id }))}
+                                        <textarea
+                                            {...methods.register('content')}
+                                            rows={7}
+                                            name="content"
+                                            id="content"
+                                            autoComplete="given-name"
+                                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         />
                                     </div>
                                 </div>

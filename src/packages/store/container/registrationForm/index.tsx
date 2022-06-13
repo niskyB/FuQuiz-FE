@@ -29,9 +29,6 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
                     <h1 className="text-3xl font-bold text-center">Registration form</h1>
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="w-full space-y-5">
-                            <TextField label="Full name" name="fullName" type="text" />
-                            <TextField label="Email" name="Email" type="email" />
-                            <TextField label="Phone number" name="mobile" type="text" />
                             <div className="w-full">
                                 <div className="flex justify-start space-x-2">
                                     <label className="block text-sm font-medium text-gray-700 capitalize">
@@ -41,13 +38,16 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
 
                                 <div className="py-2 mt-1 text-sm ">{formState.registrationForm.subjectName}</div>
                             </div>
-
-                            <SelectField name="gender" label="Gender" values={genderFieldData} />
                             <SelectField
                                 name="Package"
-                                label="pricePackage"
+                                label="Price Package"
                                 values={dataParser<PricePackage>(formState.registrationForm.pricePackage, 'name', 'id')}
                             />
+                            <TextField label="Full name" name="fullName" type="text" />
+                            <TextField label="Email" name="Email" type="email" />
+                            <TextField label="Phone number" name="mobile" type="text" />
+
+                            <SelectField name="gender" label="Gender" values={genderFieldData} />
 
                             <div className="flex items-center space-x-5">
                                 <button

@@ -6,6 +6,7 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { Answer, Question } from '../../../../core/models/question';
+import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 
 interface QuestionListProps {}
@@ -28,7 +29,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 1',
             isActive: true,
             // lessonAttribute: { id: 'l1', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 1', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 1', type: { id: '1', name: '' } },
         },
         {
             id: 'q2',
@@ -36,7 +37,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 2',
             isActive: true,
             // lessonAttribute: { id: 'l2', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 2', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 2', type: { id: '1', name: '' } },
         },
         {
             id: 'q3',
@@ -44,7 +45,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 3',
             isActive: true,
             // lessonAttribute: { type: { id: 'l3', name: 'Quiz' } },
-            dimension: { id: '', description: '', name: 'Domain 3', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 3', type: { id: '1', name: '' } },
         },
         {
             id: 'q4',
@@ -52,12 +53,13 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 4',
             isActive: true,
             // lessonAttribute: { id: 'l4', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 4', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 4', type: { id: '1', name: '' } },
         },
     ]);
     const [count, setCount] = React.useState<number>(4);
 
     const _handleOnSubmit = async () => {};
+    console.log(router.asPath);
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -69,7 +71,12 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={router.asPath + '/add'} passHref>
+                    <Link href={router.asPath.replace(routes.adminQuestionListUrl, routes.adminQuizListUrl)} passHref>
+                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                            Quiz List
+                        </p>
+                    </Link>
+                    <Link href={router.asPath + routes.adminAddQuestionUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Question
                         </p>
@@ -79,26 +86,64 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             <div>
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
-                        <div className="flex space-x-4">
-                            <TextField name="content" label="Question" />
-                            <SelectField
-                                label="Dimension"
-                                values={[
-                                    { label: 'Dimension 1', value: '1' },
-                                    { label: 'Dimension 2', value: '2' },
-                                    { label: 'Dimension 3', value: '3' },
-                                    { label: 'Dimension 4', value: '4' },
-                                ]}
-                                name="isActive"
-                            />
-                            <SelectField
-                                label="Active"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                name="isActive"
-                            />
+                        <div className="flex flex-col space-y-2">
+                            <div className="flex space-x-4">
+                                <SelectField
+                                    require={false}
+                                    label="Subject"
+                                    values={[
+                                        { label: 'Subject 1', value: '1' },
+                                        { label: 'Subject 2', value: '2' },
+                                        { label: 'Subject 3', value: '3' },
+                                        { label: 'Subject 4', value: '4' },
+                                    ]}
+                                    name="subject"
+                                />
+                                <SelectField
+                                    require={false}
+                                    label="Lesson"
+                                    values={[
+                                        { label: 'Lesson 1', value: '1' },
+                                        { label: 'Lesson 2', value: '2' },
+                                        { label: 'Lesson 3', value: '3' },
+                                        { label: 'Lesson 4', value: '4' },
+                                    ]}
+                                    name="lesson"
+                                />
+                                <SelectField
+                                    require={false}
+                                    label="Dimension"
+                                    values={[
+                                        { label: 'Dimension 1', value: '1' },
+                                        { label: 'Dimension 2', value: '2' },
+                                        { label: 'Dimension 3', value: '3' },
+                                        { label: 'Dimension 4', value: '4' },
+                                    ]}
+                                    name="dimension"
+                                />
+                            </div>
+                            <div className="flex space-x-4">
+                                <TextField name="content" label="Content" require={false} />
+                                <SelectField
+                                    require={false}
+                                    label="Level"
+                                    values={[
+                                        { label: 'Easy', value: '1' },
+                                        { label: 'Dimension 2', value: '2' },
+                                        { label: 'Dimension 3', value: '3' },
+                                    ]}
+                                    name="Level"
+                                />
+                                <SelectField
+                                    require={false}
+                                    label="Status"
+                                    values={[
+                                        { label: 'Active', value: true },
+                                        { label: 'Inactive', value: false },
+                                    ]}
+                                    name="isActive"
+                                />
+                            </div>
                         </div>
                         <div className="flex justify-end">
                             <button
@@ -116,18 +161,25 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Question', 'Dimension', 'Activation', '']} />
+                                <TableHead fields={['Subject', 'Lesson', 'Dimension', 'Content', 'Level', 'Activation', '']} />
 
                                 <TableBody>
                                     {Boolean(count && questions) &&
                                         questions.map((question, index) => (
                                             <TableRow key={question.id}>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{question.content}</div>
+                                                    <div className="text-gray-900">Subject 1</div>
+                                                </TableDescription>
+                                                <TableDescription>
+                                                    <div className="text-gray-900">Lesson 1</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{question.dimension.name}</div>
                                                 </TableDescription>
+                                                <TableDescription>
+                                                    <div className="text-gray-900">{question.content}</div>
+                                                </TableDescription>
+                                                <TableDescription>Easy</TableDescription>
 
                                                 <TableDescription>
                                                     {question.isActive ? (
