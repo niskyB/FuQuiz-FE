@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { UserRole } from '../../../../core/models/role';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
@@ -69,6 +70,8 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
                             />
                             <TextField label="Valid From" name="validFrom" type="date" defaultValue={'12/5/2022'} />
                             <TextField label="Valid To" name="validTo" type="date" defaultValue={'12/5/2022'} />
+
+                            <TextareaField name="Note" label="Note" />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

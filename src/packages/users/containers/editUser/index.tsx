@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { genderFieldData } from '../../../../core/common/dataField';
-import { FormErrorMessage, FormWrapper, RadioField, TextField } from '../../../../core/components/form';
+import { genderFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { useGetUserById } from '../../';
+import { UserRole } from '../../../../core/models/role';
 
 interface EditUserProps {
     id: string;
@@ -36,13 +37,24 @@ const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
-                            <TextField label="Full name" name="fullName" type="fullName" />
-                            <TextField label="Email address" name="email" type="email" />
-                            <TextField label="phone number" name="mobile" type="text" />
-                            <TextField label="New password" name="password" type="password" />
-                            <TextField label="Confirm password" name="confirmPassword" type="password" />
-                            <TextField label="Role" name="role" readOnly={true} />
-                            <RadioField label="sex" name="gender" values={genderFieldData} />
+                            {}
+                            <div className="flex justify-center">
+                                <img className="h-36 w-36" src={user?.imageUrl} />
+                            </div>
+                            <TextField label="Full name" name="fullName" type="fullName" require={false} readOnly={true} />
+                            <TextField label="Email address" name="email" type="email" require={false} readOnly={true} />
+                            <TextField label="phone number" name="mobile" type="text" require={false} readOnly={true} />
+                            <SelectField label="Status" name="isActive" require={false} values={[...statusFieldData]} />
+                            <SelectField
+                                label="Role"
+                                name="role"
+                                require={false}
+                                values={[
+                                    { label: 'Admin', value: UserRole.ADMIN },
+                                    { label: 'Expert', value: UserRole.EXPERT },
+                                ]}
+                            />
+                            <RadioField require={false} label="sex" name="gender" values={genderFieldData} />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

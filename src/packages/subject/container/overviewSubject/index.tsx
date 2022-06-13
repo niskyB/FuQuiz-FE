@@ -22,7 +22,7 @@ interface OverviewSubjectProps {
 }
 
 const mapFields = [
-    { label: 'Title', name: 'name' },
+    { label: 'Name', name: 'name' },
     { label: 'Tag Line', name: 'tagLine' },
 ];
 

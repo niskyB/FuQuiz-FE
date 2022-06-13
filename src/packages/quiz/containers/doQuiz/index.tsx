@@ -25,7 +25,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
         content: 'Which of the following is correct?',
         isActive: true,
         // lessonType: { id: 'l1', name: 'Quiz' },
-        dimension: { id: '', description: '', name: 'Domain 1', typeId: { id: '1', name: '' } },
+        dimension: { id: '', description: '', name: 'Domain 1', type: { id: '1', name: '' } },
         isMarked: false,
         userAnswerId: null,
     },
@@ -43,7 +43,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
         content: 'In software testing what is the main purpose of exit criteria?',
         isActive: true,
         // lessonType: { id: 'l2', name: 'Quiz' },
-        dimension: { id: '', description: '', name: 'Domain 2', typeId: { id: '1', name: '' } },
+        dimension: { id: '', description: '', name: 'Domain 2', type: { id: '1', name: '' } },
         isMarked: false,
         userAnswerId: null,
     },
@@ -62,7 +62,7 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
             'Given the following state transition diagram Which of the following series of state transitions contains an INVALID transition which may indicate a fault in the system design?',
         isActive: true,
         // lessonType: { id: 'l3', name: 'Quiz' },
-        dimension: { id: '', description: '', name: 'Domain 3', typeId: { id: '1', name: '' } },
+        dimension: { id: '', description: '', name: 'Domain 3', type: { id: '1', name: '' } },
         isMarked: false,
         userAnswerId: null,
     },
@@ -80,15 +80,24 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
         content: 'Which of the following is a KEY test closure task?',
         isActive: true,
         // lessonType: { id: 'l4', name: 'Quiz' },
-        dimension: { id: '', description: '', name: 'Domain 4', typeId: { id: '1', name: '' } },
+        dimension: { id: '', description: '', name: 'Domain 4', type: { id: '1', name: '' } },
         isMarked: false,
         userAnswerId: null,
     },
 ];
 
+const quizAnswerStatus = [
+    { label: 'Unanswered', value: 'unanswered' },
+    { label: 'Marked', value: 'marked' },
+    { label: 'Answered', value: 'Answered' },
+    { label: 'All Questions', value: 'allQuestions' },
+];
+
 export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const [questionList, setQuestionList] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
+    const [answerStatus, setAnswerStatus] = React.useState<string>('allQuestions');
+
     const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(
@@ -196,6 +205,18 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                 </div>
                 <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">
                     <h1 className="text-xl font-semibold">Quiz progress : </h1>
+                    <div className="flex space-x-2">
+                        {quizAnswerStatus.map((item) => (
+                            <button
+                                key={item.value}
+                                onClick={() => setAnswerStatus(item.value)}
+                                type="button"
+                                className={`bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 inline-flex items-center px-4 py-2  font-medium text-white  border border-transparent rounded-md shadow-sm text-xs focus:outline-none focus:ring-2 focus:ring-offset-2  `}
+                            >
+                                {item.label}
+                            </button>
+                        ))}
+                    </div>
                     <div className="grid grid-cols-10 gap-3 w-fit h-fit">
                         <QuizAnswer data={questionList} setCurrentIndex={setCurrentIndex} currentIndex={currentIndex} />
                     </div>

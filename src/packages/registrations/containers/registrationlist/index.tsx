@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { OrderFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
@@ -62,6 +63,17 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                 ]}
                                 require={false}
                                 name="isActive"
+                            />
+                            <SelectField label="Sort" values={[...OrderFieldData]} name="order" require={false} />
+                            <SelectField
+                                label="OrderBy"
+                                values={[
+                                    { label: 'ID', value: 'id' },
+                                    { label: 'Email', value: 'email' },
+                                    { label: 'Registration Time', value: 'Registration Time' },
+                                ]}
+                                name="orderBy"
+                                require={false}
                             />
                         </div>
                         <div className="flex justify-end">
