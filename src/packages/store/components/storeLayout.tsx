@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ResetForm } from '../../../core/common/HOC/resetForm';
 import { GlobalLoading } from '../../../core/components/loading/globalLoading';
 import { Navigation } from '../container/navigation';
+import { RegistrationForm } from '../container/registrationForm';
 
 interface StoreLayoutProps {}
 
@@ -15,6 +16,7 @@ export const StoreLayout: React.FC<StoreLayoutProps> = ({ children }) => {
                         <div className="w-full mx-auto max-w-7xl">{children}</div>
                     </div>
                     <GlobalLoading />
+                    <RegistrationForm />
                 </div>
             </ResetForm>
         </>

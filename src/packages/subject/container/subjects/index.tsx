@@ -13,6 +13,8 @@ import { UserFilter } from '../../components/userFilter';
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
+import { store, useStoreForm, useStoreUser } from '../../../../core/store';
+import { formActions } from '../../../../core/store/form';
 
 interface SubjectsProps extends BlogListFilterDTO {}
 
@@ -20,6 +22,9 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
 export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, currentPage, isFeature, name, pageSize }) => {
+    const userState = useStoreUser();
+    const formState = useStoreForm();
+
     const featureSubjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
         () => ({ isActive: true, isFeature: true, currentPage: 1, pageSize: 3 }),
         []
@@ -98,34 +103,60 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                             leaveFrom="transform opacity-100 scale-100"
                                             leaveTo="transform opacity-0 scale-95"
                                         >
-                                            <Menu.Items className="absolute right-0 w-full mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                            <Menu.Items className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                 <div className="py-1">
                                                     <Menu.Item>
                                                         {({ active }) => (
-                                                            <a
-                                                                href="#"
-                                                                className={classNames(
-                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                    'flex px-4 py-2 text-sm justify-between'
-                                                                )}
-                                                            >
-                                                                <div className="font-semibold">Standard</div>
-                                                                <div className="">30.000 đ/ 3 months</div>
-                                                            </a>
+                                                            <Link href="#">
+                                                                <div
+                                                                    onClick={() => {
+                                                                        if (userState.id) {
+                                                                        } else {
+                                                                            store.dispatch(
+                                                                                formActions.setRegistrationForm({
+                                                                                    pricePackage: [],
+                                                                                    subjectId: item.id,
+                                                                                    subjectName: item.name,
+                                                                                })
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                    className={classNames(
+                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                        'flex px-4 py-2 text-sm justify-between cursor-pointer '
+                                                                    )}
+                                                                >
+                                                                    <div className="font-semibold">Standard</div>
+                                                                    <div className="">30.000 đ/ 3 months</div>
+                                                                </div>
+                                                            </Link>
                                                         )}
                                                     </Menu.Item>
                                                     <Menu.Item>
                                                         {({ active }) => (
-                                                            <a
-                                                                href="#"
-                                                                className={classNames(
-                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                    'flex px-4 py-2 text-sm justify-between'
-                                                                )}
-                                                            >
-                                                                <div className="font-semibold">Premium</div>
-                                                                <div className="">80.000 đ/ 9 months</div>
-                                                            </a>
+                                                            <Link href="#">
+                                                                <div
+                                                                    onClick={() => {
+                                                                        if (userState.id) {
+                                                                        } else {
+                                                                            store.dispatch(
+                                                                                formActions.setRegistrationForm({
+                                                                                    pricePackage: [],
+                                                                                    subjectId: item.id,
+                                                                                    subjectName: item.name,
+                                                                                })
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                    className={classNames(
+                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                        'flex px-4 py-2 text-sm justify-between cursor-pointer'
+                                                                    )}
+                                                                >
+                                                                    <div className="font-semibold">Premium</div>
+                                                                    <div className="">80.000 đ/ 9 months</div>
+                                                                </div>
+                                                            </Link>
                                                         )}
                                                     </Menu.Item>
                                                 </div>
