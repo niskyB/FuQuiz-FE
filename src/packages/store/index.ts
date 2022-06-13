@@ -6,3 +6,5 @@ export * from './components/sideBox';
 
 export * from './container/Home';
 export * from './container/navigation';
+export * from './container/registrationForm';
+export * from './container/Contact';
