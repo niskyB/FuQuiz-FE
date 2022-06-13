@@ -30,7 +30,8 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
         {
             id: 'q2',
             answers: cloneAnswers,
-            content: 'Question 2',
+            content:
+                ' keyboard drive trace initiative pakistan neural-net avon sdd face calculate throughput grey vortals officer generating bedfordshire firewall heights efficient synthesizing liberia green customer-focused metrics programming account card action-items soft accounts integration central loan garden buckinghamshire investment personal fish parkway copying encoding rustic the analyst disintermediate integrated rue xss technician alarm crossing purple planner mindshare synthesize copying solution data well-modulated orchid account optical capacitor neural research online unleash bluetooth way purple transition ai jordan divide reciprocal full-range international schemas homogeneous initiative circuit avon salad leading-edge pink up algorithm synthesizing avon deposit copying tennessee action-items copy frictionless deposit global bypass bypassing health sas hard auto mouse bedfordshire portals maximized withdrawal assurance portal optical money deposit pizza account adp cuban yemen nevada franc unleash profound online montana auxiliary sharable oregon multi-state xml sql birr personal belize optimization product sausages borders sausages belize gb franc haptic experiences loan chips zloty demand-driven rubber payment multi-layered intuitive pennsylvania rubber somoni china buckinghamshire architect self-enabling web-enabled soft compelling wireless shoes slovakia administrator back-end json square contextually-based magenta unit chips euro soft dinar 24/365 quantifying parsing vermont island array adapter cross-platform green australian azure impactful ghana generating neural tan silver sdd olive ergonomic tasty assurance synthesize synergize invoice',
             isActive: true,
             // lessonAttribute: { id: 'l2', name: 'Quiz' },
             dimension: { id: '', description: '', name: 'Domain 2', type: { id: '1', name: '' } },
@@ -60,7 +61,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
 
     return (
         <FormWrapper methods={methods}>
-            <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+            <form className="space-y-8 divide-y divide-gray-200 " onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div className="space-y-8">
                         <div>
@@ -158,40 +159,32 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                     />
                                 </div>
                             </div>
-                        </div>
-                        <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
-                            <div>
-                                <h2 className="text-lg font-medium leading-6 text-gray-900">Setting</h2>
-                                <p className="flex max-w-2xl mt-1 text-sm text-gray-500">
-                                    Choose question for quiz <p className="ml-1 font-semibold text-red-600">(will reset if change subject)</p>
-                                </p>
-                            </div>
-                            <div className="px-4 space-y-4 sm:px-6 lg:px-4">
-                                <div className="sm:flex sm:items-center">
-                                    <div className="sm:flex-auto">
-                                        <h1 className="text-xl font-semibold text-gray-900">Question List</h1>
-                                        <p className="mt-2 text-sm text-gray-700">
-                                            A list of all question in current quiz including Subject, Lesson, Dimension, Content, Level and active
-                                            status.
-                                        </p>
-                                    </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <div className="flex justify-start space-x-2">
+                                    <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Number of questions
+                                    </label>
+                                    <RedStar />
                                 </div>
+                                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                    <TextField label="" name={'numberOfQuestion'} type="number" min={1} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                            <div className="space-y-4 ">
+                                <div>
+                                    <h2 className="text-lg font-medium leading-6 text-gray-900">Setting</h2>
+                                    <p className="flex max-w-2xl mt-1 text-sm text-gray-500">
+                                        Choose question for quiz <p className="ml-1 font-semibold text-red-600">(will reset if change subject)</p>
+                                    </p>
+                                </div>
+
                                 <div>
                                     <FormWrapper methods={methods}>
                                         <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                                             <div className="flex flex-col space-y-2">
                                                 <div className="flex space-x-4">
-                                                    <SelectField
-                                                        require={false}
-                                                        label="Subject"
-                                                        values={[
-                                                            { label: 'Subject 1', value: '1' },
-                                                            { label: 'Subject 2', value: '2' },
-                                                            { label: 'Subject 3', value: '3' },
-                                                            { label: 'Subject 4', value: '4' },
-                                                        ]}
-                                                        name="subject"
-                                                    />
                                                     <SelectField
                                                         require={false}
                                                         label="Lesson"
@@ -214,9 +207,6 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                                         ]}
                                                         name="dimension"
                                                     />
-                                                </div>
-                                                <div className="flex space-x-4">
-                                                    <TextField name="content" label="Content" require={false} />
                                                     <SelectField
                                                         require={false}
                                                         label="Level"
@@ -227,18 +217,16 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                                         ]}
                                                         name="Level"
                                                     />
-                                                    <SelectField
-                                                        require={false}
-                                                        label="Status"
-                                                        values={[
-                                                            { label: 'Active', value: true },
-                                                            { label: 'Inactive', value: false },
-                                                        ]}
-                                                        name="isActive"
-                                                    />
+                                                    <TextField name="content" label="Content" require={false} />
                                                 </div>
                                             </div>
-                                            <div className="flex justify-end">
+                                            <div className="flex justify-end space-x-2">
+                                                <button
+                                                    type="submit"
+                                                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                                >
+                                                    Reset
+                                                </button>
                                                 <button
                                                     type="submit"
                                                     className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -254,18 +242,12 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                                                 <Table>
-                                                    <TableHead fields={['ID', 'Subject', 'Lesson', 'Dimension', 'Content', 'Level', 'Showing', '']} />
+                                                    <TableHead fields={['Lesson', 'Dimension', 'Content', 'Level', 'Choose question']} />
 
                                                     <TableBody>
                                                         {Boolean(questions) &&
                                                             questions.map((question, index) => (
                                                                 <TableRow key={question.id}>
-                                                                    <TableDescription>
-                                                                        <div className="text-gray-900">#{question.id}</div>
-                                                                    </TableDescription>
-                                                                    <TableDescription>
-                                                                        <div className="text-gray-900">Subject 1</div>
-                                                                    </TableDescription>
                                                                     <TableDescription>
                                                                         <div className="text-gray-900">Lesson 1</div>
                                                                     </TableDescription>
@@ -273,27 +255,14 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                                                         <div className="text-gray-900">{question.dimension.name}</div>
                                                                     </TableDescription>
                                                                     <TableDescription>
-                                                                        <div className="text-gray-900">{question.content}</div>
+                                                                        <p className="w-full text-gray-900 break-normal line-clamp-4">
+                                                                            {question.content}
+                                                                        </p>
                                                                     </TableDescription>
                                                                     <TableDescription>Easy</TableDescription>
 
                                                                     <TableDescription>
-                                                                        {question.isActive ? (
-                                                                            <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                                                Showing
-                                                                            </span>
-                                                                        ) : (
-                                                                            <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                                                Inactive
-                                                                            </span>
-                                                                        )}
-                                                                    </TableDescription>
-                                                                    <TableDescription>
-                                                                        <Link href={`${router.asPath}/edit/${question.id}`} passHref>
-                                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">
-                                                                                Edit
-                                                                            </p>
-                                                                        </Link>
+                                                                        <input name="questions" type={`checkbox`} />
                                                                     </TableDescription>
                                                                 </TableRow>
                                                             ))}
@@ -308,14 +277,16 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                     </div>
                 </div>
 
-                <div className="pt-5">
-                    <div className="flex justify-end">
+                <div className="flex justify-between pt-5">
+                    <p className="mt-2 font-semibold text-red-500 text">Choose Questions: 2/60</p>
+                    <div className="flex">
                         <Link href={routes.adminSliderListUrl} passHref>
                             <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Cancel
                             </p>
                         </Link>
                         <button
+                            disabled={true}
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >

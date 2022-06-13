@@ -22,6 +22,7 @@ const NAV_LINK = [
 ];
 
 const USER_ACTION_LINK = [
+    { label: 'Balance', link: routes.practiceListUrl },
     { label: 'your profile', link: routes.meUrl },
     { label: 'My course', link: routes.userCourseUrl },
     { label: 'Quiz Practice', link: routes.practiceListUrl },
@@ -48,7 +49,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                 <Link href={routes.homeUrl} passHref>
                                     <div className="flex items-center flex-shrink-0 cursor-pointer">
                                         <img className="block w-auto h-full " src="/asset/icons/logo-image.png" />
-                                        <img className="block w-auto h-full -ml-3  md:block" src="/asset/icons/logo-text.png" />
+                                        <img className="block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.png" />
                                     </div>
                                 </Link>
                                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
@@ -67,7 +68,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex items-center justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
+                            {/* <div className="flex items-center justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
                                 <div className="w-full max-w-lg lg:max-w-xs">
                                     <label htmlFor="search" className="sr-only">
                                         Search
@@ -85,7 +86,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                         />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="flex items-center lg:hidden">
                                 {/* Mobile menu button */}
                                 <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -119,7 +120,13 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                             leaveFrom="transform opacity-100 scale-100"
                                             leaveTo="transform opacity-0 scale-95"
                                         >
-                                            <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                            <Menu.Items className="absolute right-0 z-10 w-48 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                                <div className="flex flex-col font-semibold text-gray-100 bg-orange-500 cursor-none">
+                                                    <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
+                                                        Hello, {userState.fullName}
+                                                    </p>
+                                                    <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>Balance: 90000 VNĐ</p>
+                                                </div>
                                                 {USER_ACTION_LINK.map((item) => (
                                                     <Menu.Item key={item.label}>
                                                         {({ active }) => (

@@ -1,5 +1,5 @@
 interface TableProps {}
 
 export const Table: React.FunctionComponent<TableProps> = ({ children }) => {
-    return <table className="min-w-full divide-y divide-gray-300">{children}</table>;
+    return <table className="w-full min-w-full divide-y divide-gray-300 table-fixed">{children}</table>;
 };
