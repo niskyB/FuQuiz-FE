@@ -63,9 +63,14 @@ export const routes = {
     editLessonUrl: '/edit',
 
     // questionList
-    questionListUrl: '/question',
-    addQuestionUrl: '/question/add',
-    editQuestionUrl: '/question/edit',
+    adminQuestionListUrl: '/dashboard/question-bank/question',
+    adminAddQuestionUrl: '/add',
+    editQuestionUrl: '/edit',
+
+    //quiz PracticeQuiz
+    adminQuizListUrl: '/dashboard/question-bank/quiz',
+    adminAddQuizUrl: '/add',
+    adminEditQuizUrl: '/edit',
 
     //quiz PracticeQuiz
     practiceListUrl: '/practices',
@@ -89,6 +94,5 @@ export const routes = {
     adminAddPackageUrl: '/add',
 
     // Package
-    adminQuestionListUrl: '/question',
-    adminAddQuestionUrl: '/add',
+    // adminQuestionListUrl: '/question',
 };
