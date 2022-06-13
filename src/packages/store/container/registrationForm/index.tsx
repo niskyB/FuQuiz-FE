@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { genderFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { PricePackage } from '../../../../core/models/pricePackage';
-import { store, useStoreForm } from '../../../../core/store';
+import { store, useStoreForm, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { dataParser } from '../../../../core/util/data';
 import * as React from 'react';
@@ -13,6 +13,7 @@ interface RegistrationFormProps {}
 
 export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = () => {
     const formState = useStoreForm();
+    const userState = useStoreUser();
     const methods = useForm<RegistrationFormDTO>();
 
     React.useEffect(() => {
@@ -43,12 +44,14 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
                                 label="Price Package"
                                 values={dataParser<PricePackage>(formState.registrationForm.pricePackage, 'name', 'id')}
                             />
-                            <TextField label="Full name" name="fullName" type="text" />
-                            <TextField label="Email" name="Email" type="email" />
-                            <TextField label="Phone number" name="mobile" type="text" />
-
-                            <SelectField name="gender" label="Gender" values={genderFieldData} />
-
+                            {!userState.id && (
+                                <>
+                                    <TextField label="Full name" name="fullName" type="text" />
+                                    <TextField label="Email" name="Email" type="email" />
+                                    <TextField label="Phone number" name="mobile" type="text" />
+                                    <SelectField name="gender" label="Gender" values={genderFieldData} />
+                                </>
+                            )}
                             <div className="flex items-center space-x-5">
                                 <button
                                     className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
