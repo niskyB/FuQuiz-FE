@@ -8,6 +8,7 @@ import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../.
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
 import { routes } from '../../../../core/routes';
 import { useGetBlogCategoryList } from '../../../blogCategory';
+import { RedStar } from '../../../store';
 import { useGetBlog } from '../../common/hooks/useGetBlog';
 import { updateBlog } from './action';
 import { EditBlogDTO } from './interface';
@@ -81,9 +82,7 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                     <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Title
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <TextField label="" name="title" />
@@ -95,9 +94,7 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                         <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                             Category
                                         </label>
-                                        <p className="inline-flex text-red-500" id="require">
-                                            *
-                                        </p>
+                                        <RedStar />
                                     </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectBlogCategory label="" name="category" values={categories} />
@@ -109,9 +106,7 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                     <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Brief Info
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <textarea
@@ -127,11 +122,9 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <div className="flex justify-start space-x-2">
                                     <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Details
+                                        Description
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <QuillInput description={details} setDescription={setDetails} />
@@ -143,9 +136,7 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                     <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Thumbnail
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField
@@ -163,9 +154,7 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                     <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Showing
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <SelectField name="isShow" values={[...statusFieldData]} require={false} />
@@ -176,9 +165,7 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                     <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Feature
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <SelectField name="isFeature" values={[...statusFieldData]} require={false} />
