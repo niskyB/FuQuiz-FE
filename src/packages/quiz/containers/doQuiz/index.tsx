@@ -89,12 +89,13 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
 const quizAnswerStatus = [
     { label: 'Unanswered', value: 'unanswered' },
     { label: 'Marked', value: 'marked' },
-    { label: 'Answered', value: 'Answered' },
+    { label: 'Answered', value: 'answered' },
     { label: 'All Questions', value: 'allQuestions' },
 ];
 
 export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const [questionList, setQuestionList] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
+    const [questionFilter, setQuestionFilters] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
     const [answerStatus, setAnswerStatus] = React.useState<string>('allQuestions');
 
@@ -108,6 +109,8 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
             }, 0),
         [questionList]
     );
+
+    React.useEffect(() => {}, [answerStatus]);
 
     const _onChangeQuestion = (type: 'previous' | 'next') => {
         switch (type) {
