@@ -28,7 +28,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 1',
             isActive: true,
             // lessonAttribute: { id: 'l1', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 1', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 1', type: { id: '1', name: '' } },
         },
         {
             id: 'q2',
@@ -36,7 +36,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 2',
             isActive: true,
             // lessonAttribute: { id: 'l2', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 2', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 2', type: { id: '1', name: '' } },
         },
         {
             id: 'q3',
@@ -44,7 +44,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 3',
             isActive: true,
             // lessonAttribute: { type: { id: 'l3', name: 'Quiz' } },
-            dimension: { id: '', description: '', name: 'Domain 3', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 3', type: { id: '1', name: '' } },
         },
         {
             id: 'q4',
@@ -52,7 +52,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
             content: 'Question 4',
             isActive: true,
             // lessonAttribute: { id: 'l4', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 4', typeId: { id: '1', name: '' } },
+            dimension: { id: '', description: '', name: 'Domain 4', type: { id: '1', name: '' } },
         },
     ]);
     const [count, setCount] = React.useState<number>(4);
@@ -80,8 +80,9 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="content" label="Question" />
+                            <TextField name="content" label="Question" require={false} />
                             <SelectField
+                                require={false}
                                 label="Dimension"
                                 values={[
                                     { label: 'Dimension 1', value: '1' },
@@ -92,6 +93,18 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                                 name="isActive"
                             />
                             <SelectField
+                                require={false}
+                                label="Dimension"
+                                values={[
+                                    { label: 'Dimension 1', value: '1' },
+                                    { label: 'Dimension 2', value: '2' },
+                                    { label: 'Dimension 3', value: '3' },
+                                    { label: 'Dimension 4', value: '4' },
+                                ]}
+                                name="isActive"
+                            />
+                            <SelectField
+                                require={false}
                                 label="Active"
                                 values={[
                                     { label: 'Active', value: true },
