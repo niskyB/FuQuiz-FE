@@ -67,9 +67,8 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                     <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Title
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <TextField name="title" />
@@ -106,9 +105,8 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                     <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Brief Info
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <TextareaField name="briefInfo" />
@@ -117,12 +115,10 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <div className="flex justify-start space-x-2">
                                     <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Details
+                                        Description
                                     </label>
 
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <QuillInput description={details} setDescription={setDetails} />
@@ -134,9 +130,8 @@ export const AddBlog: React.FunctionComponent<AddBlogProps> = () => {
                                     <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Thumbnail
                                     </label>
-                                    <p className="inline-flex text-red-500" id="require">
-                                        *
-                                    </p>
+
+                                    <RedStar />
                                 </div>
                                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                                     <FileField
