@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Lesson, LessonType, SubjectTopic } from '../../../../core/models/lesson';
+import { Lesson, LessonTypeEnum, SubjectTopic } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 
@@ -18,7 +18,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = () => {
             id: '1',
             createAt: '05/18/2022',
             isActive: true,
-            lessonAttribute: { type: { id: '1', name: LessonType.LESSON }, attribute: null },
+            lessonAttribute: { type: { id: '1', name: LessonTypeEnum.LESSON }, attribute: null },
             name: 'Bài 1: Type cơ bản',
             updateAt: '05/18/2022',
             order: 1,
@@ -27,7 +27,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = () => {
             id: '2',
             createAt: '05/18/2022',
             isActive: true,
-            lessonAttribute: { type: { id: '1', name: LessonType.SUBJECT_TOPIC }, attribute: null },
+            lessonAttribute: { type: { id: '1', name: LessonTypeEnum.SUBJECT_TOPIC }, attribute: null },
             name: 'Bài 1: Type cơ bản',
             updateAt: '05/18/2022',
             order: 2,
@@ -36,7 +36,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = () => {
             id: '3',
             createAt: '05/18/2022',
             isActive: true,
-            lessonAttribute: { type: { id: '1', name: LessonType.QUIZ }, attribute: null },
+            lessonAttribute: { type: { id: '1', name: LessonTypeEnum.LESSON_QUIZ }, attribute: null },
             name: 'Bài 1: Type cơ bản',
             updateAt: '05/18/2022',
             order: 3,

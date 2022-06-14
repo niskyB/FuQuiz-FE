@@ -1,5 +1,5 @@
 import { Dimension } from './dimension';
-import { LessonType } from './lesson';
+import { LessonTypeEnum } from './lesson';
 
 export interface Question {
     id: string;

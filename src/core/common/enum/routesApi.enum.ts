@@ -1,5 +1,6 @@
 export enum ApiListRoutes {
     LESSONS = 'lessons',
+    LESSON_TYPES = 'lesson-types',
 
     SLIDERS = 'sliders',
 

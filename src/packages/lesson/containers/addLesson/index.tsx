@@ -2,44 +2,59 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
-import { Lesson, LessonAttribute, LessonDetail, LessonType, QuizLesson, SubjectTopic } from '../../../../core/models/lesson';
-import { routes } from '../../../../core/routes';
+import { LessonType, LessonTypeEnum } from '../../../../core/models/lesson';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
+import { dataParser } from '../../../../core/util/data';
+import { useGetLessonType } from '../../common/hooks/useGetLessonType';
+import { addLesson } from './action';
+import { AddLessonFormDTO } from './interface';
 
-interface AddLessonProps {}
+interface AddLessonProps {
+    subjectId: string;
+}
 
-const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
+const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
+    const methods = useForm<AddLessonFormDTO>();
+
     const router = useRouter();
     const [description, setDescription] = React.useState<string>('');
-    const [formType, setFormType] = React.useState<LessonType>(LessonType.LESSON);
+    const [formType, setFormType] = React.useState<LessonTypeEnum>(LessonTypeEnum.LESSON_DETAIL);
 
     const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>({ label: 'Quiz 1', value: '1' });
     const [selectedQuizList, setSelectedQuizList] = React.useState<SelectionFieldValues<any>[]>([]);
+    const { lessonType } = useGetLessonType();
 
-    const lessonsAttribute: LessonAttribute[] = [
-        { type: { id: '1', name: LessonType.LESSON }, attribute: null },
-        { type: { id: '2', name: LessonType.QUIZ }, attribute: null },
-        { type: { id: '3', name: LessonType.SUBJECT_TOPIC }, attribute: null },
-    ];
-
-    const _handleOnSubmit = async (data: Lesson) => {};
-
-    const methods = useForm<Lesson>();
+    const _handleOnSubmit = async (data: AddLessonFormDTO) => {
+        const res = await addLesson({ ...data, isActive: true, subject: subjectId, htmlContent: description });
+        if (res) {
+            methods.reset();
+            store.dispatch(apiActions.resetState());
+            setDescription('');
+            toast.success('Add lesson success!');
+        }
+    };
+    React.useEffect(() => {
+        if (lessonType.length > 0) methods.setValue('type', lessonType[0].id);
+        return () => {};
+    }, [lessonType]);
 
     const _onChangeSubjectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        for (let i = 0; i < lessonsAttribute.length; i++) {
-            const item = lessonsAttribute[i];
-            if (item.type.id === e.target.value) {
-                setFormType(item.type.name);
+        for (let i = 0; i < lessonType.length; i++) {
+            const item = lessonType[i];
+            if (item.id === e.target.value) {
+                setFormType(item.name);
             }
         }
     };
 
     const _onRenderForm = () => {
         switch (formType) {
-            case LessonType.LESSON:
+            case LessonTypeEnum.LESSON_DETAIL:
                 return (
                     <>
                         <TextField label="Video link" name="videoLink" />
@@ -47,13 +62,13 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                     </>
                 );
 
-            case LessonType.QUIZ:
+            case LessonTypeEnum.LESSON_QUIZ:
                 return (
                     <>
                         <SelectField
                             label="Quiz"
                             name="quiz"
-                            values={lessonsAttribute.map((lesson) => ({ label: lesson.type.name, value: lesson.type.id }))}
+                            values={dataParser<LessonType>(lessonType, 'name', 'id')}
                             onChange={(e) => _onChangeSubjectType(e)}
                         />
                         <MultiSelectBox
@@ -72,7 +87,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                         <QuillInput label="HTML Content" description={description} setDescription={setDescription} />
                     </>
                 );
-            case LessonType.SUBJECT_TOPIC:
+            case LessonTypeEnum.SUBJECT_TOPIC:
                 return <></>;
         }
     };
@@ -94,7 +109,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                         <SelectField
                                             label="Lessons Type"
                                             name="type"
-                                            values={lessonsAttribute.map((lesson) => ({ label: lesson.type.name, value: lesson.type.id }))}
+                                            values={dataParser<LessonType>(lessonType, 'name', 'id')}
                                             onChange={(e) => _onChangeSubjectType(e)}
                                         />
                                     </div>
@@ -104,16 +119,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                         <div className="space-y-5 ">
                             <TextField label="name" name="name" />
                             <div className="flex space-x-5">
-                                <SelectField
-                                    require={false}
-                                    label="Topic"
-                                    name="topic"
-                                    values={[
-                                        { label: 'Topic 1', value: 'topic 1' },
-                                        { label: 'Topic 2', value: 'topic 2' },
-                                        { label: 'Topic 3', value: 'topic 3' },
-                                    ]}
-                                />
+                                <TextField name="topic" label="Topic" />
                                 <TextField label="order" name="order" type={'number'} min={1} />
                             </div>
                             {_onRenderForm()}
@@ -128,14 +134,13 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = () => {
                                         Cancel
                                     </button>
                                 </Link>
-                                <Link href={routes.adminBlogListUrl} passHref>
-                                    <button
-                                        type="submit"
-                                        className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    >
-                                        Save
-                                    </button>
-                                </Link>
+
+                                <button
+                                    type="submit"
+                                    className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </form>
