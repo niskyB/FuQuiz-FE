@@ -1,6 +1,6 @@
 import { SelectionFieldValues } from '../interface';
 
-export const unsetData: SelectionFieldValues<''> = {
+export const unsetFieldData: SelectionFieldValues<any> = {
     label: 'Unset',
     value: '',
 };

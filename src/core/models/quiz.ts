@@ -7,6 +7,7 @@ export interface QuizAttribute {
 }
 
 export interface ExamLevel extends AttributeType {}
+
 export interface QuizType extends AttributeType {}
 
 export interface PracticeQuiz extends QuizAttribute {

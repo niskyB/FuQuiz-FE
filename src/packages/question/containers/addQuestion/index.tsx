@@ -2,37 +2,67 @@ import { PlusCircleIcon, XCircleIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useForm, useFormContext } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { statusFieldData } from '../../../../core/common/dataField';
-import { FormWrapper, QuillInput, RadioField, SelectField, TextField } from '../../../../core/components/form';
-import { Answer } from '../../../../core/models/question';
-import { routes } from '../../../../core/routes';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
+import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { RedStar } from '../../../store';
+import { AddQuestionDTO } from './interface';
 
 interface AddQuestionProps {}
 
-const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
+const defaultValues: AddQuestionDTO = {
+    subject: '',
+    lesson: '',
+    dimension: '',
+    level: { id: '', name: '' },
+    imageUrl: '',
+    videoUrl: '',
+    audioUrl: '',
+    content: '',
+    isActive: true,
+    isMultipleChoice: false,
+    answers: [{ answerContent: '', isCorrect: false }],
+    explanation: '',
+};
+
+export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const router = useRouter();
-    const [questionType, setQuestionType] = React.useState<string>('radio');
+    const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
-    explanation;
 
-    const subjectId = React.useMemo(() => {
-        return router.asPath.replace(`${routes.adminAddQuestionUrl}`, '');
-    }, [router.asPath]);
+    const subjects = [
+        { id: 'subject-id-1', label: 'Subject 1' },
+        { id: 'subject-id-2', label: 'Subject 2' },
+        { id: 'subject-id-3', label: 'Subject 3' },
+        { id: 'subject-id-4', label: 'Subject 4' },
+    ];
 
-    const [answers, setAnswers] = React.useState<Answer[]>([
-        { id: '1', answerContent: '' },
-        { id: '2', answerContent: '' },
-    ]);
+    const methods = useForm<AddQuestionDTO>({
+        defaultValues,
+    });
 
-    const _onChangeQuestionType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        e.target.value && setQuestionType(e.target.value);
+    const answers = useFieldArray({ control: methods.control, name: 'answers' });
+
+    const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(e.target.value);
     };
 
-    const _handleOnSubmit = async () => {};
+    const _onChangeQuestionType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const isMultipleChoice = e.target && e.target.value === 'true' ? true : false;
+        setIsMultipleChoice(isMultipleChoice);
+    };
 
-    const methods = useForm();
+    const _onChangeRightAnswerBox = (e: React.ChangeEvent<HTMLInputElement>, refIndex: number) => {
+        !isMultipleChoice && answers.fields.map((_, index) => methods.setValue(`answers.${index}.isCorrect`, false));
+        methods.setValue(`answers.${refIndex}.isCorrect`, e.target.checked);
+    };
+
+    const _handleOnSubmit = async (data: AddQuestionDTO) => {
+        data.explanation = explanation;
+        console.log(data);
+    };
+
     return (
         <FormWrapper methods={methods}>
             <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
@@ -40,24 +70,41 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                     <div>
                         <div>
                             <h3 className="text-lg font-medium leading-6 text-gray-900">Add Question</h3>
-                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new question for current quiz</p>
+                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new question</p>
                         </div>
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Subject <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField
+                                            defaultValue={''}
                                             label=""
-                                            name="dimension"
+                                            name="subject"
+                                            id="subject"
+                                            onChange={(e) => _onChangeSubject(e)}
+                                            values={[...subjects.map((subject) => ({ label: subject.label, value: subject.id }))]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Lesson <RedStar />
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <SelectField
+                                            defaultValue={''}
+                                            label=""
+                                            name="lesson"
                                             values={[
-                                                { label: 'Subject 1', value: '1' },
-                                                { label: 'Domain 2', value: '2' },
-                                                { label: 'Domain 3', value: '3' },
-                                                { label: 'Domain 4', value: '4' },
+                                                unsetFieldData,
+                                                { label: 'Lesson 1', value: 'lesson-1' },
+                                                { label: 'Lesson 2', value: 'lesson-2' },
+                                                { label: 'Lesson 3', value: 'lesson-3' },
+                                                { label: 'Lesson 4', value: 'lesson-4' },
                                             ]}
                                         />
                                     </div>
@@ -68,30 +115,12 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField
+                                            defaultValue={''}
                                             label=""
                                             name="dimension"
                                             values={[
-                                                { label: 'Domain 1', value: '1' },
-                                                { label: 'Domain 2', value: '2' },
-                                                { label: 'Domain 3', value: '3' },
-                                                { label: 'Domain 4', value: '4' },
-                                            ]}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Lesson <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="dimension"
-                                            values={[
-                                                { label: 'Lesson 1', value: '1' },
-                                                { label: 'Domain 2', value: '2' },
-                                                { label: 'Domain 3', value: '3' },
-                                                { label: 'Domain 4', value: '4' },
+                                                { label: 'Group', value: 'group-1' },
+                                                { label: 'Domain', value: 'domain-2' },
                                             ]}
                                         />
                                     </div>
@@ -102,13 +131,13 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField
+                                            defaultValue={''}
                                             label=""
                                             name="level"
                                             values={[
-                                                { label: 'Easy', value: '1' },
-                                                { label: 'Domain 2', value: '2' },
-                                                { label: 'Domain 3', value: '3' },
-                                                { label: 'Domain 4', value: '4' },
+                                                { label: 'Easy', value: 'easy-1' },
+                                                { label: 'Medium', value: 'medium-2' },
+                                                { label: 'Hard', value: 'hard-3' },
                                             ]}
                                         />
                                     </div>
@@ -118,7 +147,7 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Status <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField label="" name="level" values={[...statusFieldData]} />
+                                        <SelectField defaultValue={statusFieldData[0]} label="" name="level" values={[...statusFieldData]} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -126,7 +155,7 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Image Url
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="title" />
+                                        <TextField label="" name="imageUrl" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -134,7 +163,7 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Video Url
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="title" />
+                                        <TextField label="" name="videoUrl" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -142,7 +171,7 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Audio Url
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="title" />
+                                        <TextField label="" name="audioUrl" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -153,7 +182,6 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         <textarea
                                             {...methods.register('content')}
                                             rows={7}
-                                            name="content"
                                             id="content"
                                             autoComplete="given-name"
                                             className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -167,46 +195,57 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField
                                             label=""
-                                            name="dimension"
+                                            name="isMultipleChoice"
+                                            defaultValue={false}
                                             values={[
-                                                { label: 'Multiple choice ', value: 'checkbox' },
-                                                { label: 'One choice', value: 'radio' },
+                                                { label: 'Multiple choice', value: true },
+                                                { label: 'One choice', value: false },
                                             ]}
                                             onChange={(e) => _onChangeQuestionType(e)}
                                         />
                                     </div>
                                 </div>
-                                {answers.map((answer, index) => (
+                                {answers.fields.map((_, index) => (
                                     <div
-                                        key={answer.id}
+                                        key={'answer' + index}
                                         className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
                                     >
                                         <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                             Answer {index + 1} <RedStar />
                                         </label>
                                         <div className="flex items-center flex-1 mt-1 space-x-2 sm:mt-0 sm:col-span-2">
-                                            <TextField label="" name="title" />
+                                            <TextField label="" {...methods.register(`answers.${index}.answerContent` as const)} />
                                         </div>
                                         <div
                                             className={`flex ${
-                                                answers.length - 1 === index ? 'justify-between' : 'justify-end'
+                                                answers.fields.length - 1 === index ? 'justify-between' : 'justify-end'
                                             } col-span-2 col-end-4 space-x-4`}
                                         >
-                                            {answers.length - 1 === index && (
+                                            {answers.fields.length - 1 === index && (
                                                 <div className="flex space-x-2">
-                                                    <button className="w-8 h-8 text-indigo-500">
+                                                    <button
+                                                        className="w-8 h-8 text-indigo-500 hover:text-indigo-600"
+                                                        onClick={() => answers.append({ answerContent: '', isCorrect: false })}
+                                                    >
                                                         <PlusCircleIcon />
                                                     </button>
 
                                                     {index !== 0 && (
-                                                        <button className="w-8 h-8 text-red-500">
+                                                        <button
+                                                            className="w-8 h-8 text-red-500 hover:text-red-600"
+                                                            onClick={() => answers.remove(answers.fields.length - 1)}
+                                                        >
                                                             <XCircleIcon />
                                                         </button>
                                                     )}
                                                 </div>
                                             )}
                                             <div className="flex items-center space-x-2 text-sm font-medium text-gray-900 w-fit">
-                                                <input type={questionType} name="rightAnswer" />
+                                                <input
+                                                    type={isMultipleChoice ? 'checkbox' : 'radio'}
+                                                    name="isCorrect"
+                                                    onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
+                                                />
                                                 <label>Right Answer</label>
                                             </div>
                                         </div>
@@ -248,5 +287,3 @@ const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         </FormWrapper>
     );
 };
-
-export default AddQuestion;
