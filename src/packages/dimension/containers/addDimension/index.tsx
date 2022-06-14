@@ -38,7 +38,7 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = ({ subje
     };
     return (
         <FormWrapper methods={methods}>
-            <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+            <form className="max-w-2xl space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>

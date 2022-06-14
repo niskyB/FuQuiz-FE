@@ -24,7 +24,7 @@ interface EditSubjectProps {
 }
 
 const mapFields = [
-    { label: 'Title', name: 'name' },
+    { label: 'Name', name: 'name' },
     { label: 'Tag Line', name: 'tagLine' },
 ];
 
@@ -129,7 +129,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
     };
     return (
         <FormWrapper methods={methods}>
-            <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+            <form className="space-y-8 divide-y divide-gray-200 " onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div className="flex justify-between">
@@ -137,21 +137,35 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                 <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Subject</h3>
                                 <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be edit old subject</p>
                             </div>
-                            <div className="space-x-2">
-                                <Link href={routes.adminSubjectListUrl + `/${id}` + routes.adminDimensionListUrl} passHref>
-                                    <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                        Dimension
-                                    </p>
-                                </Link>
-                                <Link href={routes.adminSubjectListUrl + `/${id}` + routes.adminPackageListUrl} passHref>
-                                    <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                        Package
-                                    </p>
-                                </Link>
+                            <div className="flex flex-col items-end mt-4 space-y-2 sm:mt-0 sm:ml-16">
+                                <div className="space-x-2">
+                                    <Link href={routes.adminSubjectListUrl} passHref>
+                                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">
+                                            Back to subject list
+                                        </p>
+                                    </Link>
+                                    <Link href={router.asPath.replace('/edit', '') + routes.lessonListUrl} passHref>
+                                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                            Lessons
+                                        </p>
+                                    </Link>
+                                </div>
+                                <div className="space-x-2">
+                                    <Link href={router.asPath.replace('/edit', '') + routes.adminDimensionListUrl} passHref>
+                                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                            Dimension
+                                        </p>
+                                    </Link>
+                                    <Link href={router.asPath.replace('/edit', '') + routes.adminPackageListUrl} passHref>
+                                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                            Price package
+                                        </p>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
+                        <div className="w-full max-w-3xl mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             {mapFields.map((item) => (
                                 <div
                                     key={item.name}
@@ -203,23 +217,22 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                     />
                                 </div>
                             </div>
+                            <div className="pt-5">
+                                <div className="flex justify-end">
+                                    <Link href={routes.adminSubjectListUrl} passHref>
+                                        <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Cancel
+                                        </p>
+                                    </Link>
+                                    <button
+                                        type="submit"
+                                        className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div className="pt-5">
-                    <div className="flex justify-end">
-                        <Link href={routes.adminSubjectListUrl} passHref>
-                            <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Cancel
-                            </p>
-                        </Link>
-                        <button
-                            type="submit"
-                            className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Edit
-                        </button>
                     </div>
                 </div>
             </form>

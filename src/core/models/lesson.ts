@@ -15,11 +15,12 @@ export interface QuizLesson {
 
 export interface SubjectTopic extends AttributeType {}
 
+export interface LessonType {
+    id: string;
+    name: LessonTypeEnum;
+}
 export interface LessonAttribute {
-    type: {
-        id: string;
-        name: LessonType;
-    };
+    type: LessonType;
     attribute: LessonDetail | QuizLesson | SubjectTopic | null;
 }
 
@@ -33,8 +34,8 @@ export interface Lesson {
     isActive: boolean;
 }
 
-export enum LessonType {
-    QUIZ = 'Quiz',
+export enum LessonTypeEnum {
+    LESSON_QUIZ = 'Lesson Quiz',
     SUBJECT_TOPIC = 'Subject Topic',
-    LESSON = 'Lesson',
+    LESSON_DETAIL = 'Lesson Detail',
 }

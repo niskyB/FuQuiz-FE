@@ -26,7 +26,7 @@ export const AddSetting: React.FunctionComponent<AddSettingProps> = () => {
                                 label="Type"
                                 name="Type"
                                 values={[
-                                    { label: 'Type 1', value: '1' },
+                                    { label: 'Role', value: '1' },
                                     { label: 'Type 2', value: '2' },
                                 ]}
                             />

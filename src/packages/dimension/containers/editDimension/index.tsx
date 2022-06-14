@@ -7,6 +7,7 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { DimensionType } from '../../../../core/models/dimension';
 import { dataParser } from '../../../../core/util/data';
+import { RedStar } from '../../../store';
 import { EditSubject } from '../../../subject';
 import { useGetDimensionById } from '../../common/hooks/useGetDimensionById';
 import { useGetDimensionType } from '../../common/hooks/useGetDimensionTypes';
@@ -50,7 +51,7 @@ export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ sub
     };
     return (
         <FormWrapper methods={methods}>
-            <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+            <form className="max-w-2xl space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
@@ -62,7 +63,7 @@ export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ sub
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Type
+                                        Type <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField name="type" label="" values={dataParser<DimensionType>(dimensionTypes, 'name', 'id')} />
@@ -70,7 +71,7 @@ export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ sub
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Name
+                                        Name <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="name" />
@@ -78,7 +79,7 @@ export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ sub
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Description
+                                        Description <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextareaField name="description" label="" />
@@ -88,7 +89,6 @@ export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ sub
                         </div>
                     </div>
                 </div>
-
                 <div className="pt-5">
                     <div className="flex justify-end">
                         <Link href={router.asPath.replace(`/edit/${dimensionId}`, '')} passHref>
@@ -100,7 +100,7 @@ export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ sub
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Add
+                            Update
                         </button>
                     </div>
                 </div>

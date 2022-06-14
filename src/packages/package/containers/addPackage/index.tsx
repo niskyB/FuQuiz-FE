@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FormWrapper, TextField } from '../../../../core/components/form';
+import { statusFieldData } from '../../../../core/common/dataField';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
 import { RedStar } from '../../../store';
@@ -67,7 +68,7 @@ const AddPackage: React.FunctionComponent<AddPackageProps> = ({ subjectId }) => 
                                         Original price <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="originalPrice" type="number" />
+                                        <TextField label="" name="originalPrice" type="number" min={1} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -75,7 +76,15 @@ const AddPackage: React.FunctionComponent<AddPackageProps> = ({ subjectId }) => 
                                         Sale Price <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="salePrice" type="number" />
+                                        <TextField label="" name="salePrice" type="number" min={1} />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Is active <RedStar />
+                                    </label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <SelectField disabled label="" name="isActive" values={statusFieldData} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">

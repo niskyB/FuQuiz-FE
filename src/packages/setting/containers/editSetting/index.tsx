@@ -10,11 +10,11 @@ interface EditSettingProps {}
 export const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
     const methods = useForm({});
     React.useEffect(() => {
-        methods.setValue('Type', '2');
-        methods.setValue('value', 'Value 1');
+        methods.setValue('Type', 'Role');
+        methods.setValue('value', 'cfd80d32-eb1b-11ec-8fea-0242ac120002');
         methods.setValue('order', 1);
         methods.setValue('Activation', true);
-        methods.setValue('description', 'Description 1');
+        methods.setValue('description', 'Admin');
     }, []);
 
     const _handleOnSubmit = async () => {};
@@ -32,12 +32,15 @@ export const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
                             <SelectField
                                 label="Type"
                                 name="Type"
+                                disabled
+                                require={false}
                                 values={[
-                                    { label: 'Type 1', value: '1' },
+                                    { label: 'Role', value: 'Role' },
                                     { label: 'Type 2', value: '2' },
                                 ]}
                             />
-                            <TextField label="Value" name="value" type="value" />
+
+                            <TextField label="Value" name="value" type="value" readOnly require={false} />
                             <TextField label="Order" name="order" type="order" />
                             <TextareaField label="Description" name="description" aria-rowspan={8} />
                             <SelectField

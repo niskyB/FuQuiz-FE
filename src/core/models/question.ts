@@ -1,7 +1,7 @@
 import { AttributeType } from '../common/interface';
 import { Answer } from './answer';
 import { Dimension } from './dimension';
-import { LessonType } from './lesson';
+import { LessonTypeEnum } from './lesson';
 
 export interface Question {
     id: string;
