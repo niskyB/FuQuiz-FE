@@ -162,7 +162,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     )}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${router.asPath}/${subject.id}`} passHref>
+                                                    <Link href={`${router.asPath}/${subject.id}/edit`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Overview</p>
                                                     </Link>
                                                     <Link href={`${routes.adminSubjectListUrl}/${subject.id}${routes.lessonListUrl}`} passHref>

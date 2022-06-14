@@ -27,7 +27,7 @@ const defaultValues: AddSubjectFormDTO = {
     image: null,
     name: '',
     tagLine: '',
-    isFeature: '',
+    isFeature: true,
     isActive: '',
 };
 

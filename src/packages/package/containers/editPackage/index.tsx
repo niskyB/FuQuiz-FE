@@ -2,12 +2,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FormWrapper, TextField } from '../../../../core/components/form';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { useGetPricePackageById } from '../../common/hooks/useGetPricePackageBySubjectId';
 import { editBlog } from './action';
 import { EditPricePackageFormDTO } from './interface';
 import * as React from 'react';
+import { RedStar } from '../../../store';
+import { statusFieldData } from '../../../../core/common/dataField';
 
 interface EditPackageProps {
     subjectId: string;
@@ -59,31 +61,47 @@ export const EditPackage: React.FunctionComponent<EditPackageProps> = ({ pricePa
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Name</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Name <RedStar />{' '}
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="name" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Duration</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Duration <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextField label="" name="duration" type="number" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Original price</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Original price <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="originalPrice" type="number" />
+                                        <TextField label="" name="originalPrice" type="number" min={1} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Sale Price</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Sale Price <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="salePrice" type="number" />
+                                        <TextField label="" name="salePrice" type="number" min={1} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Description</label>
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Is active</label>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                                        <SelectField disabled label="" name="isActive" values={statusFieldData} />
+                                    </div>
+                                </div>
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Description <RedStar />
+                                    </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <TextareaField label="" name="description" />
                                     </div>
@@ -104,7 +122,7 @@ export const EditPackage: React.FunctionComponent<EditPackageProps> = ({ pricePa
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Add
+                            Update
                         </button>
                     </div>
                 </div>

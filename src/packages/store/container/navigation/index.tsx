@@ -121,7 +121,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                             leaveTo="transform opacity-0 scale-95"
                                         >
                                             <Menu.Items className="absolute right-0 z-10 w-48 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                <div className="flex flex-col font-semibold text-gray-100 bg-orange-500 cursor-none">
+                                                <div className="flex flex-col font-semibold text-white bg-orange-500 cursor-none">
                                                     <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
                                                         Hello, {userState.fullName}
                                                     </p>
