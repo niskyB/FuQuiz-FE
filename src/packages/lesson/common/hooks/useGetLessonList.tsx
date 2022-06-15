@@ -1,6 +1,5 @@
 import { ApiListRoutes } from '../../../../core/common/enum';
-import { useGetList, useGetListWithCount } from '../../../../core/common/hooks';
-import { Blog } from '../../../../core/models/blog';
+import { useGetList } from '../../../../core/common/hooks';
 import { Lesson } from '../../../../core/models/lesson';
 
 export const useGetLessonList = (subjectId: string) => {
