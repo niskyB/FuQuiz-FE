@@ -7,7 +7,7 @@ export interface Question {
     id: string;
     subject: string;
     lesson: string;
-    dimension: string;
+    dimension: Dimension;
     level: QuestionLevel;
     isActive: boolean;
     content: string;
@@ -15,7 +15,7 @@ export interface Question {
     videoUrl: string;
     audioUrl: string;
     isMultipleChoice: boolean;
-    answers: Omit<Answer, 'id'>[];
+    answers: Answer[];
     explanation: string;
 }
 

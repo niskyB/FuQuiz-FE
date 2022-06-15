@@ -15,7 +15,7 @@ const defaultValues: AddQuestionDTO = {
     subject: '',
     lesson: '',
     dimension: '',
-    level: { id: '', name: '' },
+    level: '',
     imageUrl: '',
     videoUrl: '',
     audioUrl: '',
@@ -60,6 +60,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
 
     const _handleOnSubmit = async (data: AddQuestionDTO) => {
         data.explanation = explanation;
+        data.isMultipleChoice = isMultipleChoice;
         console.log(data);
     };
 
@@ -147,7 +148,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Status <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField defaultValue={statusFieldData[0]} label="" name="level" values={[...statusFieldData]} />
+                                        <SelectField label="" name="isActive" values={statusFieldData} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -201,7 +202,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                                 { label: 'Multiple choice', value: true },
                                                 { label: 'One choice', value: false },
                                             ]}
-                                            onChange={(e) => _onChangeQuestionType(e)}
+                                            onChange={(e) => _onChangeQuestionType({ ...e })}
                                         />
                                     </div>
                                 </div>

@@ -17,11 +17,9 @@ const mapFields = [{ label: 'Name', name: 'name' }];
 
 export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     const [imageUrl, setImageUrl] = React.useState<string>('');
-    const cloneAnswers: Answer[] = [{ id: '1', answerContent: 'Answer 1' }];
-    const [questions, setQuestions] = React.useState<Question[]>([
+    const [questions, setQuestions] = React.useState<[]>([
         {
             id: 'q1',
-            answers: cloneAnswers,
             content: 'Question 1',
             isActive: true,
             // lessonAttribute: { id: 'l1', name: 'Quiz' },
