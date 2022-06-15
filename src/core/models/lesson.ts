@@ -28,10 +28,11 @@ export interface Lesson {
     id: string;
     order: number;
     name: string;
-    createAt: string;
+    createdAt: string;
     lessonAttribute: LessonAttribute;
-    updateAt: string;
+    updatedAt: string;
     isActive: boolean;
+    topic: string;
 }
 
 export enum LessonTypeEnum {

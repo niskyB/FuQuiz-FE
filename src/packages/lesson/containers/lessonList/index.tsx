@@ -2,51 +2,33 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Lesson, LessonTypeEnum, SubjectTopic } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
+import { useGetLessonList } from '../../common/hooks/useGetLessonList';
+import { updateLessonActivation } from './action';
+import { UpdateLessonActivationDTO } from './interface';
 
-interface LessonListProps {}
+interface LessonListProps {
+    subjectId: string;
+}
 
-export const LessonList: React.FunctionComponent<LessonListProps> = () => {
+export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId }) => {
     const methods = useForm();
-    const [lessons, setLessons] = React.useState<Lesson<SubjectTopic | any>[]>([
-        {
-            id: '1',
-            createAt: '05/18/2022',
-            isActive: true,
-            lessonAttribute: { type: { id: '1', name: LessonTypeEnum.LESSON }, attribute: null },
-            name: 'Bài 1: Type cơ bản',
-            updateAt: '05/18/2022',
-            order: 1,
-        },
-        {
-            id: '2',
-            createAt: '05/18/2022',
-            isActive: true,
-            lessonAttribute: { type: { id: '1', name: LessonTypeEnum.SUBJECT_TOPIC }, attribute: null },
-            name: 'Bài 1: Type cơ bản',
-            updateAt: '05/18/2022',
-            order: 2,
-        },
-        {
-            id: '3',
-            createAt: '05/18/2022',
-            isActive: true,
-            lessonAttribute: { type: { id: '1', name: LessonTypeEnum.LESSON_QUIZ }, attribute: null },
-            name: 'Bài 1: Type cơ bản',
-            updateAt: '05/18/2022',
-            order: 3,
-        },
-    ]);
-    const [count, setCount] = React.useState<number>(4);
+    const router = useRouter();
+
+    const { lessonList } = useGetLessonList(subjectId);
 
     const _handleOnSubmit = async () => {};
-
-    const router = useRouter();
+    const _onUpdateLessonActivation = async (lessonId: string, data: UpdateLessonActivationDTO) => {
+        const res = await updateLessonActivation(lessonId, data);
+        if (res) {
+            toast.success('Update success!');
+        }
+    };
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
@@ -117,50 +99,48 @@ export const LessonList: React.FunctionComponent<LessonListProps> = () => {
                             <Table>
                                 <TableHead fields={['Title', 'Lesson Type', 'Create at', 'Update date', 'Activation', '']} />
                                 <TableBody>
-                                    {Boolean(count && lessons) &&
-                                        lessons.map((lesson) => (
-                                            <TableRow key={lesson.id}>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{lesson.name}</div>
-                                                </TableDescription>
+                                    {lessonList.map((lesson) => (
+                                        <TableRow key={lesson.id}>
+                                            <TableDescription>
+                                                <div className="text-gray-900">{lesson.name}</div>
+                                            </TableDescription>
 
-                                                <TableDescription>
-                                                    <div className="max-w-sm">
-                                                        <div className="text-gray-900">{lesson.lessonAttribute.type.name}</div>
-                                                    </div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{lesson.createAt}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{lesson.updateAt}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    {lesson.isActive ? (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                            Active
-                                                        </span>
-                                                    ) : (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                            Inactive
-                                                        </span>
-                                                    )}
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <Link href={`${router.asPath}${routes.editLessonUrl}/${lesson.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                    </Link>
-                                                    <Link
-                                                        href={`${router.asPath}${routes.lessonListUrl}/${lesson.id}${routes.questionListUrl}`}
-                                                        passHref
-                                                    >
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">
-                                                            {lesson ? 'Deactive' : 'Active'}
-                                                        </p>
-                                                    </Link>
-                                                </TableDescription>
-                                            </TableRow>
-                                        ))}
+                                            <TableDescription>
+                                                <div className="max-w-sm">
+                                                    {/* <div className="text-gray-900">{lesson.lessonAttribute.type.name}</div> */}
+                                                </div>
+                                            </TableDescription>
+                                            <TableDescription>
+                                                <div className="text-gray-900">{new Date(lesson.createdAt).toLocaleString()}</div>
+                                            </TableDescription>
+                                            <TableDescription>
+                                                <div className="text-gray-900">{new Date(lesson.updatedAt).toLocaleString()}</div>
+                                            </TableDescription>
+                                            <TableDescription>
+                                                {lesson.isActive ? (
+                                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                        Active
+                                                    </span>
+                                                ) : (
+                                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                        Inactive
+                                                    </span>
+                                                )}
+                                            </TableDescription>
+                                            <TableDescription>
+                                                <Link href={`${router.asPath}${routes.editLessonUrl}/${lesson.id}`} passHref>
+                                                    <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                </Link>
+
+                                                <p
+                                                    onClick={() => _onUpdateLessonActivation(lesson.id, { isActive: !lesson.isActive })}
+                                                    className="text-indigo-600 cursor-pointer hover:text-indigo-900"
+                                                >
+                                                    {lesson.isActive ? 'Deactive' : 'Active'}
+                                                </p>
+                                            </TableDescription>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                         </div>
