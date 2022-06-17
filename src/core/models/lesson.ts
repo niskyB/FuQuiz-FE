@@ -33,6 +33,7 @@ export interface Lesson {
     updatedAt: string;
     isActive: boolean;
     topic: string;
+    type: LessonType;
 }
 
 export enum LessonTypeEnum {

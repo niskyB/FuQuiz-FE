@@ -21,7 +21,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
     const router = useRouter();
 
     const { lessonList } = useGetLessonList(subjectId);
-
+    console.log(lessonList);
     const _handleOnSubmit = async () => {};
     const _onUpdateLessonActivation = async (lessonId: string, data: UpdateLessonActivationDTO) => {
         const res = await updateLessonActivation(lessonId, data);
@@ -107,7 +107,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
 
                                             <TableDescription>
                                                 <div className="max-w-sm">
-                                                    {/* <div className="text-gray-900">{lesson.lessonAttribute.type.name}</div> */}
+                                                    <div className="text-gray-900">{lesson.type.name}</div>
                                                 </div>
                                             </TableDescription>
                                             <TableDescription>
