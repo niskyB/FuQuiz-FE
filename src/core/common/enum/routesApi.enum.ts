@@ -3,6 +3,8 @@ export enum ApiListRoutes {
     LESSON = 'lesson',
     LESSON_TYPES = 'lesson-types',
 
+    QUESTION_LEVEL = 'question-levels',
+
     SLIDERS = 'sliders',
 
     SUBJECTS = 'subjects',

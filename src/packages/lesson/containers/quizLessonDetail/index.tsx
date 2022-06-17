@@ -9,10 +9,10 @@ const QuizLessonDetail: React.FunctionComponent<QuizLessonDetailProps> = () => {
     const [details, setDetails] = React.useState('');
 
     const [answers, setAnswers] = React.useState<Answer[]>([
-        { id: '1', answerContent: 'Answer 1' },
-        { id: '2', answerContent: 'Answer 2' },
-        { id: '3', answerContent: 'Answer 3' },
-        { id: '4', answerContent: 'Answer 4' },
+        { id: '1', details: 'Answer 1' },
+        { id: '2', details: 'Answer 2' },
+        { id: '3', details: 'Answer 3' },
+        { id: '4', details: 'Answer 4' },
     ]);
 
     const { register } = useFormContext();

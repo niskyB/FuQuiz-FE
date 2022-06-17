@@ -58,7 +58,7 @@ const QuizQuestionReadonly: React.FunctionComponent<QuizQuestionReadonlyProps> =
                                 </div>
                                 <div className="flex items-center ml-3 space-x-2 text-sm">
                                     <label htmlFor={item.id} className="font-medium text-black cursor-pointer">
-                                        {item.answerContent}
+                                        {item.details}
                                     </label>
                                     <div className="w-8 h-8">
                                         {item.id === data.userAnswerId || item.id === rightAnswer ? (
