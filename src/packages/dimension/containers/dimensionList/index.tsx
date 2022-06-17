@@ -20,8 +20,8 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ subjectId,
 
     const router = useRouter();
 
-    const options = React.useMemo<GetDimensionListDTO>(() => ({ currentPage, id: subjectId, pageSize: 99 }), [subjectId, currentPage, pageSize]);
-    const { dimensionList } = useGetDimensionListById(options);
+    // const options = React.useMemo<GetDimensionListDTO>(() => ({ currentPage, pageSize: 99 }), [subjectId, currentPage, pageSize]);
+    const { dimensionList } = useGetDimensionListById(subjectId);
 
     const _handleOnSubmit = () => {};
 

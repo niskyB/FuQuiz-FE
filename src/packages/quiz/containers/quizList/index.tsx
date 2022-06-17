@@ -16,7 +16,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
     const methods = useForm();
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [{ id: '1', answerContent: 'Answer 1' }];
+    const cloneAnswers: Answer[] = [{ id: '1', details: 'Answer 1' }];
 
     const [quizzes, setQuizzes] = React.useState([
         {
