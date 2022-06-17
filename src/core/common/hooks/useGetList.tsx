@@ -3,6 +3,7 @@ import { http } from '../../api';
 import { urlQueryParser } from '../../util';
 import { ApiListRoutes } from '../enum';
 import { GetListWithCount } from '../interface';
+import { stringify } from 'query-string';
 
 export const useGetListWithCount = <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
     const [list, setList] = React.useState<T[]>([]);
@@ -18,7 +19,7 @@ export const useGetListWithCount = <T, Options>(apiRoute: ApiListRoutes | string
 };
 
 export const getFilterWithCount = async <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
-    const res = await http.get<GetListWithCount<T>>(`/${apiRoute}${urlQueryParser(options)}`);
+    const res = await http.get<GetListWithCount<T>>(`/${apiRoute}${urlQueryParser({ ...options })}`);
     return res.data;
 };
 
@@ -34,7 +35,7 @@ export const useGetList = <T, Options>(apiRoute: ApiListRoutes | string, options
 };
 
 export const getFilter = async <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
-    const res = await http.get<T[]>(`/${apiRoute}${urlQueryParser(options)}`);
+    const res = await http.get<T[]>(`/${apiRoute}${urlQueryParser({ ...options })}`);
     return res.data;
 };
 

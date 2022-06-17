@@ -6,6 +6,7 @@ export enum ApiListRoutes {
     SLIDERS = 'sliders',
 
     SUBJECTS = 'subjects',
+    SUBJECTS_ROLE = 'subjects/role',
     SUBJECT = 'subject',
     SUBJECT_CATEGORIES = 'subject-categories',
     SUBJECT_CATEGORY = 'subject-category',
