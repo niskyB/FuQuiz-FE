@@ -1,12 +1,20 @@
 import { PricePackage } from '../models/pricePackage';
 
 export const getMinMaxPriceOfPricePackge = (data: PricePackage[]) => {
-    const values = [];
+    let minPricePackage = null;
     for (let i = 0; i < data.length; i++) {
         const price = data[i];
-        values.push(price.salePrice);
+        if (i === 0) {
+            minPricePackage = price;
+            continue;
+        }
+
+        if (minPricePackage && price.salePrice < minPricePackage.originalPrice) {
+            minPricePackage = price;
+        }
     }
-    return { minPrice: Math.min(...values), maxPrice: Math.max(...values) };
+
+    return minPricePackage;
 };
 
 export const vietnamCurrencyConverter = (number: number) => {

@@ -16,6 +16,7 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
 import { store } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { getMinMaxPriceOfPricePackge, vietnamCurrencyConverter } from '../../../../core/util/price';
+import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 
 interface SubjectsProps extends BlogListFilterDTO {}
 
@@ -59,7 +60,7 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                 <div className="flex flex-col space-y-5">
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                         {subjects.map((item) => {
-                            const { maxPrice, minPrice } = getMinMaxPriceOfPricePackge(item.pricePackages);
+                            const minPricePackage = getMinMaxPriceOfPricePackge(item.pricePackages);
 
                             return (
                                 <div key={item.id} className="flex flex-col w-full py-5 bg-white rounded-lg shadow-lg ">
@@ -80,18 +81,14 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                         </div>
 
                                         <div className="flex items-center mt-6">
-                                            <p className="text-2xl font-medium text-gray-900">
-                                                {minPrice !== Infinity && maxPrice !== Infinity && minPrice !== maxPrice && (
-                                                    <div className="text-orange-600">
-                                                        {`${vietnamCurrencyConverter(minPrice)} `}
-                                                        {`- ${vietnamCurrencyConverter(maxPrice)}`}
-                                                    </div>
-                                                )}
+                                            <p className="font-medium text-gray-900 ">
+                                                {minPricePackage ? (
+                                                    <div className="flex flex-col text-orange-600">
+                                                        <div className="line-through">{vietnamCurrencyConverter(minPricePackage.originalPrice)}</div>
 
-                                                {minPrice === maxPrice && (
-                                                    <div className="text-orange-600">{`${vietnamCurrencyConverter(minPrice)}`}</div>
-                                                )}
-                                                {minPrice === Infinity && maxPrice === -Infinity && (
+                                                        <div className="text-2xl">{vietnamCurrencyConverter(minPricePackage.salePrice)}</div>
+                                                    </div>
+                                                ) : (
                                                     <div className="text-orange-600">Not open yet!</div>
                                                 )}
                                             </p>
