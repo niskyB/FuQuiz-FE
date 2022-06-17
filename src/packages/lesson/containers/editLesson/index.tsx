@@ -45,7 +45,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
     }, [lesson]);
 
     const _handleOnSubmit = async (data: EditLessonFormDTO) => {
-        const res = await editLesson(lessonId, data);
+        const res = await editLesson(lessonId, { ...data, htmlContent: description });
         if (res) {
             router.push(router.asPath.replace(`/edit/${lesson?.id}`, ''));
             toast.success('Update success!');
