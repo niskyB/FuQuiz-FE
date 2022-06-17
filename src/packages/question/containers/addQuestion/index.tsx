@@ -6,7 +6,11 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
+import { Lesson } from '../../../../core/models/lesson';
+import { dataParser } from '../../../../core/util/data';
+import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { RedStar } from '../../../store';
+import { useGetSubjectListByRole } from '../../../subject/common/hooks/useGetSubjectListByRole';
 import { AddQuestionDTO } from './interface';
 
 interface AddQuestionProps {}
@@ -30,22 +34,24 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const router = useRouter();
     const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
-
-    const subjects = [
-        { id: 'subject-id-1', label: 'Subject 1' },
-        { id: 'subject-id-2', label: 'Subject 2' },
-        { id: 'subject-id-3', label: 'Subject 3' },
-        { id: 'subject-id-4', label: 'Subject 4' },
-    ];
+    const [subjectId, setSubjectId] = React.useState<string>('');
 
     const methods = useForm<AddQuestionDTO>({
         defaultValues,
     });
-
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
+    const { subjects } = useGetSubjectListByRole();
+    // const subjectId = methods.watch('subject', '');
+
+    const { lessonList: lessons } = useGetLessonList(subjectId);
+    // const lessons: Lesson[] = [];
+
+    React.useEffect(() => {
+        console.log(subjectId);
+    }, [subjectId]);
 
     const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.target.value);
+        setSubjectId(e.target.value);
     };
 
     const _onChangeQuestionType = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -82,12 +88,11 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField
-                                            defaultValue={''}
                                             label=""
                                             name="subject"
                                             id="subject"
                                             onChange={(e) => _onChangeSubject(e)}
-                                            values={[...subjects.map((subject) => ({ label: subject.label, value: subject.id }))]}
+                                            values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
                                         />
                                     </div>
                                 </div>
@@ -96,18 +101,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Lesson <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            defaultValue={''}
-                                            label=""
-                                            name="lesson"
-                                            values={[
-                                                unsetFieldData,
-                                                { label: 'Lesson 1', value: 'lesson-1' },
-                                                { label: 'Lesson 2', value: 'lesson-2' },
-                                                { label: 'Lesson 3', value: 'lesson-3' },
-                                                { label: 'Lesson 4', value: 'lesson-4' },
-                                            ]}
-                                        />
+                                        <SelectField label="" name="lesson" values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -116,7 +110,6 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField
-                                            defaultValue={''}
                                             label=""
                                             name="dimension"
                                             values={[
@@ -132,7 +125,6 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                                         <SelectField
-                                            defaultValue={''}
                                             label=""
                                             name="level"
                                             values={[

@@ -1,3 +1,3 @@
 import { Question } from '../../../../core/models/question';
 
-export interface SelectQuestionDTO extends Omit<Question, 'imageUr   l' | ''> {}
+export interface AddQuestionQuizDTO extends Pick<Question, 'id' | 'content' | 'lesson' | 'subject' | 'dimension' | 'level'> {}
