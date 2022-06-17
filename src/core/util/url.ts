@@ -1,4 +1,4 @@
-import { stringify, stringifyUrl } from 'query-string';
+import { stringify } from 'query-string';
 
 export const urlQueryParser = (data: { [key: string]: any }) => {
     if (data) {
