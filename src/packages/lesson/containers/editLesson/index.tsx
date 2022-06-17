@@ -33,6 +33,8 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
             methods.setValue('name', lesson.name);
             methods.setValue('order', lesson.order);
             methods.setValue('topic', lesson.topic);
+            methods.setValue('type', lesson.type.id);
+            setFormType(lesson.type.name);
         }
 
         return () => {};
@@ -105,6 +107,8 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
                                     <div>
                                         <SelectField
                                             label="Lessons Type"
+                                            disabled
+                                            require={false}
                                             name="type"
                                             values={dataParser<LessonType>(lessonType, 'name', 'id')}
                                             onChange={(e) => _onChangeSubjectType(e)}
