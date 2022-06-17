@@ -42,7 +42,7 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
                                 <div className="py-2 mt-1 text-sm ">{formState.registrationForm.subjectName}</div>
                             </div>
                             <SelectField
-                                name="Package"
+                                name="pricePackage"
                                 label="Price Package"
                                 values={dataParser<PricePackage>(formState.registrationForm.pricePackage, 'name', 'id')}
                             />

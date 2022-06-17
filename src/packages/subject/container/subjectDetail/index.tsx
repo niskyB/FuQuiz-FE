@@ -91,6 +91,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                                 pricePackage: pricePackageList,
                                                                 subjectId: subject.id,
                                                                 subjectName: subject?.name,
+                                                                defaultPackage: tier.id,
                                                             })
                                                         );
                                                     }
