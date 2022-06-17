@@ -3,11 +3,15 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { allFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
+import { PricePackage } from '../../../../core/models/pricePackage';
 import { routes } from '../../../../core/routes';
+import { dataParser } from '../../../../core/util/data';
 import { PaginationBar } from '../../../dashboard';
+import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
 import { useGetLessonList } from '../../common/hooks/useGetLessonList';
 import { updateLessonActivation } from './action';
 import { UpdateLessonActivationDTO } from './interface';
@@ -21,7 +25,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
     const router = useRouter();
 
     const { lessonList } = useGetLessonList(subjectId);
-    console.log(lessonList);
+    const { pricePackageList } = useGetPricePackageListById(subjectId);
     const _handleOnSubmit = async () => {};
     const _onUpdateLessonActivation = async (lessonId: string, data: UpdateLessonActivationDTO) => {
         const res = await updateLessonActivation(lessonId, data);
@@ -77,6 +81,12 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                                     { label: 'Active', value: true },
                                     { label: 'Inactive', value: false },
                                 ]}
+                                name="isActive"
+                                require={false}
+                            />
+                            <SelectField
+                                label="Package"
+                                values={[allFieldData, ...((pricePackageList && dataParser<PricePackage>(pricePackageList, 'name', 'id')) || [])]}
                                 name="isActive"
                                 require={false}
                             />
