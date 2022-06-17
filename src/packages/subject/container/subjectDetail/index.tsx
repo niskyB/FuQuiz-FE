@@ -9,6 +9,7 @@ import { ChevronRightIcon } from '@heroicons/react/outline';
 import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
 import { store, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
+import { vietnamCurrencyConverter } from '../../../../core/util/price';
 interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
@@ -79,9 +80,16 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                         <div className="p-6">
                                             <h2 className="text-lg font-medium leading-6 text-gray-900">{tier.name}</h2>
                                             <p className="mt-4 text-sm text-gray-500">{tier.description}</p>
-                                            <p className="mt-8">
-                                                <span className="text-4xl font-medium text-gray-900">{tier.salePrice}đ</span>{' '}
-                                                <span className="text-base font-medium text-gray-500">/mo</span>
+                                            <p className="flex flex-col mt-8">
+                                                <span className="text-2xl font-medium text-gray-500 line-through">
+                                                    {vietnamCurrencyConverter(tier.originalPrice)}
+                                                </span>
+                                                <div className="">
+                                                    <span className="text-4xl font-medium text-gray-900">
+                                                        {vietnamCurrencyConverter(tier.salePrice)}
+                                                    </span>
+                                                    <span className="text-base font-medium text-gray-500">/mo</span>
+                                                </div>
                                             </p>
                                             <button
                                                 onClick={() => {
