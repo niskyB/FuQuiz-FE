@@ -10,6 +10,7 @@ import { LessonType, LessonTypeEnum } from '../../../../core/models/lesson';
 import { dataParser } from '../../../../core/util/data';
 import { useGetLessonById } from '../../common/hooks/useGetLessonById';
 import { useGetLessonType } from '../../common/hooks/useGetLessonType';
+import { editLesson } from './action';
 import { EditLessonFormDTO } from './interface';
 
 interface EditLessonProps {
@@ -20,7 +21,7 @@ interface EditLessonProps {
 const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lessonId }) => {
     const methods = useForm<EditLessonFormDTO>();
     const { lesson } = useGetLessonById(lessonId);
-    console.log(lesson);
+
     const router = useRouter();
     const [description, setDescription] = React.useState<string>('');
     const [formType, setFormType] = React.useState<LessonTypeEnum>(LessonTypeEnum.LESSON_DETAIL);
@@ -34,13 +35,22 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
             methods.setValue('order', lesson.order);
             methods.setValue('topic', lesson.topic);
             methods.setValue('type', lesson.type.id);
+            methods.setValue('videoLink', lesson.lessonDetail && lesson.lessonDetail.videoLink);
+
+            setDescription(lesson.lessonDetail && lesson.lessonDetail.htmlContent);
             setFormType(lesson.type.name);
         }
 
         return () => {};
     }, [lesson]);
 
-    const _handleOnSubmit = async (data: EditLessonFormDTO) => {};
+    const _handleOnSubmit = async (data: EditLessonFormDTO) => {
+        const res = await editLesson(lessonId, data);
+        if (res) {
+            router.push(router.asPath.replace(`/edit/${lesson?.id}`, ''));
+            toast.success('Update success!');
+        }
+    };
 
     const _onChangeSubjectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
         for (let i = 0; i < lessonType.length; i++) {
@@ -99,7 +109,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
                             <div>
                                 <div className="flex justify-between">
                                     <div>
-                                        <h3 className="text-lg font-medium leading-6 text-gray-900 capitalize">Add new lesson</h3>
+                                        <h3 className="text-lg font-medium leading-6 text-gray-900 capitalize">Edit lesson</h3>
                                         <p className="max-w-2xl mt-1 text-sm text-gray-500">
                                             This information will be displayed publicly so be careful what you share.
                                         </p>
@@ -127,7 +137,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
                         </div>
                         <div className="pt-5">
                             <div className="flex justify-end">
-                                <Link href={router.asPath.replace('/lesson/add', '')} passHref>
+                                <Link href={router.asPath.replace(`/edit/${lesson?.id}`, '')} passHref>
                                     <button
                                         type="button"
                                         className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
