@@ -134,7 +134,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">9 lesson</div>
+                                                    <div className="text-gray-900">{subject.lessons.length} lesson(s)</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{subject.assignTo.user.fullName}</div>
