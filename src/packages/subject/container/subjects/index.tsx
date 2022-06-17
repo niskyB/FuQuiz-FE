@@ -16,21 +16,20 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
 import { store } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { getMinMaxPriceOfPricePackge, vietnamCurrencyConverter } from '../../../../core/util/price';
-import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 
 interface SubjectsProps extends BlogListFilterDTO {}
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
-export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, currentPage, isFeature, name, pageSize }) => {
+export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, currentPage, isFeature, name, pageSize, order }) => {
     const featureSubjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
         () => ({ isActive: true, isFeature: true, currentPage: 1, pageSize: 3 }),
         []
     );
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
-        () => ({ isActive: true, isFeature, currentPage, pageSize, category, name }),
-        [category, currentPage, isFeature, name, pageSize]
+        () => ({ isActive: true, isFeature, currentPage, pageSize, category, name, order }),
+        [category, currentPage, isFeature, name, pageSize, order]
     );
 
     const { subjects, count } = useGetSubjectList(subjectOption);

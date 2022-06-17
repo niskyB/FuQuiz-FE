@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { allFieldData } from '../../../core/common/dataField';
+import { allFieldData, Order } from '../../../core/common/dataField';
 import { FeatureFieldData } from '../../../core/common/dataField/feature';
 import { FormWrapper, SelectField, TextField } from '../../../core/components/form';
 import { BlogCategory } from '../../../core/models/blog';
@@ -19,6 +19,7 @@ const defaultValues: BlogListFilterDTO = {
     isFeature: '',
     name: '',
     pageSize: 12,
+    order: Order.DESC,
 };
 export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOption }) => {
     const router = useRouter();
@@ -44,6 +45,15 @@ export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOp
                     values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
                 />
                 <SelectField label="Feature" name="isFeature" require={false} values={[allFieldData, ...FeatureFieldData]} />
+                <SelectField
+                    label="Sort"
+                    name="order"
+                    require={false}
+                    values={[
+                        { label: 'Newest', value: Order.DESC },
+                        { label: 'Oldest', value: Order.ASC },
+                    ]}
+                />
 
                 <button
                     type="submit"
