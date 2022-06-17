@@ -62,7 +62,7 @@ export const QuizPracticeQuestion: React.FunctionComponent<QuizPracticeQuestionP
                                 </div>
                                 <div className="ml-3 text-sm">
                                     <label htmlFor={item.id} className="font-medium text-black cursor-pointer">
-                                        {item.answerContent}
+                                        {item.details}
                                     </label>
                                 </div>
                             </div>

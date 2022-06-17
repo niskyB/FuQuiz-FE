@@ -15,7 +15,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
     const methods = useForm();
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [{ id: '1', answerContent: 'Answer 1' }];
+    const cloneAnswers: Answer[] = [{ id: '1', details: 'Answer 1' }];
 
     const [questions, setQuestions] = React.useState<Question[]>([
         {

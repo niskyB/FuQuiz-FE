@@ -14,12 +14,12 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
     {
         id: 'q1',
         answers: [
-            { id: '1', answerContent: 'Impact analysis assesses the effect on the system of a defect found in regression testing.' },
-            { id: '2', answerContent: 'Impact analysis assesses the effect of a new person joining the regression test team.' },
-            { id: '3', answerContent: 'Impact analysis assesses whether or not a defect found in regression testing has been fixed correctly.' },
+            { id: '1', details: 'Impact analysis assesses the effect on the system of a defect found in regression testing.' },
+            { id: '2', details: 'Impact analysis assesses the effect of a new person joining the regression test team.' },
+            { id: '3', details: 'Impact analysis assesses whether or not a defect found in regression testing has been fixed correctly.' },
             {
                 id: '4',
-                answerContent: 'Impact analysis assesses the effect of a change to the system to determine how much regression testing to do',
+                details: 'Impact analysis assesses the effect of a change to the system to determine how much regression testing to do',
             },
         ],
         content: 'Which of the following is correct?',
@@ -32,12 +32,12 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
     {
         id: 'q2',
         answers: [
-            { id: '1', answerContent: 'To enhance the security of the system' },
-            { id: '2', answerContent: 'To prevent the endless loops in code.' },
-            { id: '3', answerContent: 'To swerve as an alternative or "Plan-B"' },
+            { id: '1', details: 'To enhance the security of the system' },
+            { id: '2', details: 'To prevent the endless loops in code.' },
+            { id: '3', details: 'To swerve as an alternative or "Plan-B"' },
             {
                 id: '4',
-                answerContent: 'To define when to stop testing',
+                details: 'To define when to stop testing',
             },
         ],
         content: 'In software testing what is the main purpose of exit criteria?',
@@ -50,12 +50,12 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
     {
         id: 'q3',
         answers: [
-            { id: '1', answerContent: 'Login Browse Basket Checkout Basket Checkout Pay Logout.' },
-            { id: '2', answerContent: 'Login Browse Basket Checkout Pay Logout.' },
-            { id: '3', answerContent: 'Login Browse Basket Checkout Basket Logout.' },
+            { id: '1', details: 'Login Browse Basket Checkout Basket Checkout Pay Logout.' },
+            { id: '2', details: 'Login Browse Basket Checkout Pay Logout.' },
+            { id: '3', details: 'Login Browse Basket Checkout Basket Logout.' },
             {
                 id: '4',
-                answerContent: 'Login Browse Basket Browse Basket Checkout Pay Logout.',
+                details: 'Login Browse Basket Browse Basket Checkout Pay Logout.',
             },
         ],
         content:
@@ -68,12 +68,12 @@ const QUESTIONS_LIST: QuizQuestionDTO[] = [
     {
         id: 'q4',
         answers: [
-            { id: '1', answerContent: 'Ensuring proper environment setup' },
-            { id: '2', answerContent: 'Writing a test summary report' },
-            { id: '3', answerContent: 'Assessing the need for additional tests' },
+            { id: '1', details: 'Ensuring proper environment setup' },
+            { id: '2', details: 'Writing a test summary report' },
+            { id: '3', details: 'Assessing the need for additional tests' },
             {
                 id: '4',
-                answerContent: 'Finalizing and archiving testware.',
+                details: 'Finalizing and archiving testware.',
             },
         ],
         content: 'Which of the following is a KEY test closure task?',
@@ -170,7 +170,7 @@ export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ i
                             data={questionList}
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
-                            rightAnswer={{ answerContent: '', id: '1' }}
+                            rightAnswer={{ details: '', id: '1' }}
                         />
                     </div>
                 </div>

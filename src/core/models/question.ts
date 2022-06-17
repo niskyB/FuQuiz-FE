@@ -2,19 +2,17 @@ import { AttributeType } from '../common/interface';
 import { Answer } from './answer';
 import { Dimension } from './dimension';
 import { Lesson, LessonTypeEnum } from './lesson';
-import { Subject } from './subject';
 
 export interface Question {
     id: string;
-    subject: Pick<Subject, 'id' | 'name'>;
     lesson: Pick<Lesson, 'id' | 'name'>;
     dimension: Pick<Dimension, 'id' | 'name'>;
-    level: QuestionLevel;
+    questionLevel: QuestionLevel;
     isActive: boolean;
     content: string;
-    imageUrl: string;
-    videoUrl: string;
-    audioUrl: string;
+    imageLink: string;
+    videoLink: string;
+    audioLink: string;
     isMultipleChoice: boolean;
     answers: Answer[];
     explanation: string;
@@ -29,10 +27,4 @@ export interface BackQuestion {
     content: string;
     dimension: Dimension;
     answers: Answer[];
-}
-
-export interface Answer {
-    id: string;
-    answerContent: string;
-    isCorrect: boolean;
 }

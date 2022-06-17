@@ -5,13 +5,16 @@ import * as React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
-import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
-import { Lesson } from '../../../../core/models/lesson';
+import { SelectionFieldValues } from '../../../../core/common/interface';
+import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
+import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject/common/hooks/useGetSubjectListByRole';
+import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
+import { addQuestion } from './action';
 import { AddQuestionDTO } from './interface';
 
 interface AddQuestionProps {}
@@ -19,15 +22,15 @@ interface AddQuestionProps {}
 const defaultValues: AddQuestionDTO = {
     subject: '',
     lesson: '',
-    dimension: '',
-    level: '',
-    imageUrl: '',
-    videoUrl: '',
-    audioUrl: '',
+    dimensions: '',
+    questionLevel: '',
+    image: null,
+    videoLink: '',
+    audioLink: '',
     content: '',
     isActive: true,
     isMultipleChoice: false,
-    answers: [{ answerContent: '', isCorrect: false }],
+    answers: [{ detail: '', isCorrect: false }],
     explanation: '',
 };
 
@@ -35,16 +38,31 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const router = useRouter();
     const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
-    const [subjectId, setSubjectId] = React.useState<string>('');
 
     const methods = useForm<AddQuestionDTO>({
         defaultValues,
     });
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
 
+    const [subjectId, setSubjectId] = React.useState<string>('');
+
+    React.useEffect(() => {
+        methods.reset();
+        methods.setValue('subject', subjectId);
+        setSelectedDimension(unsetFieldData);
+        setSelectedDimensionList([]);
+        setIsMultipleChoice(false);
+        setExplanation('');
+    }, [subjectId]);
+
+    const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
+    const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { subjects } = useGetSubjectListByRole();
     const { lessonList: lessons } = useGetLessonList(subjectId);
-    // const {} = useGetDimensionListById();
+    const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
+    const { level } = useGetQuestionLevelList();
+    const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
+    const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
 
     const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSubjectId(e.target.value);
@@ -61,9 +79,16 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     };
 
     const _handleOnSubmit = async (data: AddQuestionDTO) => {
-        data.explanation = explanation;
-        data.isMultipleChoice = isMultipleChoice;
-        console.log(data);
+        const { subject, ...others } = data;
+        if (thumbnailFile) others.image = thumbnailFile;
+        others.explanation = explanation;
+        others.isMultipleChoice = isMultipleChoice;
+        let dimensionString = '';
+        selectedDimensionList.map((item) => (dimensionString = dimensionString + item.value + ','));
+        others.dimensions = dimensionString;
+        console.log(others);
+        const res = await addQuestion(others);
+        console.log(res);
     };
 
     return (
@@ -104,14 +129,15 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Dimension <RedStar />
                                     </label>
+
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="dimension"
-                                            values={[
-                                                { label: 'Group', value: 'group-1' },
-                                                { label: 'Domain', value: 'domain-2' },
-                                            ]}
+                                        <MultiSelectBox
+                                            selected={selectedDimension}
+                                            setSelected={setSelectedDimension}
+                                            selectedList={selectedDimensionList}
+                                            setSelectedList={setSelectedDimensionList}
+                                            values={dataParser(dimensions, 'name', 'id')}
+                                            require={false}
                                         />
                                     </div>
                                 </div>
@@ -120,15 +146,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Level <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="level"
-                                            values={[
-                                                { label: 'Easy', value: 'easy-1' },
-                                                { label: 'Medium', value: 'medium-2' },
-                                                { label: 'Hard', value: 'hard-3' },
-                                            ]}
-                                        />
+                                        <SelectField label="" name="questionLevel" values={dataParser(level, 'name', 'id')} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -141,10 +159,17 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Image Url
+                                        Image
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="imageUrl" />
+                                        <FileField
+                                            label=""
+                                            name="image"
+                                            setFile={setThumbnailFile}
+                                            file={thumbnailFile}
+                                            previewUrl={previewThumbnailUrl}
+                                            setPreviewUrl={setPreviewThumbnailUrl}
+                                        />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -152,7 +177,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Video Url
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="videoUrl" />
+                                        <TextField label="" name="videoLink" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -160,7 +185,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Audio Url
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="audioUrl" />
+                                        <TextField label="" name="audioLink" />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -203,7 +228,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                             Answer {index + 1} <RedStar />
                                         </label>
                                         <div className="flex items-center flex-1 mt-1 space-x-2 sm:mt-0 sm:col-span-2">
-                                            <TextField label="" {...methods.register(`answers.${index}.answerContent` as const)} />
+                                            <TextField label="" {...methods.register(`answers.${index}.detail` as const)} />
                                         </div>
                                         <div
                                             className={`flex ${
@@ -214,7 +239,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                                 <div className="flex space-x-2">
                                                     <button
                                                         className="w-8 h-8 text-indigo-500 hover:text-indigo-600"
-                                                        onClick={() => answers.append({ answerContent: '', isCorrect: false })}
+                                                        onClick={() => answers.append({ detail: '', isCorrect: false })}
                                                     >
                                                         <PlusCircleIcon />
                                                     </button>
