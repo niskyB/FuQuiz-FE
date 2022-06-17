@@ -1,6 +1,6 @@
 import { PricePackage } from '../../../../core/models/pricePackage';
 
-export interface EditPricePackageDTO extends Pick<PricePackage, 'name' | 'originalPrice' | 'salePrice' | 'duration' | 'description' | 'isActive'> {
+export interface EditPricePackageDTO extends Pick<PricePackage, 'name' | 'originalPrice' | 'salePrice' | 'duration' | 'description'> {
     subjectId: string;
 }
 
