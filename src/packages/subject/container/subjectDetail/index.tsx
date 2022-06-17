@@ -10,6 +10,7 @@ import { useGetPricePackageListById } from '../../../package/common/hooks/useGet
 import { store, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { vietnamCurrencyConverter } from '../../../../core/util/price';
+import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
@@ -52,6 +53,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
     );
     const { pricePackageList } = useGetPricePackageListById(id);
     const { subject } = useGetSubject(id);
+    const { lessonList } = useGetLessonList(id);
     return (
         <>
             <div className="flex space-x-10">
@@ -121,15 +123,15 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                         <h1 className="mt-12 text-3xl font-bold sm:mt-16">Lesson</h1>
                         <div className="overflow-hidden bg-white shadow sm:rounded-md">
                             <ul role="list" className="divide-y divide-gray-200">
-                                {positions.map((position) => (
-                                    <Link href={`${router.asPath}/quiz`} key={position.id}>
+                                {lessonList.map((lesson) => (
+                                    <Link href={`${router.asPath}/quiz`} key={lesson.id}>
                                         <a className="block hover:bg-gray-50">
                                             <div className="px-4 py-4 sm:px-6">
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex flex-col space-y-3">
-                                                        <div className="text-sm font-medium text-indigo-600 truncate">{position.title}</div>
-                                                        <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full max-w-fit">
-                                                            {position.type}
+                                                        <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
+                                                        <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
+                                                            {lesson.type.name}
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center flex-shrink-0 ml-2">
