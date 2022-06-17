@@ -8,6 +8,7 @@ import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { Lesson } from '../../../../core/models/lesson';
 import { dataParser } from '../../../../core/util/data';
+import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject/common/hooks/useGetSubjectListByRole';
@@ -40,15 +41,10 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         defaultValues,
     });
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
+
     const { subjects } = useGetSubjectListByRole();
-    // const subjectId = methods.watch('subject', '');
-
     const { lessonList: lessons } = useGetLessonList(subjectId);
-    // const lessons: Lesson[] = [];
-
-    React.useEffect(() => {
-        console.log(subjectId);
-    }, [subjectId]);
+    // const {} = useGetDimensionListById();
 
     const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSubjectId(e.target.value);
