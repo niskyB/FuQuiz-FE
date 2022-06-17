@@ -21,7 +21,6 @@ const defaultValues: EditPricePackageFormDTO = {
     name: '',
     originalPrice: 0,
     salePrice: 0,
-    isActive: true,
 };
 export const EditPackage: React.FunctionComponent<EditPackageProps> = ({ pricePackageId, subjectId }) => {
     const router = useRouter();
@@ -32,7 +31,6 @@ export const EditPackage: React.FunctionComponent<EditPackageProps> = ({ pricePa
         if (pricePackage) {
             methods.setValue('description', pricePackage?.description);
             methods.setValue('duration', pricePackage?.duration);
-            methods.setValue('isActive', pricePackage?.isActive);
             methods.setValue('name', pricePackage?.name);
             methods.setValue('originalPrice', pricePackage?.originalPrice);
             methods.setValue('salePrice', pricePackage?.salePrice);
