@@ -22,6 +22,7 @@
         "joi": "^17.6.0",
         "next": "12.1.0",
         "next-seo": "^5.2.0",
+        "object-to-formdata": "^4.4.2",
         "query-string": "^7.1.1",
         "react": "17.0.2",
         "react-apexcharts": "^1.4.0",
