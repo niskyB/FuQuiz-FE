@@ -12,7 +12,7 @@ import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { RedStar } from '../../../store';
-import { useGetSubjectListByRole } from '../../../subject/common/hooks/useGetSubjectListByRole';
+import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
 import { addQuestion } from './action';
 import { AddQuestionDTO } from './interface';

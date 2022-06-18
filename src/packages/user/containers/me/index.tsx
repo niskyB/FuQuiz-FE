@@ -9,6 +9,7 @@ import { routes } from '../../../../core/routes';
 import { toast } from 'react-toastify';
 import { UpdateUserDto } from './interface';
 import { checkFileType } from '../../../../core/util/file';
+import { genderFieldData } from '../../../../core/common/dataField';
 
 interface UpdateUserProps {}
 
@@ -24,17 +25,6 @@ const PROFILE_FIELD = [
     { label: 'Email address', name: 'email', readonly: true },
     { label: 'Full name', name: 'fullName', readonly: false },
     { label: 'Phone number', name: 'mobile', readonly: false },
-];
-
-const GENDER_FIELD = [
-    {
-        label: 'Male',
-        value: Gender.MALE,
-    },
-    {
-        label: 'Female',
-        value: Gender.FEMALE,
-    },
 ];
 
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
@@ -96,7 +86,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                 <dl className="sm:divide-y sm:divide-gray-200">
                                     {PROFILE_FIELD.map((item) => (
                                         <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
-                                            <dt className="flex items-center text-sm font-medium text-gray-500 space-x-2">
+                                            <dt className="flex items-center space-x-2 text-sm font-medium text-gray-500">
                                                 <p>{item.label}</p>
                                                 <p className="inline-flex text-red-500" id="require">
                                                     *
@@ -109,14 +99,14 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                     ))}
 
                                     <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                                        <dt className="flex items-center text-sm font-medium text-gray-500 space-x-2">
+                                        <dt className="flex items-center space-x-2 text-sm font-medium text-gray-500">
                                             <p>Gender</p>
                                             <p className="inline-flex text-red-500" id="require">
                                                 *
                                             </p>
                                         </dt>
                                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                            <SelectField label="" name="gender" values={GENDER_FIELD} defaultValue={userState.gender} />
+                                            <SelectField label="" name="gender" values={genderFieldData} defaultValue={userState.gender} />
                                         </dd>
                                     </div>
                                     <FormErrorMessage />

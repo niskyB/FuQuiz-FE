@@ -50,7 +50,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     React.useEffect(() => {
         if (slider) {
             // if user go in there are not admin or the owner of the slider, push them to sliderList page
-            if (userState.role.name != UserRole.ADMIN && slider.marketing && slider.marketing.id && slider.marketing.id !== userState.typeId) {
+            if (userState.role.description != UserRole.ADMIN && slider.marketing && slider.marketing.id && slider.marketing.id !== userState.typeId) {
                 router.push(routes.adminSliderListUrl);
                 return;
             }

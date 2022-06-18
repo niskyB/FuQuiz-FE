@@ -1,6 +1,6 @@
 import { PricePackage } from '../models/pricePackage';
 
-export const getMinMaxPriceOfPricePackge = (data: PricePackage[]) => {
+export const getMinMaxPriceOfPricePackage = (data: PricePackage[]) => {
     let minPricePackage = null;
     for (let i = 0; i < data.length; i++) {
         const price = data[i];

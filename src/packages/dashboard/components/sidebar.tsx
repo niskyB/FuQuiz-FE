@@ -58,7 +58,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = () => {
                 </div>
                 <nav className="px-2 mt-5 space-y-1 bg-white " aria-label="Sidebar">
                     {navigation.map((item) => {
-                        if (item.acceptRole.findIndex((selection) => userState.role && userState.role.name === selection) !== -1)
+                        if (item.acceptRole.findIndex((selection) => userState.role && userState.role.description === selection) !== -1)
                             return (
                                 <Link key={item.name} href={item.link} passHref>
                                     <div
@@ -118,7 +118,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = () => {
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-white">{userState.fullName}</p>
-                            <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">{userState.role?.name}</p>
+                            <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">{userState.role?.description}</p>
                         </div>
                     </div>
                 </div>
