@@ -89,7 +89,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="name" label="Subject name" require={false} />
+                            <TextField name="name" label="Subject name" isRequire={false} />
                             <DateField name="createdAt" label="Create From" />
                             <SelectField
                                 label="Category"

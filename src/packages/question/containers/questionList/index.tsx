@@ -132,7 +132,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                                 />
                             </div>
                             <div className="flex space-x-4">
-                                <TextField name="content" label="Content" require={false} />
+                                <TextField name="content" label="Content" isRequire={false} />
                                 <SelectField
                                     require={false}
                                     label="Level"

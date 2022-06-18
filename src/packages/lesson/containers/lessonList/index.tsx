@@ -62,7 +62,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" require={false} />
+                            <TextField name="title" label="Title" isRequire={false} />
                             <SelectField
                                 label="Lesson Type"
                                 values={[
@@ -73,8 +73,8 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                                 name="isActive"
                                 require={false}
                             />
-                            <TextField name="createdAt" label="Create From" type={'date'} require={false} />
-                            <TextField name="updateAt" label="Update date" type={'date'} require={false} />
+                            <TextField name="createdAt" label="Create From" type={'date'} isRequire={false} />
+                            <TextField name="updateAt" label="Update date" type={'date'} isRequire={false} />
                             <SelectField
                                 label="Active"
                                 values={[
