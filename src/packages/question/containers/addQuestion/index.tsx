@@ -153,11 +153,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Level <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-<<<<<<< HEAD
-                                        <SelectField label="" name="questionLevel" values={dataParser(levels, 'name', 'id')} />
-=======
-                                        <SelectField label="" name="questionLevel" values={dataParser(level, 'description', 'id')} />
->>>>>>> main/master
+                                        <SelectField label="" name="questionLevel" values={dataParser(levels, 'description', 'id')} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -324,7 +320,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         <RedStar />
                                     </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <QuillInput description={explanation} setDescription={setExplanation} require={false} />
+                                        <QuillInput description={explanation} setDescription={setExplanation} isRequire={false} />
                                     </div>
                                 </div>
                             </div>
