@@ -13,7 +13,7 @@ export const RouterProtectionWrapper: React.FC<RouterProtectionWrapperProps> = (
     const router = useRouter();
 
     React.useEffect(() => {
-        if (user.isLogin && (!user.id || acceptRoles.findIndex((item) => user.role && item === user.role.name) === -1)) {
+        if (user.isLogin && (!user.id || acceptRoles.findIndex((item) => user.role && item === user.role.description) === -1)) {
             router.push(routes.loginUrl);
         }
     }, [acceptRoles, user, router]);

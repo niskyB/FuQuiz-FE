@@ -1,4 +1,3 @@
-import { BookOpenIcon, HomeIcon, PencilIcon } from '@heroicons/react/outline';
 import { Slide } from '../../../slider/containers/slide';
 import { BlogBox, useGetBlogList } from '../../../blog';
 import { routes } from '../../../../core/routes';
@@ -6,11 +5,11 @@ import * as React from 'react';
 import Link from 'next/link';
 import { useGetSliderList } from '../../../slider';
 import { GetSliderOptionsDTO } from '../../../slider/containers/sliderList/interface';
-import { useGetSubjectList } from '../../../subject/common/hooks/useGetSubjectList';
 import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
 import { FilterBlogListDTO } from '../../../blog/container/blogList/interface';
 import { SideBlog } from '../../../blog/container/sideBlog';
 import Contact from '../Contact';
+import { useGetSubjectList } from '../../../subject';
 
 const tabs = [
     { id: 'blog', name: 'Blog', href: '#', current: true },

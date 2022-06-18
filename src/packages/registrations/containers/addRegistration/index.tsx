@@ -1,18 +1,25 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
-import { UserRole } from '../../../../core/models/role';
+import { PricePackage } from '../../../../core/models/pricePackage';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
+import { dataParser } from '../../../../core/util/data';
+import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
+import { useGetSubjectList } from '../../../subject';
+import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
 
 interface AddRegistrationProps {}
 
 const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
     const methods = useForm({});
-
+    const [selectedSubject, setSelectedSubject] = React.useState<string | null>(null);
+    const options = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ pageSize: 99, currentPage: 0 }), []);
+    const { subjects } = useGetSubjectList(options);
+    const { pricePackageList } = useGetPricePackageListById(selectedSubject || '');
     const _handleOnSubmit = async () => {};
 
     return (
@@ -26,24 +33,16 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
                             <SelectField
+                                onChange={(e) => setSelectedSubject(e.target.value)}
                                 label="Subject"
                                 name="subject"
-                                values={[
-                                    { label: 'Javascript', value: '1' },
-                                    { label: 'Java', value: '' },
-                                    { label: 'C#', value: '' },
-                                    { label: 'Marketing', value: '' },
-                                ]}
+                                values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
                             />
                             <SelectField
+                                disabled={!selectedSubject && true}
                                 label="Package"
                                 name="package"
-                                values={[
-                                    { label: 'Package 1 - 500,000 - 350,000', value: '' },
-                                    { label: 'Package 2 - 800,000 - 700,000', value: '2' },
-                                    { label: 'Package 3 - 1,000,000 - 900,000', value: '' },
-                                    { label: 'Package 4 - 3,000,000 - 2,800,000', value: '' },
-                                ]}
+                                values={[unsetFieldData, ...((pricePackageList && dataParser<PricePackage>(pricePackageList, 'name', 'id')) || [])]}
                             />
                             <TextField label="Full name" name="fullName" type="fullName" />
                             <TextField label="Email address" name="email" type="email" />

@@ -7,3 +7,5 @@ export * from './container/subjectDetail';
 export * from './components/userFilter';
 
 export * from './common/hooks/useGetSubjectCategory';
+export * from './common/hooks/useGetSubjectList';
+export * from './common/hooks/useGetSubjectListByRole';

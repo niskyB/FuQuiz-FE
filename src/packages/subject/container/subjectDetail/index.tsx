@@ -15,26 +15,6 @@ interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
 
-const positions = [
-    {
-        id: 2,
-        title: 'Chương 1: đầu tư như thé nào là chính xác?',
-        type: 'Subject topic',
-        department: '',
-    },
-    {
-        id: 1,
-        title: 'Quiz ôn tập chương 1',
-        type: 'Quiz',
-        department: '',
-    },
-    {
-        id: 3,
-        title: 'Hướng dẫn cụ thể cách tạo ví stepN',
-        type: 'Lesson',
-        department: '',
-    },
-];
 export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
     category,
     createdAt,
