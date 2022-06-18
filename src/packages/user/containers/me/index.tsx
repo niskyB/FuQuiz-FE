@@ -9,6 +9,7 @@ import { routes } from '../../../../core/routes';
 import { toast } from 'react-toastify';
 import { UpdateUserDto } from './interface';
 import { checkFileType } from '../../../../core/util/file';
+import { genderFieldData } from '../../../../core/common/dataField';
 
 interface UpdateUserProps {}
 
@@ -24,17 +25,6 @@ const PROFILE_FIELD = [
     { label: 'Email address', name: 'email', readonly: true },
     { label: 'Full name', name: 'fullName', readonly: false },
     { label: 'Phone number', name: 'mobile', readonly: false },
-];
-
-const GENDER_FIELD = [
-    {
-        label: 'Male',
-        value: Gender.MALE,
-    },
-    {
-        label: 'Female',
-        value: Gender.FEMALE,
-    },
 ];
 
 export const UpdateUser: React.FC<UpdateUserProps> = () => {
@@ -115,7 +105,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                             </p>
                                         </dt>
                                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                            <SelectField label="" name="gender" values={GENDER_FIELD} defaultValue={userState.gender} />
+                                            <SelectField label="" name="gender" values={genderFieldData} defaultValue={userState.gender} />
                                         </dd>
                                     </div>
                                     <FormErrorMessage />

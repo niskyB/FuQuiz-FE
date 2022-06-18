@@ -15,7 +15,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { store } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
-import { getMinMaxPriceOfPricePackge, vietnamCurrencyConverter } from '../../../../core/util/price';
+import { getMinMaxPriceOfPricePackage, vietnamCurrencyConverter } from '../../../../core/util/price';
 
 interface SubjectsProps extends BlogListFilterDTO {}
 
@@ -59,7 +59,7 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                 <div className="flex flex-col space-y-5">
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                         {subjects.map((item) => {
-                            const minPricePackage = getMinMaxPriceOfPricePackge(item.pricePackages);
+                            const minPricePackage = getMinMaxPriceOfPricePackage(item.pricePackages);
 
                             return (
                                 <div key={item.id} className="flex flex-col w-full py-5 bg-white rounded-lg shadow-lg ">

@@ -20,7 +20,7 @@ const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
             methods.setValue('fullName', user.fullName);
             methods.setValue('email', user.email);
             methods.setValue('mobile', user.mobile);
-            methods.setValue('role', user.role.name);
+            methods.setValue('role', user.role.description);
             methods.setValue('gender', user.gender);
         }
     }, [user]);

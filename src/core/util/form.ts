@@ -1,5 +1,3 @@
-import { serialize } from 'object-to-formdata';
-
 export const FormParser = (input: any): FormData => {
     let form = new FormData();
 
@@ -11,7 +9,6 @@ export const FormParser = (input: any): FormData => {
     }
 
     return form;
-    // return serialize(input, { allowEmptyArrays: true });
 };
 
 export const SendFormRequestConfig = () => {

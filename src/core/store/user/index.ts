@@ -20,7 +20,7 @@ export const defaultCurrentUser: User = {
     isActive: false,
     mobile: '',
     password: '',
-    role: { id: '', name: UserRole.CUSTOMER },
+    role: { id: '', description: UserRole.CUSTOMER },
     token: '',
     updateAt: '',
 };
