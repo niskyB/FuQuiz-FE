@@ -93,7 +93,11 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                             <DateField name="createdAt" label="Create From" />
                             <SelectField
                                 label="Category"
+<<<<<<< HEAD
                                 values={[allFieldData, ...dataParser<SubjectCategory>(categories, 'description', 'id')]}
+=======
+                                values={[allFieldData, ...dataParser<SubjectCategory>(categories, 'name', 'id')]}
+>>>>>>> main/master
                                 name="category"
                                 require={false}
                             />

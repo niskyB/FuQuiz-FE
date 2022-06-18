@@ -34,7 +34,7 @@ export const BlogBox: React.FunctionComponent<BlogBoxProps> = ({ data, mode }) =
                     <div className="flex-1">
                         <p className="text-sm font-medium text-indigo-600">
                             <Link href={''}>
-                                <a className="hover:underline">{data.category.name}</a>
+                                <a className="hover:underline">{data.category.description}</a>
                             </Link>
                         </p>
                         <a href={''} className="block mt-2">

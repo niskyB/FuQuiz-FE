@@ -1,7 +1,7 @@
-import { AttributeType } from '../common/interface';
+import { SystemType } from '../common/interface';
 import { Answer } from './answer';
 import { Dimension } from './dimension';
-import { Lesson, LessonTypeEnum } from './lesson';
+import { Lesson } from './lesson';
 
 export interface Question {
     id: string;
@@ -18,7 +18,7 @@ export interface Question {
     explanation: string;
 }
 
-export interface QuestionLevel extends AttributeType {}
+export interface QuestionLevel extends SystemType<string> {}
 
 export interface BackQuestion {
     id: string;

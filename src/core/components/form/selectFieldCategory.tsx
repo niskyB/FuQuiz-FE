@@ -27,7 +27,7 @@ export const SelectBlogCategory: React.FC<SelectBlogCategoryProps> = ({ name, la
             >
                 {values.map((item) => (
                     <option key={item.id} value={item.id}>
-                        {item.name}
+                        {item.description}
                     </option>
                 ))}
             </select>

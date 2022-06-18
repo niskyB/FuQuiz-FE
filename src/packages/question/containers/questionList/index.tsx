@@ -37,6 +37,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
     const methods = useForm<FilterQuestionsDTO>();
     const router = useRouter();
 
+<<<<<<< HEAD
     const options = React.useMemo(
         () => ({
             content,
@@ -51,6 +52,12 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
 
         [content, currentPage, dimension, isActive, lesson, level, pageSize, subject]
     );
+=======
+    const cloneAnswers: Answer[] = [];
+
+    const [questions, setQuestions] = React.useState<Question[]>([]);
+    const [count, setCount] = React.useState<number>(4);
+>>>>>>> main/master
 
     useUrlParams({
         defaultPath: routes.adminQuestionListUrl,

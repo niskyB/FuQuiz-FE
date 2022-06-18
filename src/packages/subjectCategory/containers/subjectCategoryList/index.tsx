@@ -38,7 +38,7 @@ const SubjectCategoryList: React.FunctionComponent<SubjectCategoryListProps> = (
                                                     <div className="text-gray-900">{category.id}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{category.name}</div>
+                                                    <div className="text-gray-900">{category.description}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <Link href={`${routes.adminEditSubjectCategoryUrl}/${category.id}`} passHref>
