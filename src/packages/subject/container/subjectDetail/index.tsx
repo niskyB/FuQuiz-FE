@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { SubjectFilterDTO } from '../subjectList/interface';
-import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
 import { UserFilter } from '../../components/userFilter';
 import Contact from '../../../store/container/Contact';
 import Link from 'next/link';
@@ -11,6 +10,7 @@ import { store, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { vietnamCurrencyConverter } from '../../../../core/util/price';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
+import { useGetSubject } from '../../common/hooks/useGetSubject';
 interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
@@ -113,7 +113,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                     <div className="flex flex-col space-y-3">
                                                         <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
                                                         <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
-                                                            {lesson.type.name}
+                                                            {lesson.type.description}
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center flex-shrink-0 ml-2">

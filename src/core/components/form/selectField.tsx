@@ -3,31 +3,23 @@ import { useFormContext } from 'react-hook-form';
 import { RedStar } from '../../../packages/store';
 import { SelectionFieldValues } from '../../common/interface';
 import { useStoreApi } from '../../store';
+import CommonFieldWrapper from './commonFieldWrapper';
 
 interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     name: string;
     label?: string;
     values: Array<SelectionFieldValues<any>>;
     defaultValue?: any;
-    require?: boolean;
+    isRequire?: boolean;
+    direction?: 'row' | 'column';
 }
 
-export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue, require = true, ...rest }) => {
+export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue, direction, isRequire = true, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
-        <div className="w-full">
-            {label ? (
-                <div className="flex justify-start space-x-2">
-                    <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-                        {label} {require ? <RedStar /> : ''}
-                    </label>
-                </div>
-            ) : (
-                ''
-            )}
-
+        <CommonFieldWrapper name={name} label={label} isRequire={isRequire} direction={direction}>
             <select
                 {...register(name)}
                 {...rest}
@@ -41,6 +33,6 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
                 ))}
             </select>
             {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
-        </div>
+        </CommonFieldWrapper>
     );
 };
