@@ -18,15 +18,15 @@ const defaultValues: AddUserDTO = {
     fullName: '',
     gender: Gender.MALE,
     mobile: '',
-    password: '',
     role: '',
 };
-const AddUser: React.FunctionComponent<AddUserProps> = () => {
+export const AddUser: React.FunctionComponent<AddUserProps> = () => {
     const methods = useForm<AddUserDTO>({
         defaultValues,
     });
 
     const _handleOnSubmit = async (data: AddUserDTO) => {
+        console.log(data);
         adminAddNewUser(data).then((res) => {
             if (res) {
                 methods.reset();
@@ -94,5 +94,3 @@ const AddUser: React.FunctionComponent<AddUserProps> = () => {
         </div>
     );
 };
-
-export default AddUser;

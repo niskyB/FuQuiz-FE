@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { DimensionType } from '../../../../core/models/dimension';
@@ -48,30 +49,16 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = ({ subje
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Type <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField name="type" label="" values={dataParser<DimensionType>(dimensionTypes, 'description', 'id')} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Name <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="name" />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Description <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextareaField name="description" label="" />
-                                    </div>
-                                </div>
+                                <SelectField
+                                    direction="row"
+                                    name="type"
+                                    label="Type"
+                                    values={[unsetFieldData, ...dataParser<DimensionType>(dimensionTypes, 'description', 'id')]}
+                                />
+
+                                <TextField label="Name" name="name" direction="row" />
+
+                                <TextareaField name="description" label="Description" direction="row" />
                             </div>
                         </div>
                     </div>

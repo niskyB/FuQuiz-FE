@@ -3,8 +3,12 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
+import { useBlogCategoriesFieldData } from '../../../../core/common/dataField/blogCategory';
+import { FeatureFieldData } from '../../../../core/common/dataField/feature';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { SelectBlogCategory } from '../../../../core/components/form/selectFieldCategory';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
 import { useGetBlogCategoryList } from '../../../blogCategory';
 import { RedStar } from '../../../store';
@@ -28,7 +32,8 @@ const defaultValues: EditBlogDTO = {
 
 export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     const { blog } = useGetBlog(id);
-    const { categories } = useGetBlogCategoryList();
+    // const { categories } = useGetBlogCategoryList();
+    const { blogCategoriesFieldData } = useBlogCategoriesFieldData();
     const methods = useForm<EditBlogDTO>({ defaultValues });
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>(blog?.thumbnailUrl || '');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
@@ -76,59 +81,17 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                         </div>
 
                         <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <div className="flex justify-start space-x-2">
-                                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Title
-                                    </label>
-                                    <RedStar />
-                                </div>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextField label="" name="title" />
-                                </div>
-                            </div>
-                            <div className="space-y-6 sm:space-y-5">
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <div className="flex justify-start space-x-2">
-                                        <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                            Category
-                                        </label>
-                                        <RedStar />
-                                    </div>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectBlogCategory label="" name="category" values={categories} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <div className="flex justify-start space-x-2">
-                                    <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Brief Info
-                                    </label>
-                                    <RedStar />
-                                </div>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <textarea
-                                        {...methods.register('briefInfo')}
-                                        rows={7}
-                                        name="briefInfo"
-                                        id="briefInfo"
-                                        autoComplete="given-name"
-                                        className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
-                                    />
-                                </div>
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <div className="flex justify-start space-x-2">
-                                    <label htmlFor="details" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Description
-                                    </label>
-                                    <RedStar />
-                                </div>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <QuillInput description={details} setDescription={setDetails} />
-                                </div>
-                            </div>
+                            <TextField name="title" label="Title" direction="row" />
+
+                            <SelectField label="Category" name="category" values={[unsetFieldData, ...blogCategoriesFieldData]} direction="row" />
+
+                            <SelectField label="Feature" name="isFeature" values={[unsetFieldData, ...FeatureFieldData]} direction="row" />
+
+                            <TextareaField label="Brief Info" name="briefInfo" direction="row" />
+
+                            <SelectField label="Showing" name="isShow" direction="row" values={[...statusFieldData]} />
+
+                            <QuillInput label="Description" description={details} setDescription={setDetails} direction="row" />
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <div className="flex justify-start space-x-2">
@@ -146,28 +109,6 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
                                         previewUrl={previewThumbnailUrl}
                                         setPreviewUrl={setPreviewThumbnailUrl}
                                     />
-                                </div>
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <div className="flex justify-start space-x-2">
-                                    <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Showing
-                                    </label>
-                                    <RedStar />
-                                </div>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <SelectField name="isShow" values={[...statusFieldData]} require={false} />
-                                </div>
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <div className="flex justify-start space-x-2">
-                                    <label htmlFor="Thumbnail" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Feature
-                                    </label>
-                                    <RedStar />
-                                </div>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <SelectField name="isFeature" values={[...statusFieldData]} require={false} />
                                 </div>
                             </div>
                         </div>

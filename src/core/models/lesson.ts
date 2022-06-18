@@ -1,4 +1,4 @@
-import { AttributeType } from '../common/interface';
+import { AttributeType, SystemType } from '../common/interface';
 
 export interface LessonDetail {
     id: string;
@@ -13,10 +13,9 @@ export interface QuizLesson {
 
 export interface SubjectTopic extends AttributeType {}
 
-export interface LessonType {
-    id: string;
-    name: LessonTypeEnum;
-}
+// export interface LessonType extends AttributeType {}
+export interface LessonType extends SystemType<LessonTypeEnum> {}
+
 export interface LessonAttribute {
     type: LessonType;
     attribute: LessonDetail | QuizLesson | SubjectTopic | null;

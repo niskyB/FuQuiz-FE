@@ -2,26 +2,82 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { QuestionListPageProps } from '../../../../../pages/dashboard/question-bank/question';
+import { statusFieldData } from '../../../../core/common/dataField';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { Answer } from '../../../../core/models/answer';
 import { Question } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
+import { dataParser } from '../../../../core/util/data';
 import { PaginationBar } from '../../../dashboard';
+import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
+import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
+import { useGetSubjectListByRole } from '../../../subject/common/hooks/useGetSubjectListByRole';
+import { useGetAllQuestionList } from '../../common/hooks/getAllQuestionList';
+import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
+import { FilterQuestionsDTO, QuestionListDTO } from './interface';
 
-interface QuestionListProps {}
+export interface QuestionListProps extends QuestionListPageProps {}
 
-const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
-    const methods = useForm();
+const QuestionList: React.FunctionComponent<QuestionListProps> = ({
+    content,
+    currentPage,
+    dimension,
+    isActive,
+    lesson,
+    level,
+    pageSize,
+    subject,
+}) => {
+    const methods = useForm<FilterQuestionsDTO>();
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [];
+    const options = React.useMemo(
+        () => ({
+            content,
+            currentPage,
+            dimension,
+            isActive,
+            lesson,
+            level,
+            pageSize,
+            subject,
+        }),
 
-    const [questions, setQuestions] = React.useState<Question[]>([]);
-    const [count, setCount] = React.useState<number>(4);
+        [content, currentPage, dimension, isActive, lesson, level, pageSize, subject]
+    );
 
-    const _handleOnSubmit = async () => {};
+    useUrlParams({
+        defaultPath: routes.adminQuestionListUrl,
+        query: { ...router.query, content, currentPage, dimension, isActive, lesson, level, pageSize },
+    });
+
+    const [subjectId, setSubjectId] = React.useState<string>('');
+
+    const { subjects } = useGetSubjectListByRole();
+    const { lessonList: lessons } = useGetLessonList(subjectId);
+    const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
+    const { levels } = useGetQuestionLevelList();
+
+    const { questions: allQuestion, count } = useGetAllQuestionList(options);
+
+    const [questions, setQuestions] = React.useState<QuestionListDTO[]>([]);
+    React.useEffect(() => {
+        setQuestions(allQuestion);
+    }, [allQuestion]);
+
+    const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSubjectId(e.target.value);
+    };
+
+    const _handleOnSubmit = async (data: FilterQuestionsDTO) => {
+        pushWithParams(router, routes.adminQuestionListUrl, { ...options, ...data });
+    };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -43,7 +99,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                             Quiz List
                         </p>
                     </Link>
-                    <Link href={router.asPath + routes.adminAddQuestionUrl} passHref>
+                    <Link href={routes.adminQuestionListUrl + routes.adminAddQuestionUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Question
                         </p>
@@ -56,60 +112,34 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                         <div className="flex flex-col space-y-2">
                             <div className="flex space-x-4">
                                 <SelectField
-                                    require={false}
-                                    label="Subject"
-                                    values={[
-                                        { label: 'Subject 1', value: '1' },
-                                        { label: 'Subject 2', value: '2' },
-                                        { label: 'Subject 3', value: '3' },
-                                        { label: 'Subject 4', value: '4' },
-                                    ]}
+                                    isRequire={false}
+                                    label="Subject (will change lesson and dimension too)"
+                                    onChange={(e) => _onChangeSubject(e)}
+                                    values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
                                     name="subject"
                                 />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Lesson"
-                                    values={[
-                                        { label: 'Lesson 1', value: '1' },
-                                        { label: 'Lesson 2', value: '2' },
-                                        { label: 'Lesson 3', value: '3' },
-                                        { label: 'Lesson 4', value: '4' },
-                                    ]}
+                                    values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
                                     name="lesson"
                                 />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Dimension"
-                                    values={[
-                                        { label: 'Dimension 1', value: '1' },
-                                        { label: 'Dimension 2', value: '2' },
-                                        { label: 'Dimension 3', value: '3' },
-                                        { label: 'Dimension 4', value: '4' },
-                                    ]}
+                                    values={[unsetFieldData, ...dataParser(dimensions, 'name', 'id')]}
                                     name="dimension"
                                 />
                             </div>
                             <div className="flex space-x-4">
                                 <TextField name="content" label="Content" isRequire={false} />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Level"
-                                    values={[
-                                        { label: 'Easy', value: '1' },
-                                        { label: 'Dimension 2', value: '2' },
-                                        { label: 'Dimension 3', value: '3' },
-                                    ]}
-                                    name="Level"
+                                    values={[unsetFieldData, ...dataParser(levels, 'description', 'id')]}
+                                    name="level"
                                 />
-                                <SelectField
-                                    require={false}
-                                    label="Status"
-                                    values={[
-                                        { label: 'Active', value: true },
-                                        { label: 'Inactive', value: false },
-                                    ]}
-                                    name="isActive"
-                                />
+                                <SelectField isRequire={false} label="Status" values={[unsetFieldData, ...statusFieldData]} name="isActive" />
                             </div>
                         </div>
                         <div className="flex justify-end">
@@ -135,21 +165,23 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                                         questions.map((question, index) => (
                                             <TableRow key={question.id}>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">#{question.id}</div>
+                                                    <div className="text-gray-900">{question.id}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">Subject 1</div>
+                                                    <div className="text-gray-900">{question.lesson.subject.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">Lesson 1</div>
+                                                    <div className="text-gray-900">{question.lesson.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{question.dimension.name}</div>
+                                                    <div className="text-gray-900">{question.dimensions.map((item) => item.name).toString()}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{question.content}</div>
                                                 </TableDescription>
-                                                <TableDescription>Easy</TableDescription>
+                                                <TableDescription>
+                                                    <div className="text-gray-900">{question.questionLevel.description}</div>
+                                                </TableDescription>
 
                                                 <TableDescription>
                                                     {question.isActive ? (
@@ -175,7 +207,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };

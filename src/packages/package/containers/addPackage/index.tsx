@@ -47,55 +47,17 @@ const AddPackage: React.FunctionComponent<AddPackageProps> = ({ subjectId }) => 
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Name <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="name" />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Duration <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="duration" type="number" />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Original price <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="originalPrice" type="number" min={1} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Sale Price <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="salePrice" type="number" min={1} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Is active <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField disabled label="" name="isActive" values={statusFieldData} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Description
-                                        <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextareaField label="" name="description" />
-                                    </div>
-                                </div>
+                                <TextField label="Name" name="name" direction="row" />
+
+                                <TextField label="Duration" name="duration" type="number" direction="row" />
+
+                                <TextField label="Original price" name="originalPrice" type="number" min={1} direction="row" />
+
+                                <TextField label="Sale Price" name="salePrice" type="number" min={1} direction="row" />
+
+                                <SelectField disabled label="Active" name="isActive" values={statusFieldData} direction="row" />
+
+                                <TextareaField label="Description" name="description" direction="row" />
                             </div>
                         </div>
                     </div>

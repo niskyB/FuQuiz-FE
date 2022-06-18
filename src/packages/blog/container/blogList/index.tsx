@@ -82,14 +82,14 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
                             <TextField label="Title" name="title" isRequire={false} />
                         </div>
                         <div className="">
-                            <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} require={false} />
+                            <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} isRequire={false} />
                         </div>
                         <div className="">
                             <SelectField
                                 label="Category"
                                 name="category"
                                 values={[allFieldData, ...dataParser<BlogCategory>(categories, 'description', 'id')]}
-                                require={false}
+                                isRequire={false}
                             />
                         </div>
                         <div className="">
