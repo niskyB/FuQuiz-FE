@@ -62,7 +62,6 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
     }, [avatarFile]);
 
     const _onChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target);
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
 
@@ -96,7 +95,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                 <dl className="sm:divide-y sm:divide-gray-200">
                                     {PROFILE_FIELD.map((item) => (
                                         <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
-                                            <dt className="flex items-center text-sm font-medium text-gray-500 space-x-2">
+                                            <dt className="flex items-center space-x-2 text-sm font-medium text-gray-500">
                                                 <p>{item.label}</p>
                                                 <p className="inline-flex text-red-500" id="require">
                                                     *
@@ -109,7 +108,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                     ))}
 
                                     <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                                        <dt className="flex items-center text-sm font-medium text-gray-500 space-x-2">
+                                        <dt className="flex items-center space-x-2 text-sm font-medium text-gray-500">
                                             <p>Gender</p>
                                             <p className="inline-flex text-red-500" id="require">
                                                 *

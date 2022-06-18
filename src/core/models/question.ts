@@ -6,7 +6,7 @@ import { Lesson, LessonTypeEnum } from './lesson';
 export interface Question {
     id: string;
     lesson: Pick<Lesson, 'id' | 'name'>;
-    dimension: Pick<Dimension, 'id' | 'name'>;
+    dimensions: Pick<Dimension, 'id' | 'name'>[];
     questionLevel: QuestionLevel;
     isActive: boolean;
     content: string;

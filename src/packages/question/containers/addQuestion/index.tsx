@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { SelectionFieldValues } from '../../../../core/common/interface';
@@ -19,12 +20,11 @@ import { AddQuestionDTO } from './interface';
 
 interface AddQuestionProps {}
 
-const defaultValues: AddQuestionDTO = {
+const defaultValues: Omit<AddQuestionDTO, 'image'> = {
     subject: '',
     lesson: '',
     dimensions: '',
     questionLevel: '',
-    image: null,
     videoLink: '',
     audioLink: '',
     content: '',
@@ -60,7 +60,8 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const { subjects } = useGetSubjectListByRole();
     const { lessonList: lessons } = useGetLessonList(subjectId);
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
-    const { level } = useGetQuestionLevelList();
+    const { levels } = useGetQuestionLevelList();
+
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
 
@@ -87,8 +88,14 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         selectedDimensionList.map((item) => (dimensionString = dimensionString + item.value + ','));
         others.dimensions = dimensionString;
         console.log(others);
-        const res = await addQuestion(others);
-        console.log(res);
+        await addQuestion(others).then(() => {
+            methods.reset();
+            setPreviewThumbnailUrl('');
+            setThumbnailFile(null);
+            setExplanation('');
+
+            toast.success('Add new question success!');
+        });
     };
 
     return (
@@ -146,7 +153,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Level <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField label="" name="questionLevel" values={dataParser(level, 'name', 'id')} />
+                                        <SelectField label="" name="questionLevel" values={dataParser(levels, 'name', 'id')} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
