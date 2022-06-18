@@ -15,11 +15,7 @@ const dimensions = [
 
 const AddPractice: React.FunctionComponent<AddPracticeProps> = () => {
     const methods = useForm();
-    const [subjects, setSubjects] = React.useState<Pick<Subject, 'title' | 'id'>[]>([
-        { id: '1', name: 'Subject 1' },
-        { id: '2', name: 'Subject 2' },
-        { id: '3', name: 'Subject 3' },
-    ]);
+    const [subjects, setSubjects] = React.useState<Pick<Subject, 'name' | 'id'>[]>([]);
 
     const _handleOnSubmit = async () => {};
     return (

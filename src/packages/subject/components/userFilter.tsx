@@ -42,7 +42,7 @@ export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOp
                     label="Category"
                     name="category"
                     require={false}
-                    values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
+                    values={[allFieldData, ...dataParser<BlogCategory>(categories, 'description', 'id')]}
                 />
                 <SelectField label="Feature" name="isFeature" require={false} values={[allFieldData, ...FeatureFieldData]} />
                 <SelectField

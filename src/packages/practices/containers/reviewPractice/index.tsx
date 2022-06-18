@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { findQuestionAndDoAction } from '../../../../core/util/question';
-import { ClockIcon } from '@heroicons/react/outline';
 import { QuizQuestionDTO } from '../../../quiz/containers/doQuiz/interface';
 
 import QuizQuestionReadonly from '../../components/QuizQuestionReadonly';
@@ -10,79 +9,7 @@ import HintAnswer from '../../components/hintAnswer';
 interface ReviewPracticeProps {
     id: string;
 }
-const QUESTIONS_LIST: QuizQuestionDTO[] = [
-    {
-        id: 'q1',
-        answers: [
-            { id: '1', details: 'Impact analysis assesses the effect on the system of a defect found in regression testing.' },
-            { id: '2', details: 'Impact analysis assesses the effect of a new person joining the regression test team.' },
-            { id: '3', details: 'Impact analysis assesses whether or not a defect found in regression testing has been fixed correctly.' },
-            {
-                id: '4',
-                details: 'Impact analysis assesses the effect of a change to the system to determine how much regression testing to do',
-            },
-        ],
-        content: 'Which of the following is correct?',
-        isActive: true,
-        // lessonType: { id: 'l1', name: 'Quiz' },
-        dimension: { id: '', description: '', name: 'Domain 1', type: { id: '1', name: '' } },
-        isMarked: false,
-        userAnswerId: '2',
-    },
-    {
-        id: 'q2',
-        answers: [
-            { id: '1', details: 'To enhance the security of the system' },
-            { id: '2', details: 'To prevent the endless loops in code.' },
-            { id: '3', details: 'To swerve as an alternative or "Plan-B"' },
-            {
-                id: '4',
-                details: 'To define when to stop testing',
-            },
-        ],
-        content: 'In software testing what is the main purpose of exit criteria?',
-        isActive: true,
-        // lessonType: { id: 'l2', name: 'Quiz' },
-        dimension: { id: '', description: '', name: 'Domain 2', type: { id: '1', name: '' } },
-        isMarked: false,
-        userAnswerId: '4',
-    },
-    {
-        id: 'q3',
-        answers: [
-            { id: '1', details: 'Login Browse Basket Checkout Basket Checkout Pay Logout.' },
-            { id: '2', details: 'Login Browse Basket Checkout Pay Logout.' },
-            { id: '3', details: 'Login Browse Basket Checkout Basket Logout.' },
-            {
-                id: '4',
-                details: 'Login Browse Basket Browse Basket Checkout Pay Logout.',
-            },
-        ],
-        content:
-            'Given the following state transition diagram Which of the following series of state transitions contains an INVALID transition which may indicate a fault in the system design?',
-        isActive: true,
-        dimension: { id: '', description: '', name: 'Domain 3', type: { id: '1', name: '' } },
-        isMarked: true,
-        userAnswerId: '1',
-    },
-    {
-        id: 'q4',
-        answers: [
-            { id: '1', details: 'Ensuring proper environment setup' },
-            { id: '2', details: 'Writing a test summary report' },
-            { id: '3', details: 'Assessing the need for additional tests' },
-            {
-                id: '4',
-                details: 'Finalizing and archiving testware.',
-            },
-        ],
-        content: 'Which of the following is a KEY test closure task?',
-        isActive: true,
-        dimension: { id: '', description: '', name: 'Domain 4', type: { id: '1', name: '' } },
-        isMarked: true,
-        userAnswerId: '1',
-    },
-];
+const QUESTIONS_LIST: QuizQuestionDTO[] = [];
 const quizAnswerStatus = [
     { label: 'Unanswered', value: 'unanswered' },
     { label: 'Marked', value: 'marked' },
@@ -170,7 +97,7 @@ export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ i
                             data={questionList}
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
-                            rightAnswer={{ details: '', id: '1' }}
+                            rightAnswer={{ detail: '', id: '1', isCorrect: true }}
                         />
                     </div>
                 </div>

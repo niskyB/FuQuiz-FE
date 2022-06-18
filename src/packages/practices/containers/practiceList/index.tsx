@@ -2,12 +2,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { Question } from '../../../../core/models/question';
 import { PracticeQuiz } from '../../../../core/models/quiz';
-import { Subject } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 import { SelectSubject } from './interface';
@@ -15,11 +14,7 @@ import { SelectSubject } from './interface';
 interface PracticeListProps {}
 
 const PracticeList: React.FC<PracticeListProps> = () => {
-    const [subjects, setSubjects] = React.useState<SelectSubject[]>([
-        { id: '1', name: 'Javascript basic' },
-        { id: '2', name: 'Javascript' },
-        { id: '3', name: 'Master of coins' },
-    ]);
+    const [subjects, setSubjects] = React.useState<SelectSubject[]>([]);
     const [quizzes, setQuizzes] = React.useState<PracticeQuiz[]>([
         {
             id: '1',

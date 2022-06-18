@@ -50,7 +50,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                         label="Blog Category"
                         name="category"
                         require={false}
-                        values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
+                        values={[allFieldData, ...dataParser<BlogCategory>(categories, 'description', 'id')]}
                     />
 
                     <TextField label="Title" name="title" isRequire={false} />

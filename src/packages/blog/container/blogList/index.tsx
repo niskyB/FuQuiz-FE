@@ -4,7 +4,7 @@ import * as React from 'react';
 import { BlogBox } from '../blogBox';
 import { useForm } from 'react-hook-form';
 import { FilterBlogListDTO, FilterBlogListFormDTO } from './interface';
-import { DateField, FormWrapper, SelectBlogCategory, SelectField, TextField } from '../../../../core/components/form';
+import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useStoreUser } from '../../../../core/store';
 import { pushWithParams } from '../../../../core/util/router';
 import { useRouter } from 'next/router';
@@ -14,6 +14,8 @@ import { PaginationBar } from '../../../dashboard';
 import { useGetBlogCategoryList } from '../../../blogCategory';
 import { useGetBlogList } from '../../common/hooks/useGetBlogList';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
+import { dataParser } from '../../../../core/util/data';
+import { BlogCategory } from '../../../../core/models/blog';
 interface BlogListProps extends FilterBlogListDTO {}
 
 export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, createdAt, currentPage, isShow, pageSize, title, userId, order }) => {
@@ -83,7 +85,12 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
                             <SelectField label="Showing" name="isShow" values={[allFieldData, ...statusFieldData]} require={false} />
                         </div>
                         <div className="">
-                            <SelectBlogCategory label="Category" name="category" values={[{ id: '', name: 'All' }, ...categories]} />
+                            <SelectField
+                                label="Category"
+                                name="category"
+                                values={[allFieldData, ...dataParser<BlogCategory>(categories, 'description', 'id')]}
+                                require={false}
+                            />
                         </div>
                         <div className="">
                             <DateField label="Create at" name="createdAt" />

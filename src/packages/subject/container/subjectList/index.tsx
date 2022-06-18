@@ -6,8 +6,8 @@ import { allFieldData, statusFieldData } from '../../../../core/common/dataField
 import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { BlogCategory } from '../../../../core/models/blog';
 import { UserRole } from '../../../../core/models/role';
+import { SubjectCategory } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { pushWithParams } from '../../../../core/util';
@@ -93,7 +93,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                             <DateField name="createdAt" label="Create From" />
                             <SelectField
                                 label="Category"
-                                values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
+                                values={[allFieldData, ...dataParser<SubjectCategory>(categories, 'name', 'id')]}
                                 name="category"
                                 require={false}
                             />

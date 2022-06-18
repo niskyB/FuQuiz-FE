@@ -14,7 +14,7 @@ export interface PracticeQuiz extends QuizAttribute {
     id: string;
     name: string;
     subject: Pick<Subject, 'id' | 'name'>;
-    examLevel: AttributeType;
+    examLevel: ExamLevel;
     quizLevel: QuizType;
     correctAnswer: number;
     questions: Question[];

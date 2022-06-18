@@ -1,4 +1,4 @@
-import { AttributeType } from '../common/interface';
+import { SystemType } from '../common/interface';
 
 export interface Dimension {
     id: string;
@@ -7,4 +7,4 @@ export interface Dimension {
     description: string;
 }
 
-export interface DimensionType extends AttributeType {}
+export interface DimensionType extends SystemType<string> {}

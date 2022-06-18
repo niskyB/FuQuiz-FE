@@ -1,19 +1,14 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { QuillInput, SelectField, TextField } from '../../../../core/components/form';
-import { Answer } from '../../../../core/models/question';
+import { SelectField, TextField } from '../../../../core/components/form';
+import { Answer } from '../../../../core/models/answer';
 
 interface QuizLessonDetailProps {}
 
 const QuizLessonDetail: React.FunctionComponent<QuizLessonDetailProps> = () => {
     const [details, setDetails] = React.useState('');
 
-    const [answers, setAnswers] = React.useState<Answer[]>([
-        { id: '1', details: 'Answer 1' },
-        { id: '2', details: 'Answer 2' },
-        { id: '3', details: 'Answer 3' },
-        { id: '4', details: 'Answer 4' },
-    ]);
+    const [answers, setAnswers] = React.useState<Answer[]>([]);
 
     const { register } = useFormContext();
     return (
