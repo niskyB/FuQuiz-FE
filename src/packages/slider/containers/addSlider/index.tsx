@@ -67,7 +67,7 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             {mapFields.map((item) => (
-                                <TextField label={item.label} name={item.name} type="text" direction="row" />
+                                <TextField key={item.name} label={item.label} name={item.name} type="text" direction="row" />
                             ))}
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
