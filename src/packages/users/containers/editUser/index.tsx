@@ -41,9 +41,9 @@ const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
                             <div className="flex justify-center">
                                 <img className="h-36 w-36" src={user?.imageUrl} />
                             </div>
-                            <TextField label="Full name" name="fullName" type="fullName" require={false} readOnly={true} />
-                            <TextField label="Email address" name="email" type="email" require={false} readOnly={true} />
-                            <TextField label="phone number" name="mobile" type="text" require={false} readOnly={true} />
+                            <TextField label="Full name" name="fullName" type="fullName" isRequire={false} readOnly={true} />
+                            <TextField label="Email address" name="email" type="email" isRequire={false} readOnly={true} />
+                            <TextField label="phone number" name="mobile" type="text" isRequire={false} readOnly={true} />
                             <SelectField label="Status" name="isActive" require={false} values={[...statusFieldData]} />
                             <SelectField
                                 label="Role"

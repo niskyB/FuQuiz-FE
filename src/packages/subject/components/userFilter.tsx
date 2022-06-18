@@ -37,7 +37,7 @@ export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOp
                 onSubmit={methods.handleSubmit(_handleOnSubmit)}
                 className="flex flex-col items-end w-full max-w-xs p-5 space-y-5 bg-white rounded-md h-fit"
             >
-                <TextField label="Name" name="name" require={false} />
+                <TextField label="Name" name="name" isRequire={false} />
                 <SelectField
                     label="Category"
                     name="category"

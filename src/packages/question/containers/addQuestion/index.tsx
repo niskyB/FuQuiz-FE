@@ -172,14 +172,14 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Video Url
                                     </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="videoLink" />
-                                    </div>
-                                </div>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2"> */}
+                                <TextField label="Video Url" name="videoLink" direction="row" />
+                                {/* </div>
+                                </div> */}
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Audio Url
@@ -219,7 +219,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         />
                                     </div>
                                 </div>
-                                {answers.fields.map((_, index) => (
+                                {/* {answers.fields.map((_, index) => (
                                     <div
                                         key={'answer' + index}
                                         className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
@@ -264,7 +264,46 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                             </div>
                                         </div>
                                     </div>
+                                ))} */}
+                                {answers.fields.map((_, index) => (
+                                    <>
+                                        <TextField
+                                            key={'answer' + index}
+                                            direction="row"
+                                            label={`Answer ${index + 1}`}
+                                            {...methods.register(`answers.${index}.detail` as const)}
+                                        />
+                                        <div className={`flex justify-end col-span-2 col-end-4 space-x-4`}>
+                                            <div className="flex items-center space-x-2 text-sm font-medium text-gray-900 w-fit">
+                                                <input
+                                                    type={isMultipleChoice ? 'checkbox' : 'radio'}
+                                                    name="isCorrect"
+                                                    onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
+                                                />
+                                                <label>Right Answer</label>
+                                            </div>
+                                        </div>
+                                    </>
                                 ))}
+
+                                <div className="flex justify-end space-x-2">
+                                    <button
+                                        className="w-8 h-8 text-indigo-500 hover:text-indigo-600"
+                                        onClick={() => answers.append({ detail: '', isCorrect: false })}
+                                    >
+                                        <PlusCircleIcon />
+                                    </button>
+
+                                    {answers.fields.length !== 1 && (
+                                        <button
+                                            className="w-8 h-8 text-red-500 hover:text-red-600"
+                                            onClick={() => answers.remove(answers.fields.length - 1)}
+                                        >
+                                            <XCircleIcon />
+                                        </button>
+                                    )}
+                                </div>
+
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <div className="flex justify-start space-x-2">
                                         <label htmlFor="explanation" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">

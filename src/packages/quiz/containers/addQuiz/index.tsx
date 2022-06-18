@@ -227,7 +227,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                             ]}
                                             name="Level"
                                         />
-                                        <TextField name="content" label="Content" require={false} />
+                                        <TextField name="content" label="Content" isRequire={false} />
                                     </div>
                                 </div>
                                 <div className="flex justify-end space-x-2">
