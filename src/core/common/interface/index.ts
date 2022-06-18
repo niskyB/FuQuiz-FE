@@ -1,10 +1,6 @@
 export interface AttributeType {
     id: string;
-    type: string;
-    value: string;
-    order: number;
-    description: string;
-    isActive: boolean;
+    name: string;
 }
 
 export interface SystemType<T> {

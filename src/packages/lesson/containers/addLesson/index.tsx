@@ -47,7 +47,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
         for (let i = 0; i < lessonType.length; i++) {
             const item = lessonType[i];
             if (item.id === e.target.value) {
-                setFormType(item.id);
+                setFormType(item.description);
             }
         }
     };
