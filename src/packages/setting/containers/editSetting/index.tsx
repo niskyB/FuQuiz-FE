@@ -40,7 +40,7 @@ export const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
                                 ]}
                             />
 
-                            <TextField label="Value" name="value" type="value" readOnly require={false} />
+                            <TextField label="Value" name="value" type="value" readOnly isRequire={false} />
                             <TextField label="Order" name="order" type="order" />
                             <TextareaField label="Description" name="description" aria-rowspan={8} />
                             <SelectField

@@ -110,7 +110,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                                     ]}
                                     name="lesson"
                                 />
-                                <TextField name="name" label="Name" require={false} />
+                                <TextField name="name" label="Name" isRequire={false} />
                             </div>
                         </div>
                         <div className="flex justify-end">
