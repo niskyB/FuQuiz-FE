@@ -37,7 +37,6 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
     const methods = useForm<FilterQuestionsDTO>();
     const router = useRouter();
 
-<<<<<<< HEAD
     const options = React.useMemo(
         () => ({
             content,
@@ -52,12 +51,6 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
 
         [content, currentPage, dimension, isActive, lesson, level, pageSize, subject]
     );
-=======
-    const cloneAnswers: Answer[] = [];
-
-    const [questions, setQuestions] = React.useState<Question[]>([]);
-    const [count, setCount] = React.useState<number>(4);
->>>>>>> main/master
 
     useUrlParams({
         defaultPath: routes.adminQuestionListUrl,
@@ -119,20 +112,20 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                         <div className="flex flex-col space-y-2">
                             <div className="flex space-x-4">
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Subject (will change lesson and dimension too)"
                                     onChange={(e) => _onChangeSubject(e)}
                                     values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
                                     name="subject"
                                 />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Lesson"
                                     values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
                                     name="lesson"
                                 />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Dimension"
                                     values={[unsetFieldData, ...dataParser(dimensions, 'name', 'id')]}
                                     name="dimension"
@@ -141,12 +134,12 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                             <div className="flex space-x-4">
                                 <TextField name="content" label="Content" isRequire={false} />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Level"
-                                    values={[unsetFieldData, ...dataParser(levels, 'name', 'id')]}
+                                    values={[unsetFieldData, ...dataParser(levels, 'description', 'id')]}
                                     name="level"
                                 />
-                                <SelectField require={false} label="Status" values={[unsetFieldData, ...statusFieldData]} name="isActive" />
+                                <SelectField isRequire={false} label="Status" values={[unsetFieldData, ...statusFieldData]} name="isActive" />
                             </div>
                         </div>
                         <div className="flex justify-end">
@@ -187,7 +180,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                                                     <div className="text-gray-900">{question.content}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{question.questionLevel.name}</div>
+                                                    <div className="text-gray-900">{question.questionLevel.description}</div>
                                                 </TableDescription>
 
                                                 <TableDescription>
