@@ -1,7 +1,7 @@
-import { AttributeType } from '../common/interface';
+import { SystemType } from '../common/interface';
 import { Marketing } from './marketing';
 
-export interface BlogCategory extends AttributeType {}
+export interface BlogCategory extends SystemType<string> {}
 
 export interface Blog {
     id: string;

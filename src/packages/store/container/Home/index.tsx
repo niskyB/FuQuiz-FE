@@ -68,12 +68,6 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                                                 <p className="mt-3 text-base text-gray-500">{item.description.substring(0, 100) + '...'}</p>
                                             </a>
                                         </div>
-
-                                        {/* <div className="flex items-center mt-6">
-                                            <p className="text-2xl font-medium text-gray-900">
-                                                <div className="text-orange-600">20.000đ - 100.000đ</div>
-                                            </p>
-                                        </div> */}
                                     </div>
                                 </div>
                             </Link>

@@ -1,6 +1,4 @@
 import { AttributeType } from '../common/interface';
-import { Question } from './question';
-import { Subject } from './subject';
 
 export interface LessonDetail {
     id: string;

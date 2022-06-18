@@ -1,11 +1,8 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
-import { Answer, Question } from '../../../../core/models/question';
+import { Answer } from '../../../../core/models/answer';
+import { Question } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
-import { PaginationBar } from '../../../dashboard';
 import ReviewQuestion from '../../components/reviewQuestion';
 
 interface SimulationDetailProps {
@@ -15,12 +12,7 @@ interface SimulationDetailProps {
 const SimulationDetail: React.FunctionComponent<SimulationDetailProps> = ({ quizId }) => {
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [
-        { id: '1', details: 'Answer 1' },
-        { id: '2', details: 'Answer 2' },
-        { id: '3', details: 'Answer 3' },
-        { id: '4', details: 'Answer 4' },
-    ];
+    const cloneAnswers: Answer[] = [];
 
     const generateQuiz = async () => {
         // generate simulation quiz in backend base on quiz review Id
@@ -28,43 +20,7 @@ const SimulationDetail: React.FunctionComponent<SimulationDetailProps> = ({ quiz
         router.push(routes.quizUrl + `/${id}`);
     };
 
-    const [questions, setQuestions] = React.useState<Question[]>([
-        {
-            id: 'q1',
-            answers: cloneAnswers,
-            content: 'Content 1',
-            isActive: true,
-            dimension: { id: '', description: '', name: 'Domain 1', typeId: { id: '1', name: '' } },
-        },
-        {
-            id: 'q2',
-            answers: cloneAnswers,
-            content: 'Content 2',
-            isActive: true,
-            dimension: { id: '', description: '', name: 'Domain 2', typeId: { id: '1', name: '' } },
-        },
-        {
-            id: 'q3',
-            answers: cloneAnswers,
-            content: 'Content 3',
-            isActive: true,
-            dimension: { id: '', description: '', name: 'Domain 3', typeId: { id: '1', name: '' } },
-        },
-        {
-            id: 'q4',
-            answers: cloneAnswers,
-            content: 'Content 4',
-            isActive: true,
-            dimension: { id: '', description: '', name: 'Domain 4', typeId: { id: '1', name: '' } },
-        },
-        {
-            id: 'q5',
-            answers: cloneAnswers,
-            content: 'Content 5',
-            isActive: true,
-            dimension: { id: '', description: '', name: 'Domain 5', typeId: { id: '1', name: '' } },
-        },
-    ]);
+    const [questions, setQuestions] = React.useState<Question[]>([]);
     const [count, setCount] = React.useState<number>(4);
 
     return (

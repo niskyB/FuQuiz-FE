@@ -15,40 +15,7 @@ interface AddQuizProps {}
 const mapFields = [{ label: 'Name', name: 'name' }];
 
 export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
-    const [questions, setQuestions] = React.useState<AddQuestionQuizDTO[]>([
-        {
-            id: '1',
-            subject: { id: 's1', name: 'subject 1' },
-            content: 'Content 1',
-            dimension: { id: 'd1', name: 'dimension 1' },
-            lesson: { id: 'ls1', name: 'Lesson 1' },
-            level: { id: 'lv1', name: 'Easy' },
-        },
-        {
-            id: '2',
-            subject: { id: 's1', name: 'subject 1' },
-            content: 'Content 1',
-            dimension: { id: 'd1', name: 'dimension 1' },
-            lesson: { id: 'ls1', name: 'Lesson 1' },
-            level: { id: 'lv1', name: 'Easy' },
-        },
-        {
-            id: '3',
-            subject: { id: 's1', name: 'subject 1' },
-            content: 'Content 1',
-            dimension: { id: 'd1', name: 'dimension 1' },
-            lesson: { id: 'ls1', name: 'Lesson 1' },
-            level: { id: 'lv1', name: 'Easy' },
-        },
-        {
-            id: '4',
-            subject: { id: 's2', name: 'subject 1' },
-            content: 'Content 1',
-            dimension: { id: 'd1', name: 'dimension 1' },
-            lesson: { id: 'ls1', name: 'Lesson 1' },
-            level: { id: 'lv1', name: 'Easy' },
-        },
-    ]);
+    const [questions, setQuestions] = React.useState<AddQuestionQuizDTO[]>([]);
 
     const router = useRouter();
     const filterMethods = useForm();

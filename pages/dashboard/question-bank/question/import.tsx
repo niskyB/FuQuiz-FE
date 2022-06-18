@@ -2,15 +2,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormWrapper, SelectField, TextField } from '../../../../src/core/components/form';
+import { FormWrapper } from '../../../../src/core/components/form';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../src/core/components/table';
 import { TableBody } from '../../../../src/core/components/table/tableBody';
-import { Answer } from '../../../../src/core/models/question';
 import { UserRole } from '../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../src/packages/dashboard';
-import AddQuestion from '../../../../src/packages/question/containers/addQuestion';
-import { RedStar } from '../../../../src/packages/store';
 
 interface AddQuestionPageProps {}
 

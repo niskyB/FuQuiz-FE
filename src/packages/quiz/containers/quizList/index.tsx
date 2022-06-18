@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Answer, Question } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
+import { Answer } from '../../../../core/models/answer';
 
 interface QuizListProps {}
 
@@ -16,7 +16,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
     const methods = useForm();
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [{ id: '1', details: 'Answer 1' }];
+    const cloneAnswers: Answer[] = [];
 
     const [quizzes, setQuizzes] = React.useState([
         {

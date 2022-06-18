@@ -28,7 +28,7 @@ export const BlogPost: React.FunctionComponent<BlogPostProps> = ({ id }) => {
                                 </p>
                             </div>
                         </div>
-                        <h2 className="text-lg italic text-right text-indigo-600">{blog?.category.name}</h2>
+                        <h2 className="text-lg italic text-right text-indigo-600">{blog?.category.description}</h2>
                     </div>
                     <div className="flex flex-col space-y-10">
                         <h1 id={'blog-title-' + id} className="mt-4 text-4xl font-semibold text-center text-gray-900">

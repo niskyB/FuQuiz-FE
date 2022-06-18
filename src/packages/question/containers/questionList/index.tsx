@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Answer, Question } from '../../../../core/models/question';
+import { Answer } from '../../../../core/models/answer';
+import { Question } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 
@@ -15,42 +16,9 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = () => {
     const methods = useForm();
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [{ id: '1', details: 'Answer 1' }];
+    const cloneAnswers: Answer[] = [];
 
-    const [questions, setQuestions] = React.useState<Question[]>([
-        {
-            id: 'q1',
-            answers: cloneAnswers,
-            content: 'Question 1',
-            isActive: true,
-            // lessonAttribute: { id: 'l1', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 1', type: { id: '1', name: '' } },
-        },
-        {
-            id: 'q2',
-            answers: cloneAnswers,
-            content: 'Question 2',
-            isActive: true,
-            // lessonAttribute: { id: 'l2', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 2', type: { id: '1', name: '' } },
-        },
-        {
-            id: 'q3',
-            answers: cloneAnswers,
-            content: 'Question 3',
-            isActive: true,
-            // lessonAttribute: { type: { id: 'l3', name: 'Quiz' } },
-            dimension: { id: '', description: '', name: 'Domain 3', type: { id: '1', name: '' } },
-        },
-        {
-            id: 'q4',
-            answers: cloneAnswers,
-            content: 'Question 4',
-            isActive: true,
-            // lessonAttribute: { id: 'l4', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 4', type: { id: '1', name: '' } },
-        },
-    ]);
+    const [questions, setQuestions] = React.useState<Question[]>([]);
     const [count, setCount] = React.useState<number>(4);
 
     const _handleOnSubmit = async () => {};
