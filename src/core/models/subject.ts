@@ -21,5 +21,9 @@ export interface AssignTo {
 
 export interface SubjectCategory {
     id: string;
-    name: string;
+    type: string;
+    isActive: boolean;
+    order: string;
+    value: string;
+    description: string;
 }

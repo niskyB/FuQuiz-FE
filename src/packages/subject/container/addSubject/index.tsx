@@ -38,6 +38,7 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const options = React.useMemo(() => ({ role: UserRole.EXPERT }), []);
 
     const { categories } = useGetSubjectCategory();
+    console.log(categories);
     const { userList: expertList } = useAdminGetUserList(options);
 
     const methods = useForm<AddSubjectFormDTO>({
@@ -90,7 +91,7 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                                 </label>
                                 <SelectField
                                     label=""
-                                    values={[{ label: 'Unset', value: '' }, ...dataParser<SubjectCategory>(categories, 'name', 'id')]}
+                                    values={[{ label: 'Unset', value: '' }, ...dataParser<SubjectCategory>(categories, 'description', 'id')]}
                                     name="category"
                                 />
                             </div>

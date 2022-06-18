@@ -176,7 +176,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Category <RedStar />
                                 </label>
-                                <SelectField label="" values={[...dataParser<SubjectCategory>(categories, 'name', 'id')]} name="category" />
+                                <SelectField label="" values={[...dataParser<SubjectCategory>(categories, 'description', 'id')]} name="category" />
                             </div>
                             {_renderField()}
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">

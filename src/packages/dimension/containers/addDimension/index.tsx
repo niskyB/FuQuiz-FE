@@ -53,7 +53,7 @@ export const AddDimension: React.FunctionComponent<AddDimensionProps> = ({ subje
                                         Type <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField name="type" label="" values={dataParser<DimensionType>(dimensionTypes, 'name', 'id')} />
+                                        <SelectField name="type" label="" values={dataParser<DimensionType>(dimensionTypes, 'description', 'id')} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">

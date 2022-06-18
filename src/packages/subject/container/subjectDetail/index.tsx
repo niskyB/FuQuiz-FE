@@ -48,7 +48,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                         </div>
                         <div className="flex-1 ">
                             <h1 className="text-2xl font-bold">{subject?.name}</h1>
-                            <p className="mt-1 font-semibold text-indigo-500">{subject?.category.name}</p>
+                            <p className="mt-1 font-semibold text-indigo-500">{subject?.category.description}</p>
                             <p className="mt-1 text-gray-500">{subject?.tagLine}</p>
                             <p className="mt-3 text-gray-500">{subject?.description}</p>
                         </div>
@@ -95,7 +95,9 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-base text-red-500">At current we don't have any price package yet, please check this out later!</p>
+                            <p className="text-base text-red-500">
+                                At current we don&apos;t have any price package yet, please check this out later!
+                            </p>
                         )}
                     </div>
 

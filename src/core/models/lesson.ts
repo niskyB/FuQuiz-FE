@@ -15,10 +15,8 @@ export interface QuizLesson {
 
 export interface SubjectTopic extends AttributeType {}
 
-export interface LessonType {
-    id: string;
-    name: LessonTypeEnum;
-}
+export interface LessonType extends AttributeType {}
+
 export interface LessonAttribute {
     type: LessonType;
     attribute: LessonDetail | QuizLesson | SubjectTopic | null;
