@@ -92,7 +92,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                                 </p>
                                             </dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                <TextField label="" name={item.name} type="text" readOnly={item.readonly} />
+                                                <TextField label="" name={item.name} type="text" readOnly={item.readonly} isRequire={false} />
                                             </dd>
                                         </div>
                                     ))}
@@ -105,7 +105,13 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                                             </p>
                                         </dt>
                                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                            <SelectField label="" name="gender" values={genderFieldData} defaultValue={userState.gender} />
+                                            <SelectField
+                                                label=""
+                                                name="gender"
+                                                values={genderFieldData}
+                                                defaultValue={userState.gender}
+                                                isRequire={false}
+                                            />
                                         </dd>
                                     </div>
                                     <FormErrorMessage />
