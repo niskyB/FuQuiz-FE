@@ -14,7 +14,6 @@ interface QuillInputProps {
 }
 
 export const QuillInput: React.FC<QuillInputProps> = ({ description, setDescription, name = '', label = '', isRequire = true, direction }) => {
-    const { errorDetails } = useStoreApi();
     return (
         <>
             <CommonFieldWrapper name={name} label={label} isRequire={isRequire} direction={direction}>
@@ -42,7 +41,6 @@ export const QuillInput: React.FC<QuillInputProps> = ({ description, setDescript
                         ],
                     }}
                 />
-                {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
             </CommonFieldWrapper>
         </>
     );

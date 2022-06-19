@@ -15,7 +15,6 @@ interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement>
 }
 
 export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue, direction, isRequire = true, ...rest }) => {
-    const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
@@ -32,7 +31,6 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
                     </option>
                 ))}
             </select>
-            {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
         </CommonFieldWrapper>
     );
 };
