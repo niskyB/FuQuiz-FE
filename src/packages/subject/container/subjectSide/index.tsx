@@ -17,6 +17,7 @@ const SubjectSide: React.FunctionComponent<SubjectSideProps> = ({ category, curr
         () => ({ isActive: true, isFeature, currentPage, pageSize, category, name, order }),
         [category, currentPage, isFeature, name, pageSize, order]
     );
+
     const { subjects: featureSubjects } = useGetSubjectList(featureSubjectOption);
     return (
         <>

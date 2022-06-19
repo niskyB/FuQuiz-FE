@@ -22,7 +22,6 @@ const defaultValues: BlogListFilterDTO = {
     order: Order.DESC,
 };
 export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOption }) => {
-    console.log(subjectOption);
     const router = useRouter();
 
     const methods = useForm<BlogListFilterDTO>({

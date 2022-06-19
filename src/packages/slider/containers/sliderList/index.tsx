@@ -116,12 +116,13 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Image', 'Title/Date', 'Back link', 'Showing', '']} />
+                                <TableHead fields={['id', 'Image', 'Title/Date', 'Back link', 'Showing', '']} />
 
                                 <TableBody>
                                     {Boolean(count && sliders) &&
                                         sliders.map((slider) => (
                                             <TableRow key={slider.id}>
+                                                <TableDescription>{slider.id}</TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
                                                         <img className="w-10 h-10" src={slider.imageUrl} alt="" />
