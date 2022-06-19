@@ -92,7 +92,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                     { label: 'Lesson Types ', value: 'DESC' },
                                     { label: 'Subject Dimension', value: 'DESC' },
                                 ]}
-                                require={false}
+                                isRequire={false}
                                 name="orderBy"
                             />
                             <TextField isRequire={false} name="value" label="value" />
@@ -102,7 +102,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                     { label: 'Active', value: true },
                                     { label: 'Inactive', value: false },
                                 ]}
-                                require={false}
+                                isRequire={false}
                                 name="isActive"
                             />
                             <SelectField
@@ -114,7 +114,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                     { label: 'Order', value: 'DESC' },
                                     { label: 'Status ', value: 'DESC' },
                                 ]}
-                                require={false}
+                                isRequire={false}
                                 name="orderBy"
                             />
                             <SelectField
@@ -123,7 +123,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                     { label: 'ASCENDING', value: 'ASC' },
                                     { label: 'DESCENDING', value: 'DESC' },
                                 ]}
-                                require={false}
+                                isRequire={false}
                                 name="order"
                             />
                         </div>
