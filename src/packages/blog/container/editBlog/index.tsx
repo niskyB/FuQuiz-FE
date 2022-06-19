@@ -40,7 +40,6 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     const [details, setDetails] = React.useState<string>('');
 
     React.useEffect(() => {
-        console.log(blog);
         if (blog) {
             methods.setValue('category', blog.category.id);
             methods.setValue('briefInfo', blog.briefInfo);
@@ -51,10 +50,12 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
             setDetails(blog.details);
             setPreviewThumbnailUrl(blog.thumbnailUrl);
         }
+
         return () => {};
     }, [blog]);
 
     const _handleOnSubmit = async (data: EditBlogDTO) => {
+        console.log(data);
         if (thumbnailFile) data.image = thumbnailFile;
         else data.image = new File([], '');
         if (details) data.details = details;

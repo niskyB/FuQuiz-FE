@@ -13,9 +13,19 @@ import { Table, TableDescription, TableHead, TableRow } from '../../../../core/c
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { useGetSliderList } from '../../common/hooks/useGetSliderList';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 
 interface SliderProps extends GetSliderOptionsDTO {}
-export const SliderList: React.FunctionComponent<SliderProps> = ({ title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId }) => {
+export const SliderList: React.FunctionComponent<SliderProps> = ({
+    title,
+    currentPage,
+    pageSize,
+    createdAt: createdAt,
+    isShow,
+    orderBy,
+    userId,
+    backLink,
+}) => {
     const router = useRouter();
     const userState = useStoreUser();
     const methods = useForm<SliderProps>();
@@ -28,6 +38,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
             isShow,
             orderBy,
             createdAt: createdAt,
+            backLink,
         }),
         [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
     );
@@ -85,15 +96,8 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                         <div className="flex space-x-4">
                             <TextField name="title" label="Title" isRequire={false} />
                             <TextField name="createdAt" label="Create From" type={'date'} isRequire={false} />
-                            <SelectField
-                                label="Showing"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                name="isShow"
-                                require={false}
-                            />
+                            <TextField name="backLink" label="Back link" isRequire={false} />
+                            <SelectField label="Showing" values={[allFieldData, ...statusFieldData]} name="isShow" isRequire={false} />
                         </div>
                         <div className="flex justify-end">
                             <button
