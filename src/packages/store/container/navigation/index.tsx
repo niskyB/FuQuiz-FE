@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { logout } from './action';
 import { useStoreUser } from '../../../../core/store';
 import { routes } from '../../../../core/routes';
+import { UserRole } from '../../../../core/models/role';
 
 interface NavigationProps {}
 function classNames(...classes: any) {
@@ -18,7 +19,6 @@ const NAV_LINK = [
     { label: 'Home', link: routes.homeUrl },
     { label: 'Blog', link: routes.blogListUrl },
     { label: 'Course', link: routes.subjectListUrl },
-    { label: 'Dashboard', link: routes.dashboardUrl },
 ];
 
 const USER_ACTION_LINK = [
@@ -39,6 +39,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
         const res = await logout();
         if (res) window.location.reload();
     };
+    console.log(userState.role.description !== UserRole.CUSTOMER);
     return (
         <Disclosure as="nav" className="bg-white shadow">
             {({ open }) => (
@@ -66,6 +67,20 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                             </a>
                                         </Link>
                                     ))}
+
+                                    {userState.role.description !== UserRole.CUSTOMER && (
+                                        <Link href={routes.dashboardUrl}>
+                                            <a
+                                                className={`${
+                                                    router.pathname === routes.dashboardUrl
+                                                        ? 'border-indigo-500 text-gray-900'
+                                                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                                                } inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 `}
+                                            >
+                                                Dashboard
+                                            </a>
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                             {/* <div className="flex items-center justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
