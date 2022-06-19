@@ -51,7 +51,9 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
             setPreviewThumbnailUrl(blog.thumbnailUrl);
         }
 
-        return () => {};
+        return () => {
+            methods.reset();
+        };
     }, [blog]);
 
     const _handleOnSubmit = async (data: EditBlogDTO) => {
