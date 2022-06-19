@@ -19,7 +19,6 @@ const defaultValues: AddUserDTO = {
     gender: Gender.MALE,
     mobile: '',
     role: '',
-    password: '',
 };
 export const AddUser: React.FunctionComponent<AddUserProps> = () => {
     const methods = useForm<AddUserDTO>({

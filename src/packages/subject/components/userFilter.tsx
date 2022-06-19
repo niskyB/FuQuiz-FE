@@ -9,7 +9,7 @@ import { pushWithParams } from '../../../core/util';
 import { dataParser } from '../../../core/util/data';
 import { useGetSubjectCategoryList } from '../../subjectCategory';
 import { BlogListFilterDTO } from '../container/subjects/interface';
-
+import React from 'react';
 interface UserFilterProps {
     subjectOption: any;
 }
@@ -31,6 +31,15 @@ export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOp
         pushWithParams(router, routes.subjectListUrl, { ...subjectOption, ...data });
     };
     const { categories } = useGetSubjectCategoryList();
+
+    React.useEffect(() => {
+        methods.setValue('category', subjectOption.category);
+        methods.setValue('isFeature', subjectOption.isFeature);
+        methods.setValue('order', subjectOption.order);
+        methods.setValue('name', subjectOption.name);
+        return () => {};
+    }, []);
+
     return (
         <FormWrapper methods={methods}>
             <form
@@ -41,14 +50,14 @@ export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOp
                 <SelectField
                     label="Category"
                     name="category"
-                    require={false}
+                    isRequire={false}
                     values={[allFieldData, ...dataParser<BlogCategory>(categories, 'description', 'id')]}
                 />
-                <SelectField label="Feature" name="isFeature" require={false} values={[allFieldData, ...FeatureFieldData]} />
+                <SelectField label="Feature" name="isFeature" isRequire={false} values={[allFieldData, ...FeatureFieldData]} />
                 <SelectField
                     label="Sort"
                     name="order"
-                    require={false}
+                    isRequire={false}
                     values={[
                         { label: 'Newest', value: Order.DESC },
                         { label: 'Oldest', value: Order.ASC },
