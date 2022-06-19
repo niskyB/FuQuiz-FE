@@ -35,8 +35,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
 
     const _handleOnSubmit = async (data: FilterBlogsDTO) => {
         if (options) {
-            const { category, currentPage, order, pageSize, title } = options;
-            pushWithParams(router, routes.blogListUrl, { ...data, category, currentPage, order, pageSize, title });
+            pushWithParams(router, routes.blogListUrl, { options, ...data });
             return;
         }
         pushWithParams(router, routes.blogListUrl, { ...data });
@@ -49,7 +48,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                     <SelectField
                         label="Blog Category"
                         name="category"
-                        require={false}
+                        isRequire={false}
                         values={[allFieldData, ...dataParser<BlogCategory>(categories, 'description', 'id')]}
                     />
 
@@ -58,7 +57,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                     <SelectField
                         label="Sort"
                         name="order"
-                        require={false}
+                        isRequire={false}
                         values={[
                             { label: 'Newest', value: Order.DESC, isSelect: true },
                             { label: 'Oldest', value: Order.ASC },
