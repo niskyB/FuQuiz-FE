@@ -131,7 +131,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
                                             Back to subject list
                                         </p>
                                     </Link>
-                                    <Link href={router.asPath.replace('/edit', '') + routes.lessonListUrl} passHref>
+                                    <Link href={router.asPath.replace('/edit', '') + routes.adminLessonListUrl} passHref>
                                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                                             Lessons
                                         </p>

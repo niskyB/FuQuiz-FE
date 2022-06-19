@@ -9,6 +9,7 @@ import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
@@ -110,60 +111,36 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Subject <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="subject"
-                                            id="subject"
-                                            onChange={(e) => _onChangeSubject(e)}
-                                            values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Lesson <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField label="" name="lesson" values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Dimension <RedStar />
-                                    </label>
+                                <SelectField
+                                    label="Subject"
+                                    name="subject"
+                                    direction="row"
+                                    onChange={(e) => _onChangeSubject(e)}
+                                    values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
+                                />
 
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <MultiSelectBox
-                                            selected={selectedDimension}
-                                            setSelected={setSelectedDimension}
-                                            selectedList={selectedDimensionList}
-                                            setSelectedList={setSelectedDimensionList}
-                                            values={dataParser(dimensions, 'name', 'id')}
-                                            require={false}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Level <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField label="" name="questionLevel" values={dataParser(levels, 'description', 'id')} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Status <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField label="" name="isActive" values={statusFieldData} />
-                                    </div>
-                                </div>
+                                <SelectField
+                                    label="Lesson"
+                                    name="lesson"
+                                    direction="row"
+                                    values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
+                                />
+
+                                <MultiSelectBox
+                                    selected={selectedDimension}
+                                    setSelected={setSelectedDimension}
+                                    selectedList={selectedDimensionList}
+                                    setSelectedList={setSelectedDimensionList}
+                                    values={dataParser(dimensions, 'name', 'id')}
+                                    name="dimensions"
+                                    label="Dimensions"
+                                    direction="row"
+                                />
+
+                                <SelectField label="Level" direction="row" name="questionLevel" values={dataParser(levels, 'description', 'id')} />
+
+                                <SelectField label="Status" direction="row" name="isActive" values={statusFieldData} />
+
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Image
@@ -179,53 +156,24 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         />
                                     </div>
                                 </div>
-                                {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Video Url
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2"> */}
-                                <TextField label="Video Url" name="videoLink" direction="row" />
-                                {/* </div>
-                                </div> */}
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Audio Url
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="audioLink" />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Content <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <textarea
-                                            {...methods.register('content')}
-                                            rows={7}
-                                            id="content"
-                                            autoComplete="given-name"
-                                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        Question Type <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="isMultipleChoice"
-                                            defaultValue={false}
-                                            values={[
-                                                { label: 'Multiple choice', value: true },
-                                                { label: 'One choice', value: false },
-                                            ]}
-                                            onChange={(e) => _onChangeQuestionType({ ...e })}
-                                        />
-                                    </div>
-                                </div>
+
+                                <TextField isRequire={false} label="Video Url" name="videoLink" direction="row" />
+
+                                <TextField isRequire={false} label="Audio Url" name="audioLink" direction="row" />
+
+                                <TextareaField label="Content" name="content" direction="row" />
+
+                                <SelectField
+                                    label="Question Type"
+                                    direction="row"
+                                    name="isMultipleChoice"
+                                    defaultValue={false}
+                                    values={[
+                                        { label: 'One choice', value: false },
+                                        { label: 'Multiple choice', value: true },
+                                    ]}
+                                    onChange={(e) => _onChangeQuestionType({ ...e })}
+                                />
                                 {/* {answers.fields.map((_, index) => (
                                     <div
                                         key={'answer' + index}
@@ -297,6 +245,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     <button
                                         className="w-8 h-8 text-indigo-500 hover:text-indigo-600"
                                         onClick={() => answers.append({ detail: '', isCorrect: false })}
+                                        type="button"
                                     >
                                         <PlusCircleIcon />
                                     </button>
@@ -305,6 +254,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         <button
                                             className="w-8 h-8 text-red-500 hover:text-red-600"
                                             onClick={() => answers.remove(answers.fields.length - 1)}
+                                            type="button"
                                         >
                                             <XCircleIcon />
                                         </button>
@@ -320,7 +270,13 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         <RedStar />
                                     </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <QuillInput description={explanation} setDescription={setExplanation} isRequire={false} />
+                                        <QuillInput
+                                            label="Explanation"
+                                            direction="row"
+                                            description={explanation}
+                                            setDescription={setExplanation}
+                                            isRequire={false}
+                                        />
                                     </div>
                                 </div>
                             </div>

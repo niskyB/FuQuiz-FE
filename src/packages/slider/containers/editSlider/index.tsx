@@ -52,10 +52,10 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     React.useEffect(() => {
         if (slider) {
             // if user go in there are not admin or the owner of the slider, push them to sliderList page
-            if (userState.role.description != UserRole.ADMIN && slider.marketing && slider.marketing.id && slider.marketing.id !== userState.typeId) {
-                router.push(routes.adminSliderListUrl);
-                return;
-            }
+            // if (userState.role.description != UserRole.ADMIN && slider.marketing && slider.marketing.id && slider.marketing.id !== userState.typeId) {
+            //     router.push(routes.adminSliderListUrl);
+            //     return;
+            // }
 
             methods.setValue('title', slider.title);
             methods.setValue('backLink', slider.backLink);
@@ -63,13 +63,6 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
             methods.setValue('notes', slider.notes);
         }
     }, [methods, slider, router, userState]);
-
-    React.useEffect(() => {
-        if (imageFile) setImageUrl(URL.createObjectURL(imageFile));
-        return () => {
-            URL.revokeObjectURL(imageUrl);
-        };
-    }, [imageFile]);
 
     const _handleOnSubmit = async (data: UpdateSliderDTO) => {
         if (imageFile) data.image = imageFile;
@@ -97,7 +90,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
     };
     return (
         <FormWrapper methods={methods}>
-            <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+            <form className="max-w-2xl space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
@@ -177,12 +170,14 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
                                 Cancel
                             </p>
                         </Link>
-                        <button
-                            type="submit"
-                            className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Update
-                        </button>
+                        {(userState.role.description === UserRole.ADMIN || userState.id === slider?.marketing?.user.id) && (
+                            <button
+                                type="submit"
+                                className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Update
+                            </button>
+                        )}
                     </div>
                 </div>
             </form>

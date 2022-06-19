@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { SubjectFilterDTO } from '../subjectList/interface';
-import { UserFilter } from '../../components/userFilter';
-import Contact from '../../../store/container/Contact';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/outline';
 import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
@@ -11,6 +9,8 @@ import { formActions } from '../../../../core/store/form';
 import { vietnamCurrencyConverter } from '../../../../core/util/price';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { useGetSubject } from '../../common/hooks/useGetSubject';
+import SubjectSide from '../subjectSide';
+import { Order } from '../../../../core/common/dataField';
 interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
@@ -27,10 +27,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
 }) => {
     const router = useRouter();
     const userState = useStoreUser();
-    const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
-        () => ({ isActive: true, isFeature, currentPage, pageSize, category, name }),
-        [category, currentPage, isFeature, name, pageSize]
-    );
+
     const { pricePackageList } = useGetPricePackageListById(id);
     const { subject } = useGetSubject(id);
     const { lessonList } = useGetLessonList(id);
@@ -38,8 +35,14 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
         <>
             <div className="flex space-x-10">
                 <div className="w-full max-w-xs space-y-10">
-                    <UserFilter subjectOption={subjectOption} />
-                    <Contact />
+                    <SubjectSide
+                        category={category}
+                        currentPage={currentPage}
+                        isFeature={isFeature}
+                        name={name}
+                        order={Order.DESC}
+                        pageSize={pageSize}
+                    />
                 </div>
                 <div className="flex flex-col flex-1 p-10 space-y-10 bg-white rounded-md">
                     <div className="flex">
@@ -113,7 +116,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                     <div className="flex flex-col space-y-3">
                                                         <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
                                                         <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
-                                                            {lesson.type.description}
+                                                            {lesson.type.name}
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center flex-shrink-0 ml-2">

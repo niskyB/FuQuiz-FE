@@ -5,10 +5,6 @@ import Link from 'next/link';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 import { BlogListFilterDTO } from './interface';
-import { SideBox } from '../../../store/components/sideBox';
-import Contact from '../../../store/container/Contact';
-import { UserFilter } from '../../components/userFilter';
-
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
@@ -16,6 +12,7 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
 import { store } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { getMinMaxPriceOfPricePackage, vietnamCurrencyConverter } from '../../../../core/util/price';
+import SubjectSide from '../subjectSide';
 
 interface SubjectsProps extends BlogListFilterDTO {}
 
@@ -23,37 +20,19 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
 export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, currentPage, isFeature, name, pageSize, order }) => {
-    const featureSubjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
-        () => ({ isActive: true, isFeature: true, currentPage: 1, pageSize: 3 }),
-        []
-    );
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
         () => ({ isActive: true, isFeature, currentPage, pageSize, category, name, order }),
         [category, currentPage, isFeature, name, pageSize, order]
     );
 
     const { subjects, count } = useGetSubjectList(subjectOption);
-    const { subjects: featureSubjects } = useGetSubjectList(featureSubjectOption);
 
     return (
         <>
             <h1 className="mb-5 text-4xl font-bold text-center">New Course</h1>
             <div className="flex space-x-10">
                 <div className="flex flex-col w-full max-w-xs space-y-7">
-                    <UserFilter subjectOption={subjectOption} />
-                    <div className="space-y-3">
-                        <h2 className="text-2xl font-semibold">Feature course</h2>
-                        {featureSubjects.map((subject) => (
-                            <SideBox
-                                key={subject.id}
-                                href={`${routes.subjectUrl}/${subject.id}`}
-                                image={subject.thumbnailUrl}
-                                title={subject.name}
-                                category={subject.category.description}
-                            />
-                        ))}
-                    </div>
-                    <Contact />
+                    <SubjectSide category={category} currentPage={currentPage} isFeature={isFeature} name={name} order={order} pageSize={pageSize} />
                 </div>
 
                 <div className="flex flex-col space-y-5">

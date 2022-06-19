@@ -116,45 +116,55 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Image', 'Title/Date', 'Back link', 'Showing', '']} />
+                                <TableHead fields={['id', 'Image', 'Title/Date', 'Back link', 'Showing', '']} />
 
                                 <TableBody>
                                     {Boolean(count && sliders) &&
-                                        sliders.map((slider) => (
-                                            <TableRow key={slider.id}>
-                                                <TableDescription>
-                                                    <div className="max-w-sm">
-                                                        <img className="w-10 h-10" src={slider.imageUrl} alt="" />
-                                                    </div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{slider.title}</div>
-                                                    <div className="text-gray-900">{new Date(slider.createdAt).toLocaleDateString()}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{slider.backLink}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    {slider.isShow ? (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                            Active
-                                                        </span>
-                                                    ) : (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                            Inactive
-                                                        </span>
-                                                    )}
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    {(slider.marketing && slider.marketing.user.id === userState.id) ||
-                                                    userState.role.description === UserRole.ADMIN ? (
-                                                        <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
-                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                        </Link>
-                                                    ) : null}
-                                                </TableDescription>
-                                            </TableRow>
-                                        ))}
+                                        sliders.map((slider) => {
+                                            console.log(slider);
+
+                                            return (
+                                                <TableRow key={slider.id}>
+                                                    <TableDescription>{slider.id}</TableDescription>
+                                                    <TableDescription>
+                                                        <div className="max-w-sm">
+                                                            <img className="w-10 h-10" src={slider.imageUrl} alt="" />
+                                                        </div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{slider.title}</div>
+                                                        <div className="text-gray-900">{new Date(slider.createdAt).toLocaleDateString()}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{slider.backLink}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        {slider.isShow ? (
+                                                            <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                                Active
+                                                            </span>
+                                                        ) : (
+                                                            <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                                Inactive
+                                                            </span>
+                                                        )}
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        {(slider.marketing && slider.marketing.user.id === userState.id) ||
+                                                        userState.role.description === UserRole.ADMIN ||
+                                                        userState.id === slider.marketing?.user.id ? (
+                                                            <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
+                                                                <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                            </Link>
+                                                        ) : (
+                                                            <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
+                                                                <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View</p>
+                                                            </Link>
+                                                        )}
+                                                    </TableDescription>
+                                                </TableRow>
+                                            );
+                                        })}
                                 </TableBody>
                             </Table>
                         </div>

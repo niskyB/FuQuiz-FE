@@ -1,14 +1,15 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterUnAuthProtectionWrapper } from '../../../src/core/components/routerProtection';
-import VerifyEmail from '../../../src/packages/auth/containers/verifyEmail';
+import { VerifyEmail } from '../../../src/packages/auth/containers/verifyEmail';
+
 import { StoreLayout } from '../../../src/packages/store';
 
-interface ResetPasswordPageProps {
+interface VerifyEmailPageProps {
     token: string;
 }
 
-const ResetPasswordPage: NextPage<ResetPasswordPageProps> = ({ token }) => {
+const VerifyEmailPage: NextPage<VerifyEmailPageProps> = ({ token }) => {
     return (
         <RouterUnAuthProtectionWrapper>
             <StoreLayout>
@@ -18,10 +19,10 @@ const ResetPasswordPage: NextPage<ResetPasswordPageProps> = ({ token }) => {
     );
 };
 
-ResetPasswordPage.getInitialProps = async (ctx: NextPageContext): Promise<ResetPasswordPageProps> => {
+VerifyEmailPage.getInitialProps = async (ctx: NextPageContext): Promise<VerifyEmailPageProps> => {
     let props = { token: ctx.query?.token || '' };
 
-    return props as ResetPasswordPageProps;
+    return props as VerifyEmailPageProps;
 };
 
-export default ResetPasswordPage;
+export default VerifyEmailPage;

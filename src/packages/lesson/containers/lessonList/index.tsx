@@ -44,14 +44,14 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                 </div>
                 <div className="flex flex-col items-end mt-4 space-y-2 sm:mt-0 sm:ml-16">
                     <div className="space-x-2">
-                        <Link href={router.asPath.replace(routes.lessonListUrl, '')} passHref>
+                        <Link href={router.asPath.replace(routes.adminLessonListUrl, routes.adminEditSubjectUrl)} passHref>
                             <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                                 Overview
                             </p>
                         </Link>
                     </div>
 
-                    <Link href={router.asPath + routes.addLessonUrl} passHref>
+                    <Link href={router.asPath + routes.adminAddLessonUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Lesson
                         </p>
@@ -71,7 +71,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                                     { label: 'Quiz', value: 'domain 2' },
                                 ]}
                                 name="isActive"
-                                require={false}
+                                isRequire={false}
                             />
                             <TextField name="createdAt" label="Create From" type={'date'} isRequire={false} />
                             <TextField name="updateAt" label="Update date" type={'date'} isRequire={false} />
@@ -82,13 +82,13 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                                     { label: 'Inactive', value: false },
                                 ]}
                                 name="isActive"
-                                require={false}
+                                isRequire={false}
                             />
                             <SelectField
                                 label="Package"
                                 values={[allFieldData, ...((pricePackageList && dataParser<PricePackage>(pricePackageList, 'name', 'id')) || [])]}
                                 name="isActive"
-                                require={false}
+                                isRequire={false}
                             />
                         </div>
                         <div className="flex justify-end">
@@ -138,7 +138,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                                                 )}
                                             </TableDescription>
                                             <TableDescription>
-                                                <Link href={`${router.asPath}${routes.editLessonUrl}/${lesson.id}`} passHref>
+                                                <Link href={`${router.asPath}${routes.adminEditLessonUrl}/${lesson.id}`} passHref>
                                                     <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                 </Link>
 
