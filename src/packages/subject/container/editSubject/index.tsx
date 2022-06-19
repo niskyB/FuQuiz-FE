@@ -4,7 +4,9 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { UserRole } from '../../../../core/models/role';
 import { SubjectCategory } from '../../../../core/models/subject';
 import { User } from '../../../../core/models/user';
@@ -12,9 +14,9 @@ import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { checkFileType } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
-import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
 import { RedStar } from '../../../store';
 import { useAdminGetUserList } from '../../../users';
+import { useGetSubject } from '../../common/hooks/useGetSubject';
 import { useGetSubjectCategory } from '../../common/hooks/useGetSubjectCategory';
 import { adminUpdateSubject, expertUpdateSubject } from './action';
 import { EditSubjectDTO } from './interface';
@@ -69,13 +71,6 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
         }
     }, [methods, subject, router, categories]);
 
-    React.useEffect(() => {
-        if (file) setImageUrl(URL.createObjectURL(file));
-        return () => {
-            URL.revokeObjectURL(imageUrl);
-        };
-    }, [file]);
-
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
@@ -105,24 +100,16 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
         if (userState.role.description === UserRole.ADMIN) {
             return (
                 <>
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                        <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Owner <RedStar />
-                        </label>
-                        <SelectField label="" values={[...dataParser<User>(expertList, 'fullName', 'id')]} name="assignTo" />
-                    </div>
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                        <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Feature <RedStar />
-                        </label>
-                        <SelectField label="" values={statusFieldData} name="isFeature" />
-                    </div>
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                        <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Active <RedStar />
-                        </label>
-                        <SelectField label="" values={statusFieldData} name="isActive" />
-                    </div>
+                    <SelectField
+                        label="Owner"
+                        direction="row"
+                        values={[{ label: 'Unset', value: '' }, ...dataParser<User>(expertList, 'fullName', 'id')]}
+                        name="assignTo"
+                    />
+
+                    <SelectField label="Feature" direction="row" values={[unsetFieldData, ...statusFieldData]} name="isFeature" />
+
+                    <SelectField label="Active" direction="row" values={[unsetFieldData, ...statusFieldData]} name="isActive" />
                 </>
             );
         }
@@ -167,39 +154,18 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
 
                         <div className="w-full max-w-3xl mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             {mapFields.map((item) => (
-                                <div
-                                    key={item.name}
-                                    className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-                                >
-                                    <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        {item.label} <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name={item.name} type="text" />
-                                    </div>
-                                </div>
+                                <TextField key={item.name} label={item.label} name={item.name} type="text" direction="row" />
                             ))}
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Category <RedStar />
-                                </label>
-                                <SelectField label="" values={[...dataParser<SubjectCategory>(categories, 'name', 'id')]} name="category" />
-                            </div>
+
+                            <SelectField
+                                label="Category"
+                                values={[...dataParser<SubjectCategory>(categories, 'description', 'id')]}
+                                name="category"
+                                direction="row"
+                            />
                             {_renderField()}
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Description <RedStar />
-                                </label>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <textarea
-                                        {...methods.register('description')}
-                                        rows={7}
-                                        id="description"
-                                        autoComplete="given-name"
-                                        className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
-                                    />
-                                </div>
-                            </div>
+
+                            <TextareaField label="Description" name="description" direction="row" />
 
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">

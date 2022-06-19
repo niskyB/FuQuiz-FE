@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { SubjectFilterDTO } from '../subjectList/interface';
-import { useGetSubject } from '../../../slider/common/hooks/useGetSubject';
 import { UserFilter } from '../../components/userFilter';
 import Contact from '../../../store/container/Contact';
 import Link from 'next/link';
@@ -11,30 +10,11 @@ import { store, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { vietnamCurrencyConverter } from '../../../../core/util/price';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
+import { useGetSubject } from '../../common/hooks/useGetSubject';
 interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
 
-const positions = [
-    {
-        id: 2,
-        title: 'Chương 1: đầu tư như thé nào là chính xác?',
-        type: 'Subject topic',
-        department: '',
-    },
-    {
-        id: 1,
-        title: 'Quiz ôn tập chương 1',
-        type: 'Quiz',
-        department: '',
-    },
-    {
-        id: 3,
-        title: 'Hướng dẫn cụ thể cách tạo ví stepN',
-        type: 'Lesson',
-        department: '',
-    },
-];
 export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
     category,
     createdAt,
@@ -68,7 +48,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                         </div>
                         <div className="flex-1 ">
                             <h1 className="text-2xl font-bold">{subject?.name}</h1>
-                            <p className="mt-1 font-semibold text-indigo-500">{subject?.category.name}</p>
+                            <p className="mt-1 font-semibold text-indigo-500">{subject?.category.description}</p>
                             <p className="mt-1 text-gray-500">{subject?.tagLine}</p>
                             <p className="mt-3 text-gray-500">{subject?.description}</p>
                         </div>
@@ -115,7 +95,9 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-base text-red-500">At current we don't have any price package yet, please check this out later!</p>
+                            <p className="text-base text-red-500">
+                                At current we don&apos;t have any price package yet, please check this out later!
+                            </p>
                         )}
                     </div>
 

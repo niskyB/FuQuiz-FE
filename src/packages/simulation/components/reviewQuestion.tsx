@@ -20,7 +20,7 @@ const ReviewQuestion: React.FunctionComponent<ReviewQuestionProps> = ({ question
                         <div key={item.id} className="relative flex items-start">
                             <div className="ml-3 text-sm">
                                 <label htmlFor={item.id} className="font-medium text-black cursor-pointer">
-                                    {item.details}
+                                    {item.detail}
                                 </label>
                             </div>
                         </div>

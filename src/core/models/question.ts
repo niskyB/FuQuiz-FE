@@ -1,12 +1,12 @@
-import { AttributeType } from '../common/interface';
+import { SystemType } from '../common/interface';
 import { Answer } from './answer';
 import { Dimension } from './dimension';
-import { Lesson, LessonTypeEnum } from './lesson';
+import { Lesson } from './lesson';
 
 export interface Question {
     id: string;
     lesson: Pick<Lesson, 'id' | 'name'>;
-    dimension: Pick<Dimension, 'id' | 'name'>;
+    dimensions: Pick<Dimension, 'id' | 'name'>[];
     questionLevel: QuestionLevel;
     isActive: boolean;
     content: string;
@@ -18,7 +18,7 @@ export interface Question {
     explanation: string;
 }
 
-export interface QuestionLevel extends AttributeType {}
+export interface QuestionLevel extends SystemType<string> {}
 
 export interface BackQuestion {
     id: string;

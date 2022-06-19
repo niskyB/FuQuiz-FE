@@ -59,16 +59,19 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <button
-                        onClick={() =>
-                            userId
-                                ? pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: '' })
-                                : pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: userState.id })
-                        }
-                        className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                    >
-                        {userId ? 'All sliders' : 'My sliders'}
-                    </button>
+                    {userState.role.description !== UserRole.ADMIN && (
+                        <button
+                            onClick={() =>
+                                userId
+                                    ? pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: '' })
+                                    : pushWithParams(router, routes.adminSliderListUrl, { ...options, userId: userState.id })
+                            }
+                            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                        >
+                            {userId ? 'All sliders' : 'My sliders'}
+                        </button>
+                    )}
+
                     <Link href={routes.adminAddSliderUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Slider
@@ -80,8 +83,8 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="title" label="Title" require={false} />
-                            <TextField name="createdAt" label="Create From" type={'date'} require={false} />
+                            <TextField name="title" label="Title" isRequire={false} />
+                            <TextField name="createdAt" label="Create From" type={'date'} isRequire={false} />
                             <SelectField
                                 label="Showing"
                                 values={[

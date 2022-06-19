@@ -1,4 +1,4 @@
-import { Answer } from '../../../core/models/question';
+import { Answer } from '../../../core/models/answer';
 import { QuizQuestionDTO } from '../../quiz/containers/doQuiz/interface';
 
 interface QuizAnswerReadonlyProps {

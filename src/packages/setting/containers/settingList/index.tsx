@@ -95,7 +95,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                 require={false}
                                 name="orderBy"
                             />
-                            <TextField require={false} name="value" label="value" />
+                            <TextField isRequire={false} name="value" label="value" />
                             <SelectField
                                 label="Active"
                                 values={[

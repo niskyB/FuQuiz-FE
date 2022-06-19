@@ -118,7 +118,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = () => {
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-white">{userState.fullName}</p>
-                            <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">{userState.role?.name}</p>
+                            <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">{userState.role?.description}</p>
                         </div>
                     </div>
                 </div>

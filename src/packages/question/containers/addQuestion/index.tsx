@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { SelectionFieldValues } from '../../../../core/common/interface';
@@ -12,19 +13,18 @@ import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { RedStar } from '../../../store';
-import { useGetSubjectListByRole } from '../../../subject/common/hooks/useGetSubjectListByRole';
+import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
 import { addQuestion } from './action';
 import { AddQuestionDTO } from './interface';
 
 interface AddQuestionProps {}
 
-const defaultValues: AddQuestionDTO = {
+const defaultValues: Omit<AddQuestionDTO, 'image'> = {
     subject: '',
     lesson: '',
     dimensions: '',
     questionLevel: '',
-    image: null,
     videoLink: '',
     audioLink: '',
     content: '',
@@ -60,7 +60,8 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const { subjects } = useGetSubjectListByRole();
     const { lessonList: lessons } = useGetLessonList(subjectId);
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
-    const { level } = useGetQuestionLevelList();
+    const { levels } = useGetQuestionLevelList();
+
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
 
@@ -87,8 +88,14 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         selectedDimensionList.map((item) => (dimensionString = dimensionString + item.value + ','));
         others.dimensions = dimensionString;
         console.log(others);
-        const res = await addQuestion(others);
-        console.log(res);
+        await addQuestion(others).then(() => {
+            methods.reset();
+            setPreviewThumbnailUrl('');
+            setThumbnailFile(null);
+            setExplanation('');
+
+            toast.success('Add new question success!');
+        });
     };
 
     return (
@@ -146,7 +153,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         Level <RedStar />
                                     </label>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField label="" name="questionLevel" values={dataParser(level, 'name', 'id')} />
+                                        <SelectField label="" name="questionLevel" values={dataParser(levels, 'description', 'id')} />
                                     </div>
                                 </div>
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -172,14 +179,14 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Video Url
                                     </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name="videoLink" />
-                                    </div>
-                                </div>
+                                    <div className="mt-1 sm:mt-0 sm:col-span-2"> */}
+                                <TextField label="Video Url" name="videoLink" direction="row" />
+                                {/* </div>
+                                </div> */}
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                         Audio Url
@@ -219,7 +226,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         />
                                     </div>
                                 </div>
-                                {answers.fields.map((_, index) => (
+                                {/* {answers.fields.map((_, index) => (
                                     <div
                                         key={'answer' + index}
                                         className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
@@ -264,7 +271,46 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                             </div>
                                         </div>
                                     </div>
+                                ))} */}
+                                {answers.fields.map((_, index) => (
+                                    <>
+                                        <TextField
+                                            key={'answer' + index}
+                                            direction="row"
+                                            label={`Answer ${index + 1}`}
+                                            {...methods.register(`answers.${index}.detail` as const)}
+                                        />
+                                        <div className={`flex justify-end col-span-2 col-end-4 space-x-4`}>
+                                            <div className="flex items-center space-x-2 text-sm font-medium text-gray-900 w-fit">
+                                                <input
+                                                    type={isMultipleChoice ? 'checkbox' : 'radio'}
+                                                    name="isCorrect"
+                                                    onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
+                                                />
+                                                <label>Right Answer</label>
+                                            </div>
+                                        </div>
+                                    </>
                                 ))}
+
+                                <div className="flex justify-end space-x-2">
+                                    <button
+                                        className="w-8 h-8 text-indigo-500 hover:text-indigo-600"
+                                        onClick={() => answers.append({ detail: '', isCorrect: false })}
+                                    >
+                                        <PlusCircleIcon />
+                                    </button>
+
+                                    {answers.fields.length !== 1 && (
+                                        <button
+                                            className="w-8 h-8 text-red-500 hover:text-red-600"
+                                            onClick={() => answers.remove(answers.fields.length - 1)}
+                                        >
+                                            <XCircleIcon />
+                                        </button>
+                                    )}
+                                </div>
+
                                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                     <div className="flex justify-start space-x-2">
                                         <label htmlFor="explanation" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
@@ -274,7 +320,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                         <RedStar />
                                     </div>
                                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <QuillInput description={explanation} setDescription={setExplanation} require={false} />
+                                        <QuillInput description={explanation} setDescription={setExplanation} isRequire={false} />
                                     </div>
                                 </div>
                             </div>

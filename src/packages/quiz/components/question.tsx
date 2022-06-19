@@ -52,7 +52,7 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                                 </div>
                                 <div className="ml-3 text-sm">
                                     <label htmlFor={item.id} className="font-medium text-black cursor-pointer">
-                                        {item.details}
+                                        {item.detail}
                                     </label>
                                 </div>
                             </div>

@@ -80,9 +80,9 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex flex-col space-y-4">
                             <div className="flex space-x-4">
-                                <TextField name="email" label="email" require={false} />
-                                <TextField name="fullName" label="Full name" require={false} />
-                                <TextField name="mobile" label="Mobile" require={false} />
+                                <TextField name="email" label="email" isRequire={false} />
+                                <TextField name="fullName" label="Full name" isRequire={false} />
+                                <TextField name="mobile" label="Mobile" isRequire={false} />
                                 <SelectField label="Active" values={[...statusFieldData]} name="isActive" require={false} />
                             </div>
                             <div className="flex space-x-4">

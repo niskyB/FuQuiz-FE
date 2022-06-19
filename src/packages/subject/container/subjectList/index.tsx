@@ -6,8 +6,8 @@ import { allFieldData, statusFieldData } from '../../../../core/common/dataField
 import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { BlogCategory } from '../../../../core/models/blog';
 import { UserRole } from '../../../../core/models/role';
+import { SubjectCategory } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { pushWithParams } from '../../../../core/util';
@@ -33,6 +33,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
     const methods = useForm<SubjectFilterFormDTO>({
         defaultValues,
     });
+
     const options: SubjectFilterDTO = React.useMemo(
         () => ({
             currentPage,
@@ -88,16 +89,16 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                 <FormWrapper methods={methods}>
                     <form className="space-y-4" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="flex space-x-4">
-                            <TextField name="name" label="Subject name" require={false} />
-                            <DateField name="createdAt" label="Create From" />
+                            <TextField name="name" label="Subject name" isRequire={false} />
+                            <DateField name="createdAt" label="Create From" isRequire={false} />
                             <SelectField
                                 label="Category"
-                                values={[allFieldData, ...dataParser<BlogCategory>(categories, 'name', 'id')]}
+                                values={[allFieldData, ...dataParser<SubjectCategory>(categories, 'description', 'id')]}
                                 name="category"
-                                require={false}
+                                isRequire={false}
                             />
-                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" require={false} />
-                            <SelectField label="Feature" values={[allFieldData, ...statusFieldData]} name="isFeature" require={false} />
+                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" isRequire={false} />
+                            <SelectField label="Feature" values={[allFieldData, ...statusFieldData]} name="isFeature" isRequire={false} />
                         </div>
                         <div className="flex justify-end">
                             <button
@@ -130,7 +131,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{subject.category.name}</div>
+                                                        <div className="text-gray-900">{subject.category.description}</div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
@@ -162,7 +163,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     )}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${router.asPath}/${subject.id}/edit`} passHref>
+                                                    <Link href={`${routes.adminSubjectListUrl}/${subject.id}/edit`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Overview</p>
                                                     </Link>
                                                     <Link href={`${routes.adminSubjectListUrl}/${subject.id}${routes.lessonListUrl}`} passHref>

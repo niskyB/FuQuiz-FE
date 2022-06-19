@@ -47,7 +47,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
         for (let i = 0; i < lessonType.length; i++) {
             const item = lessonType[i];
             if (item.id === e.target.value) {
-                setFormType(item.name);
+                setFormType(item.description);
             }
         }
     };
@@ -68,7 +68,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
                         <SelectField
                             label="Quiz"
                             name="quiz"
-                            values={dataParser<LessonType>(lessonType, 'name', 'id')}
+                            values={dataParser<LessonType>(lessonType, 'description', 'id')}
                             onChange={(e) => _onChangeSubjectType(e)}
                         />
                         <MultiSelectBox
@@ -109,7 +109,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
                                         <SelectField
                                             label="Lessons Type"
                                             name="type"
-                                            values={dataParser<LessonType>(lessonType, 'name', 'id')}
+                                            values={dataParser<LessonType>(lessonType, 'description', 'id')}
                                             onChange={(e) => _onChangeSubjectType(e)}
                                         />
                                     </div>

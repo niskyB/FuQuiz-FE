@@ -17,6 +17,7 @@ import { statusFieldData } from '../../../../core/common/dataField';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
 import { RedStar } from '../../../store';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
 
 interface AddSubjectProps {}
 
@@ -38,6 +39,7 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
     const options = React.useMemo(() => ({ role: UserRole.EXPERT }), []);
 
     const { categories } = useGetSubjectCategory();
+    console.log(categories);
     const { userList: expertList } = useAdminGetUserList(options);
 
     const methods = useForm<AddSubjectFormDTO>({
@@ -67,64 +69,36 @@ export const AddSubject: React.FunctionComponent<AddSubjectProps> = () => {
                             <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new subject</p>
                         </div>
 
-                        <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Name <RedStar />
-                                </label>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextField label="" name="name" type="text" />
-                                </div>
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="tagLine" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Tag line <RedStar />
-                                </label>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextField label="" name="tagLine" type="text" />
-                                </div>
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="category" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Category <RedStar />
-                                </label>
-                                <SelectField
-                                    label=""
-                                    values={[{ label: 'Unset', value: '' }, ...dataParser<SubjectCategory>(categories, 'name', 'id')]}
-                                    name="category"
-                                />
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="assignTo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Owner <RedStar />
-                                </label>
-                                <SelectField
-                                    label=""
-                                    values={[{ label: 'Unset', value: '' }, ...dataParser<User>(expertList, 'fullName', 'id')]}
-                                    name="assignTo"
-                                />
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Active <RedStar />
-                                </label>
-                                <SelectField label="" values={[{ label: 'Unset', value: '' }, ...statusFieldData]} name="isActive" />
-                            </div>
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="isFeature" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Feature <RedStar />
-                                </label>
-                                <SelectField label="" values={[{ label: 'Unset', value: '' }, ...statusFieldData]} name="isFeature" />
-                            </div>
+                        <div className="w-full mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                            <TextField label="Name" direction="row" name="name" type="text" />
 
-                            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Description <RedStar />
-                                </label>
-                                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                    <TextareaField label="" name="description" />
-                                </div>
-                            </div>
+                            <TextField label="Tag line" direction="row" name="tagLine" type="text" />
+
+                            <SelectField
+                                label="Category"
+                                direction="row"
+                                values={[{ label: 'Unset', value: '' }, ...dataParser<SubjectCategory>(categories, 'description', 'id')]}
+                                name="category"
+                            />
+
+                            <SelectField
+                                label="Owner"
+                                direction="row"
+                                values={[{ label: 'Unset', value: '' }, ...dataParser<User>(expertList, 'fullName', 'id')]}
+                                name="assignTo"
+                            />
+
+                            <SelectField
+                                label="Active"
+                                direction="row"
+                                values={[{ label: 'Unset', value: '' }, ...statusFieldData]}
+                                name="isActive"
+                            />
+
+                            <SelectField label="Feature" direction="row" values={[unsetFieldData, ...statusFieldData]} name="isFeature" />
+
+                            <TextareaField label="Description" name="description" direction="row" />
+
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label htmlFor="briefInfo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                                     Thumbnail <RedStar />

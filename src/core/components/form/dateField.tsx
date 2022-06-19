@@ -2,28 +2,28 @@ import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { RedStar } from '../../../packages/store';
 import { useStoreApi } from '../../store';
+import CommonFieldWrapper from './commonFieldWrapper';
 interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;
     require?: boolean;
+    isRequire?: boolean;
+    direction?: 'row' | 'column';
 }
 
-export const DateField: React.FC<DateFieldProps> = ({ name, label, require, ...rest }) => {
+export const DateField: React.FC<DateFieldProps> = ({ name, label, direction, isRequire = true, require, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
-        <div className="flex flex-col w-full">
-            <label className="block text-sm font-medium text-gray-700 capitalize" htmlFor={name}>
-                {label} {require ? <RedStar /> : ''}
-            </label>
+        <CommonFieldWrapper name={name} label={label} isRequire={isRequire} direction={direction}>
             <input
                 {...register(name)}
                 {...rest}
                 type="date"
-                className="py-2 mt-1 border-gray-300 rounded-md outline-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="w-full py-2 border-gray-300 rounded-md outline-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
             {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
-        </div>
+        </CommonFieldWrapper>
     );
 };
