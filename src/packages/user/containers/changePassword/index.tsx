@@ -50,14 +50,14 @@ export const ChangePassword: React.FunctionComponent<PasswordProps> = () => {
                                 <dl className="sm:divide-y sm:divide-gray-200">
                                     {PROFILE_FIELD.map((item) => (
                                         <div key={item.name} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
-                                            <dt className="flex items-center text-sm font-medium text-gray-500 space-x-2">
+                                            <dt className="flex items-center space-x-2 text-sm font-medium text-gray-500">
                                                 <p>{item.label}</p>
                                                 <p className="inline-flex text-red-500" id="require">
                                                     *
                                                 </p>
                                             </dt>
                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                <TextField label="" name={item.name} type={item.type} />
+                                                <TextField label="" name={item.name} type={item.type} isRequire={false} />
                                             </dd>
                                         </div>
                                     ))}

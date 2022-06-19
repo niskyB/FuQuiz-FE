@@ -7,7 +7,7 @@ interface VerifyEmailProps {
     token: string;
 }
 
-const VerifyEmail: React.FunctionComponent<VerifyEmailProps> = ({ token }) => {
+export const VerifyEmail: React.FunctionComponent<VerifyEmailProps> = ({ token }) => {
     const router = useRouter();
 
     React.useEffect(() => {
@@ -15,5 +15,3 @@ const VerifyEmail: React.FunctionComponent<VerifyEmailProps> = ({ token }) => {
     }, []);
     return <></>;
 };
-
-export default VerifyEmail;

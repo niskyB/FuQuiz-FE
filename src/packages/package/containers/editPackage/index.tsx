@@ -8,7 +8,6 @@ import { useGetPricePackageById } from '../../common/hooks/useGetPricePackageByS
 import { editBlog } from './action';
 import { EditPricePackageFormDTO } from './interface';
 import * as React from 'react';
-import { RedStar } from '../../../store';
 import { statusFieldData } from '../../../../core/common/dataField';
 
 interface EditPackageProps {
