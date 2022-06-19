@@ -8,7 +8,7 @@ import { GetSliderOptionsDTO } from '../../../src/packages/slider/containers/sli
 
 interface SliderPageProps extends GetSliderOptionsDTO {}
 
-const SliderPage: NextPage<SliderPageProps> = ({ createdAt: createdAt, orderBy, currentPage, pageSize, title, userId, isShow }) => {
+const SliderPage: NextPage<SliderPageProps> = ({ createdAt: createdAt, orderBy, currentPage, pageSize, title, userId, isShow, backLink }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
             <DashBoardLayout>
@@ -20,6 +20,7 @@ const SliderPage: NextPage<SliderPageProps> = ({ createdAt: createdAt, orderBy, 
                     title={title}
                     userId={userId}
                     isShow={isShow}
+                    backLink={backLink}
                 />
             </DashBoardLayout>
         </RouterProtectionWrapper>
@@ -32,9 +33,10 @@ SliderPage.getInitialProps = async (ctx: NextPageContext): Promise<SliderPagePro
         pageSize: ctx.query?.pageSize || 12,
         title: ctx.query?.title || '',
         userId: ctx.query?.userId || '',
-        isShow: ctx.query?.isShow || true,
+        isShow: ctx.query?.isShow || '',
         createdAt: ctx.query?.createdAt || '01-01-2022',
         orderBy: ctx.query?.orderBy || '',
+        backLink: ctx.query?.backLink || '',
     };
     return props as SliderPageProps;
 };

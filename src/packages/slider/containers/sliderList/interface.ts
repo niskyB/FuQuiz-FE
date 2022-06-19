@@ -8,7 +8,8 @@ export interface GetSliderOptionsDTO {
     pageSize: number;
     title: string;
     userId: string;
-    isShow: boolean;
+    isShow: boolean | '';
     createdAt: string;
     orderBy: string;
+    backLink: string;
 }
