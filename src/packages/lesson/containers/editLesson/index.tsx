@@ -38,7 +38,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
             methods.setValue('videoLink', lesson.lessonDetail && lesson.lessonDetail.videoLink);
 
             setDescription(lesson.lessonDetail && lesson.lessonDetail.htmlContent);
-            setFormType(lesson.type.name);
+            setFormType(lesson.type.description);
         }
 
         return () => {};

@@ -136,7 +136,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                                 <div className="text-gray-900">{user.gender}</div>
                                             </TableDescription>
                                             <TableDescription>
-                                                <div className="text-gray-900">{user.role.name}</div>
+                                                <div className="text-gray-900">{user.role.description}</div>
                                             </TableDescription>
                                             <TableDescription>
                                                 {user.isActive ? (

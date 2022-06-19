@@ -139,7 +139,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({ title, curren
                                                 </TableDescription>
                                                 <TableDescription>
                                                     {(slider.marketing && slider.marketing.user.id === userState.id) ||
-                                                    userState.role.name === UserRole.ADMIN ? (
+                                                    userState.role.description === UserRole.ADMIN ? (
                                                         <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
                                                             <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                         </Link>

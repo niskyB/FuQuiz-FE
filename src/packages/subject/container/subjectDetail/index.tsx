@@ -131,7 +131,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                     <div className="flex flex-col space-y-3">
                                                         <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
                                                         <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
-                                                            {lesson.type.name}
+                                                            {lesson.type.description}
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center flex-shrink-0 ml-2">

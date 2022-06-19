@@ -107,7 +107,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
 
                                             <TableDescription>
                                                 <div className="max-w-sm">
-                                                    <div className="text-gray-900">{lesson.type.name}</div>
+                                                    <div className="text-gray-900">{lesson.type.description}</div>
                                                 </div>
                                             </TableDescription>
                                             <TableDescription>

@@ -93,7 +93,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
         const { assignTo, isActive, ...expertUpdateField } = data;
         //
         let res1, res2;
-        if (userState.role.name === UserRole.ADMIN) res1 = await adminUpdateSubject(id, { assignTo, isActive });
+        if (userState.role.description === UserRole.ADMIN) res1 = await adminUpdateSubject(id, { assignTo, isActive });
 
         res2 = await expertUpdateSubject(id, expertUpdateField);
 
@@ -102,7 +102,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
         }
     };
     const _renderField = () => {
-        if (userState.role.name === UserRole.ADMIN) {
+        if (userState.role.description === UserRole.ADMIN) {
             return (
                 <>
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
