@@ -23,7 +23,6 @@ export const TextareaField: React.FC<TextareaFieldProps> = ({ name, label, isReq
                 rows={6}
                 className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
-            {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}
         </CommonFieldWrapper>
     );
 };

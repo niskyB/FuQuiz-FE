@@ -44,6 +44,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
     });
 
     const _handleOnSubmit = async (data: FilterBlogListFormDTO) => {
+        console.log(data);
         pushWithParams(router, routes.adminBlogListUrl, { ...options, ...data });
     };
 
@@ -93,7 +94,7 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
                             />
                         </div>
                         <div className="">
-                            <DateField label="Create at" name="createdAt" />
+                            <DateField isRequire={false} label="Create at" name="createdAt" />
                         </div>
                         {userState.role.description !== UserRole.ADMIN && (
                             <div
