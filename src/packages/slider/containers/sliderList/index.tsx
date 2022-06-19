@@ -40,12 +40,12 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
             createdAt: createdAt,
             backLink,
         }),
-        [currentPage, pageSize, title, userId, isShow, orderBy, createdAt]
+        [currentPage, pageSize, title, userId, isShow, orderBy, createdAt, backLink]
     );
 
     useUrlParams({
         defaultPath: routes.adminSliderListUrl,
-        query: { ...router.query, title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId },
+        query: { ...router.query, title, currentPage, pageSize, createdAt: createdAt, isShow, orderBy, userId, backLink },
     });
 
     const { count, sliders } = useGetSliderList(options);
@@ -58,6 +58,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
             title: data.title,
             isShow: data.isShow,
             createdAt: data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '',
+            backLink: data.backLink,
         });
     };
     return (

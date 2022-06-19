@@ -12,6 +12,7 @@ export const useGetSlider = ({ id }: useGetSliderProps) => {
 
     React.useEffect(() => {
         getSliderById(id).then((data) => {
+            console.log(data);
             setImageUrl(data.imageUrl);
             setSlider(data);
         });

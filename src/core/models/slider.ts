@@ -8,6 +8,7 @@ export interface Slider {
     backLink: string;
     isShow: boolean;
     marketing: Marketing | null;
+    notes: string;
 }
 
 export interface SliderWithoutAuthDTO extends Omit<Slider, 'marketing'> {}
