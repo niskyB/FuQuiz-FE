@@ -166,7 +166,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                                                     <Link href={`${routes.adminSubjectListUrl}/${subject.id}/edit`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Overview</p>
                                                     </Link>
-                                                    <Link href={`${routes.adminSubjectListUrl}/${subject.id}${routes.lessonListUrl}`} passHref>
+                                                    <Link href={`${routes.adminSubjectListUrl}/${subject.id}${routes.adminLessonListUrl}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Lessons</p>
                                                     </Link>
                                                 </TableDescription>

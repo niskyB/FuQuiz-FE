@@ -57,10 +57,10 @@ export const routes = {
     addSettingUrl: '/dashboard/setting/add',
     editSettingUrl: '/dashboard/setting/edit',
 
-    // Lesson
-    lessonListUrl: '/lesson',
-    addLessonUrl: '/add',
-    editLessonUrl: '/edit',
+    //  Lesson
+    adminLessonListUrl: '/lesson',
+    adminAddLessonUrl: '/add',
+    adminEditLessonUrl: '/edit',
 
     // questionList
     adminQuestionListUrl: '/dashboard/question-bank/question',
