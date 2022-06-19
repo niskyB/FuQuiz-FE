@@ -33,7 +33,7 @@ BlogPage.getInitialProps = async (ctx: NextPageContext): Promise<BlogPageProps> 
         pageSize: ctx.query?.pageSize || 12,
         title: ctx.query?.title || '',
         userId: ctx.query?.userId || '',
-        isShow: ctx.query?.isShow || true,
+        isShow: ctx.query?.isShow || '',
         createdAt: ctx.query?.createdAt || '01-01-2022',
         category: ctx.query?.category || '',
         order: ctx.query?.order || Order.DESC,

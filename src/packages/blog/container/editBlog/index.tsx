@@ -40,15 +40,14 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     const [details, setDetails] = React.useState<string>('');
 
     React.useEffect(() => {
+        console.log(blog);
         if (blog) {
-            console.log();
+            methods.setValue('category', blog.category.id);
             methods.setValue('briefInfo', blog.briefInfo);
             methods.setValue('title', blog.title);
-            methods.setValue('category', blog.category.id);
             methods.setValue('details', blog.details);
             methods.setValue('isShow', blog.isShow);
             methods.setValue('isFeature', blog.isFeature);
-
             setDetails(blog.details);
             setPreviewThumbnailUrl(blog.thumbnailUrl);
         }
