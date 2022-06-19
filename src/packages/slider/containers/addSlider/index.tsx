@@ -17,6 +17,7 @@ const defaultValues: AddSliderInput = {
     backLink: '',
     title: '',
     isShow: true,
+    notes: '',
 };
 
 const mapFields = [
