@@ -6,4 +6,5 @@ export const roleFieldData: SelectionFieldValues<UserRole>[] = [
     { label: 'Expert', value: UserRole.EXPERT },
     { label: 'Marketing', value: UserRole.MARKETING },
     { label: 'Admin', value: UserRole.ADMIN },
+    { label: 'Sale', value: UserRole.SALE },
 ];

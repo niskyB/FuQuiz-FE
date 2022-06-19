@@ -15,7 +15,6 @@ interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement>
 }
 
 export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, defaultValue, direction, isRequire = true, ...rest }) => {
-    const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (

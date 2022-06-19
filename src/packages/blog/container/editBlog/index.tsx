@@ -41,21 +41,23 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
 
     React.useEffect(() => {
         if (blog) {
-            console.log();
+            methods.setValue('category', blog.category.id);
             methods.setValue('briefInfo', blog.briefInfo);
             methods.setValue('title', blog.title);
-            methods.setValue('category', blog.category.id);
             methods.setValue('details', blog.details);
             methods.setValue('isShow', blog.isShow);
             methods.setValue('isFeature', blog.isFeature);
-
             setDetails(blog.details);
             setPreviewThumbnailUrl(blog.thumbnailUrl);
         }
-        return () => {};
+
+        return () => {
+            methods.reset();
+        };
     }, [blog]);
 
     const _handleOnSubmit = async (data: EditBlogDTO) => {
+        console.log(data);
         if (thumbnailFile) data.image = thumbnailFile;
         else data.image = new File([], '');
         if (details) data.details = details;

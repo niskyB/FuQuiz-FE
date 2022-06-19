@@ -2,7 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { statusFieldData } from '../../../../core/common/dataField';
+import { roleFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { UserRole } from '../../../../core/models/role';
 import { Gender } from '../../../../core/models/user';
@@ -19,6 +19,7 @@ const defaultValues: AddUserDTO = {
     gender: Gender.MALE,
     mobile: '',
     role: '',
+    password: '',
 };
 export const AddUser: React.FunctionComponent<AddUserProps> = () => {
     const methods = useForm<AddUserDTO>({
@@ -26,7 +27,6 @@ export const AddUser: React.FunctionComponent<AddUserProps> = () => {
     });
 
     const _handleOnSubmit = async (data: AddUserDTO) => {
-        console.log(data);
         adminAddNewUser(data).then((res) => {
             if (res) {
                 methods.reset();
@@ -53,16 +53,7 @@ export const AddUser: React.FunctionComponent<AddUserProps> = () => {
                             <TextField label="Full name" name="fullName" type="fullName" />
                             <TextField label="Email address" name="email" type="email" />
                             <TextField label="phone number" name="mobile" type="text" />
-                            <SelectField
-                                label="Role"
-                                name="role"
-                                values={[
-                                    { label: 'Customer', value: UserRole.CUSTOMER },
-                                    { label: 'Admin', value: UserRole.ADMIN },
-                                    { label: 'Expert', value: UserRole.EXPERT },
-                                    { label: 'Marketing', value: UserRole.MARKETING },
-                                ]}
-                            />
+                            <SelectField label="Role" name="role" values={roleFieldData} />
                             <SelectField label="Status" name="isActive" values={[...statusFieldData]} />
                             <RadioField
                                 label="sex"

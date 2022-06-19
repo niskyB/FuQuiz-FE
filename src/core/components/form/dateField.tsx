@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { RedStar } from '../../../packages/store';
 import { useStoreApi } from '../../store';
 import CommonFieldWrapper from './commonFieldWrapper';
 interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {

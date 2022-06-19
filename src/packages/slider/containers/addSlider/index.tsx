@@ -3,7 +3,9 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FormWrapper, TextField } from '../../../../core/components/form';
+import { statusFieldData } from '../../../../core/common/dataField';
+import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
 import { checkFileType } from '../../../../core/util/file';
 import { addSlider } from './action';
@@ -14,6 +16,8 @@ interface AddSliderProps {}
 const defaultValues: AddSliderInput = {
     backLink: '',
     title: '',
+    isShow: true,
+    notes: '',
 };
 
 const mapFields = [
@@ -69,7 +73,8 @@ export const AddSlider: React.FunctionComponent<AddSliderProps> = () => {
                             {mapFields.map((item) => (
                                 <TextField key={item.name} label={item.label} name={item.name} type="text" direction="row" />
                             ))}
-
+                            <SelectField name="isShow" values={statusFieldData} label="Show" direction="row" />
+                            <TextareaField name="notes" label="Notes" direction="row" />
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <div className="flex justify-start space-x-2">
                                     <label htmlFor="cover-photo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">

@@ -40,8 +40,9 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
     const _handleOnSubmit = async (data: UpdateUserDto) => {
         if (avatarFile) data.image = avatarFile;
         const res = await updateUser(data);
-        if (res.data === 200) {
-            toast.success('Update profile success!');
+
+        if (res.status === 200) {
+            window.location.reload();
         }
     };
     React.useEffect(() => {
