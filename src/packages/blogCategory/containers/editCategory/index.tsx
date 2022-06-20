@@ -29,7 +29,6 @@ const EditBlogCategory: React.FunctionComponent<EditBlogCategoryProps> = ({ id }
     };
 
     React.useEffect(() => {
-        console.log(category);
         if (category) methods.setValue('name', category.description);
         return () => {};
     }, [category]);

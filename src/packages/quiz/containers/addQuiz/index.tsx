@@ -23,12 +23,9 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
 
     const _handleOnFilter = async (data: any) => {
         data.subject = methods.getValues('subject');
-        console.log(data);
     };
 
-    const _handleOnSubmit = async (data: any) => {
-        console.log(data);
-    };
+    const _handleOnSubmit = async (data: any) => {};
 
     return (
         <div className="space-y-8 divide-y divide-gray-200">

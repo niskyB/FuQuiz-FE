@@ -44,7 +44,6 @@ export const BlogList: React.FunctionComponent<BlogListProps> = ({ category, cre
     });
 
     const _handleOnSubmit = async (data: FilterBlogListFormDTO) => {
-        console.log(data);
         pushWithParams(router, routes.adminBlogListUrl, { ...options, ...data });
     };
 
