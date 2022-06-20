@@ -83,17 +83,17 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                 <TextField name="email" label="email" isRequire={false} />
                                 <TextField name="fullName" label="Full name" isRequire={false} />
                                 <TextField name="mobile" label="Mobile" isRequire={false} />
-                                <SelectField label="Active" values={[...statusFieldData]} name="isActive" require={false} />
+                                <SelectField label="Active" values={[...statusFieldData]} name="isActive" isRequire={false} />
                             </div>
                             <div className="flex space-x-4">
-                                <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" require={false} />
-                                <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" require={false} />
-                                <SelectField label="Sort" values={[...OrderFieldData]} name="order" require={false} />
+                                <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" isRequire={false} />
+                                <SelectField label="Gender" values={[allFieldData, ...genderFieldData]} name="gender" isRequire={false} />
+                                <SelectField label="Sort" values={[...OrderFieldData]} name="order" isRequire={false} />
                                 <SelectField
                                     label="OrderBy"
                                     values={userFieldDataParser(['email', 'fullName', 'mobile'])}
                                     name="orderBy"
-                                    require={false}
+                                    isRequire={false}
                                 />
                             </div>
                         </div>

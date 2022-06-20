@@ -88,7 +88,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                         <div className="flex flex-col space-y-2">
                             <div className="flex space-x-4">
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Subject"
                                     values={[
                                         { label: 'Subject 1', value: '1' },
@@ -99,7 +99,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                                     name="subject"
                                 />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Quiz Type"
                                     values={[
                                         { label: 'Simulation', value: '1' },

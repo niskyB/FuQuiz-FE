@@ -21,7 +21,7 @@ export const TrendingStatistics: React.FunctionComponent<TrendingStatisticsProps
                     <h1 className="text-xl font-bold">Trending (order counts)</h1>
                     <div className="flex items-end space-x-5">
                         <SelectField
-                            require={false}
+                            isRequire={false}
                             label="Status"
                             name="status"
                             values={[
@@ -29,8 +29,8 @@ export const TrendingStatistics: React.FunctionComponent<TrendingStatisticsProps
                                 { label: 'All', value: 'ALL' },
                             ]}
                         />
-                        <DateField require={false} label="From" name="fromDate" />
-                        <DateField require={false} label="To" name="toDate" />
+                        <DateField isRequire={false} label="From" name="fromDate" />
+                        <DateField isRequire={false} label="To" name="toDate" />
                         <button
                             type="button"
                             className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
