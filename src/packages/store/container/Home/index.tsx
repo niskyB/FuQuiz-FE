@@ -59,7 +59,7 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
                                         <div className="flex-1">
                                             <p className="text-sm font-medium text-indigo-600">
                                                 <Link href={''}>
-                                                    <a className="hover:underline">{item.category.name}</a>
+                                                    <a className="hover:underline">{item.category.description}</a>
                                                 </Link>
                                             </p>
                                             <a href={''} className="block mt-2">

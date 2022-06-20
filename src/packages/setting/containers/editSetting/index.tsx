@@ -33,7 +33,7 @@ export const EditSetting: React.FunctionComponent<EditSettingProps> = () => {
                                 label="Type"
                                 name="Type"
                                 disabled
-                                require={false}
+                                isRequire={false}
                                 values={[
                                     { label: 'Role', value: 'Role' },
                                     { label: 'Type 2', value: '2' },
