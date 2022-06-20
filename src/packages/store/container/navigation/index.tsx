@@ -39,7 +39,6 @@ export const Navigation: React.FC<NavigationProps> = () => {
         const res = await logout();
         if (res) window.location.reload();
     };
-    console.log(userState.role.description !== UserRole.CUSTOMER);
     return (
         <Disclosure as="nav" className="bg-white shadow">
             {({ open }) => (

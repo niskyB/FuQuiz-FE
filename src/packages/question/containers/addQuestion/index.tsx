@@ -88,7 +88,6 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         let dimensionString = '';
         selectedDimensionList.map((item) => (dimensionString = dimensionString + item.value + ','));
         others.dimensions = dimensionString;
-        console.log(others);
         await addQuestion(others).then(() => {
             methods.reset();
             setPreviewThumbnailUrl('');

@@ -30,7 +30,6 @@ export const EditDimension: React.FunctionComponent<EditDimensionProps> = ({ sub
 
     const { dimensionTypes } = useGetDimensionType();
     const { dimension } = useGetDimensionById(dimensionId);
-    console.log(dimension);
     React.useEffect(() => {
         if (dimension) {
             methods.setValue('description', dimension.description);
