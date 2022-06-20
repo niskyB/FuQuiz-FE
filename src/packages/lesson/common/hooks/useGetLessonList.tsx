@@ -9,6 +9,6 @@ interface LessonRenderOptions {
 
 export const useGetLessonList = (subjectId: string) => {
     const options = React.useMemo<LessonRenderOptions>(() => ({ subjectId }), [subjectId]);
-    const { list: lessonList } = useGetList<Lesson, LessonRenderOptions>(ApiListRoutes.LESSONS + `/${subjectId}`, options);
+    const { list: lessonList } = useGetList<Lesson, LessonRenderOptions>(ApiListRoutes.LESSONS + `/${subjectId.trim()}`, options);
     return { lessonList };
 };

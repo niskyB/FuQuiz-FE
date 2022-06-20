@@ -8,7 +8,7 @@ import { PricePackage } from '../../../../core/models/pricePackage';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
-import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
+import { useGetPricePackageListBySubjectId } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
 import { useGetSubjectList } from '../../../subject';
 import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
 
@@ -19,7 +19,7 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
     const [selectedSubject, setSelectedSubject] = React.useState<string | null>(null);
     const options = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ pageSize: 99, currentPage: 0 }), []);
     const { subjects } = useGetSubjectList(options);
-    const { pricePackageList } = useGetPricePackageListById(selectedSubject || '');
+    const { pricePackageList } = useGetPricePackageListBySubjectId(selectedSubject || '');
     const _handleOnSubmit = async () => {};
 
     return (
