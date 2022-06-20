@@ -1,7 +1,7 @@
 import { Answer } from '../../../../core/models/answer';
 import { Question } from '../../../../core/models/question';
 
-export interface AddQuestionDTO extends Omit<Question, 'id' | 'answers' | 'subject' | 'dimensions' | 'lesson' | 'questionLevel' | 'imageLink'> {
+export interface EditQuestionDTO extends Omit<Question, 'id' | 'answers' | 'subject' | 'dimensions' | 'lesson' | 'questionLevel' | 'imageLink'> {
     answers: Omit<Answer, 'id'>[];
     image: File;
     subject: string;
@@ -10,4 +10,4 @@ export interface AddQuestionDTO extends Omit<Question, 'id' | 'answers' | 'subje
     questionLevel: string;
 }
 
-export interface AddQuestionForm extends Omit<AddQuestionDTO, 'subject'> {}
+export interface EditQuestionForm extends Omit<EditQuestionDTO, 'subject'> {}
