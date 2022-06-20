@@ -3,7 +3,7 @@ import React from 'react';
 import { SubjectFilterDTO } from '../subjectList/interface';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/outline';
-import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
+import { useGetPricePackageListBySubjectId } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
 import { store, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { vietnamCurrencyConverter } from '../../../../core/util/price';
@@ -28,7 +28,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
     const router = useRouter();
     const userState = useStoreUser();
 
-    const { pricePackageList } = useGetPricePackageListById(id);
+    const { pricePackageList } = useGetPricePackageListBySubjectId(id);
     const { subject } = useGetSubject(id);
     const { lessonList } = useGetLessonList(id);
     return (
@@ -116,7 +116,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                     <div className="flex flex-col space-y-3">
                                                         <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
                                                         <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
-                                                            {lesson.type.name}
+                                                            {lesson.type.description}
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center flex-shrink-0 ml-2">

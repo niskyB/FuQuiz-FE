@@ -5,7 +5,7 @@ import { TotalRevenuesStatisticsDTO } from './action';
 
 interface TotalRevenuesStatisticsProps {}
 const defaultValues: TotalRevenuesStatisticsDTO = {
-    subjectCategory: { id: '', name: '' },
+    subjectCategory: { id: '', description: '', isActive: true, order: '', type: '', value: '' },
 };
 export const TotalRevenuesStatistics: React.FunctionComponent<TotalRevenuesStatisticsProps> = () => {
     const methods = useForm<TotalRevenuesStatisticsDTO>({
@@ -21,7 +21,7 @@ export const TotalRevenuesStatistics: React.FunctionComponent<TotalRevenuesStati
                         <SelectField
                             label="Category"
                             name="category"
-                            require={false}
+                            isRequire={false}
                             values={[
                                 { label: 'Category 1', value: '1' },
                                 { label: 'Category 2', value: '2' },

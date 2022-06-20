@@ -55,7 +55,6 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
     const [count, setCount] = React.useState<number>(4);
 
     const _handleOnSubmit = async () => {};
-    console.log(router.asPath);
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -89,7 +88,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                         <div className="flex flex-col space-y-2">
                             <div className="flex space-x-4">
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Subject"
                                     values={[
                                         { label: 'Subject 1', value: '1' },
@@ -100,7 +99,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                                     name="subject"
                                 />
                                 <SelectField
-                                    require={false}
+                                    isRequire={false}
                                     label="Quiz Type"
                                     values={[
                                         { label: 'Simulation', value: '1' },

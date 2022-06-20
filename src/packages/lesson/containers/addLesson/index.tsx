@@ -36,6 +36,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
             store.dispatch(apiActions.resetState());
             setDescription('');
             toast.success('Add lesson success!');
+            methods.setValue('type', data.type);
         }
     };
     React.useEffect(() => {
@@ -72,6 +73,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
                             onChange={(e) => _onChangeSubjectType(e)}
                         />
                         <MultiSelectBox
+                            name="quiz"
                             label="Quiz"
                             selected={selectedQuiz}
                             setSelected={setSelectedQuiz}

@@ -4,7 +4,7 @@ import React from 'react';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
-import { useGetPricePackageListById } from '../../common/hooks/useGetPricePackageListBySubjectId';
+import { useGetPricePackageListBySubjectId } from '../../common/hooks/useGetPricePackageListBySubjectId';
 
 interface PackageListProps {
     subjectId: string;
@@ -13,7 +13,7 @@ interface PackageListProps {
 const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) => {
     const router = useRouter();
 
-    const { pricePackageList } = useGetPricePackageListById(subjectId);
+    const { pricePackageList } = useGetPricePackageListBySubjectId(subjectId);
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">

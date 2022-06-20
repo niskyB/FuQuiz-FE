@@ -9,9 +9,7 @@ interface QuestionPageProps {}
 const QuestionPage: React.FunctionComponent<QuestionPageProps> = () => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
-            <DashBoardLayout>
-                <QuestionList />
-            </DashBoardLayout>
+            <DashBoardLayout>{/* <QuestionList /> */}</DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };

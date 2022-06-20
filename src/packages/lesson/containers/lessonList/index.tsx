@@ -3,16 +3,17 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { allFieldData } from '../../../../core/common/dataField';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { PricePackage } from '../../../../core/models/pricePackage';
 import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
 import { PaginationBar } from '../../../dashboard';
-import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
+import { useGetPricePackageListBySubjectId } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
 import { useGetLessonList } from '../../common/hooks/useGetLessonList';
+import { useGetLessonType } from '../../common/hooks/useGetLessonType';
 import { updateLessonActivation } from './action';
 import { UpdateLessonActivationDTO } from './interface';
 
@@ -23,14 +24,14 @@ interface LessonListProps {
 export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId }) => {
     const methods = useForm();
     const router = useRouter();
-
+    const { lessonType } = useGetLessonType();
     const { lessonList } = useGetLessonList(subjectId);
-    const { pricePackageList } = useGetPricePackageListById(subjectId);
+    const { pricePackageList } = useGetPricePackageListBySubjectId(subjectId);
     const _handleOnSubmit = async () => {};
     const _onUpdateLessonActivation = async (lessonId: string, data: UpdateLessonActivationDTO) => {
         const res = await updateLessonActivation(lessonId, data);
         if (res) {
-            toast.success('Update success!');
+            window.location.reload();
         }
     };
     return (
@@ -65,25 +66,13 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                             <TextField name="title" label="Title" isRequire={false} />
                             <SelectField
                                 label="Lesson Type"
-                                values={[
-                                    { label: 'Subject Topic', value: 'domain' },
-                                    { label: 'Lesson', value: 'domain 1' },
-                                    { label: 'Quiz', value: 'domain 2' },
-                                ]}
+                                values={[allFieldData, ...dataParser(lessonType, 'description', 'description')]}
                                 name="isActive"
                                 isRequire={false}
                             />
-                            <TextField name="createdAt" label="Create From" type={'date'} isRequire={false} />
-                            <TextField name="updateAt" label="Update date" type={'date'} isRequire={false} />
-                            <SelectField
-                                label="Active"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                name="isActive"
-                                isRequire={false}
-                            />
+                            <DateField name="createdAt" label="Create From" isRequire={false} />
+                            <DateField name="updateAt" label="Update date" isRequire={false} />
+                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" isRequire={false} />
                             <SelectField
                                 label="Package"
                                 values={[allFieldData, ...((pricePackageList && dataParser<PricePackage>(pricePackageList, 'name', 'id')) || [])]}
@@ -146,7 +135,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                                                     onClick={() => _onUpdateLessonActivation(lesson.id, { isActive: !lesson.isActive })}
                                                     className="text-indigo-600 cursor-pointer hover:text-indigo-900"
                                                 >
-                                                    {lesson.isActive ? 'Deactive' : 'Active'}
+                                                    {lesson.isActive ? 'Deactivate' : 'Active'}
                                                 </p>
                                             </TableDescription>
                                         </TableRow>
