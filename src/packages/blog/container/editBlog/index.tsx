@@ -57,7 +57,6 @@ export const EditBlog: React.FunctionComponent<EditBlogProps> = ({ id }) => {
     }, [blog]);
 
     const _handleOnSubmit = async (data: EditBlogDTO) => {
-        console.log(data);
         if (thumbnailFile) data.image = thumbnailFile;
         else data.image = new File([], '');
         if (details) data.details = details;

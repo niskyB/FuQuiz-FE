@@ -17,7 +17,6 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
     const methods = useForm<RegistrationFormDTO>();
 
     React.useEffect(() => {
-        console.log(formState.registrationForm);
         methods.setValue('subject', formState.registrationForm.subjectName);
         methods.setValue('pricePackage', formState.registrationForm.defaultPackage);
         return () => {};

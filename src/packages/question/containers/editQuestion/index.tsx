@@ -2,75 +2,72 @@ import { PlusCircleIcon, XCircleIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
-import { SelectionFieldValues } from '../../../../core/common/interface';
+import useTimeout from '../../../../core/common/hooks/useTimeout';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
-import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { TextareaField } from '../../../../core/components/form/textareaField';
-import { LessonTypeEnum } from '../../../../core/models/lesson';
+import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
-import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
-import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
-import { useGetLessonType } from '../../../lesson/common/hooks/useGetLessonType';
-import { RedStar } from '../../../store';
-import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
-import { addQuestion } from './action';
-import { AddQuestionDTO } from './interface';
+import { editQuestion, useGetQuestionById } from './action';
+import { EditQuestionDTO, EditQuestionForm } from './interface';
 
-interface AddQuestionProps {}
+interface EditQuestionProps {
+    id: string;
+}
 
-const defaultValues: Omit<AddQuestionDTO, 'image'> = {
-    subject: '',
-    lesson: '',
-    dimensions: '',
+const defaultValues: Omit<EditQuestionForm, 'image'> = {
     questionLevel: '',
     videoLink: '',
     audioLink: '',
     content: '',
     isActive: true,
     isMultipleChoice: false,
-    answers: [{ detail: '', isCorrect: false }],
+    answers: [],
     explanation: '',
 };
 
-export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
+export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id }) => {
     const router = useRouter();
     const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
+    const [isShit, setShit] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
 
-    const methods = useForm<AddQuestionDTO>({
+    const methods = useForm<EditQuestionForm>({
         defaultValues,
     });
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
 
-    const [subjectId, setSubjectId] = React.useState<string>('');
+    const { question } = useGetQuestionById(id);
 
     React.useEffect(() => {
-        methods.reset();
-        methods.setValue('subject', subjectId);
-        setSelectedDimension(unsetFieldData);
-        setSelectedDimensionList([]);
-        setIsMultipleChoice(false);
-        setExplanation('');
-    }, [subjectId]);
+        if (question) {
+            methods.setValue('explanation', question.explanation);
+            methods.setValue('content', question.content);
 
-    const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
-    const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
-    const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
-    const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
+            setPreviewThumbnailUrl(question.imageUrl);
+            methods.setValue('audioLink', question.audioLink);
+            methods.setValue('videoLink', question.videoLink);
+            setExplanation(question.explanation);
+            methods.setValue('isMultipleChoice', question.isMultipleChoice);
+            answers.replace(question.answers);
+        }
+    }, [question]);
+
+    useTimeout(() => {
+        if (question) {
+            methods.setValue('isActive', question.isActive);
+            methods.setValue('questionLevel', question.questionLevel.id);
+        }
+    }, 500);
+
     const { levels } = useGetQuestionLevelList();
 
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
-
-    const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSubjectId(e.target.value);
-    };
 
     const _onChangeQuestionType = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const isMultipleChoice = e.target && e.target.value === 'true' ? true : false;
@@ -82,21 +79,19 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         methods.setValue(`answers.${refIndex}.isCorrect`, e.target.checked);
     };
 
-    const _handleOnSubmit = async (data: AddQuestionDTO) => {
-        const { subject, ...others } = data;
-        if (thumbnailFile) others.image = thumbnailFile;
-        others.explanation = explanation;
-        others.isMultipleChoice = isMultipleChoice;
-        let dimensionString = '';
-        selectedDimensionList.map((item) => (dimensionString = dimensionString + item.value + ','));
-        others.dimensions = dimensionString;
-        await addQuestion(others).then(() => {
+    const _handleOnSubmit = async (data: EditQuestionForm) => {
+        if (thumbnailFile) data.image = thumbnailFile;
+        data.explanation = explanation;
+        data.isMultipleChoice = isMultipleChoice;
+        console.log(data);
+        await editQuestion(id, data).then(() => {
             methods.reset();
             setPreviewThumbnailUrl('');
             setThumbnailFile(null);
             setExplanation('');
 
-            toast.success('Add new question success!');
+            toast.success('Edit question success!');
+            router.push(routes.adminQuestionListUrl);
         });
     };
 
@@ -106,45 +101,12 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Add Question</h3>
-                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new question</p>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Question</h3>
+                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be edit question</p>
                         </div>
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                                <SelectField
-                                    label="Subject"
-                                    name="subject"
-                                    direction="row"
-                                    onChange={(e) => _onChangeSubject(e)}
-                                    values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
-                                />
-
-                                <SelectField
-                                    label="Lesson"
-                                    name="lesson"
-                                    direction="row"
-                                    values={[
-                                        unsetFieldData,
-                                        ...dataParser(
-                                            lessons.filter((lesson) => lesson.type.description !== LessonTypeEnum.LESSON_QUIZ),
-                                            'name',
-                                            'id'
-                                        ),
-                                    ]}
-                                />
-
-                                <MultiSelectBox
-                                    selected={selectedDimension}
-                                    setSelected={setSelectedDimension}
-                                    selectedList={selectedDimensionList}
-                                    setSelectedList={setSelectedDimensionList}
-                                    values={dataParser(dimensions, 'name', 'id')}
-                                    name="dimensions"
-                                    label="Dimensions"
-                                    direction="row"
-                                />
-
                                 <SelectField
                                     label="Level"
                                     direction="row"
@@ -187,25 +149,21 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     onChange={(e) => _onChangeQuestionType({ ...e })}
                                 />
 
-                                {answers.fields.map((_, index) => (
-                                    <>
-                                        <TextField
-                                            key={'answer' + index}
-                                            direction="row"
-                                            label={`Answer ${index + 1}`}
-                                            {...methods.register(`answers.${index}.detail` as const)}
-                                        />
+                                {answers.fields.map((answer, index) => (
+                                    <div key={'answer-' + index}>
+                                        <TextField direction="row" label={`Answer ${index + 1}`} name={`answers.${index}.detail` as const} />
                                         <div className={`flex justify-end col-span-2 col-end-4 space-x-4`}>
                                             <div className="flex items-center space-x-2 text-sm font-medium text-gray-900 w-fit">
                                                 <input
                                                     type={isMultipleChoice ? 'checkbox' : 'radio'}
                                                     name="isCorrect"
+                                                    defaultChecked={answer.isCorrect}
                                                     onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
                                                 />
                                                 <label>Right Answer</label>
                                             </div>
                                         </div>
-                                    </>
+                                    </div>
                                 ))}
 
                                 <div className="flex justify-end space-x-2">
@@ -251,7 +209,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                             type="submit"
                             className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Add
+                            Edit
                         </button>
                     </div>
                 </div>

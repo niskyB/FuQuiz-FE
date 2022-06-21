@@ -23,12 +23,9 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
 
     const _handleOnFilter = async (data: any) => {
         data.subject = methods.getValues('subject');
-        console.log(data);
     };
 
-    const _handleOnSubmit = async (data: any) => {
-        console.log(data);
-    };
+    const _handleOnSubmit = async (data: any) => {};
 
     return (
         <div className="space-y-8 divide-y divide-gray-200">
@@ -163,7 +160,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                 <div className="flex flex-col space-y-2">
                                     <div className="flex space-x-4">
                                         <SelectField
-                                            require={false}
+                                            isRequire={false}
                                             label="Lesson"
                                             values={[
                                                 { label: 'Lesson 1', value: '1' },
@@ -174,7 +171,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                             name="lesson"
                                         />
                                         <SelectField
-                                            require={false}
+                                            isRequire={false}
                                             label="Dimension"
                                             values={[
                                                 { label: 'Dimension 1', value: '1' },
@@ -185,7 +182,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                             name="dimension"
                                         />
                                         <SelectField
-                                            require={false}
+                                            isRequire={false}
                                             label="Level"
                                             values={[
                                                 { label: 'Easy', value: '1' },
@@ -230,7 +227,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                                             <div className="text-gray-900">{question.lesson.name}</div>
                                                         </TableDescription>
                                                         <TableDescription>
-                                                            <div className="text-gray-900">{question.dimension.name}</div>
+                                                            <div className="text-gray-900">{question.dimensions}</div>
                                                         </TableDescription>
                                                         <TableDescription>
                                                             <p className="w-full text-gray-900 break-normal line-clamp-4">{question.content}</p>

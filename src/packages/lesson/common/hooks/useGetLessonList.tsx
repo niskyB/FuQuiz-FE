@@ -1,14 +1,23 @@
 import React from 'react';
 import { ApiListRoutes } from '../../../../core/common/enum';
-import { useGetList } from '../../../../core/common/hooks';
+import { useGetListWithCount } from '../../../../core/common/hooks';
 import { Lesson } from '../../../../core/models/lesson';
+import { FilterLessonListDTO } from '../../containers/lessonList/interface';
 
-interface LessonRenderOptions {
-    subjectId: string;
-}
+export const useGetLessonList = (option: Partial<FilterLessonListDTO>) => {
+    const { createdAt, id, isActive, title, type, updatedAt } = option;
+    const options = React.useMemo<FilterLessonListDTO>(
+        () => ({
+            createdAt: createdAt || '',
+            id: id || '',
+            isActive: isActive || '',
+            title: title || '',
+            type: type || '',
+            updatedAt: updatedAt || '',
+        }),
+        [createdAt, id, isActive, title, type, updatedAt]
+    );
+    const { list: lessonList, count } = useGetListWithCount<Lesson, Partial<FilterLessonListDTO>>(`${ApiListRoutes.LESSONS}/${options.id}`, options);
 
-export const useGetLessonList = (subjectId: string) => {
-    const options = React.useMemo<LessonRenderOptions>(() => ({ subjectId }), [subjectId]);
-    const { list: lessonList } = useGetList<Lesson, LessonRenderOptions>(ApiListRoutes.LESSONS + `/${subjectId}`, options);
-    return { lessonList };
+    return { lessonList, count };
 };

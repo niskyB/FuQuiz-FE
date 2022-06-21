@@ -5,6 +5,5 @@ import { FilterQuestionsDTO, QuestionListDTO } from '../../containers/questionLi
 
 export const useGetAllQuestionList = (options: Partial<FilterQuestionsDTO>) => {
     const { count, list: questions } = useGetListWithCount<QuestionListDTO, Partial<FilterQuestionsDTO>>(ApiListRoutes.QUESTIONS, options);
-    console.log('options', options);
     return { questions, count };
 };

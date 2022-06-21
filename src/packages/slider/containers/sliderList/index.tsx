@@ -121,8 +121,6 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
                                 <TableBody>
                                     {Boolean(count && sliders) &&
                                         sliders.map((slider) => {
-                                            console.log(slider);
-
                                             return (
                                                 <TableRow key={slider.id}>
                                                     <TableDescription>{slider.id}</TableDescription>

@@ -29,6 +29,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
     const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>({ label: 'Quiz 1', value: '1' });
     const [selectedQuizList, setSelectedQuizList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { lessonType } = useGetLessonType();
+
     React.useEffect(() => {
         if (lesson) {
             methods.setValue('name', lesson.name);
@@ -56,7 +57,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
         for (let i = 0; i < lessonType.length; i++) {
             const item = lessonType[i];
             if (item.id === e.target.value) {
-                setFormType(item.name);
+                setFormType(item.description);
             }
         }
     };
@@ -77,10 +78,11 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
                         <SelectField
                             label="Quiz"
                             name="quiz"
-                            values={dataParser<LessonType>(lessonType, 'name', 'id')}
+                            values={dataParser<LessonType>(lessonType, 'description', 'id')}
                             onChange={(e) => _onChangeSubjectType(e)}
                         />
                         <MultiSelectBox
+                            name=""
                             label="Quiz"
                             selected={selectedQuiz}
                             setSelected={setSelectedQuiz}
@@ -118,9 +120,9 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
                                         <SelectField
                                             label="Lessons Type"
                                             disabled
-                                            require={false}
+                                            isRequire={false}
                                             name="type"
-                                            values={dataParser<LessonType>(lessonType, 'name', 'id')}
+                                            values={dataParser<LessonType>(lessonType, 'description', 'id')}
                                             onChange={(e) => _onChangeSubjectType(e)}
                                         />
                                     </div>

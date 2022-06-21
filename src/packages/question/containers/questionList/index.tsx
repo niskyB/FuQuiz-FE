@@ -9,8 +9,6 @@ import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Answer } from '../../../../core/models/answer';
-import { Question } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
@@ -60,7 +58,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
     const [subjectId, setSubjectId] = React.useState<string>('');
 
     const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList(subjectId);
+    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
     const { levels } = useGetQuestionLevelList();
 
@@ -195,7 +193,10 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                                                     )}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${router.asPath}/edit/${question.id}`} passHref>
+                                                    <Link
+                                                        href={`${routes.adminQuestionListUrl}/${routes.adminEditQuestionUrl}/${question.id}`}
+                                                        passHref
+                                                    >
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </TableDescription>

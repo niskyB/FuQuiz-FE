@@ -61,10 +61,10 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                     { label: 'Active', value: true },
                                     { label: 'Inactive', value: false },
                                 ]}
-                                require={false}
+                                isRequire={false}
                                 name="isActive"
                             />
-                            <SelectField label="Sort" values={[...OrderFieldData]} name="order" require={false} />
+                            <SelectField label="Sort" values={[...OrderFieldData]} name="order" isRequire={false} />
                             <SelectField
                                 label="OrderBy"
                                 values={[
@@ -73,7 +73,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                     { label: 'Registration Time', value: 'Registration Time' },
                                 ]}
                                 name="orderBy"
-                                require={false}
+                                isRequire={false}
                             />
                         </div>
                         <div className="flex justify-end">

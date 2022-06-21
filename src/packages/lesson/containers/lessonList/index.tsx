@@ -3,34 +3,46 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { allFieldData } from '../../../../core/common/dataField';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { PricePackage } from '../../../../core/models/pricePackage';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { PaginationBar } from '../../../dashboard';
-import { useGetPricePackageListById } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
+import { useGetPricePackageListBySubjectId } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
 import { useGetLessonList } from '../../common/hooks/useGetLessonList';
+import { useGetLessonType } from '../../common/hooks/useGetLessonType';
 import { updateLessonActivation } from './action';
-import { UpdateLessonActivationDTO } from './interface';
+import { FilterLessonListDTO, FilterLessonListFormDTO, UpdateLessonActivationDTO } from './interface';
 
-interface LessonListProps {
-    subjectId: string;
-}
+interface LessonListProps extends FilterLessonListDTO {}
 
-export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId }) => {
-    const methods = useForm();
+export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, createdAt, isActive, title, type, updatedAt }) => {
+    const methods = useForm<FilterLessonListFormDTO>({
+        defaultValues: {
+            createdAt: '',
+            isActive: '',
+            title: '',
+            type: '',
+            updatedAt: '',
+        },
+    });
     const router = useRouter();
+    const { lessonType } = useGetLessonType();
+    const { lessonList } = useGetLessonList({ id, createdAt, isActive, title, type, updatedAt });
+    const { pricePackageList } = useGetPricePackageListBySubjectId(id);
+    const _handleOnSubmit = async (data: FilterLessonListFormDTO) => {
+        const { pricePackage, ...other } = data;
 
-    const { lessonList } = useGetLessonList(subjectId);
-    const { pricePackageList } = useGetPricePackageListById(subjectId);
-    const _handleOnSubmit = async () => {};
+        pushWithParams(router, `${routes.adminSubjectListUrl}/${id}/lesson`, { ...other });
+    };
     const _onUpdateLessonActivation = async (lessonId: string, data: UpdateLessonActivationDTO) => {
         const res = await updateLessonActivation(lessonId, data);
         if (res) {
-            toast.success('Update success!');
+            window.location.reload();
         }
     };
     return (
@@ -51,7 +63,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                         </Link>
                     </div>
 
-                    <Link href={router.asPath + routes.adminAddLessonUrl} passHref>
+                    <Link href={`${routes.adminSubjectListUrl}/${id}/lesson/add`} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Lesson
                         </p>
@@ -65,29 +77,17 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                             <TextField name="title" label="Title" isRequire={false} />
                             <SelectField
                                 label="Lesson Type"
-                                values={[
-                                    { label: 'Subject Topic', value: 'domain' },
-                                    { label: 'Lesson', value: 'domain 1' },
-                                    { label: 'Quiz', value: 'domain 2' },
-                                ]}
-                                name="isActive"
+                                values={[allFieldData, ...dataParser(lessonType, 'description', 'id')]}
+                                name="type"
                                 isRequire={false}
                             />
-                            <TextField name="createdAt" label="Create From" type={'date'} isRequire={false} />
-                            <TextField name="updateAt" label="Update date" type={'date'} isRequire={false} />
-                            <SelectField
-                                label="Active"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                name="isActive"
-                                isRequire={false}
-                            />
+                            <DateField name="createdAt" label="Create From" isRequire={false} />
+                            <DateField name="updateAt" label="Update date" isRequire={false} />
+                            <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" isRequire={false} />
                             <SelectField
                                 label="Package"
                                 values={[allFieldData, ...((pricePackageList && dataParser<PricePackage>(pricePackageList, 'name', 'id')) || [])]}
-                                name="isActive"
+                                name="pricePackage"
                                 isRequire={false}
                             />
                         </div>
@@ -138,15 +138,14 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId
                                                 )}
                                             </TableDescription>
                                             <TableDescription>
-                                                <Link href={`${router.asPath}${routes.adminEditLessonUrl}/${lesson.id}`} passHref>
+                                                <Link href={`${routes.adminSubjectListUrl}/${id}/lesson/edit/${lesson.id}`} passHref>
                                                     <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                 </Link>
-
                                                 <p
                                                     onClick={() => _onUpdateLessonActivation(lesson.id, { isActive: !lesson.isActive })}
                                                     className="text-indigo-600 cursor-pointer hover:text-indigo-900"
                                                 >
-                                                    {lesson.isActive ? 'Deactive' : 'Active'}
+                                                    {lesson.isActive ? 'Deactivate' : 'Active'}
                                                 </p>
                                             </TableDescription>
                                         </TableRow>

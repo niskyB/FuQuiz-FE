@@ -44,11 +44,11 @@ const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
                             <TextField label="Full name" name="fullName" type="fullName" isRequire={false} readOnly={true} />
                             <TextField label="Email address" name="email" type="email" isRequire={false} readOnly={true} />
                             <TextField label="phone number" name="mobile" type="text" isRequire={false} readOnly={true} />
-                            <SelectField label="Status" name="isActive" require={false} values={[...statusFieldData]} />
+                            <SelectField label="Status" name="isActive" isRequire={false} values={[...statusFieldData]} />
                             <SelectField
                                 label="Role"
                                 name="role"
-                                require={false}
+                                isRequire={false}
                                 values={[
                                     { label: 'Admin', value: UserRole.ADMIN },
                                     { label: 'Expert', value: UserRole.EXPERT },

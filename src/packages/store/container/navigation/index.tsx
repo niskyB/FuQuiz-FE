@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { SearchIcon } from '@heroicons/react/solid';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -39,7 +38,6 @@ export const Navigation: React.FC<NavigationProps> = () => {
         const res = await logout();
         if (res) window.location.reload();
     };
-    console.log(userState.role.description !== UserRole.CUSTOMER);
     return (
         <Disclosure as="nav" className="bg-white shadow">
             {({ open }) => (
