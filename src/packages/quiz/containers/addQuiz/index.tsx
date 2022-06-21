@@ -3,33 +3,35 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { allFieldData } from '../../../../core/common/dataField';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { LessonTypeEnum } from '../../../../core/models/lesson';
 import { routes } from '../../../../core/routes';
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension';
 import { useGetExamLevel } from '../../../examLevel/common/useGetExamLevel';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { useGetAllQuestionList, useGetQuestionLevelList } from '../../../question';
-import { FilterQuestionsDTO } from '../../../question/containers/questionList/interface';
+import { FilterQuestionFormDTO, FilterQuestionsDTO } from '../../../question/containers/questionList/interface';
 import { useGetSubjectList } from '../../../subject';
 import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
 import { useGetQuizType } from '../../common/hooks/useGetQuizType';
-import { AddQuestionQuizDTO } from './interface';
-
+import { addQuiz } from './action';
+import { AddQuizDTO } from './interface';
 interface AddQuizProps {}
 
 const mapFields = [{ label: 'Name', name: 'name' }];
 
 export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     const [selectedSubjectId, setSelectedSubjectId] = React.useState<string>('');
+    const [numberOfQuestion, setNumberOfQuestion] = React.useState<number>(0);
 
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({}), []);
-    const questionOption = React.useMemo<Partial<FilterQuestionsDTO>>(() => ({ subject: selectedSubjectId }), []);
+    const [questionOption, setQuestionOption] = React.useState<Partial<FilterQuestionsDTO>>({});
 
     const { lessonList } = useGetLessonList({ id: selectedSubjectId });
     const { dimensionList } = useGetDimensionListById(selectedSubjectId);
@@ -37,17 +39,28 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     const { ExamLevelList } = useGetExamLevel();
     const { QuizTypeList } = useGetQuizType();
     const { levels } = useGetQuestionLevelList();
-    const { questions: questionList, count } = useGetAllQuestionList(questionOption);
+    const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, ...questionOption });
 
     const router = useRouter();
-    const filterMethods = useForm();
-    const methods = useForm();
+    const filterMethods = useForm<FilterQuestionFormDTO>();
+    const methods = useForm<AddQuizDTO>();
 
-    const _handleOnFilter = async (data: any) => {
-        data.subject = methods.getValues('subject');
+    const _handleOnFilter = async (data: FilterQuestionFormDTO) => {
+        setQuestionOption((prev) => ({ ...prev, ...data }));
     };
 
-    const _handleOnSubmit = async (data: any) => {};
+    const _handleOnSubmit = async (data: AddQuizDTO) => {
+        addQuiz(data).then((res) => {
+            if (res) {
+                methods.reset();
+                store.dispatch(apiActions.resetState());
+                setSelectedSubjectId('');
+                setNumberOfQuestion(0);
+
+                toast.success('Add quiz success!');
+            }
+        });
+    };
 
     return (
         <div className="space-y-8 divide-y divide-gray-200">
@@ -80,7 +93,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
 
                                 <SelectField
                                     label="Exam level"
-                                    name="level"
+                                    name="quizLevel"
                                     values={[unsetFieldData, ...dataParser(ExamLevelList, 'name', 'id')]}
                                     direction="row"
                                 />
@@ -91,18 +104,27 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
 
                                 <SelectField
                                     label="Quiz Type"
-                                    name="quizType"
+                                    name="type"
                                     values={[unsetFieldData, ...dataParser(QuizTypeList, 'description', 'id')]}
                                     direction="row"
                                 />
 
-                                <TextField label="Number of questions" name={'numberOfQuestion'} type="number" min={1} direction="row" />
+                                <TextField
+                                    label="Number of questions"
+                                    name="numberOfQuestion"
+                                    type="number"
+                                    min={1}
+                                    onChange={(e) => {
+                                        setNumberOfQuestion(Number(e.target.value));
+                                    }}
+                                    direction="row"
+                                />
+                                <SelectField label="Public" name="isPublic" values={[unsetFieldData, ...statusFieldData]} direction="row" />
                             </div>
                         </div>
                     </div>
                 </form>
             </FormWrapper>
-
             <div className="w-full mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                 <div className="space-y-4 ">
                     <div>
@@ -133,8 +155,9 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                             isRequire={false}
                                             label="Level"
                                             values={[allFieldData, ...(dataParser(levels, 'description', 'id') || [])]}
-                                            name="Level"
+                                            name="level"
                                         />
+                                        <SelectField isRequire={false} label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
                                         <TextField name="content" label="Content" isRequire={false} />
                                     </div>
                                 </div>
@@ -178,7 +201,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                                         <TableDescription>
                                                             <p className="w-full text-gray-900 break-normal line-clamp-4">{question.content}</p>
                                                         </TableDescription>
-                                                        <TableDescription>{question.lesson.name}</TableDescription>
+                                                        <TableDescription>{question.questionLevel.description}</TableDescription>
 
                                                         <TableDescription>
                                                             <input {...methods.register('questions')} value={question.id} type={`checkbox`} />
@@ -193,9 +216,14 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                     </div>
                 </div>
             </div>
+            <p>
+                <FormErrorMessage />
+            </p>
 
             <div className="flex justify-between pt-5">
-                <p className="mt-2 font-semibold text-red-500 text">Choose Questions: 2/60</p>
+                <p className="mt-2 font-semibold text-red-500 text">
+                    Choose Questions: {(methods.watch('questions') && methods.watch('questions').length) || 0}/{numberOfQuestion}
+                </p>
                 <div className="flex">
                     <Link href={router.asPath.replace(routes.adminAddQuizUrl, '')} passHref>
                         <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

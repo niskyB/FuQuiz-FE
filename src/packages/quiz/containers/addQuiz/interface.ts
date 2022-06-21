@@ -1,6 +1,11 @@
-import { Question } from '../../../../core/models/question';
-
-export interface AddQuestionQuizDTO extends Pick<Question, 'id' | 'content' | 'lesson' | 'dimensions'> {
-    level: string;
+export interface AddQuizDTO {
+    name: string;
+    duration: number;
+    passRate: number;
+    numberOfQuestion: number;
+    isPublic: boolean;
+    type: string;
+    quizLevel: string;
     subject: string;
+    questions: string[];
 }

@@ -93,7 +93,9 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
             setPreviewThumbnailUrl('');
             setThumbnailFile(null);
             setExplanation('');
-
+            setSelectedDimension(unsetFieldData);
+            setSelectedDimensionList([]);
+            setIsMultipleChoice(false);
             toast.success('Add new question success!');
         });
     };
