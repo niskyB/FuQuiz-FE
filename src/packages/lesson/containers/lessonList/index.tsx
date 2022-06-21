@@ -15,18 +15,17 @@ import { useGetPricePackageListBySubjectId } from '../../../package/common/hooks
 import { useGetLessonList } from '../../common/hooks/useGetLessonList';
 import { useGetLessonType } from '../../common/hooks/useGetLessonType';
 import { updateLessonActivation } from './action';
-import { UpdateLessonActivationDTO } from './interface';
+import { FilterLessonListDTO, UpdateLessonActivationDTO } from './interface';
 
-interface LessonListProps {
-    subjectId: string;
-}
+interface LessonListProps extends FilterLessonListDTO {}
 
-export const LessonList: React.FunctionComponent<LessonListProps> = ({ subjectId }) => {
+export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, createdAt, isActive, title, type, updatedAt }) => {
     const methods = useForm();
     const router = useRouter();
+
     const { lessonType } = useGetLessonType();
-    const { lessonList } = useGetLessonList(subjectId);
-    const { pricePackageList } = useGetPricePackageListBySubjectId(subjectId);
+    const { lessonList } = useGetLessonList({ id, createdAt, isActive, title, type, updatedAt });
+    const { pricePackageList } = useGetPricePackageListBySubjectId(id);
     const _handleOnSubmit = async () => {};
     const _onUpdateLessonActivation = async (lessonId: string, data: UpdateLessonActivationDTO) => {
         const res = await updateLessonActivation(lessonId, data);
