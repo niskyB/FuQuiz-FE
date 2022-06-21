@@ -29,4 +29,8 @@ export enum ApiListRoutes {
 
     DIMENSION_TYPE = 'dimension-type',
     DIMENSION_TYPES = 'dimension-types',
+
+    EXAM_LEVELS = 'exam-levels',
+
+    QUIZ_TYPES = 'quiz-types',
 }

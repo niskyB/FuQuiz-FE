@@ -3,29 +3,64 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
+import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
-import { RedStar } from '../../../store';
-import { AddQuestionQuizDTO } from './interface';
-
+import { store } from '../../../../core/store';
+import { apiActions } from '../../../../core/store/api';
+import { dataParser } from '../../../../core/util/data';
+import { useGetDimensionListById } from '../../../dimension';
+import { useGetExamLevel } from '../../../examLevel/common/useGetExamLevel';
+import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
+import { useGetAllQuestionList, useGetQuestionLevelList } from '../../../question';
+import { FilterQuestionFormDTO, FilterQuestionsDTO } from '../../../question/containers/questionList/interface';
+import { useGetSubjectList } from '../../../subject';
+import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
+import { useGetQuizType } from '../../common/hooks/useGetQuizType';
+import { addQuiz } from './action';
+import { AddQuizDTO } from './interface';
 interface AddQuizProps {}
 
 const mapFields = [{ label: 'Name', name: 'name' }];
 
 export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
-    const [questions, setQuestions] = React.useState<AddQuestionQuizDTO[]>([]);
-
     const router = useRouter();
-    const filterMethods = useForm();
-    const methods = useForm();
+    const filterMethods = useForm<FilterQuestionFormDTO>();
+    const methods = useForm<AddQuizDTO>();
 
-    const _handleOnFilter = async (data: any) => {
-        data.subject = methods.getValues('subject');
+    const [selectedSubjectId, setSelectedSubjectId] = React.useState<string>('');
+    const [numberOfQuestion, setNumberOfQuestion] = React.useState<number>(0);
+    const [questionOption, setQuestionOption] = React.useState<Partial<FilterQuestionsDTO>>({});
+
+    const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({}), []);
+
+    const { lessonList } = useGetLessonList({ id: selectedSubjectId });
+    const { dimensionList } = useGetDimensionListById(selectedSubjectId);
+    const { subjects } = useGetSubjectList(subjectOption);
+    const { ExamLevelList } = useGetExamLevel();
+    const { QuizTypeList } = useGetQuizType();
+    const { levels } = useGetQuestionLevelList();
+    const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, ...questionOption });
+
+    const _handleOnFilter = async (data: FilterQuestionFormDTO) => {
+        setQuestionOption((prev) => ({ ...prev, ...data }));
     };
 
-    const _handleOnSubmit = async (data: any) => {};
+    const _handleOnSubmit = async (data: AddQuizDTO) => {
+        addQuiz(data).then((res) => {
+            if (res) {
+                methods.reset();
+                store.dispatch(apiActions.resetState());
+                setSelectedSubjectId('');
+                setNumberOfQuestion(0);
+
+                toast.success('Add quiz success!');
+            }
+        });
+    };
 
     return (
         <div className="space-y-8 divide-y divide-gray-200">
@@ -43,108 +78,53 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                     <p className="max-w-2xl mt-1 text-sm text-gray-500">General quiz setting</p>
                                 </div>
                                 {mapFields.map((item) => (
-                                    <div
-                                        key={item.name}
-                                        className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-                                    >
-                                        <div className="flex justify-start space-x-2">
-                                            <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                                {item.label}
-                                            </label>
-                                            <RedStar />
-                                        </div>
-                                        <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                            <TextField label="" name={item.name} type="text" />
-                                        </div>
-                                    </div>
+                                    <TextField key={item.name} label={item.label} name={item.name} type="text" direction="row" />
                                 ))}
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="flex space-x-2 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        <p>Subject</p>
-                                        <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="subject"
-                                            values={[
-                                                { label: 'Subject 1', value: 's1' },
-                                                { label: 'Subject 2', value: 's2' },
-                                            ]}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="flex space-x-2 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        <p>Exam level</p>
-                                        <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="level"
-                                            values={[
-                                                { label: 'Easy', value: '1' },
-                                                { label: 'Medium', value: '2' },
-                                            ]}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <div className="flex justify-start space-x-2">
-                                        <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                            Duration (minutes)
-                                        </label>
-                                        <RedStar />
-                                    </div>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name={'duration'} type="number" min={0} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <div className="flex justify-start space-x-2">
-                                        <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                            Pass rate
-                                        </label>
-                                        <RedStar />
-                                    </div>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name={'passRate'} type="number" min={0} max={100} />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <label htmlFor="content" className="flex space-x-2 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                        <p>Quiz Type</p>
-                                        <RedStar />
-                                    </label>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <SelectField
-                                            label=""
-                                            name="quizType"
-                                            values={[
-                                                { label: 'Simulation', value: '1Simulation' },
-                                                { label: 'Practice', value: '2Practice' },
-                                            ]}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                    <div className="flex justify-start space-x-2">
-                                        <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                            Number of questions
-                                        </label>
-                                        <RedStar />
-                                    </div>
-                                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                        <TextField label="" name={'numberOfQuestion'} type="number" min={1} />
-                                    </div>
-                                </div>
+
+                                <SelectField
+                                    label="Subject"
+                                    name="subject"
+                                    onChange={(e) => {
+                                        setSelectedSubjectId(e.target.value);
+                                    }}
+                                    values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
+                                    direction="row"
+                                />
+
+                                <SelectField
+                                    label="Exam level"
+                                    name="quizLevel"
+                                    values={[unsetFieldData, ...dataParser(ExamLevelList, 'name', 'id')]}
+                                    direction="row"
+                                />
+
+                                <TextField label="Duration (minutes)" name={'duration'} type="number" min={0} direction="row" />
+
+                                <TextField label="Pass rate" name={'passRate'} type="number" min={0} max={100} direction="row" />
+
+                                <SelectField
+                                    label="Quiz Type"
+                                    name="type"
+                                    values={[unsetFieldData, ...dataParser(QuizTypeList, 'description', 'id')]}
+                                    direction="row"
+                                />
+
+                                <TextField
+                                    label="Number of questions"
+                                    name="numberOfQuestion"
+                                    type="number"
+                                    min={1}
+                                    onChange={(e) => {
+                                        setNumberOfQuestion(Number(e.target.value));
+                                    }}
+                                    direction="row"
+                                />
+                                <SelectField label="Public" name="isPublic" values={[unsetFieldData, ...statusFieldData]} direction="row" />
                             </div>
                         </div>
                     </div>
                 </form>
             </FormWrapper>
-
             <div className="w-full mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                 <div className="space-y-4 ">
                     <div>
@@ -162,35 +142,22 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                         <SelectField
                                             isRequire={false}
                                             label="Lesson"
-                                            values={[
-                                                { label: 'Lesson 1', value: '1' },
-                                                { label: 'Lesson 2', value: '2' },
-                                                { label: 'Lesson 3', value: '3' },
-                                                { label: 'Lesson 4', value: '4' },
-                                            ]}
+                                            values={[allFieldData, ...(dataParser(lessonList, 'name', 'id') || [])]}
                                             name="lesson"
                                         />
                                         <SelectField
                                             isRequire={false}
                                             label="Dimension"
-                                            values={[
-                                                { label: 'Dimension 1', value: '1' },
-                                                { label: 'Dimension 2', value: '2' },
-                                                { label: 'Dimension 3', value: '3' },
-                                                { label: 'Dimension 4', value: '4' },
-                                            ]}
+                                            values={[allFieldData, ...(dataParser(dimensionList, 'name', 'id') || [])]}
                                             name="dimension"
                                         />
                                         <SelectField
                                             isRequire={false}
                                             label="Level"
-                                            values={[
-                                                { label: 'Easy', value: '1' },
-                                                { label: 'Dimension 2', value: '2' },
-                                                { label: 'Dimension 3', value: '3' },
-                                            ]}
-                                            name="Level"
+                                            values={[allFieldData, ...(dataParser(levels, 'description', 'id') || [])]}
+                                            name="level"
                                         />
+                                        <SelectField isRequire={false} label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" />
                                         <TextField name="content" label="Content" isRequire={false} />
                                     </div>
                                 </div>
@@ -220,19 +187,21 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                         <TableHead fields={['Lesson', 'Dimension', 'Content', 'Level', 'Choose question']} />
 
                                         <TableBody>
-                                            {Boolean(questions) &&
-                                                questions.map((question, index) => (
+                                            {selectedSubjectId &&
+                                                questionList.map((question, index) => (
                                                     <TableRow key={question.id}>
                                                         <TableDescription>
                                                             <div className="text-gray-900">{question.lesson.name}</div>
                                                         </TableDescription>
                                                         <TableDescription>
-                                                            <div className="text-gray-900">{question.dimensions}</div>
+                                                            <div className="text-gray-900">
+                                                                {question.dimensions.map((dimension) => dimension.name).join(', ')}
+                                                            </div>
                                                         </TableDescription>
                                                         <TableDescription>
                                                             <p className="w-full text-gray-900 break-normal line-clamp-4">{question.content}</p>
                                                         </TableDescription>
-                                                        <TableDescription>{question.lesson.name}</TableDescription>
+                                                        <TableDescription>{question.questionLevel.description}</TableDescription>
 
                                                         <TableDescription>
                                                             <input {...methods.register('questions')} value={question.id} type={`checkbox`} />
@@ -247,9 +216,14 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                     </div>
                 </div>
             </div>
+            <p>
+                <FormErrorMessage />
+            </p>
 
             <div className="flex justify-between pt-5">
-                <p className="mt-2 font-semibold text-red-500 text">Choose Questions: 2/60</p>
+                <p className="mt-2 font-semibold text-red-500 text">
+                    Choose Questions: {(methods.watch('questions') && methods.watch('questions').length) || 0}/{numberOfQuestion}
+                </p>
                 <div className="flex">
                     <Link href={router.asPath.replace(routes.adminAddQuizUrl, '')} passHref>
                         <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
