@@ -17,7 +17,7 @@ export const useGetLessonList = (option: Partial<FilterLessonListDTO>) => {
         }),
         [createdAt, id, isActive, title, type, updatedAt]
     );
-    const { list: lessonList, count } = useGetListWithCount<Lesson, Partial<FilterLessonListDTO>>(ApiListRoutes.LESSONS, options);
+    const { list: lessonList, count } = useGetListWithCount<Lesson, Partial<FilterLessonListDTO>>(`${ApiListRoutes.LESSONS}/${options.id}`, options);
 
     return { lessonList, count };
 };
