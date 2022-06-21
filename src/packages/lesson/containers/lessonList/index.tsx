@@ -31,7 +31,6 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, creat
         },
     });
     const router = useRouter();
-    console.log(router);
     const { lessonType } = useGetLessonType();
     const { lessonList } = useGetLessonList({ id, createdAt, isActive, title, type, updatedAt });
     const { pricePackageList } = useGetPricePackageListBySubjectId(id);
@@ -139,10 +138,9 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, creat
                                                 )}
                                             </TableDescription>
                                             <TableDescription>
-                                                <Link href={`${router.asPath}${routes.adminEditLessonUrl}/${lesson.id}`} passHref>
+                                                <Link href={`${routes.adminSubjectListUrl}/${id}/lesson/edit/${lesson.id}`} passHref>
                                                     <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                 </Link>
-
                                                 <p
                                                     onClick={() => _onUpdateLessonActivation(lesson.id, { isActive: !lesson.isActive })}
                                                     className="text-indigo-600 cursor-pointer hover:text-indigo-900"
