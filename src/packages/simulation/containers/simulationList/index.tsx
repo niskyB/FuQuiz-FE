@@ -6,7 +6,7 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { Question } from '../../../../core/models/question';
-import { PracticeQuiz } from '../../../../core/models/quiz';
+import { Quiz } from '../../../../core/models/quiz';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 import { SelectSubject } from '../../../practices/containers/practiceList/interface';
@@ -20,7 +20,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
         { id: '3', name: 'Master of coins' },
     ]);
 
-    const [quizzes, setQuizzes] = React.useState<PracticeQuiz[]>([
+    const [quizzes, setQuizzes] = React.useState<Quiz[]>([
         {
             id: '1',
             name: 'Quiz Practice 1',
@@ -28,7 +28,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -41,7 +41,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -54,7 +54,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -67,7 +67,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Simulation' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -128,7 +128,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.examLevel.name}</div>
+                                                        <div className="text-gray-900">{quiz.level.name}</div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>

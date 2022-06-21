@@ -8,54 +8,32 @@ import { Table, TableDescription, TableHead, TableRow } from '../../../../core/c
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
-import { Answer } from '../../../../core/models/answer';
-import { clearQuery } from '../../../../core/util';
+import { clearQuery, pushWithParams } from '../../../../core/util';
+import { useGetQuizType } from '../../common/hooks/useGetQuizType';
+import { allFieldData } from '../../../../core/common/dataField';
+import { dataParser } from '../../../../core/util/data';
+import { useGetSubjectList } from '../../../subject';
+import { FilterQuizListDTO, FilterQuizListFormDTO, useGetQuizList } from '../../common/hooks/useGetQuizList';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 
-interface QuizListProps {}
+interface QuizListProps extends FilterQuizListDTO {}
 
-export const QuizList: React.FunctionComponent<QuizListProps> = () => {
-    const methods = useForm();
+export const QuizList: React.FunctionComponent<QuizListProps> = ({ currentPage, name, pageSize, subject, type }) => {
+    const methods = useForm<FilterQuizListFormDTO>();
     const router = useRouter();
 
-    const cloneAnswers: Answer[] = [];
+    const { quizList, count } = useGetQuizList({ currentPage, name, pageSize, subject, type });
+    const { quizTypeList: QuizTypeList } = useGetQuizType();
+    const { subjects } = useGetSubjectList({ pageSize: 99 });
 
-    const [quizzes, setQuizzes] = React.useState([
-        {
-            id: 'q1',
-            answers: cloneAnswers,
-            content: 'Question 1',
-            isActive: true,
-            // lessonAttribute: { id: 'l1', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 1', type: { id: '1', name: '' } },
-        },
-        {
-            id: 'q2',
-            answers: cloneAnswers,
-            content: 'Question 2',
-            isActive: true,
-            // lessonAttribute: { id: 'l2', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 2', type: { id: '1', name: '' } },
-        },
-        {
-            id: 'q3',
-            answers: cloneAnswers,
-            content: 'Question 3',
-            isActive: true,
-            // lessonAttribute: { type: { id: 'l3', name: 'Quiz' } },
-            dimension: { id: '', description: '', name: 'Domain 3', type: { id: '1', name: '' } },
-        },
-        {
-            id: 'q4',
-            answers: cloneAnswers,
-            content: 'Question 4',
-            isActive: true,
-            // lessonAttribute: { id: 'l4', name: 'Quiz' },
-            dimension: { id: '', description: '', name: 'Domain 4', type: { id: '1', name: '' } },
-        },
-    ]);
-    const [count, setCount] = React.useState<number>(4);
+    useUrlParams({
+        defaultPath: routes.adminQuizListUrl,
+        query: { ...router.query, currentPage, name, pageSize, subject, type },
+    });
 
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: FilterQuizListFormDTO) => {
+        pushWithParams(router, routes.adminQuizListUrl, { ...data });
+    };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -91,24 +69,14 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                                 <SelectField
                                     isRequire={false}
                                     label="Subject"
-                                    values={[
-                                        { label: 'Subject 1', value: '1' },
-                                        { label: 'Subject 2', value: '2' },
-                                        { label: 'Subject 3', value: '3' },
-                                        { label: 'Subject 4', value: '4' },
-                                    ]}
+                                    values={[allFieldData, ...dataParser(subjects, 'name', 'id')]}
                                     name="subject"
                                 />
                                 <SelectField
                                     isRequire={false}
                                     label="Quiz Type"
-                                    values={[
-                                        { label: 'Simulation', value: '1' },
-                                        { label: 'Lesson 2', value: '2' },
-                                        { label: 'Lesson 3', value: '3' },
-                                        { label: 'Lesson 4', value: '4' },
-                                    ]}
-                                    name="lesson"
+                                    values={[allFieldData, ...dataParser(QuizTypeList, 'description', 'id')]}
+                                    name="type"
                                 />
                                 <TextField name="name" label="Name" isRequire={false} />
                             </div>
@@ -129,35 +97,48 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['ID', 'Name', 'Subject', 'Level', 'Questions', 'Duration', 'Pass rate', 'Quiz Type', '', '']} />
+                                <TableHead
+                                    fields={[
+                                        'ID',
+                                        'Name',
+                                        'Subject',
+                                        'Level',
+                                        'Questions',
+                                        'Duration (minutes)',
+                                        'Pass rate (%)',
+                                        'Quiz Type',
+                                        '',
+                                        '',
+                                    ]}
+                                />
 
                                 <TableBody>
-                                    {Boolean(count && quizzes) &&
-                                        quizzes.map((quiz, index) => (
+                                    {Boolean(count && quizList) &&
+                                        quizList.map((quiz, index) => (
                                             <TableRow key={quiz.id}>
                                                 <TableDescription>
                                                     <div className="text-gray-900">#{quiz.id}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">Quiz Name 1</div>
+                                                    <div className="text-gray-900">{quiz.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">Subject 1</div>
+                                                    <div className="text-gray-900">{quiz.subject.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">Easy</div>
+                                                    <div className="text-gray-900">{quiz.level.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">60 questions</div>
+                                                    <div className="text-gray-900">{quiz.questions.length}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">60 minutes</div>
+                                                    <div className="text-gray-900">{quiz.duration}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">60%</div>
+                                                    <div className="text-gray-900">{quiz.passRate}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">Simulation</div>
+                                                    <div className="text-gray-900">{quiz.type.description}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <Link href={`${router.asPath}/edit/${quiz.id}`} passHref>
@@ -177,7 +158,7 @@ export const QuizList: React.FunctionComponent<QuizListProps> = () => {
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };

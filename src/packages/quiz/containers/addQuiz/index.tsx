@@ -41,7 +41,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     const { dimensionList } = useGetDimensionListById(selectedSubjectId);
     const { subjects } = useGetSubjectList(subjectOption);
     const { ExamLevelList } = useGetExamLevel();
-    const { QuizTypeList } = useGetQuizType();
+    const { quizTypeList: QuizTypeList } = useGetQuizType();
     const { levels } = useGetQuestionLevelList();
     const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, ...questionOption });
 
