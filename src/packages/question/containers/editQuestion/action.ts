@@ -10,10 +10,10 @@ export const useGetQuestionById = (id: string) => {
     return { question };
 };
 
-export const editQuestion = async (input: EditQuestionForm) => {
+export const editQuestion = async (id: string, input: EditQuestionForm) => {
     const { answers, ...others } = input;
     const form = FormParser({ ...others, answers: JSON.stringify(answers) });
-    const res = await http.post('/question', form, SendFormRequestConfig());
+    const res = await http.put(`/question/${id}`, form, SendFormRequestConfig());
 
     return res;
 };
