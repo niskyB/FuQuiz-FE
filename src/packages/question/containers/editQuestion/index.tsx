@@ -10,20 +10,20 @@ import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { TextareaField } from '../../../../core/components/form/textareaField';
-import { LessonTypeEnum } from '../../../../core/models/lesson';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
-import { useGetLessonType } from '../../../lesson/common/hooks/useGetLessonType';
 import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
 import { addQuestion } from './action';
-import { AddQuestionDTO } from './interface';
+import { EditQuestionDTO } from './interface';
 
-interface AddQuestionProps {}
+interface EditQuestionProps {
+    id: string;
+}
 
-const defaultValues: Omit<AddQuestionDTO, 'image'> = {
+const defaultValues: Omit<EditQuestionDTO, 'image'> = {
     subject: '',
     lesson: '',
     dimensions: '',
@@ -37,12 +37,12 @@ const defaultValues: Omit<AddQuestionDTO, 'image'> = {
     explanation: '',
 };
 
-export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
+export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id }) => {
     const router = useRouter();
     const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
 
-    const methods = useForm<AddQuestionDTO>({
+    const methods = useForm<EditQuestionDTO>({
         defaultValues,
     });
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
@@ -61,7 +61,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
     const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
+    const { lessonList: lessons } = useGetLessonList(subjectId);
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
     const { levels } = useGetQuestionLevelList();
 
@@ -82,7 +82,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         methods.setValue(`answers.${refIndex}.isCorrect`, e.target.checked);
     };
 
-    const _handleOnSubmit = async (data: AddQuestionDTO) => {
+    const _handleOnSubmit = async (data: EditQuestionDTO) => {
         const { subject, ...others } = data;
         if (thumbnailFile) others.image = thumbnailFile;
         others.explanation = explanation;
@@ -124,14 +124,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     label="Lesson"
                                     name="lesson"
                                     direction="row"
-                                    values={[
-                                        unsetFieldData,
-                                        ...dataParser(
-                                            lessons.filter((lesson) => lesson.type.description !== LessonTypeEnum.LESSON_QUIZ),
-                                            'name',
-                                            'id'
-                                        ),
-                                    ]}
+                                    values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
                                 />
 
                                 <MultiSelectBox
