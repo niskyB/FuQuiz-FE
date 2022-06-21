@@ -10,9 +10,11 @@ import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { TextareaField } from '../../../../core/components/form/textareaField';
+import { LessonTypeEnum } from '../../../../core/models/lesson';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
+import { useGetLessonType } from '../../../lesson/common/hooks/useGetLessonType';
 import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
@@ -59,7 +61,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
     const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList(subjectId);
+    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
     const { levels } = useGetQuestionLevelList();
 
@@ -122,7 +124,14 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     label="Lesson"
                                     name="lesson"
                                     direction="row"
-                                    values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
+                                    values={[
+                                        unsetFieldData,
+                                        ...dataParser(
+                                            lessons.filter((lesson) => lesson.type.description !== LessonTypeEnum.LESSON_QUIZ),
+                                            'name',
+                                            'id'
+                                        ),
+                                    ]}
                                 />
 
                                 <MultiSelectBox
