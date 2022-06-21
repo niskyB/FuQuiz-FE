@@ -58,7 +58,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
     const [subjectId, setSubjectId] = React.useState<string>('');
 
     const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList(subjectId);
+    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
     const { levels } = useGetQuestionLevelList();
 

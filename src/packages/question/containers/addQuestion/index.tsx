@@ -180,7 +180,6 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     label="Question Type"
                                     direction="row"
                                     name="isMultipleChoice"
-                                    defaultValue={false}
                                     values={[
                                         { label: 'One choice', value: false },
                                         { label: 'Multiple choice', value: true },

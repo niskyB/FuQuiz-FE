@@ -6,31 +6,25 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
-import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
-import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { dataParser } from '../../../../core/util/data';
-import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
-import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
-import { EditQuestionDTO } from './interface';
+import { editQuestion, useGetQuestionById } from './action';
+import { EditQuestionDTO, EditQuestionForm } from './interface';
 
 interface EditQuestionProps {
     id: string;
 }
 
-const defaultValues: Omit<EditQuestionDTO, 'image'> = {
-    subject: '',
-    lesson: '',
-    dimensions: '',
+const defaultValues: Omit<EditQuestionForm, 'image'> = {
     questionLevel: '',
     videoLink: '',
     audioLink: '',
     content: '',
     isActive: true,
     isMultipleChoice: false,
-    answers: [{ detail: '', isCorrect: false }],
+    answers: [],
     explanation: '',
 };
 
@@ -39,35 +33,33 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
     const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
 
-    const methods = useForm<EditQuestionDTO>({
+    const methods = useForm<EditQuestionForm>({
         defaultValues,
     });
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
 
-    const [subjectId, setSubjectId] = React.useState<string>('');
+    const { question } = useGetQuestionById(id);
 
     React.useEffect(() => {
-        methods.reset();
-        methods.setValue('subject', subjectId);
-        setSelectedDimension(unsetFieldData);
-        setSelectedDimensionList([]);
-        setIsMultipleChoice(false);
-        setExplanation('');
-    }, [subjectId]);
+        if (question) {
+            methods.setValue('explanation', question.explanation);
+            methods.setValue('content', question.content);
 
-    const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
-    const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
-    const { subjects } = useGetSubjectListByRole();
-    // const { lessonList: lessons } = useGetLessonList(subjectId);
-    const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
+            methods.setValue('questionLevel', question.questionLevel.id);
+            setPreviewThumbnailUrl(question.imageUrl);
+            methods.setValue('isActive', question.isActive);
+            methods.setValue('audioLink', question.audioLink);
+            methods.setValue('videoLink', question.videoLink);
+            setExplanation(question.explanation);
+            methods.setValue('isMultipleChoice', question.isMultipleChoice);
+            answers.replace(question.answers);
+        }
+    }, [question, question?.questionLevel]);
+
     const { levels } = useGetQuestionLevelList();
 
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
     const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
-
-    const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSubjectId(e.target.value);
-    };
 
     const _onChangeQuestionType = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const isMultipleChoice = e.target && e.target.value === 'true' ? true : false;
@@ -79,22 +71,18 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
         methods.setValue(`answers.${refIndex}.isCorrect`, e.target.checked);
     };
 
-    const _handleOnSubmit = async (data: EditQuestionDTO) => {
-        const { subject, ...others } = data;
-        if (thumbnailFile) others.image = thumbnailFile;
-        others.explanation = explanation;
-        others.isMultipleChoice = isMultipleChoice;
-        let dimensionString = '';
-        selectedDimensionList.map((item) => (dimensionString = dimensionString + item.value + ','));
-        others.dimensions = dimensionString;
-        // await addQuestion(others).then(() => {
-        //     methods.reset();
-        //     setPreviewThumbnailUrl('');
-        //     setThumbnailFile(null);
-        //     setExplanation('');
+    const _handleOnSubmit = async (data: EditQuestionForm) => {
+        if (thumbnailFile) data.image = thumbnailFile;
+        data.explanation = explanation;
+        data.isMultipleChoice = isMultipleChoice;
+        await editQuestion(data).then(() => {
+            methods.reset();
+            setPreviewThumbnailUrl('');
+            setThumbnailFile(null);
+            setExplanation('');
 
-        //     toast.success('Add new question success!');
-        // });
+            toast.success('Add new question success!');
+        });
     };
 
     return (
@@ -103,8 +91,8 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
                 <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                     <div>
                         <div>
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Add Question</h3>
-                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be add new question</p>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Question</h3>
+                            <p className="max-w-2xl mt-1 text-sm text-gray-500">This page will be edit question</p>
                         </div>
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
@@ -144,7 +132,6 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
                                     label="Question Type"
                                     direction="row"
                                     name="isMultipleChoice"
-                                    defaultValue={false}
                                     values={[
                                         { label: 'One choice', value: false },
                                         { label: 'Multiple choice', value: true },
@@ -152,10 +139,9 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
                                     onChange={(e) => _onChangeQuestionType({ ...e })}
                                 />
 
-                                {answers.fields.map((_, index) => (
-                                    <>
+                                {answers.fields.map((answer, index) => (
+                                    <div key={'answer-' + index}>
                                         <TextField
-                                            key={'answer' + index}
                                             direction="row"
                                             label={`Answer ${index + 1}`}
                                             {...methods.register(`answers.${index}.detail` as const)}
@@ -165,12 +151,13 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
                                                 <input
                                                     type={isMultipleChoice ? 'checkbox' : 'radio'}
                                                     name="isCorrect"
+                                                    checked={answer.isCorrect}
                                                     onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
                                                 />
                                                 <label>Right Answer</label>
                                             </div>
                                         </div>
-                                    </>
+                                    </div>
                                 ))}
 
                                 <div className="flex justify-end space-x-2">

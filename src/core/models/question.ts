@@ -10,7 +10,7 @@ export interface Question {
     questionLevel: QuestionLevel;
     isActive: boolean;
     content: string;
-    imageLink: string;
+    imageUrl: string;
     videoLink: string;
     audioLink: string;
     isMultipleChoice: boolean;
