@@ -1,4 +1,4 @@
-import { AttributeType } from '../common/interface';
+import { AttributeType, SystemType } from '../common/interface';
 import { Question } from './question';
 import { Subject } from './subject';
 
@@ -8,7 +8,7 @@ export interface QuizAttribute {
 
 export interface ExamLevel extends AttributeType {}
 
-export interface QuizType extends AttributeType {}
+export interface QuizType extends SystemType<string> {}
 
 export interface PracticeQuiz extends QuizAttribute {
     id: string;
