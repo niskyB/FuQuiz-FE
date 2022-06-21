@@ -52,7 +52,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = () => {
                     <Link href={routes.homeUrl} passHref>
                         <div className="flex items-center flex-shrink-0 h-20 cursor-pointer">
                             <img className="block w-auto h-full " src="/asset/icons/logo-image.png" />
-                            <img className="hidden block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.png" />
+                            <img className="block w-auto h-full -ml-3 md:block" src="/asset/icons/logo-text.png" />
                         </div>
                     </Link>
                 </div>
@@ -114,7 +114,11 @@ export const SideBar: React.FunctionComponent<SideBarProps> = () => {
                 <div className="flex-shrink-0 block w-full group">
                     <div className="flex items-center">
                         <div>
-                            <img className="inline-block rounded-full h-9 w-9" src={userState.imageUrl} alt="user avatar" />
+                            <img
+                                className="inline-block rounded-full h-9 w-9"
+                                src={userState.imageUrl || '/asset/images/default-avatar.png'}
+                                alt="user avatar"
+                            />
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-white">{userState.fullName}</p>
