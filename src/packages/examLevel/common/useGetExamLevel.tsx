@@ -1,8 +1,8 @@
 import { ApiListRoutes } from '../../../core/common/enum';
 import { useGetList } from '../../../core/common/hooks';
-import { ExamLevel } from '../../../core/models/examLevel';
+import { QuizLevel } from '../../../core/models/quiz';
 
 export const useGetExamLevel = () => {
-    const { list: ExamLevelList } = useGetList<ExamLevel, null>(ApiListRoutes.EXAM_LEVELS);
+    const { list: ExamLevelList } = useGetList<QuizLevel, null>(ApiListRoutes.EXAM_LEVELS);
     return { ExamLevelList };
 };

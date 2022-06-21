@@ -6,7 +6,7 @@ import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { Question } from '../../../../core/models/question';
-import { PracticeQuiz } from '../../../../core/models/quiz';
+import { Quiz } from '../../../../core/models/quiz';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
 import { SelectSubject } from './interface';
@@ -15,7 +15,7 @@ interface PracticeListProps {}
 
 const PracticeList: React.FC<PracticeListProps> = () => {
     const [subjects, setSubjects] = React.useState<SelectSubject[]>([]);
-    const [quizzes, setQuizzes] = React.useState<PracticeQuiz[]>([
+    const [quizzes, setQuizzes] = React.useState<Quiz[]>([
         {
             id: '1',
             name: 'Quiz Practice 1',
@@ -23,7 +23,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -36,7 +36,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -49,7 +49,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -62,7 +62,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             createdAt: '05/25/2022',
             description: 'Something is matter',
             duration: 120,
-            examLevel: { id: '1', name: 'Hard' },
+            level: { id: '1', name: 'Hard' },
             quizLevel: { id: '1', name: 'Practice' },
             passRate: 50,
             questions: Array<Question>(90),
@@ -134,7 +134,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                                 <TableDescription>
                                                     <div className="max-w-sm">
                                                         <div className="text-gray-900">{quiz.quizLevel.name}</div>
-                                                        <div className="text-gray-900">{quiz.examLevel.name}</div>
+                                                        <div className="text-gray-900">{quiz.level.name}</div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
