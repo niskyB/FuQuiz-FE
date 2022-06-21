@@ -10,9 +10,11 @@ import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FileField, FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { TextareaField } from '../../../../core/components/form/textareaField';
+import { LessonTypeEnum } from '../../../../core/models/lesson';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
+import { useGetLessonType } from '../../../lesson/common/hooks/useGetLessonType';
 import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
@@ -59,7 +61,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
     const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList(subjectId);
+    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
     const { levels } = useGetQuestionLevelList();
 
@@ -122,7 +124,14 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     label="Lesson"
                                     name="lesson"
                                     direction="row"
-                                    values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
+                                    values={[
+                                        unsetFieldData,
+                                        ...dataParser(
+                                            lessons.filter((lesson) => lesson.type.description !== LessonTypeEnum.LESSON_QUIZ),
+                                            'name',
+                                            'id'
+                                        ),
+                                    ]}
                                 />
 
                                 <MultiSelectBox
@@ -173,52 +182,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     ]}
                                     onChange={(e) => _onChangeQuestionType({ ...e })}
                                 />
-                                {/* {answers.fields.map((_, index) => (
-                                    <div
-                                        key={'answer' + index}
-                                        className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-                                    >
-                                        <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                            Answer {index + 1} <RedStar />
-                                        </label>
-                                        <div className="flex items-center flex-1 mt-1 space-x-2 sm:mt-0 sm:col-span-2">
-                                            <TextField label="" {...methods.register(`answers.${index}.detail` as const)} />
-                                        </div>
-                                        <div
-                                            className={`flex ${
-                                                answers.fields.length - 1 === index ? 'justify-between' : 'justify-end'
-                                            } col-span-2 col-end-4 space-x-4`}
-                                        >
-                                            {answers.fields.length - 1 === index && (
-                                                <div className="flex space-x-2">
-                                                    <button
-                                                        className="w-8 h-8 text-indigo-500 hover:text-indigo-600"
-                                                        onClick={() => answers.append({ detail: '', isCorrect: false })}
-                                                    >
-                                                        <PlusCircleIcon />
-                                                    </button>
 
-                                                    {index !== 0 && (
-                                                        <button
-                                                            className="w-8 h-8 text-red-500 hover:text-red-600"
-                                                            onClick={() => answers.remove(answers.fields.length - 1)}
-                                                        >
-                                                            <XCircleIcon />
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            )}
-                                            <div className="flex items-center space-x-2 text-sm font-medium text-gray-900 w-fit">
-                                                <input
-                                                    type={isMultipleChoice ? 'checkbox' : 'radio'}
-                                                    name="isCorrect"
-                                                    onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
-                                                />
-                                                <label>Right Answer</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))} */}
                                 {answers.fields.map((_, index) => (
                                     <>
                                         <TextField
