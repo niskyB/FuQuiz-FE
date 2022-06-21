@@ -29,6 +29,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
     const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>({ label: 'Quiz 1', value: '1' });
     const [selectedQuizList, setSelectedQuizList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { lessonType } = useGetLessonType();
+
     React.useEffect(() => {
         if (lesson) {
             methods.setValue('name', lesson.name);
