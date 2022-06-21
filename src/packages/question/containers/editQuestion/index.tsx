@@ -12,11 +12,8 @@ import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox'
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
-import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
-import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
-import { addQuestion } from './action';
 import { EditQuestionDTO } from './interface';
 
 interface EditQuestionProps {
@@ -61,7 +58,7 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
     const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
     const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList(subjectId);
+    // const { lessonList: lessons } = useGetLessonList(subjectId);
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
     const { levels } = useGetQuestionLevelList();
 
@@ -90,14 +87,14 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
         let dimensionString = '';
         selectedDimensionList.map((item) => (dimensionString = dimensionString + item.value + ','));
         others.dimensions = dimensionString;
-        await addQuestion(others).then(() => {
-            methods.reset();
-            setPreviewThumbnailUrl('');
-            setThumbnailFile(null);
-            setExplanation('');
+        // await addQuestion(others).then(() => {
+        //     methods.reset();
+        //     setPreviewThumbnailUrl('');
+        //     setThumbnailFile(null);
+        //     setExplanation('');
 
-            toast.success('Add new question success!');
-        });
+        //     toast.success('Add new question success!');
+        // });
     };
 
     return (
@@ -112,32 +109,6 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
 
                         <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                             <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                                <SelectField
-                                    label="Subject"
-                                    name="subject"
-                                    direction="row"
-                                    onChange={(e) => _onChangeSubject(e)}
-                                    values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
-                                />
-
-                                <SelectField
-                                    label="Lesson"
-                                    name="lesson"
-                                    direction="row"
-                                    values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
-                                />
-
-                                <MultiSelectBox
-                                    selected={selectedDimension}
-                                    setSelected={setSelectedDimension}
-                                    selectedList={selectedDimensionList}
-                                    setSelectedList={setSelectedDimensionList}
-                                    values={dataParser(dimensions, 'name', 'id')}
-                                    name="dimensions"
-                                    label="Dimensions"
-                                    direction="row"
-                                />
-
                                 <SelectField
                                     label="Level"
                                     direction="row"

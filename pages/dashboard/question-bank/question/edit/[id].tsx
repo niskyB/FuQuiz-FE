@@ -1,19 +1,28 @@
+import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../../src/packages/dashboard';
-import { AddQuestion } from '../../../../../src/packages/question';
+import { EditQuestion } from '../../../../../src/packages/question';
 
-interface EditQuestionProps {}
+interface EditQuestionPageProps {
+    id: string;
+}
 
-const EditQuestion: React.FunctionComponent<EditQuestionProps> = () => {
+const EditQuestionPage: NextPage<EditQuestionPageProps> = ({ id }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
-                <AddQuestion />
+                <EditQuestion id={id} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
 
-export default EditQuestion;
+EditQuestionPage.getInitialProps = async (ctx: NextPageContext): Promise<EditQuestionPageProps> => {
+    let props = { id: ctx.query?.id || '' };
+
+    return props as EditQuestionPageProps;
+};
+
+export default EditQuestionPage;
