@@ -19,7 +19,7 @@ const LessonPage: NextPage<LessonPageProps> = ({ id, createdAt, isActive, title,
 };
 LessonPage.getInitialProps = async (ctx: NextPageContext): Promise<LessonPageProps> => {
     let props = {
-        id: ctx.query?.id || '',
+        id: ctx.query?.subjectId || '',
         title: ctx.query?.title || '',
         type: ctx.query?.type || '',
         createdAt: ctx.query?.createdAt || '',
