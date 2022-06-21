@@ -27,11 +27,15 @@ interface AddQuizProps {}
 const mapFields = [{ label: 'Name', name: 'name' }];
 
 export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
+    const router = useRouter();
+    const filterMethods = useForm<FilterQuestionFormDTO>();
+    const methods = useForm<AddQuizDTO>();
+
     const [selectedSubjectId, setSelectedSubjectId] = React.useState<string>('');
     const [numberOfQuestion, setNumberOfQuestion] = React.useState<number>(0);
+    const [questionOption, setQuestionOption] = React.useState<Partial<FilterQuestionsDTO>>({});
 
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({}), []);
-    const [questionOption, setQuestionOption] = React.useState<Partial<FilterQuestionsDTO>>({});
 
     const { lessonList } = useGetLessonList({ id: selectedSubjectId });
     const { dimensionList } = useGetDimensionListById(selectedSubjectId);
@@ -40,10 +44,6 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     const { QuizTypeList } = useGetQuizType();
     const { levels } = useGetQuestionLevelList();
     const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, ...questionOption });
-
-    const router = useRouter();
-    const filterMethods = useForm<FilterQuestionFormDTO>();
-    const methods = useForm<AddQuizDTO>();
 
     const _handleOnFilter = async (data: FilterQuestionFormDTO) => {
         setQuestionOption((prev) => ({ ...prev, ...data }));
