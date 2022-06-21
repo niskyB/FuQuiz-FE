@@ -18,6 +18,7 @@ import { useGetLessonType } from '../../../lesson/common/hooks/useGetLessonType'
 import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
+import { AnswerListForm } from '../../components/answerListForm';
 import { addQuestion } from './action';
 import { AddQuestionDTO } from './interface';
 
@@ -187,26 +188,13 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                     onChange={(e) => _onChangeQuestionType({ ...e })}
                                 />
 
-                                {answers.fields.map((_, index) => (
-                                    <>
-                                        <TextField
-                                            key={'answer' + index}
-                                            direction="row"
-                                            label={`Answer ${index + 1}`}
-                                            {...methods.register(`answers.${index}.detail` as const)}
-                                        />
-                                        <div className={`flex justify-end col-span-2 col-end-4 space-x-4`}>
-                                            <div className="flex items-center space-x-2 text-sm font-medium text-gray-900 w-fit">
-                                                <input
-                                                    type={isMultipleChoice ? 'checkbox' : 'radio'}
-                                                    name="isCorrect"
-                                                    onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
-                                                />
-                                                <label>Right Answer</label>
-                                            </div>
-                                        </div>
-                                    </>
-                                ))}
+                                <AnswerListForm
+                                    _onChangeRightAnswerBox={_onChangeRightAnswerBox}
+                                    answers={answers.fields}
+                                    isMultipleChoice={isMultipleChoice}
+                                    direction={'row'}
+                                    label="Answers"
+                                />
 
                                 <div className="flex justify-end space-x-2">
                                     <button
@@ -231,6 +219,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
                                 <QuillInput
                                     label="Explanation"
                                     direction="row"
+                                    name="explanation"
                                     description={explanation}
                                     setDescription={setExplanation}
                                     isRequire={true}
