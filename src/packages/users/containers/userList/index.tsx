@@ -23,7 +23,7 @@ const defaultValues: FilterUserFormDTO = {
     isActive: true,
     mobile: '',
     order: Order.DESC,
-    orderBy: 'createdAt',
+    orderBy: 'id',
     role: '',
 };
 
@@ -91,7 +91,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                 <SelectField label="Sort" values={[...OrderFieldData]} name="order" isRequire={false} />
                                 <SelectField
                                     label="OrderBy"
-                                    values={userFieldDataParser(['email', 'fullName', 'mobile'])}
+                                    values={userFieldDataParser(['id', 'fullName', 'gender', 'email', 'mobile', 'role', 'isActive'])}
                                     name="orderBy"
                                     isRequire={false}
                                 />
@@ -126,7 +126,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                                 <div className="text-gray-900">{user.id}</div>
                                             </TableDescription>
                                             <TableDescription>
-                                                <div className="text-gray-900">{user.email}</div>
+                                                <div className="text-gray-900 truncate">{user.email}</div>
                                             </TableDescription>
                                             <TableDescription>
                                                 <div className="text-gray-900">{user.fullName}</div>

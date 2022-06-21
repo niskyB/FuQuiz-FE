@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApiListRoutes } from '../../../../core/common/enum';
-import { useGetList, useGetListWithCount } from '../../../../core/common/hooks';
+import { useGetListWithCount } from '../../../../core/common/hooks';
 import { Lesson } from '../../../../core/models/lesson';
 import { FilterLessonListDTO } from '../../containers/lessonList/interface';
 
