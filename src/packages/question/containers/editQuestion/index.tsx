@@ -17,11 +17,13 @@ import { RedStar } from '../../../store';
 import { useGetSubjectListByRole } from '../../../subject';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
 import { addQuestion } from './action';
-import { AddQuestionDTO } from './interface';
+import { EditQuestionDTO } from './interface';
 
-interface AddQuestionProps {}
+interface EditQuestionProps {
+    id: string;
+}
 
-const defaultValues: Omit<AddQuestionDTO, 'image'> = {
+const defaultValues: Omit<EditQuestionDTO, 'image'> = {
     subject: '',
     lesson: '',
     dimensions: '',
@@ -35,12 +37,12 @@ const defaultValues: Omit<AddQuestionDTO, 'image'> = {
     explanation: '',
 };
 
-export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
+export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id }) => {
     const router = useRouter();
     const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
 
-    const methods = useForm<AddQuestionDTO>({
+    const methods = useForm<EditQuestionDTO>({
         defaultValues,
     });
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
@@ -80,7 +82,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         methods.setValue(`answers.${refIndex}.isCorrect`, e.target.checked);
     };
 
-    const _handleOnSubmit = async (data: AddQuestionDTO) => {
+    const _handleOnSubmit = async (data: EditQuestionDTO) => {
         const { subject, ...others } = data;
         if (thumbnailFile) others.image = thumbnailFile;
         others.explanation = explanation;

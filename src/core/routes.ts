@@ -65,7 +65,7 @@ export const routes = {
     // questionList
     adminQuestionListUrl: '/dashboard/question-bank/question',
     adminAddQuestionUrl: '/add',
-    editQuestionUrl: '/edit',
+    adminEditQuestionUrl: '/edit',
 
     //quiz PracticeQuiz
     adminQuizListUrl: '/dashboard/question-bank/quiz',
