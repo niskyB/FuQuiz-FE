@@ -16,58 +16,58 @@ interface PracticeListProps {}
 const PracticeList: React.FC<PracticeListProps> = () => {
     const [subjects, setSubjects] = React.useState<SelectSubject[]>([]);
     const [quizzes, setQuizzes] = React.useState<Quiz[]>([
-        {
-            id: '1',
-            name: 'Quiz Practice 1',
-            correctAnswer: 50,
-            createdAt: '05/25/2022',
-            description: 'Something is matter',
-            duration: 120,
-            level: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
-            passRate: 50,
-            questions: Array<Question>(90),
-            subject: { id: '1', name: 'Javascript basic' },
-        },
-        {
-            id: '2',
-            name: 'Quiz Practice 2',
-            correctAnswer: 50,
-            createdAt: '05/25/2022',
-            description: 'Something is matter',
-            duration: 120,
-            level: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
-            passRate: 50,
-            questions: Array<Question>(90),
-            subject: { id: '1', name: 'Javascript basic' },
-        },
-        {
-            id: '3',
-            name: 'Quiz Practice 3',
-            correctAnswer: 50,
-            createdAt: '05/25/2022',
-            description: 'Something is matter',
-            duration: 120,
-            level: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
-            passRate: 50,
-            questions: Array<Question>(90),
-            subject: { id: '1', name: 'Javascript basic' },
-        },
-        {
-            id: '4',
-            name: 'Quiz Practice 4',
-            correctAnswer: 50,
-            createdAt: '05/25/2022',
-            description: 'Something is matter',
-            duration: 120,
-            level: { id: '1', name: 'Hard' },
-            quizLevel: { id: '1', name: 'Practice' },
-            passRate: 50,
-            questions: Array<Question>(90),
-            subject: { id: '1', name: 'Javascript basic' },
-        },
+        // {
+        //     id: '1',
+        //     name: 'Quiz Practice 1',
+        //     correctAnswer: 50,
+        //     createdAt: '05/25/2022',
+        //     description: 'Something is matter',
+        //     duration: 120,
+        //     level: { id: '1', name: 'Hard' },
+        //     quizLevel: { id: '1', name: 'Practice' },
+        //     passRate: 50,
+        //     questions: Array<Question>(90),
+        //     subject: { id: '1', name: 'Javascript basic' },
+        // },
+        // {
+        //     id: '2',
+        //     name: 'Quiz Practice 2',
+        //     correctAnswer: 50,
+        //     createdAt: '05/25/2022',
+        //     description: 'Something is matter',
+        //     duration: 120,
+        //     level: { id: '1', name: 'Hard' },
+        //     quizLevel: { id: '1', name: 'Practice' },
+        //     passRate: 50,
+        //     questions: Array<Question>(90),
+        //     subject: { id: '1', name: 'Javascript basic' },
+        // },
+        // {
+        //     id: '3',
+        //     name: 'Quiz Practice 3',
+        //     correctAnswer: 50,
+        //     createdAt: '05/25/2022',
+        //     description: 'Something is matter',
+        //     duration: 120,
+        //     level: { id: '1', name: 'Hard' },
+        //     quizLevel: { id: '1', name: 'Practice' },
+        //     passRate: 50,
+        //     questions: Array<Question>(90),
+        //     subject: { id: '1', name: 'Javascript basic' },
+        // },
+        // {
+        //     id: '4',
+        //     name: 'Quiz Practice 4',
+        //     correctAnswer: 50,
+        //     createdAt: '05/25/2022',
+        //     description: 'Something is matter',
+        //     duration: 120,
+        //     level: { id: '1', name: 'Hard' },
+        //     quizLevel: { id: '1', name: 'Practice' },
+        //     passRate: 50,
+        //     questions: Array<Question>(90),
+        //     subject: { id: '1', name: 'Javascript basic' },
+        // },
     ]);
     const [count, setCount] = React.useState<number>(4);
 
@@ -133,7 +133,6 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.quizLevel.name}</div>
                                                         <div className="text-gray-900">{quiz.level.name}</div>
                                                     </div>
                                                 </TableDescription>

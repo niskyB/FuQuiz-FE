@@ -15,6 +15,7 @@ import { dataParser } from '../../../../core/util/data';
 import { useGetSubjectList } from '../../../subject';
 import { FilterQuizListDTO, FilterQuizListFormDTO, useGetQuizList } from '../../common/hooks/useGetQuizList';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
+import { deleteQuiz } from './action';
 
 interface QuizListProps extends FilterQuizListDTO {}
 
@@ -33,6 +34,12 @@ export const QuizList: React.FunctionComponent<QuizListProps> = ({ currentPage, 
 
     const _handleOnSubmit = async (data: FilterQuizListFormDTO) => {
         pushWithParams(router, routes.adminQuizListUrl, { ...data });
+    };
+
+    const _onDeleteQuiz = (quizId: string) => {
+        deleteQuiz(quizId).then(() => {
+            window.location.reload();
+        });
     };
 
     return (
@@ -141,14 +148,17 @@ export const QuizList: React.FunctionComponent<QuizListProps> = ({ currentPage, 
                                                     <div className="text-gray-900">{quiz.type.description}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${router.asPath}/edit/${quiz.id}`} passHref>
+                                                    <Link href={`${clearQuery(router.asPath)}/edit/${quiz.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${router.asPath}/edit/${quiz.id}`} passHref>
-                                                        <p className="text-red-600 cursor-pointer hover:text-red-900">Delete</p>
-                                                    </Link>
+                                                    <p
+                                                        onClick={() => _onDeleteQuiz(quiz.id)}
+                                                        className="text-red-600 cursor-pointer hover:text-red-900"
+                                                    >
+                                                        Delete
+                                                    </p>
                                                 </TableDescription>
                                             </TableRow>
                                         ))}
