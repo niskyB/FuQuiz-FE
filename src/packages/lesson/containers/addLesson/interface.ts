@@ -1,5 +1,6 @@
 export interface AddLessonDTO {
     name: string;
+    quizType: string;
     isActive: boolean;
     htmlContent: string;
     topic: string;

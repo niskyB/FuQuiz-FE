@@ -3,13 +3,17 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { LessonType, LessonTypeEnum } from '../../../../core/models/lesson';
+import { QuizType, QuizTypeEnum } from '../../../../core/models/quiz';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
 import { dataParser } from '../../../../core/util/data';
+import { useGetQuizList } from '../../../quiz/common/hooks/useGetQuizList';
+import { useGetQuizType } from '../../../quiz/common/hooks/useGetQuizType';
 import { useGetLessonType } from '../../common/hooks/useGetLessonType';
 import { addLesson } from './action';
 import { AddLessonFormDTO } from './interface';
@@ -18,25 +22,32 @@ interface AddLessonProps {
     subjectId: string;
 }
 
-const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
+export const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
     const methods = useForm<AddLessonFormDTO>();
 
     const router = useRouter();
     const [description, setDescription] = React.useState<string>('');
     const [formType, setFormType] = React.useState<LessonTypeEnum>(LessonTypeEnum.LESSON_DETAIL);
 
-    const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>({ label: 'Quiz 1', value: '1' });
+    const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
     const [selectedQuizList, setSelectedQuizList] = React.useState<SelectionFieldValues<any>[]>([]);
     const { lessonType } = useGetLessonType();
+    const [quizType, setQuizType] = React.useState<string>('');
+
+    const { quizTypeList: quizTypeList } = useGetQuizType();
+    const { quizList } = useGetQuizList({ currentPage: 0, pageSize: 999, name: '', subject: subjectId, type: quizType });
+    React.useEffect(() => {}, [quizList]);
 
     const _handleOnSubmit = async (data: AddLessonFormDTO) => {
-        const res = await addLesson({ ...data, isActive: true, subject: subjectId, htmlContent: description });
+        const { quizType, ...others } = data;
+        console.log(quizList.map((item) => item.id).toString());
+        const res = await addLesson({ ...others, isActive: true, subject: subjectId, htmlContent: description });
         if (res) {
             methods.reset();
             store.dispatch(apiActions.resetState());
             setDescription('');
             toast.success('Add lesson success!');
-            methods.setValue('type', data.type);
+            methods.setValue('type', others.type);
         }
     };
     React.useEffect(() => {
@@ -53,6 +64,10 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
         }
     };
 
+    const _onChangeQuizType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        e.target && setQuizType(e.target.value);
+    };
+
     const _onRenderForm = () => {
         switch (formType) {
             case LessonTypeEnum.LESSON_DETAIL:
@@ -67,10 +82,10 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
                 return (
                     <>
                         <SelectField
-                            label="Quiz"
-                            name="quiz"
-                            values={dataParser<LessonType>(lessonType, 'description', 'id')}
-                            onChange={(e) => _onChangeSubjectType(e)}
+                            label="Quiz Type"
+                            name="quizType"
+                            values={dataParser<QuizType>(quizTypeList, 'description', 'id')}
+                            onChange={(e) => _onChangeQuizType(e)}
                         />
                         <MultiSelectBox
                             name="quiz"
@@ -79,12 +94,7 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
                             setSelected={setSelectedQuiz}
                             selectedList={selectedQuizList}
                             setSelectedList={setSelectedQuizList}
-                            values={[
-                                { label: 'Quiz 1', value: '1' },
-                                { label: 'Quiz 2', value: '2' },
-                                { label: 'Quiz 3', value: '3' },
-                                { label: 'Quiz 4', value: '4' },
-                            ]}
+                            values={dataParser(quizList, 'name', 'id')}
                         />
                         <QuillInput label="HTML Content" description={description} setDescription={setDescription} />
                     </>
@@ -151,5 +161,3 @@ const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }) => {
         </div>
     );
 };
-
-export default AddLesson;

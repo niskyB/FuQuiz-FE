@@ -8,7 +8,6 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { DimensionType } from '../../../../core/models/dimension';
 import { dataParser } from '../../../../core/util/data';
-import { RedStar } from '../../../store';
 import { useGetDimensionById } from '../../common/hooks/useGetDimensionById';
 import { useGetDimensionType } from '../../common/hooks/useGetDimensionTypes';
 import { editDimension } from './action';
