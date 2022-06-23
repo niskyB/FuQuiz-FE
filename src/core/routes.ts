@@ -48,9 +48,9 @@ export const routes = {
     subjectListUrl: '/courses',
     adminSubjectCategoryListUrl: '/dashboard/subject/category',
     // registration
-    registrationUrl: '/dashboard/registrations',
-    addRegistrationUrl: '/dashboard/registrations/add',
-    editRegistrationUrl: '/dashboard/registrations/edit',
+    adminRegistrationUrl: '/dashboard/registrations',
+    adminAddRegistrationUrl: '/dashboard/registrations/add',
+    adminEditRegistrationUrl: '/dashboard/registrations/edit',
 
     // registration
     settingUrl: '/dashboard/setting',
