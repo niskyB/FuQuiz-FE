@@ -1,4 +1,4 @@
-export interface AddQuizDTO {
+export interface EditQuizDTO {
     name: string;
     duration: number;
     passRate: number;

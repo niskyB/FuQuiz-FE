@@ -9,7 +9,7 @@ import { Table, TableDescription, TableHead, TableRow } from '../../../../core/c
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { PricePackage } from '../../../../core/models/pricePackage';
 import { routes } from '../../../../core/routes';
-import { pushWithParams } from '../../../../core/util';
+import { clearQuery, pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { PaginationBar } from '../../../dashboard';
 import { useGetPricePackageListBySubjectId } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
@@ -56,14 +56,14 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, creat
                 </div>
                 <div className="flex flex-col items-end mt-4 space-y-2 sm:mt-0 sm:ml-16">
                     <div className="space-x-2">
-                        <Link href={router.asPath.replace(routes.adminLessonListUrl, routes.adminEditSubjectUrl)} passHref>
+                        <Link href={clearQuery(router.asPath).replace('lesson', 'edit')} passHref>
                             <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                                 Overview
                             </p>
                         </Link>
                     </div>
 
-                    <Link href={`${routes.adminSubjectListUrl}/${id}/lesson/add`} passHref>
+                    <Link href={`${clearQuery(router.asPath)}/add`} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Lesson
                         </p>
@@ -77,7 +77,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, creat
                             <TextField name="title" label="Title" isRequire={false} />
                             <SelectField
                                 label="Lesson Type"
-                                values={[allFieldData, ...dataParser(lessonType, 'description', 'id')]}
+                                values={[allFieldData, ...dataParser(lessonType, 'description', 'description')]}
                                 name="type"
                                 isRequire={false}
                             />

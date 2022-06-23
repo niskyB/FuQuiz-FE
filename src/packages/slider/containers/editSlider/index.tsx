@@ -103,7 +103,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
                                 <TextField key={item.name} label={item.label} name={item.name} type="text" direction="row" />
                             ))}
 
-                            <SelectField label="Show" values={SHOWING_FIELDS} direction="row" name="isShow" defaultValue={slider?.isShow} />
+                            <SelectField label="Show" values={SHOWING_FIELDS} direction="row" name="isShow" />
                             <TextareaField name="notes" label="Notes" direction="row" />
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <div className="flex justify-start space-x-2">

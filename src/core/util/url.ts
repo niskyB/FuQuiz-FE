@@ -7,14 +7,11 @@ export const urlQueryParser = (data: { [key: string]: any }) => {
                 data['currentPage'] = data['currentPage'] - 1;
             }
         });
-
-        // const result = Object.keys(data)
-        //     .map((item) => {
-        //         if (item === 'currentPage') return `${item}=${data[item] - 1}`;
-        //         else return `${item}=${data[item]}`;
-        //     })
-        //     .join('&');
         return `?${stringify(data)}`;
     }
     return '';
+};
+
+export const clearQuery = (url: string) => {
+    return url.split('?')[0];
 };
