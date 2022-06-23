@@ -18,9 +18,3 @@ export interface Registration {
     validFrom: string;
     validTo: string;
 }
-
-export enum RegistrationStatus {
-    SUBMITTED = 'submitted',
-    PAID = 'paid',
-    INACTIVE = 'inactive',
-}

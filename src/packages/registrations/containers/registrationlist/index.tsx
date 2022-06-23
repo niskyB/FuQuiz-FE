@@ -32,7 +32,6 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     const { count, registrationList } = useGetRegistrationList({ currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo });
 
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
-        console.log(data);
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
 
@@ -65,7 +64,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                             <SelectField label="Status" values={[allFieldData, ...registrationStatusFieldData]} isRequire={false} name="isActive" />
                             <SelectField label="Sort" values={[...OrderFieldData]} name="order" isRequire={false} />
                             <SelectField
-                                label="OrderBy"
+                                label="Order By"
                                 values={[
                                     { label: 'ID', value: 'id' },
                                     { label: 'Email', value: 'email' },

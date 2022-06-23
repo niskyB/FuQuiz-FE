@@ -41,7 +41,7 @@ const RegistrationListPage: NextPage<RegistrationListPageProps> = ({
 
 RegistrationListPage.getInitialProps = async (ctx: NextPageContext): Promise<RegistrationListPageProps> => {
     let props = {
-        currentPage: ctx.query?.currentPage || 0,
+        currentPage: ctx.query?.currentPage || 1,
         email: ctx.query?.email || '',
         order: ctx.query?.order || Order.DESC,
         orderBy: ctx.query?.orderBy || 'validForm',
