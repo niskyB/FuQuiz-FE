@@ -26,3 +26,9 @@ export interface User {
     role: Role;
     imageUrl: string;
 }
+
+export interface Customer {
+    id: string;
+    balance: number;
+    user: User;
+}

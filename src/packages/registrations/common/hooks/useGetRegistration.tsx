@@ -37,7 +37,7 @@ export const useGetRegistrationList = ({
             currentPage: currentPage || 0,
             pageSize: pageSize || 12,
             order: order || Order.DESC,
-            orderBy: orderBy || 'validForm',
+            orderBy: orderBy || 'validFrom',
         }),
         [subject, email, status, validFrom, validTo, currentPage, pageSize]
     );
