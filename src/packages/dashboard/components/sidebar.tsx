@@ -32,7 +32,7 @@ const navigation = [
     },
     { name: 'Blog', icon: BookOpenIcon, link: routes.adminBlogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
     { name: 'Subject', icon: AcademicCapIcon, link: routes.adminSubjectListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
-    { name: 'Registration', icon: PencilAltIcon, link: routes.registrationUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
+    { name: 'Registration', icon: PencilAltIcon, link: routes.adminRegistrationUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
     { name: 'Question Bank', icon: LibraryIcon, link: routes.adminQuestionListUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
     { name: 'User', icon: IdentificationIcon, link: routes.adminUsersUrl, acceptRole: [UserRole.ADMIN] },
     { name: 'Setting', icon: CogIcon, link: routes.settingUrl, acceptRole: [UserRole.ADMIN] },

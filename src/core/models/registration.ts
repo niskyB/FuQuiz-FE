@@ -1,6 +1,12 @@
 import { PricePackage } from './pricePackage';
 import { Subject } from './subject';
 
+export enum RegistrationStatus {
+    SUBMITTED = 'submitted',
+    PAID = 'paid',
+    INACTIVE = 'inactive',
+}
+
 export interface Registration {
     id: string;
     email: string;
@@ -11,10 +17,4 @@ export interface Registration {
     status: RegistrationStatus;
     validFrom: string;
     validTo: string;
-}
-
-export enum RegistrationStatus {
-    SUBMITTED = 'submitted',
-    PAID = 'paid',
-    INACTIVE = 'inactive',
 }
