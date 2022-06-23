@@ -47,7 +47,7 @@ export const AddUser: React.FunctionComponent<AddUserProps> = () => {
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
                             <div className="flex justify-center">
-                                <img className="h-36 w-36" src={'https://fuquiz.s3.ap-southeast-1.amazonaws.com/avatar-among-us-3.png'} />
+                                {/* <img className="h-36 w-36" src={'https://fuquiz.s3.ap-southeast-1.amazonaws.com/avatar-among-us-3.png'} /> */}
                             </div>
                             <TextField label="Full name" name="fullName" type="fullName" />
                             <TextField label="Email address" name="email" type="email" />
