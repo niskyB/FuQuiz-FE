@@ -9,6 +9,11 @@ export interface QuizAttribute {
 export interface QuizLevel extends AttributeType {}
 export interface QuizType extends SystemType<string> {}
 
+export enum QuizTypeEnum {
+    SIMULATION = 'Simulation',
+    LESSON_QUIZ = 'Lesson Quiz',
+}
+
 export interface Quiz extends QuizAttribute {
     id: string;
     name: string;

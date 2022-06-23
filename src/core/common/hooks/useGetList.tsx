@@ -3,7 +3,6 @@ import { http } from '../../api';
 import { urlQueryParser } from '../../util';
 import { ApiListRoutes } from '../enum';
 import { GetListWithCount } from '../interface';
-import { stringify } from 'query-string';
 
 export const useGetListWithCount = <T, Options>(apiRoute: ApiListRoutes | string, options?: Options) => {
     const [list, setList] = React.useState<T[]>([]);

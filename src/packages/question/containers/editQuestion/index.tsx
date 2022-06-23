@@ -2,7 +2,7 @@ import { PlusCircleIcon, XCircleIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
@@ -12,8 +12,9 @@ import { TextareaField } from '../../../../core/components/form/textareaField';
 import { routes } from '../../../../core/routes';
 import { dataParser } from '../../../../core/util/data';
 import { useGetQuestionLevelList } from '../../common/hooks/getQuestionLevel';
+import { AnswerListForm } from '../../components/answerListForm';
 import { editQuestion, useGetQuestionById } from './action';
-import { EditQuestionDTO, EditQuestionForm } from './interface';
+import { EditQuestionForm } from './interface';
 
 interface EditQuestionProps {
     id: string;
@@ -33,7 +34,6 @@ const defaultValues: Omit<EditQuestionForm, 'image'> = {
 export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id }) => {
     const router = useRouter();
     const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
-    const [isShit, setShit] = React.useState<boolean>(false);
     const [explanation, setExplanation] = React.useState<string>('');
 
     const methods = useForm<EditQuestionForm>({
@@ -52,15 +52,16 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
             methods.setValue('audioLink', question.audioLink);
             methods.setValue('videoLink', question.videoLink);
             setExplanation(question.explanation);
-            methods.setValue('isMultipleChoice', question.isMultipleChoice);
-            answers.replace(question.answers);
         }
     }, [question]);
 
     useTimeout(() => {
         if (question) {
+            methods.setValue('isMultipleChoice', question.isMultipleChoice);
+            setIsMultipleChoice(question.isMultipleChoice);
             methods.setValue('isActive', question.isActive);
             methods.setValue('questionLevel', question.questionLevel.id);
+            answers.replace(question.answers);
         }
     }, 500);
 
@@ -149,7 +150,15 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
                                     onChange={(e) => _onChangeQuestionType({ ...e })}
                                 />
 
-                                {answers.fields.map((answer, index) => (
+                                <AnswerListForm
+                                    _onChangeRightAnswerBox={_onChangeRightAnswerBox}
+                                    answers={answers.fields}
+                                    isMultipleChoice={isMultipleChoice}
+                                    direction={'row'}
+                                    label="Answers"
+                                />
+
+                                {/* {answers.fields.map((answer, index) => (
                                     <div key={'answer-' + index}>
                                         <TextField direction="row" label={`Answer ${index + 1}`} name={`answers.${index}.detail` as const} />
                                         <div className={`flex justify-end col-span-2 col-end-4 space-x-4`}>
@@ -164,7 +173,7 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+                                ))} */}
 
                                 <div className="flex justify-end space-x-2">
                                     <button

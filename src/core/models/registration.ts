@@ -8,7 +8,13 @@ export interface Registration {
     subject: Subject;
     package: PricePackage;
     totalCost: number;
-    status: boolean;
-    validForm: string;
+    status: RegistrationStatus;
+    validFrom: string;
     validTo: string;
+}
+
+export enum RegistrationStatus {
+    SUBMITTED = 'submitted',
+    PAID = 'paid',
+    INACTIVE = 'inactive',
 }
