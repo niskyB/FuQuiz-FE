@@ -3,7 +3,7 @@ import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../../src/packages/dashboard';
-import AddLesson from '../../../../../src/packages/lesson/containers/addLesson';
+import { AddLesson } from '../../../../../src/packages/lesson/containers/addLesson';
 
 interface AddLessonPageProps {
     subjectId: string;
