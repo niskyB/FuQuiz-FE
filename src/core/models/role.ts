@@ -7,5 +7,5 @@ export enum UserRole {
 }
 export interface Role {
     id: string;
-    description: UserRole | null;
+    description: UserRole;
 }
