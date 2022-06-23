@@ -25,7 +25,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({ name, label, values, d
                 className="block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
                 {values.map((item) => (
-                    <option key={item.value} value={item.value}>
+                    <option className="capitalize" key={item.value} value={item.value}>
                         {item.label}
                     </option>
                 ))}

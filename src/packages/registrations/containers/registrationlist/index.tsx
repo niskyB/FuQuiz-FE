@@ -2,32 +2,38 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { OrderFieldData } from '../../../../core/common/dataField';
+import { allFieldData, OrderFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { registrationStatusFieldData } from '../../../../core/common/dataField/registration';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 
-import { Registration } from '../../../../core/models/registration';
-import { UserRole } from '../../../../core/models/role';
-import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
 import { PaginationBar } from '../../../dashboard';
+import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistration';
 
-interface RegistrationListProps {
-    currentPage?: number;
-    pageSize?: number;
-}
+interface RegistrationListProps extends RegistrationFilterDTO {}
 
-const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ currentPage, pageSize }) => {
-    const methods = useForm();
-
+const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
+    currentPage,
+    pageSize,
+    email,
+    order,
+    orderBy,
+    status,
+    subject,
+    validFrom,
+    validTo,
+}) => {
     const router = useRouter();
+    const methods = useForm<RegistrationFilterFormDTO>();
 
-    const [registrations, setRegistrations] = React.useState<Registration[]>([]);
+    const { count, registrationList } = useGetRegistrationList({ currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo });
 
-    const [count, setCount] = React.useState(4);
-
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
+        pushWithParams(router, routes.adminRegistrationUrl, { ...data });
+    };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -40,7 +46,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={routes.addRegistrationUrl} passHref>
+                    <Link href={routes.adminAddRegistrationUrl} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Add Registration
                         </p>
@@ -53,24 +59,22 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                         <div className="flex space-x-4">
                             <TextField isRequire={false} name="subject" label="subject" />
                             <TextField isRequire={false} name="email" label="email" />
-                            <TextField isRequire={false} name="createdAt" label="Registration From" type={'date'} />
-                            <TextField isRequire={false} name="createdAt" label="Registration To" type={'date'} />
-                            <SelectField
-                                label="Status"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                isRequire={false}
-                                name="isActive"
-                            />
+                            <TextField isRequire={false} name="validFrom" label="Registration From" type={'date'} />
+                            <TextField isRequire={false} name="validTo" label="Registration To" type={'date'} />
+                            <SelectField label="Status" values={[allFieldData, ...registrationStatusFieldData]} isRequire={false} name="isActive" />
                             <SelectField label="Sort" values={[...OrderFieldData]} name="order" isRequire={false} />
                             <SelectField
-                                label="OrderBy"
+                                label="Order By"
                                 values={[
                                     { label: 'ID', value: 'id' },
                                     { label: 'Email', value: 'email' },
-                                    { label: 'Registration Time', value: 'Registration Time' },
+                                    { label: 'Registration Time', value: 'registrationTime' },
+                                    { label: 'Subject', value: 'subject' },
+                                    { label: 'Package', value: 'package' },
+                                    { label: 'Total cost', value: 'totalCost' },
+                                    { label: 'status', value: 'status' },
+                                    { label: 'Valid From', value: 'validFrom' },
+                                    { label: 'Valid To', value: 'validTo' },
                                 ]}
                                 name="orderBy"
                                 isRequire={false}
@@ -109,8 +113,8 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                 />
 
                                 <TableBody>
-                                    {Boolean(count && registrations) &&
-                                        registrations.map((registration) => (
+                                    {Boolean(count && registrationList) &&
+                                        registrationList.map((registration) => (
                                             <TableRow key={registration.id}>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{registration.id}</div>
@@ -142,7 +146,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                                     )}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{registration.validForm}</div>
+                                                    <div className="text-gray-900">{registration.validFrom}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{registration.validTo}</div>
@@ -151,7 +155,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                                     <div className="text-gray-900">Hoang Loc</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${routes.editRegistrationUrl}/${registration.id}`} passHref>
+                                                    <Link href={`${routes.adminEditRegistrationUrl}/${registration.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </TableDescription>
