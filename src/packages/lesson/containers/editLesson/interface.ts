@@ -7,4 +7,4 @@ export interface EditLessonDTO {
     type: string;
     quiz: string;
 }
-export interface EditLessonFormDTO extends EditLessonDTO {}
+export interface EditLessonFormDTO extends Omit<EditLessonDTO, 'htmlContent' | 'quiz'> {}

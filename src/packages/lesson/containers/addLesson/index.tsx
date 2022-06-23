@@ -32,7 +32,6 @@ export const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }
 
     const { lessonType } = useGetLessonType();
     const { quizList } = useGetQuizList({ currentPage: 0, pageSize: 999, name: '', subject: subjectId });
-    React.useEffect(() => {}, [quizList]);
 
     const _handleOnSubmit = async (data: AddLessonFormDTO) => {
         const { quizType, ...others } = data;
