@@ -1,18 +1,23 @@
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { genderFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { genderFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { useGetUserById } from '../../';
 import { UserRole } from '../../../../core/models/role';
+import { EditUserFormDTO } from './interface';
+import { updateUserRole, updateUserStatus } from './action';
+import { toast } from 'react-toastify';
+import Router, { useRouter } from 'next/router';
 
 interface EditUserProps {
     id: string;
 }
 
 const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
-    const methods = useForm({});
+    const router = useRouter();
+    const methods = useForm<EditUserFormDTO>({});
     const { user } = useGetUserById(id);
 
     React.useEffect(() => {
@@ -25,7 +30,14 @@ const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
         }
     }, [user]);
 
-    const _handleOnSubmit = async () => {};
+    const _handleOnSubmit = async (data: EditUserFormDTO) => {
+        const res1 = await updateUserStatus(id, { isActive: data.isActive });
+        const res2 = await updateUserRole(id, { role: data.role });
+        if (res1 && res2) {
+            toast.success('Update user information success!');
+            router.push(routes.adminUsersUrl);
+        }
+    };
 
     return (
         <div className="flex flex-col justify-center flex-1 py-12 sm:px-6 lg:px-8 intro-y">
@@ -37,24 +49,15 @@ const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
-                            {}
                             <div className="flex justify-center">
-                                <img className="h-36 w-36" src={user?.imageUrl} />
+                                <img className="h-36 w-36" src={user?.imageUrl || '/asset/images/default-avatar.png'} />
                             </div>
                             <TextField label="Full name" name="fullName" type="fullName" isRequire={false} readOnly={true} />
                             <TextField label="Email address" name="email" type="email" isRequire={false} readOnly={true} />
                             <TextField label="phone number" name="mobile" type="text" isRequire={false} readOnly={true} />
                             <SelectField label="Status" name="isActive" isRequire={false} values={[...statusFieldData]} />
-                            <SelectField
-                                label="Role"
-                                name="role"
-                                isRequire={false}
-                                values={[
-                                    { label: 'Admin', value: UserRole.ADMIN },
-                                    { label: 'Expert', value: UserRole.EXPERT },
-                                ]}
-                            />
-                            <RadioField require={false} label="sex" name="gender" values={genderFieldData} />
+                            <SelectField label="Role" name="role" isRequire={false} values={roleFieldData} />
+                            <RadioField disabled require={false} label="sex" name="gender" values={genderFieldData} />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

@@ -62,7 +62,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
     const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
     const { levels } = useGetQuestionLevelList();
 
-    const { questions: allQuestion, count } = useGetAllQuestionList(options);
+    const { questions: allQuestion, count } = useGetAllQuestionList({ ...options });
 
     const [questions, setQuestions] = React.useState<QuestionListDTO[]>([]);
     React.useEffect(() => {

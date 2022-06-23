@@ -1,5 +1,3 @@
-import { QuestionListProps } from '.';
-import { Dimension } from '../../../../core/models/dimension';
 import { Lesson } from '../../../../core/models/lesson';
 import { Question } from '../../../../core/models/question';
 import { Subject } from '../../../../core/models/subject';
@@ -14,4 +12,15 @@ export interface QuestionListDTO extends Omit<Question, 'lesson'> {
     lesson: SubjectLesson;
 }
 
-export interface FilterQuestionsDTO extends Pick<QuestionListProps, 'subject'> {}
+export interface FilterQuestionsDTO {
+    subject: string;
+    lesson: string;
+    dimension: string;
+    content: string;
+    level: string;
+    isActive: boolean | '';
+    currentPage: number;
+    pageSize: number;
+}
+
+export interface FilterQuestionFormDTO extends Omit<FilterQuestionsDTO, 'subject' | 'currentPage' | 'pageSize'> {}

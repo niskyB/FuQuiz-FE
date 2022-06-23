@@ -4,14 +4,14 @@ import { RedStar } from '../../../packages/store';
 import { Gender } from '../../models/user';
 import { useStoreApi } from '../../store';
 
-interface RadioFieldProps {
+interface RadioFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;
     values: Array<{ label: string; value: Gender }>;
     require?: boolean;
 }
 
-export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values, require = true }) => {
+export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values, require = true, ...rest }) => {
     const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
@@ -23,7 +23,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({ name, label, values, req
             <div className="flex mt-1 space-x-5">
                 {values.map((item) => (
                     <div className="flex items-center space-x-2" key={item.value}>
-                        <input type="radio" id={`${name}.${item.value}`} {...register(name)} value={item.value} />
+                        <input {...rest} type="radio" id={`${name}.${item.value}`} {...register(name)} value={item.value} />
                         <label htmlFor={`${name}.${item.value}`}>{item.label}</label>
                     </div>
                 ))}
