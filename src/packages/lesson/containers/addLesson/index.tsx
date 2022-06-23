@@ -8,12 +8,10 @@ import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../core/components/form';
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { LessonType, LessonTypeEnum } from '../../../../core/models/lesson';
-import { QuizType, QuizTypeEnum } from '../../../../core/models/quiz';
 import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
 import { dataParser } from '../../../../core/util/data';
 import { useGetQuizList } from '../../../quiz/common/hooks/useGetQuizList';
-import { useGetQuizType } from '../../../quiz/common/hooks/useGetQuizType';
 import { useGetLessonType } from '../../common/hooks/useGetLessonType';
 import { addLesson } from './action';
 import { AddLessonFormDTO } from './interface';
@@ -27,21 +25,23 @@ export const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }
 
     const router = useRouter();
     const [description, setDescription] = React.useState<string>('');
-    const [formType, setFormType] = React.useState<LessonTypeEnum>(LessonTypeEnum.LESSON_DETAIL);
+    const [formType, setFormType] = React.useState<LessonTypeEnum>();
 
     const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
     const [selectedQuizList, setSelectedQuizList] = React.useState<SelectionFieldValues<any>[]>([]);
-    const { lessonType } = useGetLessonType();
-    const [quizType, setQuizType] = React.useState<string>('');
 
-    const { quizTypeList: quizTypeList } = useGetQuizType();
-    const { quizList } = useGetQuizList({ currentPage: 0, pageSize: 999, name: '', subject: subjectId, type: quizType });
-    React.useEffect(() => {}, [quizList]);
+    const { lessonType } = useGetLessonType();
+    const { quizList } = useGetQuizList({ currentPage: 0, pageSize: 999, name: '', subject: subjectId });
 
     const _handleOnSubmit = async (data: AddLessonFormDTO) => {
         const { quizType, ...others } = data;
-        console.log(quizList.map((item) => item.id).toString());
-        const res = await addLesson({ ...others, isActive: true, subject: subjectId, htmlContent: description });
+        const res = await addLesson({
+            ...others,
+            isActive: true,
+            subject: subjectId,
+            htmlContent: description,
+            quiz: selectedQuizList.map((item) => item.value).join(','),
+        });
         if (res) {
             methods.reset();
             store.dispatch(apiActions.resetState());
@@ -51,7 +51,10 @@ export const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }
         }
     };
     React.useEffect(() => {
-        if (lessonType.length > 0) methods.setValue('type', lessonType[0].id);
+        if (lessonType.length > 0) {
+            methods.setValue('type', lessonType[0].id);
+            setFormType(lessonType[0].description);
+        }
         return () => {};
     }, [lessonType]);
 
@@ -62,10 +65,6 @@ export const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }
                 setFormType(item.description);
             }
         }
-    };
-
-    const _onChangeQuizType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        e.target && setQuizType(e.target.value);
     };
 
     const _onRenderForm = () => {
@@ -81,12 +80,12 @@ export const AddLesson: React.FunctionComponent<AddLessonProps> = ({ subjectId }
             case LessonTypeEnum.LESSON_QUIZ:
                 return (
                     <>
-                        <SelectField
+                        {/* <SelectField
                             label="Quiz Type"
                             name="quizType"
                             values={dataParser<QuizType>(quizTypeList, 'description', 'id')}
                             onChange={(e) => _onChangeQuizType(e)}
-                        />
+                        /> */}
                         <MultiSelectBox
                             name="quiz"
                             label="Quiz"

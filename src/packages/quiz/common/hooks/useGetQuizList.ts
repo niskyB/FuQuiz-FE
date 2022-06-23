@@ -16,7 +16,7 @@ export const useGetQuizList = (options: Partial<FilterQuizListDTO>) => {
     const { name, subject, type, currentPage, pageSize } = options;
     const option = React.useMemo<FilterQuizListDTO>(
         () => ({ name: name || '', subject: subject || '', type: type || '', currentPage: currentPage || 1, pageSize: pageSize || 10 }),
-        [name, subject, type]
+        [name, subject, type, currentPage, pageSize]
     );
 
     const { list: quizList, count } = useGetListWithCount<Quiz, Partial<FilterQuizListDTO>>(ApiListRoutes.QUIZZES, option);

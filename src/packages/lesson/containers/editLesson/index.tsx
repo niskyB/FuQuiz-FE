@@ -8,6 +8,7 @@ import { FormWrapper, QuillInput, SelectField, TextField } from '../../../../cor
 import { MultiSelectBox } from '../../../../core/components/form/multiSelectBox';
 import { LessonType, LessonTypeEnum } from '../../../../core/models/lesson';
 import { dataParser } from '../../../../core/util/data';
+import { useGetQuizList } from '../../../quiz/common/hooks/useGetQuizList';
 import { useGetLessonById } from '../../common/hooks/useGetLessonById';
 import { useGetLessonType } from '../../common/hooks/useGetLessonType';
 import { editLesson } from './action';
@@ -20,25 +21,36 @@ interface EditLessonProps {
 
 const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lessonId }) => {
     const methods = useForm<EditLessonFormDTO>();
-    const { lesson } = useGetLessonById(lessonId);
-
     const router = useRouter();
+
     const [description, setDescription] = React.useState<string>('');
     const [formType, setFormType] = React.useState<LessonTypeEnum>(LessonTypeEnum.LESSON_DETAIL);
-
     const [selectedQuiz, setSelectedQuiz] = React.useState<SelectionFieldValues<any>>({ label: 'Quiz 1', value: '1' });
     const [selectedQuizList, setSelectedQuizList] = React.useState<SelectionFieldValues<any>[]>([]);
+
     const { lessonType } = useGetLessonType();
+    const { lesson } = useGetLessonById(lessonId);
+    const { quizList } = useGetQuizList({ currentPage: 0, pageSize: 999, name: '', subject: subjectId });
 
     React.useEffect(() => {
         if (lesson) {
+            console.log(lesson);
             methods.setValue('name', lesson.name);
             methods.setValue('order', lesson.order);
             methods.setValue('topic', lesson.topic);
             methods.setValue('type', lesson.type.id);
-            methods.setValue('videoLink', lesson.lessonDetail && lesson.lessonDetail.videoLink);
 
-            setDescription(lesson.lessonDetail && lesson.lessonDetail.htmlContent);
+            if (lesson.lessonDetail) {
+                methods.setValue('videoLink', lesson.lessonDetail && lesson.lessonDetail.videoLink);
+                setDescription(lesson.lessonDetail && lesson.lessonDetail.htmlContent);
+            }
+
+            if (lesson.lessonQuiz) {
+                setSelectedQuiz(dataParser(lesson.lessonQuiz.quizzes, 'name', 'id')[0]);
+                setSelectedQuizList(dataParser(lesson.lessonQuiz.quizzes, 'name', 'id'));
+                setDescription(lesson.lessonQuiz && lesson.lessonQuiz.htmlContent);
+            }
+
             setFormType(lesson.type.description);
         }
 
@@ -46,7 +58,7 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
     }, [lesson]);
 
     const _handleOnSubmit = async (data: EditLessonFormDTO) => {
-        const res = await editLesson(lessonId, { ...data, htmlContent: description });
+        const res = await editLesson(lessonId, { ...data, htmlContent: description, quiz: selectedQuizList.map((item) => item.value).join(',') });
         if (res) {
             router.push(router.asPath.replace(`/edit/${lesson?.id}`, ''));
             toast.success('Update success!');
@@ -75,25 +87,20 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
             case LessonTypeEnum.LESSON_QUIZ:
                 return (
                     <>
-                        <SelectField
+                        {/* <SelectField
                             label="Quiz"
                             name="quiz"
                             values={dataParser<LessonType>(lessonType, 'description', 'id')}
                             onChange={(e) => _onChangeSubjectType(e)}
-                        />
+                        /> */}
                         <MultiSelectBox
-                            name=""
+                            name="quizzes"
                             label="Quiz"
                             selected={selectedQuiz}
                             setSelected={setSelectedQuiz}
                             selectedList={selectedQuizList}
                             setSelectedList={setSelectedQuizList}
-                            values={[
-                                { label: 'Quiz 1', value: '1' },
-                                { label: 'Quiz 2', value: '2' },
-                                { label: 'Quiz 3', value: '3' },
-                                { label: 'Quiz 4', value: '4' },
-                            ]}
+                            values={dataParser(quizList, 'name', 'id')}
                         />
                         <QuillInput label="HTML Content" description={description} setDescription={setDescription} />
                     </>

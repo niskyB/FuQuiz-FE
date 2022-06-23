@@ -20,7 +20,7 @@ const defaultValues: FilterUserFormDTO = {
     email: '',
     fullName: '',
     gender: '',
-    isActive: true,
+    isActive: '',
     mobile: '',
     order: Order.DESC,
     orderBy: 'id',
@@ -48,7 +48,6 @@ const UserList: React.FunctionComponent<UserListProps> = ({
     const router = useRouter();
 
     const { count, userList } = useAdminGetUserList(options);
-
     useUrlParams({
         defaultPath: routes.adminUsersUrl,
         query: { ...router.query, currentPage, pageSize, email, fullName, gender, isActive, mobile, order, orderBy, role },
@@ -83,7 +82,7 @@ const UserList: React.FunctionComponent<UserListProps> = ({
                                 <TextField name="email" label="email" isRequire={false} />
                                 <TextField name="fullName" label="Full name" isRequire={false} />
                                 <TextField name="mobile" label="Mobile" isRequire={false} />
-                                <SelectField label="Active" values={[...statusFieldData]} name="isActive" isRequire={false} />
+                                <SelectField label="Active" values={[allFieldData, ...statusFieldData]} name="isActive" isRequire={false} />
                             </div>
                             <div className="flex space-x-4">
                                 <SelectField label="Role" values={[allFieldData, ...roleFieldData]} name="role" isRequire={false} />
