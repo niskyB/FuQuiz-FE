@@ -1,5 +1,5 @@
 import { PricePackage } from './pricePackage';
-import { Subject } from './subject';
+import { Customer } from './user';
 
 export enum RegistrationStatus {
     SUBMITTED = 'submitted',
@@ -11,8 +11,8 @@ export interface Registration {
     id: string;
     email: string;
     registrationTime: string;
-    subject: Subject;
-    package: PricePackage;
+    customer: Customer;
+    pricePackage: PricePackage;
     totalCost: number;
     status: RegistrationStatus;
     validFrom: string;

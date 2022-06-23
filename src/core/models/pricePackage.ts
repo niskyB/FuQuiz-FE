@@ -1,4 +1,5 @@
 import { Lesson } from './lesson';
+import { Subject } from './subject';
 
 export interface PricePackage {
     id: string;
@@ -11,4 +12,5 @@ export interface PricePackage {
     createAt: string;
     salePrice: number;
     description: string;
+    subject?: Subject;
 }
