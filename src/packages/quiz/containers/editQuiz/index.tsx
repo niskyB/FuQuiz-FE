@@ -9,8 +9,7 @@ import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
-import { store } from '../../../../core/store';
-import { apiActions } from '../../../../core/store/api';
+import { clearQuery } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { useGetDimensionListById } from '../../../dimension';
 import { useGetExamLevel } from '../../../examLevel/common/useGetExamLevel';
@@ -19,7 +18,9 @@ import { useGetAllQuestionList, useGetQuestionLevelList } from '../../../questio
 import { FilterQuestionFormDTO, FilterQuestionsDTO } from '../../../question/containers/questionList/interface';
 import { useGetSubjectList } from '../../../subject';
 import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
+import { useGetQuizById } from '../../common/hooks/useGetQuizById';
 import { useGetQuizType } from '../../common/hooks/useGetQuizType';
+import { updateQuiz } from './action';
 import { EditQuizDTO } from './interface';
 interface EditQuizProps {
     quizId: string;
@@ -45,12 +46,43 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
     const { quizTypeList: QuizTypeList } = useGetQuizType();
     const { levels } = useGetQuestionLevelList();
     const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, ...questionOption });
+    const { quiz } = useGetQuizById(quizId);
+
+    React.useEffect(() => {
+        if (quiz) {
+            setSelectedSubjectId(quiz.subject.id);
+            setNumberOfQuestion(quiz.numberOfQuestion);
+            methods.setValue('subject', quiz.subject.id);
+            methods.setValue('name', quiz.name);
+            methods.setValue('duration', quiz.duration);
+            methods.setValue('passRate', quiz.passRate);
+            methods.setValue('numberOfQuestion', quiz.numberOfQuestion);
+            methods.setValue('isPublic', quiz.isPublic);
+            methods.setValue('quizLevel', quiz.level.id);
+            methods.setValue('type', quiz.type.id);
+            methods.setValue(
+                'questions',
+                quiz.questions.map((item) => item.id)
+            );
+        }
+        return () => {};
+    }, [quiz]);
 
     const _handleOnFilter = async (data: FilterQuestionFormDTO) => {
         setQuestionOption((prev) => ({ ...prev, ...data }));
     };
 
-    const _handleOnSubmit = async (data: EditQuizDTO) => {};
+    const _handleOnSubmit = async (data: EditQuizDTO) => {
+        if (data.questions.length === numberOfQuestion) {
+            const res = await updateQuiz(quizId, data);
+            if (res) {
+                router.push(clearQuery(router.asPath).replace(`${routes.adminEditQuizUrl}/${quizId}`, ''));
+                toast.success('Update success!');
+            }
+        } else {
+            toast.warn('Number of question and number of question you have selected should be equal!');
+        }
+    };
 
     return (
         <div className="space-y-8 divide-y divide-gray-200">
@@ -59,7 +91,7 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                     <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                         <div className="space-y-8">
                             <div>
-                                <h1 className="text-2xl font-medium leading-6 text-gray-900">Adding Quiz</h1>
+                                <h1 className="text-2xl font-medium leading-6 text-gray-900">Edit Quiz</h1>
                                 <p className="max-w-2xl mt-1 text-xl text-gray-500">This page will be add new quiz</p>
                             </div>
                             <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
@@ -74,6 +106,7 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                                 <SelectField
                                     label="Subject"
                                     name="subject"
+                                    disabled
                                     onChange={(e) => {
                                         setSelectedSubjectId(e.target.value);
                                     }}
@@ -215,7 +248,7 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                     Choose Questions: {(methods.watch('questions') && methods.watch('questions').length) || 0}/{numberOfQuestion}
                 </p>
                 <div className="flex">
-                    <Link href={router.asPath.replace(routes.adminEditQuizUrl, '')} passHref>
+                    <Link href={clearQuery(router.asPath).replace(`${routes.adminEditQuizUrl}/${quizId}`, '')} passHref>
                         <p className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Cancel
                         </p>
@@ -225,7 +258,7 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                         type="submit"
                         className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Add
+                        Update
                     </button>
                 </div>
             </div>

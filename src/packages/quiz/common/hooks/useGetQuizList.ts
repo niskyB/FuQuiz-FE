@@ -20,6 +20,5 @@ export const useGetQuizList = (options: Partial<FilterQuizListDTO>) => {
     );
 
     const { list: quizList, count } = useGetListWithCount<Quiz, Partial<FilterQuizListDTO>>(ApiListRoutes.QUIZZES, option);
-    console.log(quizList);
     return { quizList, count };
 };
