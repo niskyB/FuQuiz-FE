@@ -21,4 +21,6 @@ export interface Quiz extends QuizAttribute {
     description: string;
     createdAt: string;
     type: QuizType;
+    numberOfQuestion: number;
+    isPublic: boolean;
 }

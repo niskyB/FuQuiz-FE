@@ -50,16 +50,20 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     };
 
     const _handleOnSubmit = async (data: AddQuizDTO) => {
-        addQuiz(data).then((res) => {
-            if (res) {
-                methods.reset();
-                store.dispatch(apiActions.resetState());
-                setSelectedSubjectId('');
-                setNumberOfQuestion(0);
+        if (data.questions.length === numberOfQuestion) {
+            addQuiz(data).then((res) => {
+                if (res) {
+                    methods.reset();
+                    store.dispatch(apiActions.resetState());
+                    setSelectedSubjectId('');
+                    setNumberOfQuestion(0);
 
-                toast.success('Add quiz success!');
-            }
-        });
+                    toast.success('Add quiz success!');
+                }
+            });
+        } else {
+            toast.warn('Number of question and number of question you have selected should be equal!');
+        }
     };
 
     return (
