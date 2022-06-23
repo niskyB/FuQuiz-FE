@@ -2,7 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { roleFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { genderFieldData, roleFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { UserRole } from '../../../../core/models/role';
 import { Gender } from '../../../../core/models/user';
@@ -52,16 +52,9 @@ export const AddUser: React.FunctionComponent<AddUserProps> = () => {
                             <TextField label="Full name" name="fullName" type="fullName" />
                             <TextField label="Email address" name="email" type="email" />
                             <TextField label="phone number" name="mobile" type="text" />
-                            <SelectField label="Role" name="role" values={roleFieldData} />
-                            <SelectField label="Status" name="isActive" values={[...statusFieldData]} />
-                            <RadioField
-                                label="sex"
-                                name="gender"
-                                values={[
-                                    { label: 'Male', value: Gender.MALE },
-                                    { label: 'Female', value: Gender.FEMALE },
-                                ]}
-                            />
+                            <SelectField label="Role" name="role" values={roleFieldData.filter((item) => item.value !== UserRole.ADMIN)} />
+                            <SelectField label="Status" name="isActive" values={statusFieldData} />
+                            <RadioField label="sex" name="gender" values={genderFieldData} />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">
