@@ -109,6 +109,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                         'Valid From',
                                         'Valid To',
                                         'Last Updated By',
+                                        'Owner',
                                         '',
                                     ]}
                                 />
@@ -147,6 +148,9 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.lastUpdatedBy}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.sale?.user.fullName}</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <Link href={`${routes.adminEditRegistrationUrl}/${registration.id}`} passHref>
