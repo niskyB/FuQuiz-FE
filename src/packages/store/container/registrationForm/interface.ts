@@ -1,10 +1,5 @@
-import { Gender } from '../../../../core/models/user';
+import { AddRegistrationDTO } from '../../../registrations/containers/addRegistration/interface';
 
-export interface RegistrationFormDTO {
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-    gender: Gender;
+export interface RegistrationFormDTO extends Pick<AddRegistrationDTO, 'fullName' | 'email' | 'mobile' | 'gender' | 'pricePackage' | 'notes'> {
     subject: string;
-    pricePackage: string;
 }

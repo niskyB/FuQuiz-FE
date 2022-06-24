@@ -11,7 +11,7 @@ export interface EditRegistrationDTO {
     status: RegistrationStatus;
     validFrom: string;
     validTo: string;
-    note: string;
+    notes: string;
     sale: string;
     subject: string;
 }
