@@ -23,8 +23,15 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
     React.useEffect(() => {
         methods.setValue('subject', formState.registrationForm.subjectName);
         methods.setValue('pricePackage', formState.registrationForm.defaultPackage);
+        if (userState.id) {
+            methods.setValue('email', userState.email);
+            methods.setValue('fullName', userState.fullName);
+            methods.setValue('gender', userState.gender);
+            methods.setValue('mobile', userState.mobile);
+        }
+
         return () => {};
-    }, [formState.registrationForm]);
+    }, [formState.registrationForm, userState]);
 
     const _handleOnSubmit = async (data: RegistrationFormDTO) => {
         const { subject, ...other } = data;
@@ -38,6 +45,7 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
         });
 
         if (res) {
+            methods.reset();
             store.dispatch(formActions.resetState());
             toast.success('Register success, please wait for response from our saler!');
         }
