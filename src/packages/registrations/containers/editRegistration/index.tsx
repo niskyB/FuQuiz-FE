@@ -4,18 +4,17 @@ import Router, { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { genderFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { genderFieldData } from '../../../../core/common/dataField';
 import { registrationDataField } from '../../../../core/common/dataField/registrationStatus';
 import { DateField, FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { PricePackage } from '../../../../core/models/pricePackage';
 import { RegistrationStatus } from '../../../../core/models/registration';
 import { UserRole } from '../../../../core/models/role';
-import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { dataParser } from '../../../../core/util/data';
-import { calculateValidTo, dateParser } from '../../../../core/util/date';
+import { calculateValidTo, dateParser, getDateValueString } from '../../../../core/util/date';
 import { useGetPricePackageListBySubjectId } from '../../../package';
 import { useGetRegistrationById } from '../../common/hooks/useGetRegistrationById';
 import { editGeneralRegistration, editRegistration, editSpecificRegistration } from './action';
@@ -62,30 +61,29 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
     }, [registration]);
 
     const _handleOnSubmit = async (data: EditRegistrationDTO) => {
-        let res1, res2;
-        if (isOwner) {
-            res1 = await editSpecificRegistration(id, {
-                email: data.email,
-                fullName: data.fullName,
-                gender: data.gender,
-                mobile: data.mobile,
-                pricePackage: data.pricePackage,
-                registrationTime: data.registrationTime,
-            });
-            res2 = await editGeneralRegistration(id, { notes: data.notes, status: data.status, validFrom: data.validFrom, validTo: data.validTo });
-            if (res1 && res2) {
-                router.push(routes.adminRegistrationUrl);
-                toast.success('Update success!');
-                return;
+        try {
+            let res1, res2;
+            if (isOwner && registration?.status !== RegistrationStatus.PAID) {
+                res1 = await editSpecificRegistration(id, {
+                    email: data.email,
+                    fullName: data.fullName,
+                    gender: data.gender,
+                    mobile: data.mobile,
+                    pricePackage: data.pricePackage,
+                    registrationTime: data.registrationTime,
+                });
             }
-        }
+            res2 = await editGeneralRegistration(id, {
+                notes: data.notes,
+                status: data.status,
+                validFrom: getDateValueString(data.validFrom),
+                validTo: getDateValueString(data.validTo),
+            });
 
-        res2 = await editGeneralRegistration(id, { notes: data.notes, status: data.status, validFrom: data.validFrom, validTo: data.validTo });
-
-        if (res2) {
             router.push(routes.adminRegistrationUrl);
             toast.success('Update success!');
-            return;
+        } catch (error) {
+            toast.warn('Something went wrong, please try again later!!');
         }
     };
 
@@ -100,24 +98,48 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
                             <SelectField
-                                disabled={!isOwner}
+                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
                                 label="Subject"
                                 name="subject"
                                 values={[{ label: registration?.pricePackage.subject?.name, value: registration?.pricePackage.subject?.id }]}
                             />
                             <SelectField
-                                disabled={!isOwner}
+                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
                                 label="Package"
                                 name="pricePackage"
                                 values={pricePackageList ? dataParser<PricePackage>(pricePackageList, 'name', 'id') : []}
                             />
-                            <TextField disabled={!isOwner} label="Full name" name="fullName" type="fullName" />
-                            <TextField disabled={!isOwner} label="Email address" name="email" type="email" />
-                            <TextField disabled={!isOwner} label="phone number" name="mobile" type="text" />
+                            <TextField
+                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                label="Full name"
+                                name="fullName"
+                                type="fullName"
+                            />
+                            <TextField
+                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                label="Email address"
+                                name="email"
+                                type="email"
+                            />
+                            <TextField
+                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                label="phone number"
+                                name="mobile"
+                                type="text"
+                            />
 
-                            <RadioField disabled={!isOwner} label="sex" name="gender" values={genderFieldData} />
+                            <RadioField
+                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                label="sex"
+                                name="gender"
+                                values={genderFieldData}
+                            />
 
-                            <DateField disabled={!isOwner} label="Registration Time" name="registrationTime" />
+                            <DateField
+                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                label="Registration Time"
+                                name="registrationTime"
+                            />
 
                             <SelectField
                                 disabled={registration?.status === RegistrationStatus.PAID}
@@ -126,8 +148,8 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                                 values={registrationDataField}
                             />
                             <DateField
+                                disabled={registration?.status === RegistrationStatus.PAID}
                                 onChange={(e) => {
-                                    console.log('setting');
                                     methods.setValue(
                                         'validTo',
                                         dateParser(
