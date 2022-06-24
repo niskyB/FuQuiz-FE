@@ -11,7 +11,6 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { PaginationBar } from '../../../dashboard';
-import { useGetUserById } from '../../../users';
 import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
 interface RegistrationListProps extends RegistrationFilterDTO {}
