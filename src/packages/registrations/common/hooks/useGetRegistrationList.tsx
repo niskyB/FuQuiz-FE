@@ -2,15 +2,16 @@ import * as React from 'react';
 import { Order } from '../../../../core/common/dataField';
 import { ApiListRoutes } from '../../../../core/common/enum';
 import { useGetListWithCount } from '../../../../core/common/hooks';
-import { Registration } from '../../../../core/models/registration';
+import { Registration, RegistrationStatus } from '../../../../core/models/registration';
 
-export interface RegistrationFilterDTO extends Pick<Registration, 'validFrom' | 'validTo' | 'status'> {
+export interface RegistrationFilterDTO extends Pick<Registration, 'validFrom' | 'validTo'> {
     subject: string;
     email: string;
     pageSize: number;
     currentPage: number;
     order: Order;
     orderBy: keyof Registration;
+    status: RegistrationStatus | '';
 }
 
 export interface RegistrationFilterFormDTO extends Omit<RegistrationFilterDTO, 'pageSize' | 'currentPage'> {}
@@ -25,7 +26,7 @@ export const useGetRegistrationList = ({
     pageSize,
     order,
     orderBy,
-}: RegistrationFilterDTO) => {
+}: Partial<RegistrationFilterDTO>) => {
     const options = React.useMemo<RegistrationFilterDTO>(
         () => ({
             subject: subject || '',

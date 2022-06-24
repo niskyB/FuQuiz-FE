@@ -39,4 +39,6 @@ export enum ApiListRoutes {
 
     REGISTRATION = 'registration',
     REGISTRATIONS = 'registrations',
+
+    REGISTRATIONS_ME = 'registrations/me',
 }
