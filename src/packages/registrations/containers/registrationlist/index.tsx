@@ -11,7 +11,7 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { PaginationBar } from '../../../dashboard';
-import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistration';
+import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
 interface RegistrationListProps extends RegistrationFilterDTO {}
 
@@ -30,7 +30,6 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     const methods = useForm<RegistrationFilterFormDTO>();
 
     const { count, registrationList } = useGetRegistrationList({ currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo });
-    console.log(registrationList);
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };

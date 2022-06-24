@@ -1,24 +1,38 @@
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
+import { genderFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { registrationDataField } from '../../../../core/common/dataField/registrationStatus';
+import { DateField, FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
+import { PricePackage } from '../../../../core/models/pricePackage';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
+import { dataParser } from '../../../../core/util/data';
+import { useGetPricePackageListBySubjectId } from '../../../package';
+import { useGetRegistrationById } from '../../common/hooks/useGetRegistrationById';
+import { EditRegistrationDTO } from './interface';
 
-interface EditRegistrationProps {}
+interface EditRegistrationProps {
+    id: string;
+}
 
-const EditRegistration: React.FunctionComponent<EditRegistrationProps> = () => {
-    const methods = useForm({});
+const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }) => {
+    const methods = useForm<EditRegistrationDTO>({});
+
+    const { registration } = useGetRegistrationById(id);
+    const { pricePackageList } = useGetPricePackageListBySubjectId(registration?.pricePackage.subject?.id || '');
     React.useEffect(() => {
-        methods.setValue('fullName', 'Nguyen Van A');
-        methods.setValue('email', 'trinhvanquyet@gmail.com');
-        methods.setValue('mobile', '09123717822');
-        methods.setValue('gender', Gender.MALE);
-        methods.setValue('registrationTime', new Date('12/5/2022'));
-        methods.setValue('sale', 500000);
-        methods.setValue('status', true);
-    }, []);
+        if (registration) {
+            methods.setValue('fullName', registration.customer.user.fullName);
+            methods.setValue('email', registration.customer.user.email);
+            methods.setValue('mobile', registration.customer.user.mobile);
+            methods.setValue('gender', registration.customer.user.gender);
+            methods.setValue('registrationTime', new Date(registration.registrationTime).toISOString());
+            methods.setValue('status', registration.status);
+            methods.setValue('note', registration.notes);
+        }
+    }, [registration]);
 
     const _handleOnSubmit = async () => {};
 
@@ -35,49 +49,25 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = () => {
                             <SelectField
                                 label="Subject"
                                 name="subject"
-                                values={[
-                                    { label: 'Javascript', value: '1' },
-                                    { label: 'Java', value: '' },
-                                    { label: 'C#', value: '' },
-                                    { label: 'Marketing', value: '' },
-                                ]}
+                                values={[{ label: registration?.pricePackage.subject?.name, value: registration?.pricePackage.subject?.id }]}
                             />
                             <SelectField
                                 label="Package"
                                 name="package"
-                                values={[
-                                    { label: 'Package 1 - 500,000 - 350,000', value: '' },
-                                    { label: 'Package 2 - 800,000 - 700,000', value: '2' },
-                                    { label: 'Package 3 - 1,000,000 - 900,000', value: '' },
-                                    { label: 'Package 4 - 3,000,000 - 2,800,000', value: '' },
-                                ]}
+                                values={pricePackageList ? dataParser<PricePackage>(pricePackageList, 'name', 'id') : []}
                             />
                             <TextField label="Full name" name="fullName" type="fullName" />
                             <TextField label="Email address" name="email" type="email" />
                             <TextField label="phone number" name="mobile" type="text" />
 
-                            <RadioField
-                                label="sex"
-                                name="gender"
-                                values={[
-                                    { label: 'Male', value: Gender.MALE },
-                                    { label: 'Female', value: Gender.FEMALE },
-                                ]}
-                            />
+                            <RadioField label="sex" name="gender" values={genderFieldData} />
 
-                            <TextField label="Registration Time" name="registrationTime" type="date" defaultValue={'12/5/2022'} />
-                            <TextField label="Sale" name="sale" type="number" />
-                            <SelectField
-                                label="Status"
-                                name="status"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                            />
-                            <TextField label="Valid From" name="validFrom" type="date" defaultValue={'12/5/2022'} />
-                            <TextField label="Valid To" name="validTo" type="date" defaultValue={'12/5/2022'} />
-                            <TextareaField name="Note" label="Note" />
+                            <DateField label="Registration Time" name="registrationTime" />
+
+                            <SelectField label="Status" name="status" values={registrationDataField} />
+                            <DateField label="Valid From" name="validFrom" />
+                            <DateField label="Valid To" name="validTo" />
+                            <TextareaField name="note" label="Note" />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

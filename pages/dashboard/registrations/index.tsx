@@ -4,7 +4,7 @@ import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
-import { RegistrationFilterDTO } from '../../../src/packages/registrations/common/hooks/useGetRegistration';
+import { RegistrationFilterDTO } from '../../../src/packages/registrations/common/hooks/useGetRegistrationList';
 import RegistrationsList from '../../../src/packages/registrations/containers/registrationList';
 
 interface RegistrationListPageProps extends RegistrationFilterDTO {}
