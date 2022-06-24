@@ -12,5 +12,5 @@ export const getDateValueString = (date: string) => {
     if (date !== 'Invalid date') {
         return new Date(date).toISOString();
     }
-    return ' ';
+    return '';
 };
