@@ -37,5 +37,6 @@ export enum ApiListRoutes {
     QUIZ = 'quiz',
     QUIZZES = 'quizzes',
 
+    REGISTRATION = 'registration',
     REGISTRATIONS = 'registrations',
 }

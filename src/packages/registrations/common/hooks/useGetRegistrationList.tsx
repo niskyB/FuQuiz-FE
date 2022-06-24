@@ -7,7 +7,6 @@ import { Registration } from '../../../../core/models/registration';
 export interface RegistrationFilterDTO extends Pick<Registration, 'validFrom' | 'validTo' | 'status'> {
     subject: string;
     email: string;
-
     pageSize: number;
     currentPage: number;
     order: Order;

@@ -11,7 +11,8 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { PaginationBar } from '../../../dashboard';
-import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistration';
+import { useGetUserById } from '../../../users';
+import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
 interface RegistrationListProps extends RegistrationFilterDTO {}
 
@@ -32,6 +33,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     const { count, registrationList } = useGetRegistrationList({ currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo });
     console.log(registrationList);
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
+        // console.log(data);
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
 
@@ -114,45 +116,47 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
 
                                 <TableBody>
                                     {Boolean(count && registrationList) &&
-                                        registrationList.map((registration) => (
-                                            <TableRow key={registration.id}>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.id}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.customer.user.email}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.registrationTime}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.pricePackage.subject?.name}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.pricePackage.name}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.totalCost}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.status.toUpperCase()}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.validFrom}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{registration.validTo}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">Hoang Loc</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <Link href={`${routes.adminEditRegistrationUrl}/${registration.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                    </Link>
-                                                </TableDescription>
-                                            </TableRow>
-                                        ))}
+                                        registrationList.map((registration) => {
+                                            return (
+                                                <TableRow key={registration.id}>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.id}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.customer.user.email}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.registrationTime}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.pricePackage.subject?.name}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.pricePackage.name}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.totalCost}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.status.toUpperCase()}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.validFrom}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.validTo}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.lastUpdatedBy}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <Link href={`${routes.adminEditRegistrationUrl}/${registration.id}`} passHref>
+                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Update</p>
+                                                        </Link>
+                                                    </TableDescription>
+                                                </TableRow>
+                                            );
+                                        })}
                                 </TableBody>
                             </Table>
                         </div>
