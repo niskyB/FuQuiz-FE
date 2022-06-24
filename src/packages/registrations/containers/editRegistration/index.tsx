@@ -9,14 +9,17 @@ import { registrationDataField } from '../../../../core/common/dataField/registr
 import { DateField, FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { PricePackage } from '../../../../core/models/pricePackage';
+import { RegistrationStatus } from '../../../../core/models/registration';
+import { UserRole } from '../../../../core/models/role';
 import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
+import { useStoreUser } from '../../../../core/store';
 import { dataParser } from '../../../../core/util/data';
-import { dateParser } from '../../../../core/util/date';
+import { calculateValidTo, dateParser } from '../../../../core/util/date';
 import { useGetPricePackageListBySubjectId } from '../../../package';
 import { useGetRegistrationById } from '../../common/hooks/useGetRegistrationById';
-import { editRegistration } from './action';
-import { EditRegistrationDTO, EditRegistrationFormDTO } from './interface';
+import { editGeneralRegistration, editRegistration, editSpecificRegistration } from './action';
+import { EditRegistrationDTO } from './interface';
 
 interface EditRegistrationProps {
     id: string;
@@ -24,10 +27,22 @@ interface EditRegistrationProps {
 
 const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }) => {
     const methods = useForm<EditRegistrationDTO>({});
+    const userState = useStoreUser();
     const router = useRouter();
 
     const { registration } = useGetRegistrationById(id);
     const { pricePackageList } = useGetPricePackageListBySubjectId(registration?.pricePackage.subject?.id || '');
+
+    const isOwner = React.useMemo<boolean>(() => {
+        if (userState.role.description === UserRole.ADMIN) {
+            return false;
+        }
+
+        if (registration && registration.sale?.user.id === userState.id) {
+            return true;
+        }
+        return false;
+    }, [registration]);
 
     React.useEffect(() => {
         if (registration) {
@@ -47,11 +62,30 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
     }, [registration]);
 
     const _handleOnSubmit = async (data: EditRegistrationDTO) => {
-        const { subject, ...other } = data;
-        const res = await editRegistration(id, other);
-        if (res) {
+        let res1, res2;
+        if (isOwner) {
+            res1 = await editSpecificRegistration(id, {
+                email: data.email,
+                fullName: data.fullName,
+                gender: data.gender,
+                mobile: data.mobile,
+                pricePackage: data.pricePackage,
+                registrationTime: data.registrationTime,
+            });
+            res2 = await editGeneralRegistration(id, { notes: data.notes, status: data.status, validFrom: data.validFrom, validTo: data.validTo });
+            if (res1 && res2) {
+                router.push(routes.adminRegistrationUrl);
+                toast.success('Update success!');
+                return;
+            }
+        }
+
+        res2 = await editGeneralRegistration(id, { notes: data.notes, status: data.status, validFrom: data.validFrom, validTo: data.validTo });
+
+        if (res2) {
             router.push(routes.adminRegistrationUrl);
             toast.success('Update success!');
+            return;
         }
     };
 
@@ -66,26 +100,45 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
                             <SelectField
+                                disabled={!isOwner}
                                 label="Subject"
                                 name="subject"
                                 values={[{ label: registration?.pricePackage.subject?.name, value: registration?.pricePackage.subject?.id }]}
                             />
                             <SelectField
+                                disabled={!isOwner}
                                 label="Package"
                                 name="pricePackage"
                                 values={pricePackageList ? dataParser<PricePackage>(pricePackageList, 'name', 'id') : []}
                             />
-                            <TextField label="Full name" name="fullName" type="fullName" />
-                            <TextField label="Email address" name="email" type="email" />
-                            <TextField label="phone number" name="mobile" type="text" />
+                            <TextField disabled={!isOwner} label="Full name" name="fullName" type="fullName" />
+                            <TextField disabled={!isOwner} label="Email address" name="email" type="email" />
+                            <TextField disabled={!isOwner} label="phone number" name="mobile" type="text" />
 
-                            <RadioField label="sex" name="gender" values={genderFieldData} />
+                            <RadioField disabled={!isOwner} label="sex" name="gender" values={genderFieldData} />
 
-                            <DateField label="Registration Time" name="registrationTime" />
+                            <DateField disabled={!isOwner} label="Registration Time" name="registrationTime" />
 
-                            <SelectField label="Status" name="status" values={registrationDataField} />
-                            <DateField label="Valid From" name="validFrom" />
-                            <DateField label="Valid To" name="validTo" />
+                            <SelectField
+                                disabled={registration?.status === RegistrationStatus.PAID}
+                                label="Status"
+                                name="status"
+                                values={registrationDataField}
+                            />
+                            <DateField
+                                onChange={(e) => {
+                                    console.log('setting');
+                                    methods.setValue(
+                                        'validTo',
+                                        dateParser(
+                                            calculateValidTo(new Date(e.target.value).toISOString(), registration?.pricePackage?.duration || 0)
+                                        )
+                                    );
+                                }}
+                                label="Valid From"
+                                name="validFrom"
+                            />
+                            <DateField readOnly label="Valid To" name="validTo" />
                             <TextareaField name="notes" label="Note" />
 
                             <FormErrorMessage />
