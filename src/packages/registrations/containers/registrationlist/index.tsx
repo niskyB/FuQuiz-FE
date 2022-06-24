@@ -142,7 +142,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({ cur
                                                     )}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{registration.validForm}</div>
+                                                    <div className="text-gray-900">{registration.validFrom}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{registration.validTo}</div>
