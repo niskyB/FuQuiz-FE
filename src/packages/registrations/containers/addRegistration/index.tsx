@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { genderFieldData } from '../../../../core/common/dataField';
 import { registrationDataField } from '../../../../core/common/dataField/registrationStatus';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
-import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
+import { DateField, FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { PricePackage } from '../../../../core/models/pricePackage';
 import { RegistrationStatus } from '../../../../core/models/registration';
@@ -14,16 +14,17 @@ import { UserRole } from '../../../../core/models/role';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { dataParser } from '../../../../core/util/data';
+import { calculateValidTo } from '../../../../core/util/date';
 import { useGetPricePackageById } from '../../../package';
 import { useGetPricePackageListBySubjectId } from '../../../package/common/hooks/useGetPricePackageListBySubjectId';
 import { useGetSubjectList } from '../../../subject';
 import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
 import { addRegistration } from './action';
-import { AddRegistrationDTO } from './interface';
+import { AddRegistrationFormDTO } from './interface';
 
 interface AddRegistrationProps {}
 
-const defaultValues: Partial<AddRegistrationDTO> = {
+const defaultValues: Partial<AddRegistrationFormDTO> = {
     email: '',
     pricePackage: '',
     registrationTime: '',
@@ -32,11 +33,12 @@ const defaultValues: Partial<AddRegistrationDTO> = {
     subject: '',
     validFrom: '',
     validTo: '',
+    notes: '',
 };
 
 const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
     const userStore = useStoreUser();
-    const methods = useForm<AddRegistrationDTO>({ defaultValues });
+    const methods = useForm<AddRegistrationFormDTO>({ defaultValues });
 
     const [selectedSubject, setSelectedSubject] = React.useState<string | null>(null);
 
@@ -46,11 +48,11 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
     const { pricePackageList } = useGetPricePackageListBySubjectId(selectedSubject || '');
     const { pricePackage } = useGetPricePackageById(methods.watch('pricePackage'));
 
-    const _handleOnSubmit = async (data: AddRegistrationDTO) => {
+    const _handleOnSubmit = async (data: AddRegistrationFormDTO) => {
         const { subject, ...others } = data;
         others.sale = userStore.role.description === UserRole.SALE ? userStore.id : null;
         if (pricePackage) {
-            others.validTo = moment(others.validFrom).month(pricePackage?.duration).toDate().toISOString();
+            others.validTo = calculateValidTo(others.validFrom || '', pricePackage.duration || 0);
         }
         addRegistration(others).then(() => {
             methods.reset();
@@ -86,11 +88,11 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
 
                             <RadioField label="Sex" name="gender" values={genderFieldData} />
 
-                            <TextField label="Registration Time" name="registrationTime" type="datetime-local" />
+                            <DateField label="Registration Time" name="registrationTime" />
                             <SelectField label="Status" name="status" values={[unsetFieldData, ...registrationDataField]} />
-                            <TextField label="Valid From" name="validFrom" type="datetime-local" />
+                            <DateField label="Valid From" name="validFrom" />
 
-                            <TextareaField name="note" label="Note" />
+                            <TextareaField name="notes" label="Note" />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

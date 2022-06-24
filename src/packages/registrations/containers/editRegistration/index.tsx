@@ -36,7 +36,7 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
             methods.setValue('mobile', registration.customer.user.mobile);
             methods.setValue('gender', registration.customer.user.gender);
             methods.setValue('status', registration.status);
-            methods.setValue('note', registration.notes);
+            methods.setValue('notes', registration.notes);
             methods.setValue('pricePackage', registration.pricePackage.id);
             methods.setValue('subject', registration.pricePackage.subject?.id || '');
 
@@ -86,7 +86,7 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                             <SelectField label="Status" name="status" values={registrationDataField} />
                             <DateField label="Valid From" name="validFrom" />
                             <DateField label="Valid To" name="validTo" />
-                            <TextareaField name="note" label="Note" />
+                            <TextareaField name="notes" label="Note" />
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">

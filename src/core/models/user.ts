@@ -32,3 +32,7 @@ export interface Customer {
     balance: number;
     user: User;
 }
+export interface Sale {
+    id: string;
+    user: User;
+}
