@@ -3,6 +3,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { genderFieldData } from '../../../../core/common/dataField';
 import { registrationDataField } from '../../../../core/common/dataField/registrationStatus';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { FormErrorMessage, FormWrapper, RadioField, SelectField, TextField } from '../../../../core/components/form';
@@ -83,14 +84,7 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
                             <TextField label="Email address" name="email" type="email" />
                             <TextField label="phone number" name="mobile" type="text" />
 
-                            <RadioField
-                                label="Sex"
-                                name="gender"
-                                values={[
-                                    { label: 'Male', value: Gender.MALE },
-                                    { label: 'Female', value: Gender.FEMALE },
-                                ]}
-                            />
+                            <RadioField label="Sex" name="gender" values={genderFieldData} />
 
                             <TextField label="Registration Time" name="registrationTime" type="datetime-local" />
                             <SelectField label="Status" name="status" values={[unsetFieldData, ...registrationDataField]} />
@@ -100,7 +94,7 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
 
                             <FormErrorMessage />
                             <div className="flex space-x-2">
-                                <Link href={routes.registrationUrl}>
+                                <Link href={routes.adminRegistrationUrl}>
                                     <div className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                         Cancel
                                     </div>
@@ -109,7 +103,7 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
                                     type="submit"
                                     className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    Add User
+                                    Add
                                 </button>
                             </div>
                         </form>

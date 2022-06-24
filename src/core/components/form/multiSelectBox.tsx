@@ -82,7 +82,7 @@ export const MultiSelectBox: React.FunctionComponent<MultiSelectBoxProps> = ({
             <div className="flex pt-2 space-x-3">
                 {selectedList.map((item) => (
                     <div key={`select-${item.value}`} className="relative flex items-center pr-5 space-x-3 bg-white rounded-md w-fit">
-                        <div className="px-3 py-1 text-black ">{item.label}</div>
+                        <div className="px-3 py-1 text-sm text-black">{item.label}</div>
                         <div
                             onClick={() => {
                                 if (confirm(`Do you really want to remove ${item.label}?`)) {

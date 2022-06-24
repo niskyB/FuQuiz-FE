@@ -11,4 +11,4 @@ export interface AddLessonDTO {
     quiz: string;
 }
 
-export interface AddLessonFormDTO extends Omit<AddLessonDTO, 'isActive' | 'subject' | 'htmlContent'> {}
+export interface AddLessonFormDTO extends Omit<AddLessonDTO, 'isActive' | 'subject' | 'htmlContent' | 'quiz'> {}

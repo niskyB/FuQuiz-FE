@@ -1,6 +1,7 @@
 import { ApiListRoutes } from '../../../../core/common/enum';
 import { useGetDataById, useGetList } from '../../../../core/common/hooks';
 import { Lesson } from '../../../../core/models/lesson';
+import { Quiz } from '../../../../core/models/quiz';
 import { Subject } from '../../../../core/models/subject';
 
 export interface LessonDetail {
@@ -8,9 +9,16 @@ export interface LessonDetail {
     id: string;
     videoLink: string;
 }
+
+export interface LessonQuiz {
+    htmlContent: string;
+    id: string;
+    quizzes: Quiz[];
+}
 export interface LessonResDTO extends Lesson {
-    lessonDetail: LessonDetail;
+    lessonDetail?: LessonDetail;
     subject: Subject;
+    lessonQuiz?: LessonQuiz;
 }
 
 export const useGetLessonById = (id: string) => {
