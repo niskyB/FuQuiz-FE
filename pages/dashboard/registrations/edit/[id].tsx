@@ -11,7 +11,7 @@ interface EditRegistrationProps {
 
 const EditRegistrationPage: NextPage<EditRegistrationProps> = ({ id }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.SALE]}>
             <DashBoardLayout>
                 <EditRegistration id={id} />
             </DashBoardLayout>

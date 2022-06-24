@@ -31,9 +31,8 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     const methods = useForm<RegistrationFilterFormDTO>();
 
     const { count, registrationList } = useGetRegistrationList({ currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo });
-    console.log(registrationList);
+
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
-        // console.log(data);
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
 
