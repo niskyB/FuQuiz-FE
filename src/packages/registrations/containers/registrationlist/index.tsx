@@ -31,9 +31,8 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     const methods = useForm<RegistrationFilterFormDTO>();
 
     const { count, registrationList } = useGetRegistrationList({ currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo });
-    console.log(registrationList);
+
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
-        // console.log(data);
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
 
@@ -110,6 +109,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                         'Valid From',
                                         'Valid To',
                                         'Last Updated By',
+                                        'Owner',
                                         '',
                                     ]}
                                 />
@@ -148,6 +148,9 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.lastUpdatedBy}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.sale?.user.fullName}</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <Link href={`${routes.adminEditRegistrationUrl}/${registration.id}`} passHref>
