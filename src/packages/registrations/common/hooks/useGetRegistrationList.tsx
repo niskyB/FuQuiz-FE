@@ -39,7 +39,7 @@ export const useGetRegistrationList = ({
             order: order || Order.DESC,
             orderBy: orderBy || 'validFrom',
         }),
-        [subject, email, status, validFrom, validTo, currentPage, pageSize]
+        [subject, email, status, validFrom, validTo, currentPage, pageSize, orderBy, order]
     );
 
     const { count, list: registrationList } = useGetListWithCount<Registration, RegistrationFilterDTO>(ApiListRoutes.REGISTRATIONS, options);

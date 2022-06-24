@@ -11,7 +11,6 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { PaginationBar } from '../../../dashboard';
-import { useGetUserById } from '../../../users';
 import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
 interface RegistrationListProps extends RegistrationFilterDTO {}
@@ -109,6 +108,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                         'Valid From',
                                         'Valid To',
                                         'Last Updated By',
+                                        'Owner',
                                         '',
                                     ]}
                                 />
@@ -147,6 +147,9 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.lastUpdatedBy}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{registration.sale?.user.fullName}</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <Link href={`${routes.adminEditRegistrationUrl}/${registration.id}`} passHref>

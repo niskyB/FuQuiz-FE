@@ -51,7 +51,8 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
     const _handleOnSubmit = async (data: AddRegistrationFormDTO) => {
         const { subject, ...others } = data;
         others.sale = userStore.role.description === UserRole.SALE ? userStore.id : null;
-        if (pricePackage) {
+
+        if (pricePackage && others.validFrom) {
             others.validTo = calculateValidTo(others.validFrom || '', pricePackage.duration || 0);
         }
         addRegistration(others).then(() => {
