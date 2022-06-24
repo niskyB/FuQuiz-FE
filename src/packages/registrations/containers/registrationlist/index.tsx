@@ -30,7 +30,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     const methods = useForm<RegistrationFilterFormDTO>();
 
     const { count, registrationList } = useGetRegistrationList({ currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo });
-
+    console.log(registrationList);
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
@@ -120,30 +120,22 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                     <div className="text-gray-900">{registration.id}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{registration.email}</div>
+                                                    <div className="text-gray-900">{registration.customer.user.email}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{registration.registrationTime}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{registration.subject.name}</div>
+                                                    <div className="text-gray-900">{registration.pricePackage.subject?.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{registration.package.name}</div>
+                                                    <div className="text-gray-900">{registration.pricePackage.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{registration.totalCost}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    {registration.status ? (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                            Active
-                                                        </span>
-                                                    ) : (
-                                                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                            Inactive
-                                                        </span>
-                                                    )}
+                                                    <div className="text-gray-900">{registration.status.toUpperCase()}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{registration.validFrom}</div>
