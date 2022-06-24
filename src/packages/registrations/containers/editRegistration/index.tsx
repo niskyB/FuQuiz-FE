@@ -62,9 +62,8 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
 
     const _handleOnSubmit = async (data: EditRegistrationDTO) => {
         try {
-            let res1, res2;
             if (isOwner && registration?.status !== RegistrationStatus.PAID) {
-                res1 = await editSpecificRegistration(id, {
+                await editSpecificRegistration(id, {
                     email: data.email,
                     fullName: data.fullName,
                     gender: data.gender,
@@ -73,7 +72,7 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                     registrationTime: data.registrationTime,
                 });
             }
-            res2 = await editGeneralRegistration(id, {
+            await editGeneralRegistration(id, {
                 notes: data.notes,
                 status: data.status,
                 validFrom: getDateValueString(data.validFrom),
