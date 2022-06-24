@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { genderFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { PricePackage } from '../../../../core/models/pricePackage';
-import { store, useStoreForm, useStoreUser } from '../../../../core/store';
+import { store, useStoreApi, useStoreForm, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { dataParser } from '../../../../core/util/data';
 import * as React from 'react';
@@ -19,6 +19,7 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
     const formState = useStoreForm();
     const userState = useStoreUser();
     const methods = useForm<RegistrationFormDTO>();
+    const { errorMessage } = useStoreApi();
 
     React.useEffect(() => {
         methods.setValue('subject', formState.registrationForm.subjectName);
@@ -81,6 +82,7 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
                                 </>
                             )}
                             <TextareaField name="notes" label="Note" />
+                            {Boolean(errorMessage) && <div className="text-red-500">{errorMessage}</div>}
                             <div className="flex items-center space-x-5">
                                 <button
                                     className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
