@@ -8,6 +8,10 @@ import { dataParser } from '../../../../core/util/data';
 import * as React from 'react';
 import { RegistrationFormDTO } from './interface';
 import { RedStar } from '../../components/errorStar';
+import { addRegistration } from '../../../registrations/containers/addRegistration/action';
+import { TextareaField } from '../../../../core/components/form/textareaField';
+import { RegistrationStatus } from '../../../../core/models/registration';
+import { toast } from 'react-toastify';
 
 interface RegistrationFormProps {}
 
@@ -22,7 +26,22 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
         return () => {};
     }, [formState.registrationForm]);
 
-    const _handleOnSubmit = (data: RegistrationFormDTO) => {};
+    const _handleOnSubmit = async (data: RegistrationFormDTO) => {
+        const { subject, ...other } = data;
+        const res = await addRegistration({
+            ...other,
+            registrationTime: new Date().toISOString(),
+            sale: null,
+            status: RegistrationStatus.SUBMITTED,
+            validFrom: null,
+            validTo: null,
+        });
+
+        if (res) {
+            store.dispatch(formActions.resetState());
+            toast.success('Register success, please wait for response from our saler!');
+        }
+    };
     if (formState.isOpening)
         return (
             <div className="fixed inset-0 z-20 flex items-center justify-center w-screen h-screen">
@@ -48,11 +67,12 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
                             {!userState.id && (
                                 <>
                                     <TextField label="Full name" name="fullName" type="text" />
-                                    <TextField label="Email" name="Email" type="email" />
+                                    <TextField label="Email" name="email" type="email" />
                                     <TextField label="Phone number" name="mobile" type="text" />
                                     <SelectField name="gender" label="Gender" values={genderFieldData} />
                                 </>
                             )}
+                            <TextareaField name="notes" label="Note" />
                             <div className="flex items-center space-x-5">
                                 <button
                                     className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
