@@ -19,7 +19,7 @@ export const DateField: React.FC<DateFieldProps> = ({ name, label, direction, is
             <input
                 {...register(name)}
                 {...rest}
-                type="date"
+                type="datetime-local"
                 className="w-full py-2 border-gray-300 rounded-md outline-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
             {Boolean(errorDetails[name]) && <div className="text-red-500">{errorDetails[name]}</div>}

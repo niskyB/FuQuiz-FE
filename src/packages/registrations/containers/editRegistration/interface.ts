@@ -13,4 +13,7 @@ export interface EditRegistrationDTO {
     validTo: string;
     note: string;
     sale: string;
+    subject: string;
 }
+
+export interface EditRegistrationFormDTO extends Omit<EditRegistrationDTO, 'subject'> {}
