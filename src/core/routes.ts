@@ -93,6 +93,9 @@ export const routes = {
     adminPackageListUrl: '/package',
     adminAddPackageUrl: '/add',
 
+    // Course
+    courseListUrl: '/user/courses',
+
     // Package
     // adminQuestionListUrl: '/question',
 };

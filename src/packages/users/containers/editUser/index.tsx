@@ -10,14 +10,25 @@ import { EditUserFormDTO } from './interface';
 import { updateUserRole, updateUserStatus } from './action';
 import { toast } from 'react-toastify';
 import Router, { useRouter } from 'next/router';
+import { Gender } from '../../../../core/models/user';
+import useTimeout from '../../../../core/common/hooks/useTimeout';
 
 interface EditUserProps {
     id: string;
 }
 
+const defaultValues: EditUserFormDTO = {
+    email: '',
+    fullName: '',
+    gender: Gender.MALE,
+    isActive: true,
+    mobile: '',
+    role: UserRole.CUSTOMER,
+};
+
 const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
     const router = useRouter();
-    const methods = useForm<EditUserFormDTO>({});
+    const methods = useForm<EditUserFormDTO>({ defaultValues });
     const { user } = useGetUserById(id);
 
     React.useEffect(() => {
@@ -27,8 +38,15 @@ const EditUser: React.FunctionComponent<EditUserProps> = ({ id }) => {
             methods.setValue('mobile', user.mobile);
             methods.setValue('role', user.role.description);
             methods.setValue('gender', user.gender);
+            methods.setValue('isActive', user.isActive);
         }
     }, [user]);
+
+    useTimeout(() => {
+        if (user) {
+            methods.setValue('isActive', user.isActive);
+        }
+    }, 1000);
 
     const _handleOnSubmit = async (data: EditUserFormDTO) => {
         const res1 = await updateUserStatus(id, { isActive: data.isActive });

@@ -8,37 +8,38 @@ import { routes } from '../../../core/routes';
 import { pushWithParams } from '../../../core/util';
 import { dataParser } from '../../../core/util/data';
 import { useGetSubjectCategoryList } from '../../subjectCategory';
-import { BlogListFilterDTO } from '../container/subjects/interface';
 import React from 'react';
-
-interface UserFilterProps {
-    subjectOption: any;
+import { UserCoursesProps } from '../userCourses';
+interface CourseFilterProps {
+    registrationOptions: Partial<UserCoursesProps>;
 }
-
-const defaultValues: BlogListFilterDTO = {
+const defaultValues: UserCoursesProps = {
     category: '',
     currentPage: 1,
-    isFeature: '',
+    isFeature: true,
     name: '',
     pageSize: 12,
     order: Order.DESC,
 };
-export const UserFilter: React.FunctionComponent<UserFilterProps> = ({ subjectOption }) => {
+export const CourseFilter: React.FunctionComponent<CourseFilterProps> = ({ registrationOptions }) => {
     const router = useRouter();
 
-    const methods = useForm<BlogListFilterDTO>({
+    const methods = useForm<UserCoursesProps>({
         defaultValues,
     });
-    const _handleOnSubmit = (data: BlogListFilterDTO) => {
-        pushWithParams(router, routes.subjectListUrl, { ...subjectOption, ...data });
+    const _handleOnSubmit = (data: UserCoursesProps) => {
+        pushWithParams(router, routes.courseListUrl, { ...registrationOptions, ...data });
     };
+
     const { categories } = useGetSubjectCategoryList();
 
     React.useEffect(() => {
-        methods.setValue('category', subjectOption.category);
-        methods.setValue('isFeature', subjectOption.isFeature);
-        methods.setValue('order', subjectOption.order);
-        methods.setValue('name', subjectOption.name);
+        if (registrationOptions) {
+            methods.setValue('category', registrationOptions.category || '');
+            methods.setValue('isFeature', registrationOptions.isFeature || true);
+            methods.setValue('order', registrationOptions.order || Order.DESC);
+            methods.setValue('name', registrationOptions.name || '');
+        }
         return () => {};
     }, []);
 
