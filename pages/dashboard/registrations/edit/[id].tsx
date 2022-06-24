@@ -1,20 +1,26 @@
-import { NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../src/packages/dashboard';
 import EditRegistration from '../../../../src/packages/registrations/containers/editRegistration';
 
-interface EditUserProps {}
+interface EditRegistrationProps {
+    id: string;
+}
 
-const EditUserPage: NextPage<EditUserProps> = () => {
+const EditRegistrationPage: NextPage<EditRegistrationProps> = ({ id }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
-                <EditRegistration />
+                <EditRegistration id={id} />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
 };
+EditRegistrationPage.getInitialProps = async (ctx: NextPageContext): Promise<EditRegistrationProps> => {
+    let props = { id: ctx.query?.id || '' };
 
-export default EditUserPage;
+    return props as EditRegistrationProps;
+};
+export default EditRegistrationPage;

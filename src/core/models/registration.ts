@@ -17,4 +17,5 @@ export interface Registration {
     status: RegistrationStatus;
     validFrom: string;
     validTo: string;
+    notes: string;
 }

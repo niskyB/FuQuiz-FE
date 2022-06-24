@@ -1,4 +1,4 @@
-import moment, { duration } from 'moment';
+import moment from 'moment';
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,7 +11,6 @@ import { TextareaField } from '../../../../core/components/form/textareaField';
 import { PricePackage } from '../../../../core/models/pricePackage';
 import { RegistrationStatus } from '../../../../core/models/registration';
 import { UserRole } from '../../../../core/models/role';
-import { Gender } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { dataParser } from '../../../../core/util/data';
@@ -24,7 +23,7 @@ import { AddRegistrationDTO } from './interface';
 
 interface AddRegistrationProps {}
 
-const defaultValues: AddRegistrationDTO = {
+const defaultValues: Partial<AddRegistrationDTO> = {
     email: '',
     pricePackage: '',
     registrationTime: '',
@@ -37,15 +36,16 @@ const defaultValues: AddRegistrationDTO = {
 
 const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
     const userStore = useStoreUser();
+    const methods = useForm<AddRegistrationDTO>({ defaultValues });
 
     const [selectedSubject, setSelectedSubject] = React.useState<string | null>(null);
 
     const options = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ pageSize: 99, currentPage: 0 }), []);
-    const { subjects } = useGetSubjectList(options);
 
+    const { subjects } = useGetSubjectList(options);
     const { pricePackageList } = useGetPricePackageListBySubjectId(selectedSubject || '');
-    const methods = useForm<AddRegistrationDTO>({ defaultValues });
     const { pricePackage } = useGetPricePackageById(methods.watch('pricePackage'));
+
     const _handleOnSubmit = async (data: AddRegistrationDTO) => {
         const { subject, ...others } = data;
         others.sale = userStore.role.description === UserRole.SALE ? userStore.id : null;
