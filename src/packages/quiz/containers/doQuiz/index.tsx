@@ -6,6 +6,7 @@ import { findQuestionAndDoAction } from '../../../../core/util/question';
 import { ClockIcon } from '@heroicons/react/outline';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { useForm } from 'react-hook-form';
+import { useGetQuizResultById } from '../../common/hooks/useGetQuizResultById';
 
 interface DoQuizProps {
     id: string;
@@ -24,6 +25,9 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const [questionFilter, setQuestionFilters] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
     const [answerStatus, setAnswerStatus] = React.useState<string>('allQuestions');
+
+    const { quiz } = useGetQuizResultById(id);
+    // console.log(quiz);
 
     const [popUp, setPopUp] = React.useState<boolean>();
 
@@ -109,7 +113,7 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                 <></>
             )}
             <div className="flex flex-col flex-1 space-y-5">
-                {questionList.map((item, index) => (
+                {quiz?.attendedQuestions.map((item, index) => (
                     <QuizQuestion
                         onToggleMarkQuestion={onToggleMarkQuestion}
                         onSetQuestionAnswer={onSetQuestionAnswer}

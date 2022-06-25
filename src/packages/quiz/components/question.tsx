@@ -1,10 +1,10 @@
 import { ChangeEvent } from 'react';
 import * as React from 'react';
 import { BookmarkIcon } from '@heroicons/react/outline';
-import { QuizQuestionDTO } from '../containers/doQuiz/interface';
+import { QuestionQuizResult } from '../../../core/models/quizResult';
 
 interface QuizQuestionProps {
-    data: QuizQuestionDTO;
+    data: QuestionQuizResult;
     index: number;
     isShow: boolean;
     onSetQuestionAnswer: (questionId: string, answerId: string | null) => void;
@@ -26,6 +26,8 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
     const _onUpdateQuestionMark = () => {
         onSetMarkQuestion(data.id);
     };
+    console.log('Question', data);
+
     if (isShow)
         return (
             <div className="px-5 py-5 space-y-2 text-base bg-white rounded-md">
@@ -36,17 +38,17 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                     </div>
                 </div>
                 <div className="flex flex-col space-y-1">
-                    <p className="font-semibold">{data.content}</p>
+                    <p className="font-semibold">{data.questionInQuiz.question.content}</p>
                     <fieldset className="space-y-5">
                         <legend className="sr-only">Notifications</legend>
-                        {data.answers.map((item) => (
+                        {data.questionInQuiz.question.answers.map((item) => (
                             <div key={item.id} className="relative flex items-start">
                                 <div className="flex items-center h-5">
                                     <input
                                         id={item.id}
                                         onChange={(e) => _onCheckBoxChange(e, item.id)}
                                         type="checkbox"
-                                        checked={data.userAnswerId === item.id}
+                                        // checked={data === item.id}
                                         className="w-4 h-4 text-indigo-600 border-gray-300 rounded cursor-pointer focus:ring-indigo-500"
                                     />
                                 </div>
