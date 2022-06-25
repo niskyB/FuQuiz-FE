@@ -1,13 +1,14 @@
 import { ChangeEvent } from 'react';
 import * as React from 'react';
 import { BookmarkIcon } from '@heroicons/react/outline';
-import { QuestionQuizResult } from '../../../core/models/quizResult';
+import { ClientQuestionInQuiz } from '../../../core/models/quizResult';
 
 interface QuizQuestionProps {
-    data: QuestionQuizResult;
+    data: ClientQuestionInQuiz;
     index: number;
     isShow: boolean;
-    onSetQuestionAnswer: (questionId: string, answerId: string | null) => void;
+    onCheckQuestionAnswer: (questionId: string, answerId: string) => void;
+    onUnCheckQuestionAnswer: (questionId: string, answerId: string) => void;
     onToggleMarkQuestion: (questionId: string) => void;
 }
 
@@ -15,19 +16,18 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
     data,
     index,
     isShow,
-    onSetQuestionAnswer,
+    onCheckQuestionAnswer,
+    onUnCheckQuestionAnswer,
     onToggleMarkQuestion: onSetMarkQuestion,
 }) => {
     const _onCheckBoxChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-        if (e.target.checked) onSetQuestionAnswer(data.id, id);
-        else onSetQuestionAnswer(data.id, null);
+        if (e.target.checked) onCheckQuestionAnswer(data.id, id);
+        else onUnCheckQuestionAnswer(data.id, id);
     };
 
     const _onUpdateQuestionMark = () => {
         onSetMarkQuestion(data.id);
     };
-    console.log('Question', data);
-
     if (isShow)
         return (
             <div className="px-5 py-5 space-y-2 text-base bg-white rounded-md">
@@ -48,7 +48,7 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                                         id={item.id}
                                         onChange={(e) => _onCheckBoxChange(e, item.id)}
                                         type="checkbox"
-                                        // checked={data === item.id}
+                                        checked={data.userAnswer.includes(item.id)}
                                         className="w-4 h-4 text-indigo-600 border-gray-300 rounded cursor-pointer focus:ring-indigo-500"
                                     />
                                 </div>

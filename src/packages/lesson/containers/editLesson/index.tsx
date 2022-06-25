@@ -34,7 +34,6 @@ const EditLesson: React.FunctionComponent<EditLessonProps> = ({ subjectId, lesso
 
     React.useEffect(() => {
         if (lesson) {
-            console.log(lesson);
             methods.setValue('name', lesson.name);
             methods.setValue('order', lesson.order);
             methods.setValue('topic', lesson.topic);
