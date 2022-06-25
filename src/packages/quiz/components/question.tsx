@@ -9,6 +9,7 @@ interface QuizQuestionProps {
     isShow: boolean;
     onCheckQuestionAnswer: (questionId: string, answerId: string) => void;
     onUnCheckQuestionAnswer: (questionId: string, answerId: string) => void;
+    onResetCheckQuestion: (questionId: string, answerId: string) => void;
     onToggleMarkQuestion: (questionId: string) => void;
 }
 
@@ -18,15 +19,21 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
     isShow,
     onCheckQuestionAnswer,
     onUnCheckQuestionAnswer,
-    onToggleMarkQuestion: onSetMarkQuestion,
+    onResetCheckQuestion,
+    onToggleMarkQuestion,
 }) => {
     const _onCheckBoxChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-        if (e.target.checked) onCheckQuestionAnswer(data.id, id);
-        else onUnCheckQuestionAnswer(data.id, id);
+        if (data.questionInQuiz.question.isMultipleChoice) {
+            if (e.target.checked) onCheckQuestionAnswer(data.id, id);
+            else onUnCheckQuestionAnswer(data.id, id);
+        } else {
+            onResetCheckQuestion(data.id, id);
+            onCheckQuestionAnswer(data.id, id);
+        }
     };
 
     const _onUpdateQuestionMark = () => {
-        onSetMarkQuestion(data.id);
+        onToggleMarkQuestion(data.id);
     };
     if (isShow)
         return (
@@ -40,25 +47,26 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                 <div className="flex flex-col space-y-1">
                     <p className="font-semibold">{data.questionInQuiz.question.content}</p>
                     <fieldset className="space-y-5">
-                        <legend className="sr-only">Notifications</legend>
-                        {data.questionInQuiz.question.answers.map((item) => (
-                            <div key={item.id} className="relative flex items-start">
-                                <div className="flex items-center h-5">
-                                    <input
-                                        id={item.id}
-                                        onChange={(e) => _onCheckBoxChange(e, item.id)}
-                                        type="checkbox"
-                                        checked={data.userAnswer.includes(item.id)}
-                                        className="w-4 h-4 text-indigo-600 border-gray-300 rounded cursor-pointer focus:ring-indigo-500"
-                                    />
+                        {data.questionInQuiz.question.answers.map((item) => {
+                            return (
+                                <div key={item.id} className="relative flex items-start">
+                                    <div className="flex items-center h-5">
+                                        <input
+                                            id={item.id}
+                                            onChange={(e) => _onCheckBoxChange(e, item.id)}
+                                            type={data.questionInQuiz.question.isMultipleChoice ? 'checkbox' : 'radio'}
+                                            checked={data.userAnswer.includes(item.id)}
+                                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded cursor-pointer focus:ring-indigo-500"
+                                        />
+                                    </div>
+                                    <div className="ml-3 text-sm">
+                                        <label htmlFor={item.id} className="font-medium text-black cursor-pointer">
+                                            {item.detail}
+                                        </label>
+                                    </div>
                                 </div>
-                                <div className="ml-3 text-sm">
-                                    <label htmlFor={item.id} className="font-medium text-black cursor-pointer">
-                                        {item.detail}
-                                    </label>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </fieldset>
                 </div>
             </div>
