@@ -10,7 +10,7 @@ import { FormWrapper, SelectField, TextField } from '../../../../core/components
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
-import { pushWithParams } from '../../../../core/util';
+import { clearQuery, pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { PaginationBar } from '../../../dashboard';
 import { useGetDimensionListById } from '../../../dimension/common/hooks/useGetDimensionListBySubjectId';
@@ -87,12 +87,12 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                     </p>
                 </div>
                 <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link href={router.asPath + '/import'} passHref>
+                    <Link href={clearQuery(router.asPath) + '/import'} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Import
                         </p>
                     </Link>
-                    <Link href={router.asPath.replace(routes.adminQuestionListUrl, routes.adminQuizListUrl)} passHref>
+                    <Link href={clearQuery(router.asPath).replace(routes.adminQuestionListUrl, routes.adminQuizListUrl)} passHref>
                         <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                             Quiz List
                         </p>
@@ -208,7 +208,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={clearQuery(router.asPath)} />
         </div>
     );
 };
