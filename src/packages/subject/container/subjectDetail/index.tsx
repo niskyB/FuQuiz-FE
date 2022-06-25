@@ -46,7 +46,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                 </div>
                 <div className="flex flex-col flex-1 p-10 space-y-10 bg-white rounded-md">
                     <div className="flex">
-                        <div className="flex justify-center w-1/2">
+                        <div className="flex justify-center w-1/2 h-fit">
                             <img src={subject?.thumbnailUrl} alt="thumbnail" className="max-w-full w-96" />
                         </div>
                         <div className="flex-1 ">
@@ -78,7 +78,9 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                             </p>
                                             <button
                                                 onClick={() => {
-                                                    if (subject && !userState.id) {
+                                                    console.log(subject && !userState.id);
+
+                                                    if (subject) {
                                                         store.dispatch(
                                                             formActions.setRegistrationForm({
                                                                 pricePackage: pricePackageList,
