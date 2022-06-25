@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useGetQuizResultById } from '../../common/hooks/useGetQuizResultById';
 import { QuizAnswerStatus } from '../../../../core/models/quiz';
 import { ClientQuestionInQuiz } from '../../../../core/models/quizResult';
+import { submitQuiz } from './action';
 
 interface DoQuizProps {
     id: string;
@@ -97,8 +98,10 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     };
 
     const methods = useForm();
-    const _handleOnSubmit = () => {
+    const _handleOnSubmit = async () => {
         const data = convertQuestionListToQuestionAnswerToSend(questionList);
+        const res = await submitQuiz(data);
+        console.log(res);
     };
 
     return (
