@@ -2,84 +2,47 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { SimulationPageProps } from '../../../../../pages/practices/simulation';
+import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Question } from '../../../../core/models/question';
 import { Quiz } from '../../../../core/models/quiz';
+import { RegistrationStatus } from '../../../../core/models/registration';
+import { Subject } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
+import { dataParser } from '../../../../core/util/data';
+import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
 import { PaginationBar } from '../../../dashboard';
-import { SelectSubject } from '../../../practices/containers/practiceList/interface';
+import { useGetSimulationList } from '../common/hooks/useGetSimulationList';
 
-interface SimulationListProps {}
+export interface SimulationListProps extends SimulationPageProps {}
 
-const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
-    const [subjects, setSubjects] = React.useState<SelectSubject[]>([
-        { id: '1', name: 'Javascript basic' },
-        { id: '2', name: 'Javascript' },
-        { id: '3', name: 'Master of coins' },
-    ]);
-
-    const [quizzes, setQuizzes] = React.useState<Quiz[]>([
-        // {
-        //     id: '1',
-        //     name: 'Quiz Practice 1',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Simulation' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '2',
-        //     name: 'Quiz Practice 2',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Simulation' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '3',
-        //     name: 'Quiz Practice 3',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Simulation' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '4',
-        //     name: 'Quiz Practice 4',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Simulation' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-    ]);
-    const [count, setCount] = React.useState<number>(4);
-
+export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ currentPage, name, pageSize, subject }) => {
+    const { registrationList } = useGetRegistrationUserList({ currentPage: 0, pageSize: 999, status: RegistrationStatus.PAID });
     const router = useRouter();
+    const options = React.useMemo(() => ({ currentPage, name, pageSize, subject }), [currentPage, name, pageSize, subject]);
 
-    const methods = useForm();
-    const _handleOnSubmit = async () => {};
+    const subjects = React.useMemo<Subject[]>(() => {
+        let subjects: Subject[] = [];
+        registrationList.map((registration) => {
+            registration.pricePackage.subject && subjects.push(registration.pricePackage.subject);
+        });
+        return subjects;
+    }, [registrationList]);
+
+    useUrlParams({
+        defaultPath: routes.simulationListUrl,
+        query: { ...router.query, currentPage, pageSize, name, subject },
+    });
+
+    const { quizList: simulationList, count } = useGetSimulationList(options);
+
+    const methods = useForm<SimulationListProps>();
+    const _handleOnSubmit = (data: SimulationListProps) => {
+        pushWithParams(router, routes.simulationListUrl, { ...options, ...data });
+    };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -94,15 +57,11 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
             <div className="space-y-2">
                 <FormWrapper methods={methods}>
                     <div className="flex items-end justify-between">
-                        <form className="flex items-end space-x-2">
-                            <SelectField
-                                label="Subject"
-                                values={subjects.map((subject) => ({ label: subject.name, value: subject.id }))}
-                                name="Subject"
-                            />
-                            <TextField name="examName" label="Exam name" />
+                        <form className="flex items-end space-x-2" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+                            <SelectField label="Subject" values={dataParser(subjects, 'name', 'id')} name="subject" />
+                            <TextField name="name" label="Exam name" />
                             <button
-                                type="button"
+                                type="submit"
                                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Search
@@ -119,8 +78,8 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
                                 <TableHead fields={['Subject info', 'Simulation exam', 'Level', 'Questions', 'Duration', ' Pass rate', '']} />
 
                                 <TableBody>
-                                    {Boolean(count && quizzes) &&
-                                        quizzes.map((quiz) => (
+                                    {Boolean(count && simulationList) &&
+                                        simulationList.map((quiz) => (
                                             <TableRow key={quiz.id}>
                                                 <TableDescription>
                                                     <div className="font-semibold text-gray-900">#{quiz.id}</div>
@@ -128,7 +87,7 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.level.name}</div>
+                                                        <div className="text-gray-900">{quiz.name}</div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
@@ -162,5 +121,3 @@ const SimulationList: React.FunctionComponent<SimulationListProps> = () => {
         </div>
     );
 };
-
-export default SimulationList;
