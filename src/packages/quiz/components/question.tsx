@@ -1,13 +1,14 @@
 import { ChangeEvent } from 'react';
 import * as React from 'react';
 import { BookmarkIcon } from '@heroicons/react/outline';
-import { QuizQuestionDTO } from '../containers/doQuiz/interface';
+import { ClientQuestionInQuiz } from '../../../core/models/quizResult';
 
 interface QuizQuestionProps {
-    data: QuizQuestionDTO;
+    data: ClientQuestionInQuiz;
     index: number;
     isShow: boolean;
-    onSetQuestionAnswer: (questionId: string, answerId: string | null) => void;
+    onCheckQuestionAnswer: (questionId: string, answerId: string) => void;
+    onUnCheckQuestionAnswer: (questionId: string, answerId: string) => void;
     onToggleMarkQuestion: (questionId: string) => void;
 }
 
@@ -15,12 +16,13 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
     data,
     index,
     isShow,
-    onSetQuestionAnswer,
+    onCheckQuestionAnswer,
+    onUnCheckQuestionAnswer,
     onToggleMarkQuestion: onSetMarkQuestion,
 }) => {
     const _onCheckBoxChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-        if (e.target.checked) onSetQuestionAnswer(data.id, id);
-        else onSetQuestionAnswer(data.id, null);
+        if (e.target.checked) onCheckQuestionAnswer(data.id, id);
+        else onUnCheckQuestionAnswer(data.id, id);
     };
 
     const _onUpdateQuestionMark = () => {
@@ -36,17 +38,17 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                     </div>
                 </div>
                 <div className="flex flex-col space-y-1">
-                    <p className="font-semibold">{data.content}</p>
+                    <p className="font-semibold">{data.questionInQuiz.question.content}</p>
                     <fieldset className="space-y-5">
                         <legend className="sr-only">Notifications</legend>
-                        {data.answers.map((item) => (
+                        {data.questionInQuiz.question.answers.map((item) => (
                             <div key={item.id} className="relative flex items-start">
                                 <div className="flex items-center h-5">
                                     <input
                                         id={item.id}
                                         onChange={(e) => _onCheckBoxChange(e, item.id)}
                                         type="checkbox"
-                                        checked={data.userAnswerId === item.id}
+                                        checked={data.userAnswer.includes(item.id)}
                                         className="w-4 h-4 text-indigo-600 border-gray-300 rounded cursor-pointer focus:ring-indigo-500"
                                     />
                                 </div>

@@ -14,6 +14,13 @@ export enum QuizTypeEnum {
     LESSON_QUIZ = 'Lesson Quiz',
 }
 
+export enum QuizAnswerStatus {
+    UNANSWERED = 'unanswered',
+    MARKED = 'marked',
+    ANSWERED = 'Answered',
+    ALL_QUESTION = 'allQuestions',
+}
+
 export interface Quiz extends QuizAttribute {
     id: string;
     name: string;

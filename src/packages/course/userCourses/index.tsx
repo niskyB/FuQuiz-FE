@@ -12,7 +12,9 @@ import { CourseFilter } from '../components/courseFilter';
 import { useGetRegistrationUserList } from '../hooks/useGetRegistrationListUser';
 import { cancelRegistration } from './action';
 
-export interface UserCoursesProps extends UserCoursesPageProps {}
+export interface UserCoursesProps extends UserCoursesPageProps {
+    status: string | RegistrationStatus;
+}
 
 export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ category, currentPage, isFeature, name, order, pageSize }) => {
     const router = useRouter();

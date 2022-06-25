@@ -27,7 +27,7 @@ export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ i
     const totalDone = React.useMemo(
         () =>
             questionList.reduce((prev, current) => {
-                if (current.userAnswerId) return prev + 1;
+                if (current.userAnswer) return prev + 1;
                 else return prev;
             }, 0),
         [questionList]

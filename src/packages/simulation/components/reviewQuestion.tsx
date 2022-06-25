@@ -6,7 +6,17 @@ interface ReviewQuestionProps {
     index: number;
 }
 
-const ReviewQuestion: React.FunctionComponent<ReviewQuestionProps> = ({ question, index }) => {
+export const ReviewQuestion: React.FunctionComponent<ReviewQuestionProps> = ({ question, index }) => {
+    const convertNumberToChar = (num: number) => {
+        return num
+            .toString() // convert number to string
+            .split('') // convert string to array of characters
+            .map(Number) // parse characters as numbers
+            .map((n) => (n || 10) + 64) // convert to char code, correcting for J
+            .map((c) => String.fromCharCode(c)) // convert char codes to strings
+            .join(''); // join values together
+    };
+
     return (
         <div className="px-5 py-5 space-y-2 text-base bg-white rounded-md">
             <div className="flex justify-between">
@@ -16,11 +26,12 @@ const ReviewQuestion: React.FunctionComponent<ReviewQuestionProps> = ({ question
                 <p className="font-semibold">{question.content}</p>
                 <fieldset className="space-y-5">
                     <legend className="sr-only">Notifications</legend>
-                    {question.answers.map((item) => (
-                        <div key={item.id} className="relative flex items-start">
+                    {question.answers.map((answer, answerIndex) => (
+                        <div key={answer.id} className="relative flex items-start">
                             <div className="ml-3 text-sm">
-                                <label htmlFor={item.id} className="font-medium text-black cursor-pointer">
-                                    {item.detail}
+                                <label htmlFor={answer.id} className="font-medium text-black cursor-pointer">
+                                    {`${convertNumberToChar(answerIndex + 1)}. `}
+                                    {answer.detail}
                                 </label>
                             </div>
                         </div>

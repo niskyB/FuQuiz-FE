@@ -14,7 +14,7 @@ const QuizAnswerReadonly: React.FunctionComponent<QuizAnswerReadonlyProps> = ({ 
             {data.map((item, index) => (
                 <div
                     className={`relative flex items-center justify-center text-white  rounded-lg cursor-pointer w-10 h-10 ${
-                        currentIndex === index ? 'bg-gray-500 text-white' : item.userAnswerId === rightAnswer.id ? 'bg-green-500' : 'bg-red-500'
+                        currentIndex === index ? 'bg-gray-500 text-white' : item.userAnswer === rightAnswer.id ? 'bg-green-500' : 'bg-red-500'
                     } ${currentIndex === index ? 'border border-solid' : ''}`}
                     key={`question-${index}`}
                     onClick={() => setCurrentIndex(index)}
