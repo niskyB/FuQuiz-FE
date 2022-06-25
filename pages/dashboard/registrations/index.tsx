@@ -46,7 +46,7 @@ RegistrationListPage.getInitialProps = async (ctx: NextPageContext): Promise<Reg
         order: ctx.query?.order || Order.DESC,
         orderBy: ctx.query?.orderBy || 'validFrom',
         pageSize: ctx.query?.pageSize || 10,
-        status: ctx.query?.status || '',
+        status: ctx.query?.isActive || '',
         subject: ctx.query?.subject || '',
         validFrom: ctx.query?.validFrom || '',
         validTo: ctx.query?.validTo || '',
