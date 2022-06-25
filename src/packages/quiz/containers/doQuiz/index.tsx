@@ -9,6 +9,7 @@ import { useGetQuizResultById } from '../../common/hooks/useGetQuizResultById';
 import { QuizAnswerStatus } from '../../../../core/models/quiz';
 import { ClientQuestionInQuiz } from '../../../../core/models/quizResult';
 import { submitQuiz } from './action';
+import { toast } from 'react-toastify';
 
 interface DoQuizProps {
     id: string;
@@ -72,18 +73,27 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         }
     };
 
-    const onCheckQuestionAnswer = (updateQuestionId: string, updateAnswerId: string) => {
+    const _onCheckQuestionAnswer = (updateQuestionId: string, updateAnswerId: string) => {
         findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
             const newQuestionList = [...questionList];
             newQuestionList[i].userAnswer = [...newQuestionList[i].userAnswer, updateAnswerId];
             setQuestionList(newQuestionList);
         });
     };
-    const onUnCheckQuestionAnswer = (updateQuestionId: string, removeAnswerId: string) => {
+    const _onUnCheckQuestionAnswer = (updateQuestionId: string, removeAnswerId: string) => {
         findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
             const newQuestionList = [...questionList];
             const index = newQuestionList[i].userAnswer.indexOf(removeAnswerId);
             newQuestionList[i].userAnswer.splice(index, 1);
+
+            setQuestionList(newQuestionList);
+        });
+    };
+
+    const _onResetCheckQuestion = (updateQuestionId: string, removeAnswerId: string) => {
+        findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
+            const newQuestionList = [...questionList];
+            newQuestionList[i].userAnswer = [];
 
             setQuestionList(newQuestionList);
         });
@@ -101,7 +111,9 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const _handleOnSubmit = async () => {
         const data = convertQuestionListToQuestionAnswerToSend(questionList);
         const res = await submitQuiz(data);
-        console.log(res);
+        if (res) {
+            toast.success('Submit success!');
+        }
     };
 
     return (
@@ -148,8 +160,9 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                     {questionList.map((item, index) => (
                         <QuizQuestion
                             onToggleMarkQuestion={onToggleMarkQuestion}
-                            onUnCheckQuestionAnswer={onUnCheckQuestionAnswer}
-                            onCheckQuestionAnswer={onCheckQuestionAnswer}
+                            onUnCheckQuestionAnswer={_onUnCheckQuestionAnswer}
+                            onCheckQuestionAnswer={_onCheckQuestionAnswer}
+                            onResetCheckQuestion={_onResetCheckQuestion}
                             key={item.id}
                             data={item}
                             index={index}
