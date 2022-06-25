@@ -105,12 +105,15 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, creat
             <div className="flex flex-col mt-8">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Title', 'Lesson Type', 'Create at', 'Update date', 'Activation', '']} />
+                                <TableHead fields={['ID', 'Title', 'Lesson Type', 'Create at', 'Update date', 'Activation', '']} />
                                 <TableBody>
                                     {lessonList.map((lesson) => (
                                         <TableRow key={lesson.id}>
+                                            <TableDescription>
+                                                <div className="text-gray-900">{lesson.id}</div>
+                                            </TableDescription>
                                             <TableDescription>
                                                 <div className="text-gray-900">{lesson.name}</div>
                                             </TableDescription>
