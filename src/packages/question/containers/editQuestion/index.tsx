@@ -84,7 +84,6 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
         if (thumbnailFile) data.image = thumbnailFile;
         data.explanation = explanation;
         data.isMultipleChoice = isMultipleChoice;
-        console.log(data);
         await editQuestion(id, data).then(() => {
             methods.reset();
             setPreviewThumbnailUrl('');

@@ -56,7 +56,7 @@ export const QuizPracticeQuestion: React.FunctionComponent<QuizPracticeQuestionP
                                         id={item.id}
                                         onChange={(e) => _onCheckBoxChange(e, item.id)}
                                         type="checkbox"
-                                        checked={data.userAnswerId === item.id}
+                                        checked={data.userAnswer === item.id}
                                         className="w-4 h-4 text-indigo-600 border-gray-300 rounded cursor-pointer focus:ring-indigo-500"
                                     />
                                 </div>

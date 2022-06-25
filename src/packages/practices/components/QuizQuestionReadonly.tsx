@@ -51,7 +51,7 @@ const QuizQuestionReadonly: React.FunctionComponent<QuizQuestionReadonlyProps> =
                                     <input
                                         id={item.id}
                                         type="checkbox"
-                                        defaultChecked={data.userAnswerId === item.id}
+                                        defaultChecked={data.userAnswer === item.id}
                                         disabled={true}
                                         className="w-4 h-4 text-indigo-600 border-gray-300 rounded cursor-pointer focus:ring-indigo-500"
                                     />
@@ -61,7 +61,7 @@ const QuizQuestionReadonly: React.FunctionComponent<QuizQuestionReadonlyProps> =
                                         {item.detail}
                                     </label>
                                     <div className="w-8 h-8">
-                                        {item.id === data.userAnswerId || item.id === rightAnswer ? (
+                                        {item.id === data.userAnswer || item.id === rightAnswer ? (
                                             item.id === rightAnswer ? (
                                                 <div className="text-green-500">
                                                     <CheckCircleIcon />

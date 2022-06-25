@@ -33,7 +33,7 @@ export const QuizPractice: React.FunctionComponent<QuizPracticeProps> = ({ id })
     const totalDone = React.useMemo(
         () =>
             questionList.reduce((prev, current) => {
-                if (current.userAnswerId) return prev + 1;
+                if (current.userAnswer) return prev + 1;
                 else return prev;
             }, 0),
         [questionList]
@@ -55,7 +55,7 @@ export const QuizPractice: React.FunctionComponent<QuizPracticeProps> = ({ id })
     const onSetQuestionAnswer = (updateQuestionId: string, updateAnswerId: string | null) => {
         findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
             const newQuestionList = [...questionList];
-            newQuestionList[i].userAnswerId = updateAnswerId;
+            newQuestionList[i].userAnswer = updateAnswerId;
             setQuestionList(newQuestionList);
         });
     };

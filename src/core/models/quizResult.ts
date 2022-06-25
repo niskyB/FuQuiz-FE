@@ -1,5 +1,5 @@
-import { string } from 'joi';
 import { Question } from './question';
+import { Quiz } from './quiz';
 
 export interface QuizResult {
     id: string;
@@ -14,7 +14,13 @@ export interface QuestionQuizResult {
     questionInQuiz: QuestionInQuiz;
 }
 
+export interface QuizInQuestionInQuiz extends Pick<Quiz, 'id' | 'duration' | 'isPublic' | 'name' | 'numberOfQuestion' | 'passRate'> {}
 export interface QuestionInQuiz {
     id: string;
     question: Question;
+    quiz: QuizInQuestionInQuiz;
+}
+
+export interface ClientQuestionInQuiz extends QuestionQuizResult {
+    userAnswer: string[];
 }

@@ -4,5 +4,6 @@ import { QuizResult } from '../../../../core/models/quizResult';
 
 export const useGetQuizResultById = (quizId: string) => {
     const { data: quiz } = useGetDataById<QuizResult>(ApiListRoutes.QUIZ_RESULT, quizId);
+
     return { quiz };
 };
