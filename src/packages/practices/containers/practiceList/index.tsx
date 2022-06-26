@@ -2,26 +2,49 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { PracticeListPageProps } from '../../../../../pages/practices';
+import { useUrlParams } from '../../../../core/common/hooks';
 import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Question } from '../../../../core/models/question';
-import { Quiz } from '../../../../core/models/quiz';
+import { RegistrationStatus } from '../../../../core/models/registration';
+import { Subject } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
+import { dataParser } from '../../../../core/util/data';
+import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
 import { PaginationBar } from '../../../dashboard';
-import { SelectSubject } from './interface';
+import { useGetPracticeList } from '../../common/hooks/useGetPracticeList';
 
-interface PracticeListProps {}
+interface PracticeListProps extends PracticeListPageProps {}
 
-const PracticeList: React.FC<PracticeListProps> = () => {
-    const [subjects, setSubjects] = React.useState<SelectSubject[]>([]);
-    const [quizzes, setQuizzes] = React.useState<Quiz[]>([]);
-    const [count, setCount] = React.useState<number>(4);
+export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSize, subject }) => {
+    const { registrationList } = useGetRegistrationUserList({ currentPage: 1, pageSize: 999, status: RegistrationStatus.PAID });
 
+    const options = React.useMemo(() => ({ currentPage, pageSize, subject }), [currentPage, pageSize, subject]);
+
+    const { quizResults, count } = useGetPracticeList(options);
     const router = useRouter();
+    console.log(count, quizResults);
 
-    const methods = useForm();
-    const _handleOnSubmit = async () => {};
+    useUrlParams({
+        defaultPath: routes.practiceListUrl,
+        query: { ...router.query, currentPage, pageSize, subject },
+    });
+
+    const subjects = React.useMemo<Subject[]>(() => {
+        let subjects: Subject[] = [];
+        registrationList.map((registration) => {
+            registration.pricePackage.subject && subjects.push(registration.pricePackage.subject);
+        });
+        return subjects;
+    }, [registrationList]);
+
+    const methods = useForm<PracticeListProps>();
+
+    const _handleOnSubmit = (data: PracticeListProps) => {
+        pushWithParams(router, routes.practiceListUrl, { ...options, ...data });
+    };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -36,12 +59,14 @@ const PracticeList: React.FC<PracticeListProps> = () => {
             <div className="space-y-2">
                 <FormWrapper methods={methods}>
                     <div className="flex items-end justify-between">
-                        <form className="max-w-xs">
-                            <SelectField
-                                label="Subject"
-                                values={subjects.map((subject) => ({ label: subject.name, value: subject.id }))}
-                                name="Subject"
-                            />
+                        <form className="flex items-end max-w-xs space-x-2" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
+                            <SelectField label="Subject" values={dataParser(subjects, 'name', 'id')} name="subject" />
+                            <button
+                                type="submit"
+                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Search
+                            </button>
                         </form>
                         <div className="space-x-2">
                             <Link href={routes.addPracticeUrl} passHref>
@@ -66,34 +91,35 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                 <TableHead fields={['Practice name', 'Date taken', 'Type & Level', 'Practice Info', 'Correct Answer', '']} />
 
                                 <TableBody>
-                                    {Boolean(count && quizzes) &&
-                                        quizzes.map((quiz) => (
-                                            <TableRow key={quiz.id}>
+                                    {Boolean(count && quizResults) &&
+                                        quizResults.map((item) => (
+                                            <TableRow key={item.id}>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{quiz.subject.name}</div>
-                                                    <div className="text-gray-900">{quiz.name}</div>
+                                                    <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.createdAt}</div>
+                                                        <div className="text-gray-900">{item.createdAt}</div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.level.name}</div>
+                                                        <div className="text-gray-900">
+                                                            {item.attendedQuestions[0].questionInQuiz.quiz.level
+                                                                ? item.attendedQuestions[0].questionInQuiz.quiz.level?.name
+                                                                : ''}
+                                                        </div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{quiz.correctAnswer} Correct</div>
-                                                    <div className="text-gray-900">{quiz.questions.length} Questions</div>
+                                                    {/* <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.} Correct</div> */}
+                                                    <div className="text-gray-900">{item.attendedQuestions.length} Questions</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">
-                                                        {Math.round((quiz.correctAnswer / quiz.questions.length) * 100)}%
-                                                    </div>
+                                                    <div className="text-gray-900">{Math.round(item.rate * item.attendedQuestions.length)}%</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${routes.practiceDetailsUrl}/${quiz.id}`} passHref>
+                                                    <Link href={`${routes.practiceDetailsUrl}${item.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
                                                     </Link>
                                                 </TableDescription>
@@ -105,9 +131,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={Number(currentPage)} numberOfItem={count} pageSize={Number(pageSize)} routeUrl={router.asPath} />
         </div>
     );
 };
-
-export default PracticeList;

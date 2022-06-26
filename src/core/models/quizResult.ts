@@ -1,5 +1,5 @@
 import { Question } from './question';
-import { Quiz } from './quiz';
+import { Quiz, QuizLevel } from './quiz';
 
 export interface QuizResult {
     id: string;
@@ -14,7 +14,10 @@ export interface QuestionQuizResult {
     questionInQuiz: QuestionInQuiz;
 }
 
-export interface QuizInQuestionInQuiz extends Pick<Quiz, 'id' | 'duration' | 'isPublic' | 'name' | 'numberOfQuestion' | 'passRate'> {}
+export interface QuizInQuestionInQuiz extends Pick<Quiz, 'id' | 'duration' | 'isPublic' | 'name' | 'numberOfQuestion' | 'passRate'> {
+    level?: QuizLevel;
+}
+
 export interface QuestionInQuiz {
     id: string;
     question: Question;

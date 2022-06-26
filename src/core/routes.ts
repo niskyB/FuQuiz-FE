@@ -96,6 +96,6 @@ export const routes = {
     // Course
     courseListUrl: '/user/courses',
 
-    // Package
+    // practiceListUrl
     // adminQuestionListUrl: '/question',
 };
