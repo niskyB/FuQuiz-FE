@@ -36,6 +36,7 @@ export enum ApiListRoutes {
 
     QUIZ = 'quiz',
     QUIZ_RESULT = 'quiz-result',
+    QUIZ_RESULTS = 'quiz-results',
     QUIZZES = 'quizzes',
     QUIZZES_SIMULATIONS = 'quizzes/simulations',
 

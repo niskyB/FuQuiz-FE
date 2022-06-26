@@ -9,67 +9,18 @@ import { Question } from '../../../../core/models/question';
 import { Quiz } from '../../../../core/models/quiz';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
+import { useGetPracticeList } from '../../common/hooks/useGetPracticeList';
 import { SelectSubject } from './interface';
 
 interface PracticeListProps {}
 
-const PracticeList: React.FC<PracticeListProps> = () => {
+export const PracticeList: React.FC<PracticeListProps> = () => {
     const [subjects, setSubjects] = React.useState<SelectSubject[]>([]);
-    const [quizzes, setQuizzes] = React.useState<Quiz[]>([
-        // {
-        //     id: '1',
-        //     name: 'Quiz Practice 1',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '2',
-        //     name: 'Quiz Practice 2',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '3',
-        //     name: 'Quiz Practice 3',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '4',
-        //     name: 'Quiz Practice 4',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-    ]);
+    const [quizzes, setQuizzes] = React.useState<Quiz[]>([]);
     const [count, setCount] = React.useState<number>(4);
+
+    const { quizResults } = useGetPracticeList({ currentPage: 0, pageSize: 10, subject: '' });
+    console.log(quizResults);
 
     const router = useRouter();
 
@@ -119,34 +70,31 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                                 <TableHead fields={['Practice name', 'Date taken', 'Type & Level', 'Question Info', 'Correct Answer', '']} />
 
                                 <TableBody>
-                                    {Boolean(count && quizzes) &&
-                                        quizzes.map((quiz) => (
-                                            <TableRow key={quiz.id}>
+                                    {Boolean(count && quizResults) &&
+                                        quizResults.map((item) => (
+                                            <TableRow key={item.id}>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{quiz.subject.name}</div>
-                                                    <div className="text-gray-900">{quiz.name}</div>
+                                                    <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.name}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.createdAt}</div>
+                                                        <div className="text-gray-900">{item.createdAt}</div>
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.level.name}</div>
-                                                    </div>
+                                                    {/* <div className="max-w-sm"><div className="text-gray-900">{item.}</div></div> */}
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{quiz.correctAnswer} Correct</div>
-                                                    <div className="text-gray-900">{quiz.questions.length} Questions</div>
+                                                    {/* <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.} Correct</div> */}
+                                                    {/* <div className="text-gray-900">{item.questions.length} Questions</div> */}
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">
-                                                        {Math.round((quiz.correctAnswer / quiz.questions.length) * 100)}%
+                                                        {/* {Math.round((item.correctAnswer / item.questions.length) * 100)}% */}
                                                     </div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${routes.practiceDetailsUrl}/${quiz.id}`} passHref>
+                                                    <Link href={`${routes.practiceDetailsUrl}/${item.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
                                                     </Link>
                                                 </TableDescription>
@@ -162,5 +110,3 @@ const PracticeList: React.FC<PracticeListProps> = () => {
         </div>
     );
 };
-
-export default PracticeList;
