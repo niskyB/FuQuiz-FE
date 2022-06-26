@@ -31,6 +31,7 @@ const quizAnswerStatus = [
 export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const router = useRouter();
 
+    const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
     const [questionList, setQuestionList] = React.useState<ClientQuestionInQuiz[]>([]);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
     const [answerStatus, setAnswerStatus] = React.useState<QuizAnswerStatus>(QuizAnswerStatus.ALL_QUESTION);
@@ -52,7 +53,6 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         switch (answerStatus) {
             case QuizAnswerStatus.ALL_QUESTION:
                 return questionList.filter((item) => item).map((item) => item.id);
-
             case QuizAnswerStatus.ANSWERED:
                 return questionList.filter((item) => item.userAnswer.length > 0).map((item) => item.id);
             case QuizAnswerStatus.MARKED:
@@ -134,6 +134,7 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         const data = convertQuestionListToQuestionAnswerToSend(questionList);
         const res = await submitQuiz(data);
         if (res) {
+            setIsSubmitted(true);
             localStorage.setItem(constant.PROGRESS_TEST, '[]');
             localStorage.setItem(constant.PROGRESS_TEST_ID, '');
             toast.success('Submit success!');
@@ -208,8 +209,9 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                                     <Countdown
                                         date={new Date(quiz.createdAt).getTime() + quiz.attendedQuestions[0].questionInQuiz.quiz.duration * 60 * 1000}
                                         renderer={({ hours, minutes, seconds, completed }) => {
-                                            if (completed) {
+                                            if (completed && !isSubmitted) {
                                                 _handleOnSubmit();
+
                                                 return <>Time out</>;
                                             }
 
