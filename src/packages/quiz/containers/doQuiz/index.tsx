@@ -3,8 +3,6 @@ import * as React from 'react';
 import QuizAnswer from '../quizAnswer';
 import { convertQuestionListToQuestionAnswerToSend, findQuestionAndDoAction } from '../../../../core/util/question';
 import { ClockIcon } from '@heroicons/react/outline';
-import { FormWrapper } from '../../../../core/components/form';
-import { useForm } from 'react-hook-form';
 import { useGetQuizResultById } from '../../common/hooks/useGetQuizResultById';
 import { QuizAnswerStatus } from '../../../../core/models/quiz';
 import { ClientQuestionInQuiz } from '../../../../core/models/quizResult';
