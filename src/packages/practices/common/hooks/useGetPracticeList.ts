@@ -12,7 +12,7 @@ export interface GetPracticesDTO {
 export const useGetPracticeList = (options: Partial<GetPracticesDTO>) => {
     const { currentPage, pageSize, subject } = options;
     const option = React.useMemo<GetPracticesDTO>(
-        () => ({ subject: subject || '', currentPage: currentPage || 0, pageSize: pageSize || 10 }),
+        () => ({ subject: subject || '', currentPage: currentPage || 1, pageSize: pageSize || 10 }),
         [subject, currentPage, pageSize]
     );
     const { count, list: quizResults } = useGetListWithCount<QuizResult, Partial<GetPracticesDTO>>(ApiListRoutes.QUIZ_RESULTS, option);

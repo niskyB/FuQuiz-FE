@@ -15,7 +15,7 @@ export interface QuestionQuizResult {
 }
 
 export interface QuizInQuestionInQuiz extends Pick<Quiz, 'id' | 'duration' | 'isPublic' | 'name' | 'numberOfQuestion' | 'passRate'> {
-    quizLevel?: QuizLevel;
+    level?: QuizLevel;
 }
 
 export interface QuestionInQuiz {
