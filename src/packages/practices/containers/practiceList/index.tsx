@@ -67,7 +67,7 @@ export const PracticeList: React.FC<PracticeListProps> = () => {
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Practice name', 'Date taken', 'Type & Level', 'Question Info', 'Correct Answer', '']} />
+                                <TableHead fields={['Practice name', 'Date taken', 'Type & Level', 'Practice Info', 'Correct Answer', '']} />
 
                                 <TableBody>
                                     {Boolean(count && quizResults) &&

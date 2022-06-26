@@ -12,9 +12,7 @@ import { submitQuiz } from './action';
 import { toast } from 'react-toastify';
 import { constant } from '../../../../core/constant';
 import Countdown from 'react-countdown';
-import { date } from 'joi';
 import { useRouter } from 'next/router';
-import Router from 'next/dist/server/router';
 import useIsFirstRender from '../../../../core/common/hooks/useIsFirstRender';
 
 interface DoQuizProps {
@@ -43,11 +41,18 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const totalDone = React.useMemo(
         () =>
             questionList.reduce((prev, current) => {
-                if (current.userAnswer) return prev + 1;
+                if (current.userAnswer.length > 0) return prev + 1;
                 else return prev;
             }, 0),
         [questionList]
     );
+
+    const isDone = React.useMemo(() => {
+        if (totalDone >= questionList.length) {
+            return true;
+        }
+        return false;
+    }, [totalDone, questionList]);
 
     const filteredQuestion = React.useMemo<string[]>(() => {
         switch (answerStatus) {
@@ -78,7 +83,6 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
 
     React.useEffect(() => {
         if (!isInitRender) {
-            console.log('Update');
             localStorage.setItem(constant.PROGRESS_TEST, JSON.stringify(questionList));
         }
         return () => {};
@@ -129,7 +133,6 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         });
     };
 
-    const methods = useForm();
     const _handleOnSubmit = async () => {
         const data = convertQuestionListToQuestionAnswerToSend(questionList);
         const res = await submitQuiz(data);
@@ -141,6 +144,8 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         }
     };
 
+    const _handleOnExit = async () => {};
+
     return (
         <>
             {popUp && (
@@ -148,32 +153,37 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                     <div className="fixed z-20 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                             <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-                                <FormWrapper methods={methods}>
-                                    <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="z-50 space-y-5">
-                                        <div className="flex flex-col space-y-4">
-                                            <p className="text-lg font-semibold">Exit Exam?</p>
-                                            <p className="">
-                                                You have not answer all questions. By clicking on the [Submit now] button below, you will completed
-                                                your current exam and be return to the dashboard
+                                <div className="z-50 space-y-5">
+                                    <div className="flex flex-col space-y-4">
+                                        <p className="text-lg font-semibold">Score Exam?</p>
+                                        {totalDone !== 0 && !isDone && (
+                                            <p className="text-red-500">
+                                                {totalDone} of {questionList.length} Questions Answered
                                             </p>
-                                            <div className="flex space-x-2">
-                                                <button
-                                                    type="submit"
-                                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                >
-                                                    Submit now
-                                                </button>
-                                                <button
-                                                    onClick={() => setPopUp(false)}
-                                                    type="submit"
-                                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                >
-                                                    Cancel
-                                                </button>
-                                            </div>
+                                        )}
+                                        <p className="">
+                                            {totalDone === 0
+                                                ? 'You have not answer any questions. By clicking on the [Exit exam] button below, you will complete your current exam and be returned to the dashboard!'
+                                                : 'By clicking on the [Score Exam] button below, you will complete your current exam and receive your score. You will not be able to change any answers after this point.'}
+                                        </p>
+                                        <div className="flex space-x-2">
+                                            <button
+                                                onClick={() => setPopUp(false)}
+                                                type="submit"
+                                                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <button
+                                                onClick={_handleOnSubmit}
+                                                type="submit"
+                                                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            >
+                                                {totalDone === 0 ? 'Exit Exam' : 'Score Exam'}
+                                            </button>
                                         </div>
-                                    </form>
-                                </FormWrapper>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

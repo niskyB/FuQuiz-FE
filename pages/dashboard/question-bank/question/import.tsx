@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 import { rejects } from 'assert';
 import useDownloader from 'react-use-downloader';
 
-interface AddQuestionPageProps {}
+interface ImportQuestionPageProps {}
 
 export interface ImportedQuestion {
     index: number;
@@ -104,125 +104,125 @@ export interface ImportFormDataDTO {
 
 export interface QuestionAnswer extends Omit<Answer, 'id'> {}
 
-const AddQuestionPage: React.FunctionComponent<AddQuestionPageProps> = () => {
-    const router = useRouter();
+const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () => {
+    // const router = useRouter();
 
-    const methods = useForm<ImportFormDataDTO>();
-    const [file, setFile] = React.useState<File | null>();
-    const [data, setData] = React.useState<ImportedQuestion[]>([]);
+    // const methods = useForm<ImportFormDataDTO>();
+    // const [file, setFile] = React.useState<File | null>();
+    // const [data, setData] = React.useState<ImportedQuestion[]>([]);
 
-    const { download } = useDownloader();
-    const { levels } = useGetQuestionLevelList();
+    // const { download } = useDownloader();
+    // const { levels } = useGetQuestionLevelList();
 
-    const _handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            const file = e.target.files[0];
-            setFile(file);
-        }
-    };
+    // const _handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files && e.target.files.length > 0) {
+    //         const file = e.target.files[0];
+    //         setFile(file);
+    //     }
+    // };
 
-    const _readExcel = async (file: File) => {
-        try {
-            const fileReader = new FileReader();
-            fileReader.readAsArrayBuffer(file);
+    // const _readExcel = async (file: File) => {
+    //     try {
+    //         const fileReader = new FileReader();
+    //         fileReader.readAsArrayBuffer(file);
 
-            fileReader.onload = (e) => {
-                if (e.target && e.target.result) {
-                    const bufferArray = e.target.result;
+    //         fileReader.onload = (e) => {
+    //             if (e.target && e.target.result) {
+    //                 const bufferArray = e.target.result;
 
-                    const wb = XLSX.read(bufferArray, { type: 'buffer' });
+    //                 const wb = XLSX.read(bufferArray, { type: 'buffer' });
 
-                    // get the sheet name
-                    const wsname = wb.SheetNames[0];
+    //                 // get the sheet name
+    //                 const wsname = wb.SheetNames[0];
 
-                    //read the sheet
-                    const ws = wb.Sheets[wsname];
+    //                 //read the sheet
+    //                 const ws = wb.Sheets[wsname];
 
-                    const data = XLSX.utils.sheet_to_json(ws) as ImportQuestionOnExcel[];
+    //                 const data = XLSX.utils.sheet_to_json(ws) as ImportQuestionOnExcel[];
 
-                    setData(mappingQuestionFunction(data));
-                }
-            };
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //                 setData(mappingQuestionFunction(data));
+    //             }
+    //         };
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
-    React.useEffect(() => {
-        if (file) {
-            _readExcel(file);
-        }
-        return () => {};
-    }, [file]);
+    // React.useEffect(() => {
+    //     if (file) {
+    //         _readExcel(file);
+    //     }
+    //     return () => {};
+    // }, [file]);
 
-    const _handleOnSubmit = async (formData: ImportFormDataDTO) => {
-        const promiseList: Array<Promise<any>> = [];
-        for (let i = 0; i < formData.check.length; i++) {
-            const currentIndex = i;
-            const isCheck = formData.check[i];
-            const currentData = data[i];
+    // const _handleOnSubmit = async (formData: ImportFormDataDTO) => {
+    //     const promiseList: Array<Promise<any>> = [];
+    //     for (let i = 0; i < formData.check.length; i++) {
+    //         const currentIndex = i;
+    //         const isCheck = formData.check[i];
+    //         const currentData = data[i];
 
-            if (isCheck) {
-                let answers: QuestionAnswer[] = [
-                    { detail: data[i][`answer1`], isCorrect: currentData.correctAnswer === 1 },
-                    { detail: data[i][`answer2`], isCorrect: currentData.correctAnswer === 2 },
-                    { detail: data[i][`answer3`], isCorrect: currentData.correctAnswer === 3 },
-                    { detail: data[i][`answer4`], isCorrect: currentData.correctAnswer === 4 },
-                ];
-                const isActive = data[i].status.toLowerCase() === 'active' ? true : false;
+    //         if (isCheck) {
+    //             let answers: QuestionAnswer[] = [
+    //                 { detail: data[i][`answer1`], isCorrect: currentData.correctAnswer === 1 },
+    //                 { detail: data[i][`answer2`], isCorrect: currentData.correctAnswer === 2 },
+    //                 { detail: data[i][`answer3`], isCorrect: currentData.correctAnswer === 3 },
+    //                 { detail: data[i][`answer4`], isCorrect: currentData.correctAnswer === 4 },
+    //             ];
+    //             const isActive = data[i].status.toLowerCase() === 'active' ? true : false;
 
-                const selectedLevel = levels.filter((level) => level.description.toLocaleLowerCase() === data[i].level.toLocaleLowerCase());
-                let levelId = '';
-                if (selectedLevel && selectedLevel.length > 0) {
-                    levelId = selectedLevel[0].id;
-                }
+    //             const selectedLevel = levels.filter((level) => level.description.toLocaleLowerCase() === data[i].level.toLocaleLowerCase());
+    //             let levelId = '';
+    //             if (selectedLevel && selectedLevel.length > 0) {
+    //                 levelId = selectedLevel[0].id;
+    //             }
 
-                promiseList.push(
-                    new Promise((resolve, reject) => {
-                        addQuestion({
-                            answers,
-                            audioLink: currentData.audioUrl,
-                            content: currentData.content,
-                            dimensions: currentData.dimension,
-                            explanation: currentData.explanation,
-                            imageUrl: currentData.imageUrl,
-                            isActive,
-                            isMultipleChoice: false,
-                            lesson: currentData.lesson,
-                            questionLevel: levelId,
-                            videoLink: currentData.videoUrl,
-                        })
-                            .then((res) => {
-                                resolve('');
-                            })
-                            .catch((err) => {
-                                reject(err);
-                            });
-                    })
-                );
-            }
-        }
-        Promise.allSettled(promiseList).then((res) => {
-            for (let i = 0; i < res.length; i++) {
-                const singleRes = res[i];
-                switch (singleRes.status) {
-                    case 'fulfilled':
-                        methods.setValue(`check.${i}`, false);
-                        toast.success(`Success add question with index ${i + 1}`);
-                        break;
-                    case 'rejected':
-                        toast.error(`Failed to add question with index ${i + 1}, please make sure all information are correct!`);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-    };
+    //             promiseList.push(
+    //                 new Promise((resolve, reject) => {
+    //                     addQuestion({
+    //                         answers,
+    //                         audioLink: currentData.audioUrl,
+    //                         content: currentData.content,
+    //                         dimensions: currentData.dimension,
+    //                         explanation: currentData.explanation,
+    //                         imageUrl: currentData.imageUrl,
+    //                         isActive,
+    //                         isMultipleChoice: false,
+    //                         lesson: currentData.lesson,
+    //                         questionLevel: levelId,
+    //                         videoLink: currentData.videoUrl,
+    //                     })
+    //                         .then((res) => {
+    //                             resolve('');
+    //                         })
+    //                         .catch((err) => {
+    //                             reject(err);
+    //                         });
+    //                 })
+    //             );
+    //         }
+    //     }
+    //     Promise.allSettled(promiseList).then((res) => {
+    //         for (let i = 0; i < res.length; i++) {
+    //             const singleRes = res[i];
+    //             switch (singleRes.status) {
+    //                 case 'fulfilled':
+    //                     methods.setValue(`check.${i}`, false);
+    //                     toast.success(`Success add question with index ${i + 1}`);
+    //                     break;
+    //                 case 'rejected':
+    //                     toast.error(`Failed to add question with index ${i + 1}, please make sure all information are correct!`);
+    //                     break;
+    //                 default:
+    //                     break;
+    //             }
+    //         }
+    //     });
+    // };
 
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
-            <DashBoardLayout>
+            {/* <DashBoardLayout>
                 <FormWrapper methods={methods}>
                     <form className="space-y-8 divide-y divide-gray-200" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
@@ -332,9 +332,9 @@ const AddQuestionPage: React.FunctionComponent<AddQuestionPageProps> = () => {
                         </div>
                     </form>
                 </FormWrapper>
-            </DashBoardLayout>
+            </DashBoardLayout> */}
         </RouterProtectionWrapper>
     );
 };
 
-export default AddQuestionPage;
+export default ImportQuestionPage;
