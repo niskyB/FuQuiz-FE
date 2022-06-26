@@ -22,58 +22,58 @@ const quizAnswerStatus = [
 ];
 
 export const QuizPractice: React.FunctionComponent<QuizPracticeProps> = ({ id }) => {
-    const [questionList, setQuestionList] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
-    const [questionFilter, setQuestionFilters] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
-    const [currentIndex, setCurrentIndex] = React.useState<number>(0);
-    const [answerStatus, setAnswerStatus] = React.useState<string>('allQuestions');
-    const [hint, setHint] = React.useState<boolean>(false);
+    // const [questionList, setQuestionList] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
+    // const [questionFilter, setQuestionFilters] = React.useState<QuizQuestionDTO[]>(QUESTIONS_LIST);
+    // const [currentIndex, setCurrentIndex] = React.useState<number>(0);
+    // const [answerStatus, setAnswerStatus] = React.useState<string>('allQuestions');
+    // const [hint, setHint] = React.useState<boolean>(false);
 
-    const [popUp, setPopUp] = React.useState<boolean>();
+    // const [popUp, setPopUp] = React.useState<boolean>();
 
-    const totalDone = React.useMemo(
-        () =>
-            questionList.reduce((prev, current) => {
-                if (current.userAnswer) return prev + 1;
-                else return prev;
-            }, 0),
-        [questionList]
-    );
+    // const totalDone = React.useMemo(
+    //     () =>
+    //         questionList.reduce((prev, current) => {
+    //             if (current.userAnswer) return prev + 1;
+    //             else return prev;
+    //         }, 0),
+    //     [questionList]
+    // );
 
-    React.useEffect(() => {}, [answerStatus]);
+    // React.useEffect(() => {}, [answerStatus]);
 
-    const _onChangeQuestion = (type: 'previous' | 'next') => {
-        switch (type) {
-            case 'next':
-                if (currentIndex < questionList.length - 1) setCurrentIndex((prev) => prev + 1);
-                break;
-            case 'previous':
-                if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
-                break;
-        }
-    };
+    // const _onChangeQuestion = (type: 'previous' | 'next') => {
+    //     switch (type) {
+    //         case 'next':
+    //             if (currentIndex < questionList.length - 1) setCurrentIndex((prev) => prev + 1);
+    //             break;
+    //         case 'previous':
+    //             if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
+    //             break;
+    //     }
+    // };
 
-    const onSetQuestionAnswer = (updateQuestionId: string, updateAnswerId: string | null) => {
-        findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
-            const newQuestionList = [...questionList];
-            newQuestionList[i].userAnswer = updateAnswerId;
-            setQuestionList(newQuestionList);
-        });
-    };
+    // const onSetQuestionAnswer = (updateQuestionId: string, updateAnswerId: string | null) => {
+    //     findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
+    //         const newQuestionList = [...questionList];
+    //         newQuestionList[i].userAnswer = updateAnswerId;
+    //         setQuestionList(newQuestionList);
+    //     });
+    // };
 
-    const onToggleMarkQuestion = (updateQuestionId: string) => {
-        findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
-            const newQuestionList = [...questionList];
-            newQuestionList[i].isMarked = !newQuestionList[i].isMarked;
-            setQuestionList(newQuestionList);
-        });
-    };
+    // const onToggleMarkQuestion = (updateQuestionId: string) => {
+    //     findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
+    //         const newQuestionList = [...questionList];
+    //         newQuestionList[i].isMarked = !newQuestionList[i].isMarked;
+    //         setQuestionList(newQuestionList);
+    //     });
+    // };
 
     const methods = useForm();
     const _handleOnSubmit = () => {};
 
     return (
         <div className="flex space-x-10">
-            {popUp ? (
+            {/* {popUp ? (
                 <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-gray-900/50">
                     <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8 intro-y">
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -194,7 +194,7 @@ export const QuizPractice: React.FunctionComponent<QuizPracticeProps> = ({ id })
                         Score Exam now
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
