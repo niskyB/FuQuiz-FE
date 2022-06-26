@@ -20,6 +20,7 @@ const defaultValues: UserCoursesProps = {
     name: '',
     pageSize: 12,
     order: Order.DESC,
+    status: '',
 };
 export const CourseFilter: React.FunctionComponent<CourseFilterProps> = ({ registrationOptions }) => {
     const router = useRouter();

@@ -15,60 +15,7 @@ interface PracticeListProps {}
 
 const PracticeList: React.FC<PracticeListProps> = () => {
     const [subjects, setSubjects] = React.useState<SelectSubject[]>([]);
-    const [quizzes, setQuizzes] = React.useState<Quiz[]>([
-        // {
-        //     id: '1',
-        //     name: 'Quiz Practice 1',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '2',
-        //     name: 'Quiz Practice 2',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '3',
-        //     name: 'Quiz Practice 3',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-        // {
-        //     id: '4',
-        //     name: 'Quiz Practice 4',
-        //     correctAnswer: 50,
-        //     createdAt: '05/25/2022',
-        //     description: 'Something is matter',
-        //     duration: 120,
-        //     level: { id: '1', name: 'Hard' },
-        //     quizLevel: { id: '1', name: 'Practice' },
-        //     passRate: 50,
-        //     questions: Array<Question>(90),
-        //     subject: { id: '1', name: 'Javascript basic' },
-        // },
-    ]);
+    const [quizzes, setQuizzes] = React.useState<Quiz[]>([]);
     const [count, setCount] = React.useState<number>(4);
 
     const router = useRouter();
@@ -116,7 +63,7 @@ const PracticeList: React.FC<PracticeListProps> = () => {
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['Practice name', 'Date taken', 'Type & Level', 'Question Info', 'Correct Answer', '']} />
+                                <TableHead fields={['Practice name', 'Date taken', 'Type & Level', 'Practice Info', 'Correct Answer', '']} />
 
                                 <TableBody>
                                     {Boolean(count && quizzes) &&
