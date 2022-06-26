@@ -10,6 +10,12 @@ import { QuizAnswerStatus } from '../../../../core/models/quiz';
 import { ClientQuestionInQuiz } from '../../../../core/models/quizResult';
 import { submitQuiz } from './action';
 import { toast } from 'react-toastify';
+import { constant } from '../../../../core/constant';
+import Countdown from 'react-countdown';
+import { date } from 'joi';
+import { useRouter } from 'next/router';
+import Router from 'next/dist/server/router';
+import useIsFirstRender from '../../../../core/common/hooks/useIsFirstRender';
 
 interface DoQuizProps {
     id: string;
@@ -23,10 +29,13 @@ const quizAnswerStatus = [
 ];
 
 export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
+    const router = useRouter();
+
     const [questionList, setQuestionList] = React.useState<ClientQuestionInQuiz[]>([]);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
     const [answerStatus, setAnswerStatus] = React.useState<QuizAnswerStatus>(QuizAnswerStatus.ALL_QUESTION);
 
+    const isInitRender = useIsFirstRender();
     const { quiz } = useGetQuizResultById(id);
     const [popUp, setPopUp] = React.useState<boolean>();
 
@@ -55,12 +64,25 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
 
     React.useEffect(() => {
         if (quiz) {
-            setQuestionList(quiz.attendedQuestions.map((item) => ({ ...item, userAnswer: [] })));
+            const currentTestId = localStorage.getItem(constant.PROGRESS_TEST_ID);
+            const currentProgress = JSON.parse(localStorage.getItem(constant.PROGRESS_TEST) || '[]') as ClientQuestionInQuiz[];
+            if (currentTestId === quiz.id) {
+                if (currentProgress.length !== 0) setQuestionList(currentProgress);
+            } else {
+                localStorage.setItem(constant.PROGRESS_TEST_ID, quiz.id);
+                setQuestionList(quiz.attendedQuestions.map((item) => ({ ...item, userAnswer: [] })));
+            }
         }
         return () => {};
     }, [quiz]);
 
-    React.useEffect(() => {}, [answerStatus]);
+    React.useEffect(() => {
+        if (!isInitRender) {
+            console.log('Update');
+            localStorage.setItem(constant.PROGRESS_TEST, JSON.stringify(questionList));
+        }
+        return () => {};
+    }, [questionList]);
 
     const _onChangeQuestion = (type: 'previous' | 'next') => {
         switch (type) {
@@ -112,6 +134,8 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         const data = convertQuestionListToQuestionAnswerToSend(questionList);
         const res = await submitQuiz(data);
         if (res) {
+            localStorage.setItem(constant.PROGRESS_TEST, '[]');
+            localStorage.setItem(constant.PROGRESS_TEST_ID, '');
             toast.success('Submit success!');
         }
     };
@@ -179,7 +203,35 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                             <div className="w-6 h-6">
                                 <ClockIcon />
                             </div>
-                            <time className="font-semibold tracking-wider">00:10:48</time>
+                            <time className="font-semibold tracking-wider">
+                                {quiz && (
+                                    <Countdown
+                                        date={new Date(quiz.createdAt).getTime() + quiz.attendedQuestions[0].questionInQuiz.quiz.duration * 60 * 1000}
+                                        renderer={({ hours, minutes, seconds, completed }) => {
+                                            if (completed) {
+                                                _handleOnSubmit();
+                                                return <>Time out</>;
+                                            }
+
+                                            let hourString, minuteString, secondString;
+                                            if (hours < 10) {
+                                                hourString = `0${hours}`;
+                                            }
+                                            if (minutes < 10) {
+                                                minuteString = `0${minutes}`;
+                                            }
+                                            if (seconds < 10) {
+                                                secondString = `0${seconds}`;
+                                            }
+                                            return (
+                                                <>
+                                                    {hourString || hours}:{minuteString || minutes}:{secondString || seconds}
+                                                </>
+                                            );
+                                        }}
+                                    />
+                                )}
+                            </time>
                         </div>
                     </div>
                     <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">
