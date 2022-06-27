@@ -34,7 +34,7 @@ export const useGetRegistrationList = ({
             status: status || '',
             validFrom: validFrom || '',
             validTo: validTo || '',
-            currentPage: currentPage || 0,
+            currentPage: currentPage || 1,
             pageSize: pageSize || 12,
             order: order || Order.DESC,
             orderBy: orderBy || 'validFrom',

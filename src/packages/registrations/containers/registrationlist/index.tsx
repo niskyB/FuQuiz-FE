@@ -125,7 +125,9 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                         <div className="text-gray-900">{registration.customer.user.email}</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{registration.registrationTime}</div>
+                                                        <div className="text-gray-900">
+                                                            {new Date(registration.registrationTime).toLocaleDateString()}
+                                                        </div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.pricePackage.subject?.name}</div>
