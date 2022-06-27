@@ -1,8 +1,10 @@
 import { ChangeEvent } from 'react';
 import * as React from 'react';
-import { BookmarkIcon, CheckIcon, XIcon } from '@heroicons/react/outline';
+import { BookmarkIcon, CheckIcon, LightBulbIcon, XIcon } from '@heroicons/react/outline';
 import { ClientQuestionInQuiz } from '../../../core/models/quizResult';
 import { DoQuizType } from '../containers/doQuiz/interface';
+import { store } from '../../../core/store';
+import { UIActions } from '../../../core/store/ui';
 
 interface QuizQuestionProps {
     data: ClientQuestionInQuiz;
@@ -38,18 +40,33 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
     const _onUpdateQuestionMark = () => {
         onToggleMarkQuestion(data.id);
     };
+
     if (isShow)
         return (
             <div className="px-5 py-5 space-y-2 text-base bg-white rounded-md">
                 <div className="flex justify-between">
                     <h1 className="font-bold">Question {index + 1}</h1>
-                    <div
-                        onClick={() => {
-                            if (mode === DoQuizType.TEST) _onUpdateQuestionMark();
-                        }}
-                        className={`w-8 h-8 cursor-pointer ${data.isMarked ? 'text-orange-500 ' : 'text-gray-500'}`}
-                    >
-                        <BookmarkIcon />
+                    <div className="flex space-x-5">
+                        {mode === DoQuizType.REVIEW && (
+                            <div
+                                onClick={() => {
+                                    store.dispatch(
+                                        UIActions.setPopUp({ title: 'Explanation', description: data.questionInQuiz.question.explanation })
+                                    );
+                                }}
+                                className={`w-8 h-8 cursor-pointer text-gray-500 }`}
+                            >
+                                <LightBulbIcon />
+                            </div>
+                        )}
+                        <div
+                            onClick={() => {
+                                if (mode === DoQuizType.TEST) _onUpdateQuestionMark();
+                            }}
+                            className={`w-8 h-8 cursor-pointer ${data.isMarked ? 'text-orange-500 ' : 'text-gray-500'}`}
+                        >
+                            <BookmarkIcon />
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-col space-y-1">
