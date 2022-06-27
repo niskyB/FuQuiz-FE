@@ -12,6 +12,7 @@ export interface QuestionQuizResult {
     id: string;
     isMarked: boolean;
     questionInQuiz: QuestionInQuiz;
+    userAnswers: string[];
 }
 
 export interface QuizInQuestionInQuiz extends Pick<Quiz, 'id' | 'duration' | 'isPublic' | 'name' | 'numberOfQuestion' | 'passRate'> {
@@ -24,6 +25,6 @@ export interface QuestionInQuiz {
     quiz: QuizInQuestionInQuiz;
 }
 
-export interface ClientQuestionInQuiz extends QuestionQuizResult {
-    userAnswer: string[];
+export interface ClientQuestionInQuiz extends Omit<QuestionQuizResult, 'userAnswers'> {
+    userAnswers: string[];
 }

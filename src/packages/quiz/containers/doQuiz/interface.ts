@@ -14,3 +14,8 @@ export interface SubmitAnswerQuizDTO {
 export interface SubmitQuizDTO {
     data: SubmitAnswerQuizDTO[];
 }
+
+export enum DoQuizType {
+    TEST = 'test',
+    REVIEW = 'REVIEW',
+}
