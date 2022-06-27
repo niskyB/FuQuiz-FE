@@ -119,7 +119,7 @@ export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSiz
                                                     <div className="text-gray-900">{Math.round(item.rate * item.attendedQuestions.length)}%</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${routes.practiceDetailsUrl}${item.id}`} passHref>
+                                                    <Link href={`${routes.reviewQuizResultUrl}/${item.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
                                                     </Link>
                                                 </TableDescription>

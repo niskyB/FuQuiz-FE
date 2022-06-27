@@ -3,6 +3,7 @@ import { ResetForm } from '../../../core/common/HOC/resetForm';
 import { GlobalLoading } from '../../../core/components/loading/globalLoading';
 import { Navigation } from '../container/navigation';
 import { RegistrationForm } from '../container/registrationForm';
+import PopUp from './popUp';
 
 interface StoreLayoutProps {}
 
@@ -17,6 +18,7 @@ export const StoreLayout: React.FC<StoreLayoutProps> = ({ children }) => {
                     </div>
                     <GlobalLoading />
                     <RegistrationForm />
+                    <PopUp />
                 </div>
             </ResetForm>
         </>
