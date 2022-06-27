@@ -3,13 +3,15 @@ import * as React from 'react';
 import QuizAnswer from '../quizAnswer';
 import { convertQuestionListToQuestionAnswerToSend, findQuestionAndDoAction } from '../../../../core/util/question';
 import { ClockIcon } from '@heroicons/react/outline';
-import { FormWrapper } from '../../../../core/components/form';
-import { useForm } from 'react-hook-form';
 import { useGetQuizResultById } from '../../common/hooks/useGetQuizResultById';
 import { QuizAnswerStatus } from '../../../../core/models/quiz';
 import { ClientQuestionInQuiz } from '../../../../core/models/quizResult';
 import { submitQuiz } from './action';
 import { toast } from 'react-toastify';
+import { constant } from '../../../../core/constant';
+import Countdown from 'react-countdown';
+import { useRouter } from 'next/router';
+import useIsFirstRender from '../../../../core/common/hooks/useIsFirstRender';
 
 interface DoQuizProps {
     id: string;
@@ -23,27 +25,37 @@ const quizAnswerStatus = [
 ];
 
 export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
+    const router = useRouter();
+
+    const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
     const [questionList, setQuestionList] = React.useState<ClientQuestionInQuiz[]>([]);
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
     const [answerStatus, setAnswerStatus] = React.useState<QuizAnswerStatus>(QuizAnswerStatus.ALL_QUESTION);
 
+    const isInitRender = useIsFirstRender();
     const { quiz } = useGetQuizResultById(id);
     const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(
         () =>
             questionList.reduce((prev, current) => {
-                if (current.userAnswer) return prev + 1;
+                if (current.userAnswer.length > 0) return prev + 1;
                 else return prev;
             }, 0),
         [questionList]
     );
 
+    const isDone = React.useMemo(() => {
+        if (totalDone >= questionList.length) {
+            return true;
+        }
+        return false;
+    }, [totalDone, questionList]);
+
     const filteredQuestion = React.useMemo<string[]>(() => {
         switch (answerStatus) {
             case QuizAnswerStatus.ALL_QUESTION:
                 return questionList.filter((item) => item).map((item) => item.id);
-
             case QuizAnswerStatus.ANSWERED:
                 return questionList.filter((item) => item.userAnswer.length > 0).map((item) => item.id);
             case QuizAnswerStatus.MARKED:
@@ -55,12 +67,24 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
 
     React.useEffect(() => {
         if (quiz) {
-            setQuestionList(quiz.attendedQuestions.map((item) => ({ ...item, userAnswer: [] })));
+            const currentTestId = localStorage.getItem(constant.PROGRESS_TEST_ID);
+            const currentProgress = JSON.parse(localStorage.getItem(constant.PROGRESS_TEST) || '[]') as ClientQuestionInQuiz[];
+            if (currentTestId === quiz.id) {
+                if (currentProgress.length !== 0) setQuestionList(currentProgress);
+            } else {
+                localStorage.setItem(constant.PROGRESS_TEST_ID, quiz.id);
+                setQuestionList(quiz.attendedQuestions.map((item) => ({ ...item, userAnswer: [] })));
+            }
         }
         return () => {};
     }, [quiz]);
 
-    React.useEffect(() => {}, [answerStatus]);
+    React.useEffect(() => {
+        if (!isInitRender) {
+            localStorage.setItem(constant.PROGRESS_TEST, JSON.stringify(questionList));
+        }
+        return () => {};
+    }, [questionList]);
 
     const _onChangeQuestion = (type: 'previous' | 'next') => {
         switch (type) {
@@ -107,14 +131,18 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
         });
     };
 
-    const methods = useForm();
     const _handleOnSubmit = async () => {
         const data = convertQuestionListToQuestionAnswerToSend(questionList);
         const res = await submitQuiz(data);
         if (res) {
+            setIsSubmitted(true);
+            localStorage.setItem(constant.PROGRESS_TEST, '[]');
+            localStorage.setItem(constant.PROGRESS_TEST_ID, '');
             toast.success('Submit success!');
         }
     };
+
+    const _handleOnExit = async () => {};
 
     return (
         <>
@@ -123,32 +151,37 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                     <div className="fixed z-20 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                             <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-                                <FormWrapper methods={methods}>
-                                    <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="z-50 space-y-5">
-                                        <div className="flex flex-col space-y-4">
-                                            <p className="text-lg font-semibold">Exit Exam?</p>
-                                            <p className="">
-                                                You have not answer all questions. By clicking on the [Submit now] button below, you will completed
-                                                your current exam and be return to the dashboard
+                                <div className="z-50 space-y-5">
+                                    <div className="flex flex-col space-y-4">
+                                        <p className="text-lg font-semibold">Score Exam?</p>
+                                        {totalDone !== 0 && !isDone && (
+                                            <p className="text-red-500">
+                                                {totalDone} of {questionList.length} Questions Answered
                                             </p>
-                                            <div className="flex space-x-2">
-                                                <button
-                                                    type="submit"
-                                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                >
-                                                    Submit now
-                                                </button>
-                                                <button
-                                                    onClick={() => setPopUp(false)}
-                                                    type="submit"
-                                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                >
-                                                    Cancel
-                                                </button>
-                                            </div>
+                                        )}
+                                        <p className="">
+                                            {totalDone === 0
+                                                ? 'You have not answer any questions. By clicking on the [Exit exam] button below, you will complete your current exam and be returned to the dashboard!'
+                                                : 'By clicking on the [Score Exam] button below, you will complete your current exam and receive your score. You will not be able to change any answers after this point.'}
+                                        </p>
+                                        <div className="flex space-x-2">
+                                            <button
+                                                onClick={() => setPopUp(false)}
+                                                type="submit"
+                                                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <button
+                                                onClick={_handleOnSubmit}
+                                                type="submit"
+                                                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            >
+                                                {totalDone === 0 ? 'Exit Exam' : 'Score Exam'}
+                                            </button>
                                         </div>
-                                    </form>
-                                </FormWrapper>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -179,7 +212,36 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                             <div className="w-6 h-6">
                                 <ClockIcon />
                             </div>
-                            <time className="font-semibold tracking-wider">00:10:48</time>
+                            <time className="font-semibold tracking-wider">
+                                {quiz && (
+                                    <Countdown
+                                        date={new Date(quiz.createdAt).getTime() + quiz.attendedQuestions[0].questionInQuiz.quiz.duration * 60 * 1000}
+                                        renderer={({ hours, minutes, seconds, completed }) => {
+                                            if (completed && !isSubmitted) {
+                                                _handleOnSubmit();
+
+                                                return <>Time out</>;
+                                            }
+
+                                            let hourString, minuteString, secondString;
+                                            if (hours < 10) {
+                                                hourString = `0${hours}`;
+                                            }
+                                            if (minutes < 10) {
+                                                minuteString = `0${minutes}`;
+                                            }
+                                            if (seconds < 10) {
+                                                secondString = `0${seconds}`;
+                                            }
+                                            return (
+                                                <>
+                                                    {hourString || hours}:{minuteString || minutes}:{secondString || seconds}
+                                                </>
+                                            );
+                                        }}
+                                    />
+                                )}
+                            </time>
                         </div>
                     </div>
                     <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">

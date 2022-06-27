@@ -24,37 +24,37 @@ export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ i
     const [hint, setHint] = React.useState<boolean>(false);
     const [answerStatus, setAnswerStatus] = React.useState<string>('allQuestions');
 
-    const totalDone = React.useMemo(
-        () =>
-            questionList.reduce((prev, current) => {
-                if (current.userAnswer) return prev + 1;
-                else return prev;
-            }, 0),
-        [questionList]
-    );
+    // const totalDone = React.useMemo(
+    //     () =>
+    //         questionList.reduce((prev, current) => {
+    //             if (current.userAnswer) return prev + 1;
+    //             else return prev;
+    //         }, 0),
+    //     [questionList]
+    // );
 
-    const onToggleMarkQuestion = (updateQuestionId: string) => {
-        findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
-            const newQuestionList = [...questionList];
-            newQuestionList[i].isMarked = !newQuestionList[i].isMarked;
-            setQuestionList(newQuestionList);
-        });
-    };
+    // const onToggleMarkQuestion = (updateQuestionId: string) => {
+    //     findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
+    //         const newQuestionList = [...questionList];
+    //         newQuestionList[i].isMarked = !newQuestionList[i].isMarked;
+    //         setQuestionList(newQuestionList);
+    //     });
+    // };
 
-    const _onChangeQuestion = (type: 'previous' | 'next') => {
-        switch (type) {
-            case 'next':
-                if (currentIndex < questionList.length - 1) setCurrentIndex((prev) => prev + 1);
-                break;
-            case 'previous':
-                if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
-                break;
-        }
-    };
+    // const _onChangeQuestion = (type: 'previous' | 'next') => {
+    //     switch (type) {
+    //         case 'next':
+    //             if (currentIndex < questionList.length - 1) setCurrentIndex((prev) => prev + 1);
+    //             break;
+    //         case 'previous':
+    //             if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
+    //             break;
+    //     }
+    // };
 
     return (
         <div className="flex space-x-10">
-            <div className="flex flex-col flex-1">
+            {/* <div className="flex flex-col flex-1">
                 {questionList.map((item, index) => (
                     <div key={item.id}>
                         <QuizQuestionReadonly
@@ -123,7 +123,7 @@ export const ReviewPractice: React.FunctionComponent<ReviewPracticeProps> = ({ i
                         Next
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
