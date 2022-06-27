@@ -12,9 +12,12 @@ import { constant } from '../../../../core/constant';
 import Countdown from 'react-countdown';
 import { useRouter } from 'next/router';
 import useIsFirstRender from '../../../../core/common/hooks/useIsFirstRender';
+import { DoQuizType } from './interface';
+import { routes } from '../../../../core/routes';
 
 interface DoQuizProps {
     id: string;
+    mode: DoQuizType;
 }
 
 const quizAnswerStatus = [
@@ -24,7 +27,7 @@ const quizAnswerStatus = [
     { label: 'All Questions', value: QuizAnswerStatus.ALL_QUESTION },
 ];
 
-export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
+export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
     const router = useRouter();
 
     const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
@@ -34,12 +37,13 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
 
     const isInitRender = useIsFirstRender();
     const { quiz } = useGetQuizResultById(id);
+
     const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(
         () =>
             questionList.reduce((prev, current) => {
-                if (current.userAnswer.length > 0) return prev + 1;
+                if (current.userAnswers.length > 0) return prev + 1;
                 else return prev;
             }, 0),
         [questionList]
@@ -57,30 +61,38 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
             case QuizAnswerStatus.ALL_QUESTION:
                 return questionList.filter((item) => item).map((item) => item.id);
             case QuizAnswerStatus.ANSWERED:
-                return questionList.filter((item) => item.userAnswer.length > 0).map((item) => item.id);
+                return questionList.filter((item) => item.userAnswers.length > 0).map((item) => item.id);
             case QuizAnswerStatus.MARKED:
                 return questionList.filter((item) => item.isMarked === true).map((item) => item.id);
             case QuizAnswerStatus.UNANSWERED:
-                return questionList.filter((item) => item.userAnswer.length === 0).map((item) => item.id);
+                return questionList.filter((item) => item.userAnswers.length === 0).map((item) => item.id);
         }
     }, [answerStatus, questionList]);
 
     React.useEffect(() => {
         if (quiz) {
-            const currentTestId = localStorage.getItem(constant.PROGRESS_TEST_ID);
-            const currentProgress = JSON.parse(localStorage.getItem(constant.PROGRESS_TEST) || '[]') as ClientQuestionInQuiz[];
-            if (currentTestId === quiz.id) {
-                if (currentProgress.length !== 0) setQuestionList(currentProgress);
-            } else {
-                localStorage.setItem(constant.PROGRESS_TEST_ID, quiz.id);
-                setQuestionList(quiz.attendedQuestions.map((item) => ({ ...item, userAnswer: [] })));
+            switch (mode) {
+                case DoQuizType.TEST:
+                    const currentTestId = localStorage.getItem(constant.PROGRESS_TEST_ID);
+                    const currentProgress = JSON.parse(localStorage.getItem(constant.PROGRESS_TEST) || '[]') as ClientQuestionInQuiz[];
+                    if (currentTestId === quiz.id) {
+                        if (currentProgress.length !== 0) setQuestionList(currentProgress);
+                    } else {
+                        localStorage.setItem(constant.PROGRESS_TEST_ID, quiz.id);
+                        setQuestionList(quiz.attendedQuestions.map((item) => ({ ...item })));
+                    }
+
+                    break;
+                case DoQuizType.REVIEW:
+                    setQuestionList(quiz.attendedQuestions.map((item) => ({ ...item })));
+                    break;
             }
         }
         return () => {};
     }, [quiz]);
 
     React.useEffect(() => {
-        if (!isInitRender) {
+        if (!isInitRender && mode === DoQuizType.TEST) {
             localStorage.setItem(constant.PROGRESS_TEST, JSON.stringify(questionList));
         }
         return () => {};
@@ -100,24 +112,24 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     const _onCheckQuestionAnswer = (updateQuestionId: string, updateAnswerId: string) => {
         findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
             const newQuestionList = [...questionList];
-            newQuestionList[i].userAnswer = [...newQuestionList[i].userAnswer, updateAnswerId];
+            newQuestionList[i].userAnswers = [...newQuestionList[i].userAnswers, updateAnswerId];
             setQuestionList(newQuestionList);
         });
     };
     const _onUnCheckQuestionAnswer = (updateQuestionId: string, removeAnswerId: string) => {
         findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
             const newQuestionList = [...questionList];
-            const index = newQuestionList[i].userAnswer.indexOf(removeAnswerId);
-            newQuestionList[i].userAnswer.splice(index, 1);
+            const index = newQuestionList[i].userAnswers.indexOf(removeAnswerId);
+            newQuestionList[i].userAnswers.splice(index, 1);
 
             setQuestionList(newQuestionList);
         });
     };
 
-    const _onResetCheckQuestion = (updateQuestionId: string, removeAnswerId: string) => {
+    const _onResetCheckQuestion = (updateQuestionId: string) => {
         findQuestionAndDoAction(questionList, updateQuestionId, (i) => {
             const newQuestionList = [...questionList];
-            newQuestionList[i].userAnswer = [];
+            newQuestionList[i].userAnswers = [];
 
             setQuestionList(newQuestionList);
         });
@@ -132,18 +144,21 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
     };
 
     const _handleOnSubmit = async () => {
-        const data = convertQuestionListToQuestionAnswerToSend(questionList);
-        const res = await submitQuiz(data);
-        if (res) {
-            setIsSubmitted(true);
-            localStorage.setItem(constant.PROGRESS_TEST, '[]');
-            localStorage.setItem(constant.PROGRESS_TEST_ID, '');
-            toast.success('Submit success!');
+        if (mode === DoQuizType.TEST) {
+            const data = convertQuestionListToQuestionAnswerToSend(questionList);
+            const res = await submitQuiz(data);
+            if (res) {
+                setIsSubmitted(true);
+                localStorage.setItem(constant.PROGRESS_TEST, '[]');
+                localStorage.setItem(constant.PROGRESS_TEST_ID, '');
+
+                router.push(`${routes.quizUrl}/review/${id}`);
+                toast.success('Submit success!');
+            }
         }
     };
 
     const _handleOnExit = async () => {};
-
     return (
         <>
             {popUp && (
@@ -200,6 +215,7 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                             data={item}
                             index={index}
                             isShow={currentIndex === index}
+                            mode={mode}
                         />
                     ))}
                 </div>
@@ -208,41 +224,46 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                         <p className="font-semibold">
                             Total done: {totalDone}/{questionList.length}
                         </p>
-                        <div className="flex items-center space-x-1">
-                            <div className="w-6 h-6">
-                                <ClockIcon />
+                        {mode === DoQuizType.TEST && (
+                            <div className="flex items-center space-x-1">
+                                <div className="w-6 h-6">
+                                    <ClockIcon />
+                                </div>
+                                <time className="font-semibold tracking-wider">
+                                    {quiz && (
+                                        <Countdown
+                                            date={
+                                                new Date(quiz.createdAt).getTime() +
+                                                quiz.attendedQuestions[0].questionInQuiz.quiz.duration * 60 * 1000
+                                            }
+                                            renderer={({ hours, minutes, seconds, completed }) => {
+                                                if (completed && !isSubmitted) {
+                                                    _handleOnSubmit();
+
+                                                    return <>Time out</>;
+                                                }
+
+                                                let hourString, minuteString, secondString;
+                                                if (hours < 10) {
+                                                    hourString = `0${hours}`;
+                                                }
+                                                if (minutes < 10) {
+                                                    minuteString = `0${minutes}`;
+                                                }
+                                                if (seconds < 10) {
+                                                    secondString = `0${seconds}`;
+                                                }
+                                                return (
+                                                    <>
+                                                        {hourString || hours}:{minuteString || minutes}:{secondString || seconds}
+                                                    </>
+                                                );
+                                            }}
+                                        />
+                                    )}
+                                </time>
                             </div>
-                            <time className="font-semibold tracking-wider">
-                                {quiz && (
-                                    <Countdown
-                                        date={new Date(quiz.createdAt).getTime() + quiz.attendedQuestions[0].questionInQuiz.quiz.duration * 60 * 1000}
-                                        renderer={({ hours, minutes, seconds, completed }) => {
-                                            if (completed && !isSubmitted) {
-                                                _handleOnSubmit();
-
-                                                return <>Time out</>;
-                                            }
-
-                                            let hourString, minuteString, secondString;
-                                            if (hours < 10) {
-                                                hourString = `0${hours}`;
-                                            }
-                                            if (minutes < 10) {
-                                                minuteString = `0${minutes}`;
-                                            }
-                                            if (seconds < 10) {
-                                                secondString = `0${seconds}`;
-                                            }
-                                            return (
-                                                <>
-                                                    {hourString || hours}:{minuteString || minutes}:{secondString || seconds}
-                                                </>
-                                            );
-                                        }}
-                                    />
-                                )}
-                            </time>
-                        </div>
+                        )}
                     </div>
                     <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">
                         <h1 className="text-xl font-semibold">Quiz progress : </h1>
@@ -266,6 +287,7 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                                 data={questionList}
                                 setCurrentIndex={setCurrentIndex}
                                 currentIndex={currentIndex}
+                                mode={mode}
                             />
                         </div>
                     </div>
@@ -290,13 +312,23 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id }) => {
                         >
                             Next
                         </button>
-                        <button
-                            onClick={() => setPopUp(true)}
-                            type="button"
-                            className={`bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 inline-flex items-center px-4 py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  `}
-                        >
-                            Score Exam now
-                        </button>
+                        {mode === DoQuizType.REVIEW && (
+                            <button
+                                type="button"
+                                className={`bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 inline-flex items-center px-4 py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  `}
+                            >
+                                Go back
+                            </button>
+                        )}
+                        {mode === DoQuizType.TEST && (
+                            <button
+                                onClick={() => setPopUp(true)}
+                                type="button"
+                                className={`bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 inline-flex items-center px-4 py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  `}
+                            >
+                                Score Exam now
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

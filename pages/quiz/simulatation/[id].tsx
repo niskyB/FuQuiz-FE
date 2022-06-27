@@ -1,6 +1,7 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { DoQuiz } from '../../../src/packages/quiz';
+import { DoQuizType } from '../../../src/packages/quiz/containers/doQuiz/interface';
 import { StoreLayout } from '../../../src/packages/store';
 
 interface SimulationQuizPageProps {
@@ -10,7 +11,7 @@ interface SimulationQuizPageProps {
 const SimulationQuizPage: NextPage<SimulationQuizPageProps> = ({ id }) => {
     return (
         <StoreLayout>
-            <DoQuiz id={id} />
+            <DoQuiz id={id} mode={DoQuizType.TEST} />
         </StoreLayout>
     );
 };

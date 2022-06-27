@@ -11,5 +11,5 @@ export const findQuestionAndDoAction = (questionList: ClientQuestionInQuiz[], fi
 };
 
 export const convertQuestionListToQuestionAnswerToSend = (questionList: ClientQuestionInQuiz[]): SubmitAnswerQuizDTO[] => {
-    return questionList.map((question) => ({ answerId: question.userAnswer || '', attendedQuestionId: question.id, isMarked: question.isMarked }));
+    return questionList.map((question) => ({ answerId: question.userAnswers || '', attendedQuestionId: question.id, isMarked: question.isMarked }));
 };
