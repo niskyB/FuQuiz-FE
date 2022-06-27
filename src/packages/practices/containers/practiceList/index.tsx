@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { PracticeListPageProps } from '../../../../../pages/practices';
+import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { useUrlParams } from '../../../../core/common/hooks';
 import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
@@ -25,7 +26,6 @@ export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSiz
 
     const { quizResults, count } = useGetPracticeList(options);
     const router = useRouter();
-    console.log(count, quizResults);
 
     useUrlParams({
         defaultPath: routes.practiceListUrl,
@@ -60,7 +60,7 @@ export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSiz
                 <FormWrapper methods={methods}>
                     <div className="flex items-end justify-between">
                         <form className="flex items-end max-w-xs space-x-2" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
-                            <SelectField label="Subject" values={dataParser(subjects, 'name', 'id')} name="subject" />
+                            <SelectField label="Subject" values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]} name="subject" />
                             <button
                                 type="submit"
                                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
