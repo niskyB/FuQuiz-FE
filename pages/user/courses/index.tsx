@@ -12,7 +12,7 @@ export interface UserCoursesPageProps {
     currentPage: number;
     pageSize: number;
     category: string;
-    isFeature: boolean;
+    isFeature: boolean | '';
     order: Order;
     status: string | RegistrationStatus;
 }

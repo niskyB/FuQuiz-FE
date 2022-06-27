@@ -9,9 +9,9 @@ export const useGetRegistrationUserList = ({ currentPage, pageSize, order, categ
     const options = React.useMemo<UserCoursesProps>(
         () => ({
             category: category || '',
-            isFeature: isFeature || true,
+            isFeature: isFeature || '',
             name: name || '',
-            currentPage: currentPage || 0,
+            currentPage: currentPage || 1,
             pageSize: pageSize || 12,
             order: order || Order.DESC,
             status: status || '',

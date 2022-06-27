@@ -12,7 +12,12 @@ function PopUp() {
                         <div className="z-50 space-y-5">
                             <div className="flex flex-col space-y-4">
                                 <p className="text-lg font-semibold">{UIState.popUp.title}</p>
-                                <p>{UIState.popUp.description}</p>
+                                <div
+                                    className="mt-2 space-y-4 text-base text-gray-700"
+                                    dangerouslySetInnerHTML={{
+                                        __html: UIState.popUp.description || '',
+                                    }}
+                                />
                             </div>
                         </div>
                         <div
