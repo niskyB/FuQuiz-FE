@@ -25,11 +25,15 @@ export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ c
 
     const subjects = React.useMemo<Subject[]>(() => {
         let subjects: Subject[] = [];
-        registrationList.map((registration) => {
-            registration.pricePackage.subject && subjects.push(registration.pricePackage.subject);
-        });
+        registrationList.map((registration) => registration.pricePackage.subject);
         return subjects;
     }, [registrationList]);
+
+    const subjectIdList = React.useMemo<string[]>(() => {
+        return registrationList.map((registration) => {
+            return registration.pricePackage.subject?.id || '';
+        });
+    }, [subjects]);
 
     useUrlParams({
         defaultPath: routes.simulationListUrl,
@@ -78,38 +82,41 @@ export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ c
 
                                 <TableBody>
                                     {Boolean(count && simulationList) &&
-                                        simulationList.map((quiz) => (
-                                            <TableRow key={quiz.id}>
-                                                <TableDescription>
-                                                    <div className="font-semibold text-gray-900">#{quiz.id}</div>
-                                                    <div className="text-gray-900">{quiz.subject.name}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.name}</div>
-                                                    </div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="max-w-sm">
-                                                        <div className="text-gray-900">{quiz.level.name}</div>
-                                                    </div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{quiz.questions.length} Questions</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{quiz.duration} mins</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{quiz.passRate} %</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <Link href={`${routes.simulationReviewListUrl}/${quiz.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
-                                                    </Link>
-                                                </TableDescription>
-                                            </TableRow>
-                                        ))}
+                                        simulationList.map((quiz) => {
+                                            if (subjectIdList.includes(quiz.subject.id))
+                                                return (
+                                                    <TableRow key={quiz.id}>
+                                                        <TableDescription>
+                                                            <div className="font-semibold text-gray-900">#{quiz.id}</div>
+                                                            <div className="text-gray-900">{quiz.subject.name}</div>
+                                                        </TableDescription>
+                                                        <TableDescription>
+                                                            <div className="max-w-sm">
+                                                                <div className="text-gray-900">{quiz.name}</div>
+                                                            </div>
+                                                        </TableDescription>
+                                                        <TableDescription>
+                                                            <div className="max-w-sm">
+                                                                <div className="text-gray-900">{quiz.level.name}</div>
+                                                            </div>
+                                                        </TableDescription>
+                                                        <TableDescription>
+                                                            <div className="text-gray-900">{quiz.questions.length} Questions</div>
+                                                        </TableDescription>
+                                                        <TableDescription>
+                                                            <div className="text-gray-900">{quiz.duration} mins</div>
+                                                        </TableDescription>
+                                                        <TableDescription>
+                                                            <div className="text-gray-900">{quiz.passRate} %</div>
+                                                        </TableDescription>
+                                                        <TableDescription>
+                                                            <Link href={`${routes.simulationReviewListUrl}/${quiz.id}`} passHref>
+                                                                <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
+                                                            </Link>
+                                                        </TableDescription>
+                                                    </TableRow>
+                                                );
+                                        })}
                                 </TableBody>
                             </Table>
                         </div>

@@ -92,39 +92,41 @@ export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSiz
 
                                 <TableBody>
                                     {Boolean(count && quizResults) &&
-                                        quizResults.map((item) => (
-                                            <TableRow key={item.id}>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.name}</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="max-w-sm">
-                                                        <div className="text-gray-900">{item.createdAt}</div>
-                                                    </div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="max-w-sm">
-                                                        <div className="text-gray-900">
-                                                            {item.attendedQuestions[0].questionInQuiz.quiz.level
-                                                                ? item.attendedQuestions[0].questionInQuiz.quiz.level?.name
-                                                                : ''}
+                                        quizResults.map((item) => {
+                                            return (
+                                                <TableRow key={item.id}>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.name}</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="max-w-sm">
+                                                            <div className="text-gray-900">{item.createdAt}</div>
                                                         </div>
-                                                    </div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    {/* <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.} Correct</div> */}
-                                                    <div className="text-gray-900">{item.attendedQuestions.length} Questions</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <div className="text-gray-900">{Math.round(item.rate * item.attendedQuestions.length)}%</div>
-                                                </TableDescription>
-                                                <TableDescription>
-                                                    <Link href={`${routes.reviewQuizResultUrl}/${item.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
-                                                    </Link>
-                                                </TableDescription>
-                                            </TableRow>
-                                        ))}
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="max-w-sm">
+                                                            <div className="text-gray-900">
+                                                                {item.attendedQuestions[0].questionInQuiz.quiz.level
+                                                                    ? item.attendedQuestions[0].questionInQuiz.quiz.level?.name
+                                                                    : ''}
+                                                            </div>
+                                                        </div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        {/* <div className="text-gray-900">{item.attendedQuestions[0].questionInQuiz.quiz.} Correct</div> */}
+                                                        <div className="text-gray-900">{item.attendedQuestions.length} Questions</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <div className="text-gray-900">{Math.round(item.rate * item.attendedQuestions.length)}%</div>
+                                                    </TableDescription>
+                                                    <TableDescription>
+                                                        <Link href={`${routes.reviewQuizResultUrl}/${item.id}`} passHref>
+                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View Details</p>
+                                                        </Link>
+                                                    </TableDescription>
+                                                </TableRow>
+                                            );
+                                        })}
                                 </TableBody>
                             </Table>
                         </div>
