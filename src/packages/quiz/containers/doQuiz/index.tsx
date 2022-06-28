@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import useIsFirstRender from '../../../../core/common/hooks/useIsFirstRender';
 import { DoQuizType } from './interface';
 import { routes } from '../../../../core/routes';
-import { type } from 'os';
 
 interface DoQuizProps {
     id: string;
