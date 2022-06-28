@@ -77,7 +77,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     };
 
     const _onChangeRightAnswerBox = (e: React.ChangeEvent<HTMLInputElement>, refIndex: number) => {
-        !isMultipleChoice && answers.fields.map((_, index) => methods.setValue(`answers.${index}.isCorrect`, false));
+        if (!isMultipleChoice) answers.fields.map((_, index) => methods.setValue(`answers.${index}.isCorrect`, false));
         methods.setValue(`answers.${refIndex}.isCorrect`, e.target.checked);
     };
 
