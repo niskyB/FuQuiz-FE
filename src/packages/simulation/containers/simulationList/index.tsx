@@ -25,7 +25,7 @@ export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ c
 
     const subjects = React.useMemo<Subject[]>(() => {
         let subjects: Subject[] = [];
-        registrationList.map((registration) => registration.pricePackage.subject);
+        registrationList.map((registration) => registration.pricePackage.subject && subjects.push(registration.pricePackage.subject));
         return subjects;
     }, [registrationList]);
 
