@@ -49,7 +49,6 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
             }, 0),
         [questionList]
     );
-
     const isDone = React.useMemo(() => {
         if (totalDone >= questionList.length) {
             return true;
