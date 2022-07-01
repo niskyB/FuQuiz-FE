@@ -254,7 +254,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                     <ol className="ml-10 list-decimal">
                                         <li>On subject, dimension, lesson please input correct ID</li>
                                         <li>
-                                            On case a question have more than 2 dimension, please put "," between them <br />
+                                            On case a question have more than 2 dimension, please put &quot;,&quot; between them <br />
                                             Example : dimension_id_a,dimension_id_b
                                         </li>
                                         <li>Type correctly the level text</li>
@@ -283,7 +283,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                     />
                                     <TableBody>
                                         {data.map((item, index) => (
-                                            <TableRow>
+                                            <TableRow key={item.content + '-row-' + index}>
                                                 <TableDescription>{index + 1}</TableDescription>
                                                 <TableDescription>{item.subject}</TableDescription>
                                                 <TableDescription>{item.dimension}</TableDescription>

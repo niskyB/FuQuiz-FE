@@ -45,6 +45,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
             window.location.reload();
         }
     };
+
     React.useEffect(() => {
         if (avatarFile) setPreviewAvatarUrl(URL.createObjectURL(avatarFile));
         return () => {
