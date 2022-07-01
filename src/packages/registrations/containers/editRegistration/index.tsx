@@ -97,57 +97,85 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                     <FormWrapper methods={methods}>
                         <form onSubmit={methods.handleSubmit(_handleOnSubmit)} className="space-y-5">
                             <SelectField
-                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                disabled={
+                                    !isOwner ||
+                                    registration?.status === RegistrationStatus.PAID ||
+                                    registration?.status === RegistrationStatus.INACTIVE
+                                }
                                 label="Subject"
                                 name="subject"
                                 values={[{ label: registration?.pricePackage.subject?.name, value: registration?.pricePackage.subject?.id }]}
                             />
                             <SelectField
-                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                disabled={
+                                    !isOwner ||
+                                    registration?.status === RegistrationStatus.PAID ||
+                                    registration?.status === RegistrationStatus.INACTIVE
+                                }
                                 label="Package"
                                 name="pricePackage"
                                 values={pricePackageList ? dataParser<PricePackage>(pricePackageList, 'name', 'id') : []}
                             />
                             <TextField
-                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                disabled={
+                                    !isOwner ||
+                                    registration?.status === RegistrationStatus.PAID ||
+                                    registration?.status === RegistrationStatus.INACTIVE
+                                }
                                 label="Full name"
                                 name="fullName"
                                 type="fullName"
                             />
                             <TextField
-                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                disabled={
+                                    !isOwner ||
+                                    registration?.status === RegistrationStatus.PAID ||
+                                    registration?.status === RegistrationStatus.INACTIVE
+                                }
                                 label="Email address"
                                 name="email"
                                 type="email"
                             />
                             <TextField
-                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                disabled={
+                                    !isOwner ||
+                                    registration?.status === RegistrationStatus.PAID ||
+                                    registration?.status === RegistrationStatus.INACTIVE
+                                }
                                 label="phone number"
                                 name="mobile"
                                 type="text"
                             />
 
                             <RadioField
-                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                disabled={
+                                    !isOwner ||
+                                    registration?.status === RegistrationStatus.PAID ||
+                                    registration?.status === RegistrationStatus.INACTIVE
+                                }
                                 label="sex"
                                 name="gender"
                                 values={genderFieldData}
                             />
 
                             <DateField
-                                disabled={!isOwner || registration?.status === RegistrationStatus.PAID}
+                                disabled={
+                                    !isOwner ||
+                                    registration?.status === RegistrationStatus.PAID ||
+                                    registration?.status === RegistrationStatus.INACTIVE
+                                }
                                 label="Registration Time"
                                 name="registrationTime"
                             />
 
                             <SelectField
-                                disabled={registration?.status === RegistrationStatus.PAID}
+                                disabled={registration?.status === RegistrationStatus.PAID || registration?.status === RegistrationStatus.INACTIVE}
                                 label="Status"
                                 name="status"
                                 values={registrationDataField}
                             />
                             <DateField
-                                disabled={registration?.status === RegistrationStatus.PAID}
+                                disabled={registration?.status === RegistrationStatus.PAID || registration?.status === RegistrationStatus.INACTIVE}
                                 onChange={(e) => {
                                     methods.setValue(
                                         'validTo',

@@ -71,10 +71,10 @@ const DimensionList: React.FunctionComponent<DimensionListProps> = ({ subjectId,
                                                 <div className="text-gray-900">{dimension.id}</div>
                                             </TableDescription>
                                             <TableDescription>
-                                                <div className="text-gray-900">{dimension.name}</div>
+                                                <div className="text-gray-900">{dimension.type.description}</div>
                                             </TableDescription>
                                             <TableDescription>
-                                                <div className="text-gray-900">{dimension.description}</div>
+                                                <div className="text-gray-900">{dimension.name}</div>
                                             </TableDescription>
                                             <TableDescription>
                                                 <div>

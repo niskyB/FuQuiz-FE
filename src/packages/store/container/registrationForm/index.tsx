@@ -12,6 +12,7 @@ import { addRegistration } from '../../../registrations/containers/addRegistrati
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { RegistrationStatus } from '../../../../core/models/registration';
 import { toast } from 'react-toastify';
+import { UserRole } from '../../../../core/models/role';
 
 interface RegistrationFormProps {}
 
@@ -35,20 +36,24 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
     }, [formState.registrationForm, userState]);
 
     const _handleOnSubmit = async (data: RegistrationFormDTO) => {
-        const { subject, ...other } = data;
-        const res = await addRegistration({
-            ...other,
-            registrationTime: new Date().toISOString(),
-            sale: null,
-            status: RegistrationStatus.SUBMITTED,
-            validFrom: null,
-            validTo: null,
-        });
+        if (userState.role.description !== UserRole.ADMIN) {
+            const { subject, ...other } = data;
+            const res = await addRegistration({
+                ...other,
+                registrationTime: new Date().toISOString(),
+                sale: null,
+                status: RegistrationStatus.SUBMITTED,
+                validFrom: null,
+                validTo: null,
+            });
 
-        if (res) {
-            methods.reset();
-            store.dispatch(formActions.resetState());
-            toast.success('Register success, please wait for response from our saler!');
+            if (res) {
+                methods.reset();
+                store.dispatch(formActions.resetState());
+                toast.success('Register success, please wait for response from our saler!');
+            }
+        } else {
+            toast.warn('Admin is not access to register a course, please try on another account!');
         }
     };
     if (formState.isOpening)

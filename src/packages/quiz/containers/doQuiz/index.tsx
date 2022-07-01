@@ -264,6 +264,8 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
                                 </time>
                             </div>
                         )}
+
+                        {mode === DoQuizType.REVIEW && quiz && (quiz.rate * 100) / 100}
                     </div>
                     <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">
                         <h1 className="text-xl font-semibold">Quiz progress : </h1>
