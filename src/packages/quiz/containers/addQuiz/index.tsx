@@ -21,7 +21,7 @@ import { useGetSubjectList } from '../../../subject';
 import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
 import { useGetQuizType } from '../../common/hooks/useGetQuizType';
 import { addQuiz } from './action';
-import { AddQuizDTO } from './interface';
+import { AddQuizDTO, AddQuizFormDTO } from './interface';
 interface AddQuizProps {}
 
 const mapFields = [{ label: 'Name', name: 'name' }];
@@ -29,11 +29,12 @@ const mapFields = [{ label: 'Name', name: 'name' }];
 export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     const router = useRouter();
     const filterMethods = useForm<FilterQuestionFormDTO>();
-    const methods = useForm<AddQuizDTO>();
+    const methods = useForm<AddQuizFormDTO>();
 
     const [selectedSubjectId, setSelectedSubjectId] = React.useState<string>('');
     const [numberOfQuestion, setNumberOfQuestion] = React.useState<number>(0);
     const [questionOption, setQuestionOption] = React.useState<Partial<FilterQuestionsDTO>>({});
+    const [selectedQuestions, setSelectedQuestions] = React.useState<string[]>([]);
 
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({}), []);
 
@@ -49,9 +50,9 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
         setQuestionOption((prev) => ({ ...prev, ...data }));
     };
 
-    const _handleOnSubmit = async (data: AddQuizDTO) => {
-        if (data.questions.length === numberOfQuestion) {
-            addQuiz(data).then((res) => {
+    const _handleOnSubmit = async (data: AddQuizFormDTO) => {
+        if (selectedQuestions.length === numberOfQuestion) {
+            addQuiz({ ...data, questions: selectedQuestions }).then((res) => {
                 if (res) {
                     methods.reset();
                     store.dispatch(apiActions.resetState());
@@ -66,6 +67,13 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
         }
     };
 
+    const _onHandleCheckChange = (e: React.ChangeEvent<HTMLInputElement>, questionId: string) => {
+        if (e.target.checked) {
+            setSelectedQuestions((prev) => [...prev, questionId]);
+        } else {
+            setSelectedQuestions((prev) => prev.filter((item) => item !== questionId));
+        }
+    };
     return (
         <div className="space-y-8 divide-y divide-gray-200">
             <FormWrapper methods={methods}>
@@ -208,7 +216,13 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                                         <TableDescription>{question.questionLevel.description}</TableDescription>
 
                                                         <TableDescription>
-                                                            <input {...methods.register('questions')} value={question.id} type={`checkbox`} />
+                                                            <input
+                                                                // {...methods.register(`questions`)}
+                                                                value={question.id}
+                                                                type={`checkbox`}
+                                                                onChange={(e) => _onHandleCheckChange(e, question.id)}
+                                                                checked={selectedQuestions.includes(question.id)}
+                                                            />
                                                         </TableDescription>
                                                     </TableRow>
                                                 ))}
@@ -226,7 +240,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
 
             <div className="flex justify-between pt-5">
                 <p className="mt-2 font-semibold text-red-500 text">
-                    Choose Questions: {(methods.watch('questions') && methods.watch('questions').length) || 0}/{numberOfQuestion}
+                    Choose Questions: {selectedQuestions.length}/{numberOfQuestion}
                 </p>
                 <div className="flex">
                     <Link href={router.asPath.replace(routes.adminAddQuizUrl, '')} passHref>
