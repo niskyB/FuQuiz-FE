@@ -19,7 +19,7 @@ import { useGetSimulationList } from '../common/hooks/useGetSimulationList';
 export interface SimulationListProps extends SimulationPageProps {}
 
 export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ currentPage, name, pageSize, subject }) => {
-    const { registrationList } = useGetRegistrationUserList({ currentPage: 0, pageSize: 999, status: RegistrationStatus.PAID });
+    const { registrationList } = useGetRegistrationUserList({ currentPage: 1, pageSize: 999, status: RegistrationStatus.PAID });
     const router = useRouter();
     const options = React.useMemo(() => ({ currentPage, name, pageSize, subject }), [currentPage, name, pageSize, subject]);
 
