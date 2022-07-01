@@ -14,3 +14,9 @@ export const getDateValueString = (date: string) => {
     }
     return '';
 };
+export const getDateStringToShow = (date: string) => {
+    if (date.trim()) {
+        return new Date(date).toLocaleDateString();
+    }
+    return '';
+};

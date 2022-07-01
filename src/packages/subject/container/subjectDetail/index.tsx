@@ -11,6 +11,8 @@ import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList'
 import { useGetSubject } from '../../common/hooks/useGetSubject';
 import SubjectSide from '../subjectSide';
 import { Order } from '../../../../core/common/dataField';
+import { clearQuery } from '../../../../core/util';
+import { LessonTypeEnum } from '../../../../core/models/lesson';
 interface SubjectDetailProps extends SubjectFilterDTO {
     id: string;
 }
@@ -110,27 +112,74 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                         <h1 className="mt-12 text-3xl font-bold sm:mt-16">Lesson</h1>
                         <div className="overflow-hidden bg-white shadow sm:rounded-md">
                             <ul role="list" className="divide-y divide-gray-200">
-                                {lessonList.map((lesson) => (
-                                    <Link href={`${router.asPath}/quiz`} key={lesson.id}>
-                                        <a className="block hover:bg-gray-50">
-                                            <div className="px-4 py-4 sm:px-6">
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex flex-col space-y-3">
-                                                        <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
-                                                        <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
-                                                            {lesson.type.description}
+                                {lessonList.map((lesson) => {
+                                    switch (lesson.type.description) {
+                                        case LessonTypeEnum.LESSON_DETAIL:
+                                            return (
+                                                <Link href={`${clearQuery(router.asPath)}/lesson/${lesson.id}`} key={lesson.id}>
+                                                    <a className="block hover:bg-gray-50">
+                                                        <div className="px-4 py-4 sm:px-6">
+                                                            <div className="flex items-center justify-between">
+                                                                <div className="flex flex-col space-y-3">
+                                                                    <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
+                                                                    <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
+                                                                        {lesson.type.description}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="flex items-center flex-shrink-0 ml-2">
+                                                                    <div className="w-7 h-7">
+                                                                        <ChevronRightIcon />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="flex items-center flex-shrink-0 ml-2">
-                                                        <div className="w-7 h-7">
-                                                            <ChevronRightIcon />
+                                                    </a>
+                                                </Link>
+                                            );
+
+                                        case LessonTypeEnum.LESSON_QUIZ:
+                                            return (
+                                                <Link href={`${clearQuery(router.asPath)}/lesson/${lesson.id}`} key={lesson.id}>
+                                                    <a className="block hover:bg-gray-50">
+                                                        <div className="px-4 py-4 sm:px-6">
+                                                            <div className="flex items-center justify-between">
+                                                                <div className="flex flex-col space-y-3">
+                                                                    <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
+                                                                    <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
+                                                                        {lesson.type.description}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="flex items-center flex-shrink-0 ml-2">
+                                                                    <div className="w-7 h-7">
+                                                                        <ChevronRightIcon />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </Link>
+                                            );
+
+                                        case LessonTypeEnum.SUBJECT_TOPIC:
+                                            return (
+                                                <div className="block hover:bg-gray-50">
+                                                    <div className="px-4 py-4 sm:px-6">
+                                                        <div className="flex items-center justify-between">
+                                                            <div className="flex flex-col space-y-3">
+                                                                <div className="text-sm font-medium text-indigo-600 truncate">{lesson.name}</div>
+                                                                <div className="px-2 text-xs font-semibold leading-5 text-white bg-green-500 rounded-full w-fit ">
+                                                                    {lesson.type.description}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </a>
-                                    </Link>
-                                ))}
+                                            );
+
+                                        default:
+                                            break;
+                                    }
+                                })}
                             </ul>
                         </div>
                     </div>
