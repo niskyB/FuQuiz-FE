@@ -4,19 +4,20 @@ import LessonView from '../../../../src/packages/lesson/containers/lessonView';
 import { StoreLayout } from '../../../../src/packages/store';
 
 interface EditSliderPageProps {
-    id: string;
+    lessonId: string;
+    subjectId: string;
 }
 
-const EditSliderPage: NextPage<EditSliderPageProps> = ({ id }) => {
+const EditSliderPage: NextPage<EditSliderPageProps> = ({ lessonId, subjectId }) => {
     return (
         <StoreLayout>
-            <LessonView id={id} />
+            <LessonView lessonId={lessonId} subjectId={subjectId} />
         </StoreLayout>
     );
 };
 
 EditSliderPage.getInitialProps = async (ctx: NextPageContext): Promise<EditSliderPageProps> => {
-    let props = { id: ctx.query?.lessonId || '' };
+    let props = { lessonId: ctx.query?.lessonId || '', subjectId: ctx.query?.id || '' };
 
     return props as EditSliderPageProps;
 };

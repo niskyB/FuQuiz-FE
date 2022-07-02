@@ -1,15 +1,32 @@
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { LessonTypeEnum } from '../../../../core/models/lesson';
 import { getYoutubeCode } from '../../../../core/util';
+import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
+import { useGetRegistrationList } from '../../../registrations/common/hooks/useGetRegistrationList';
 import { useGetLessonById } from '../../common/hooks/useGetLessonById';
+import * as React from 'react';
+import { routes } from '../../../../core/routes';
 
 interface LessonViewProps {
-    id: string;
+    lessonId: string;
+    subjectId: string;
 }
 
-const LessonView: React.FunctionComponent<LessonViewProps> = ({ id }) => {
-    const { lesson } = useGetLessonById(id);
+const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId, subjectId }) => {
+    const { lesson } = useGetLessonById(lessonId);
+    const router = useRouter();
+    const { registrationList } = useGetRegistrationUserList({});
+    const isAccess = React.useMemo(() => {
+        for (let i = 0; i < registrationList.length; i++) {
+            const registration = registrationList[i];
+            if (registration.pricePackage.subject?.id === subjectId) {
+                return true;
+            }
+        }
+        return false;
+    }, [registrationList]);
 
     const _renderContent = () => {
         switch (lesson?.type.description) {
@@ -37,7 +54,54 @@ const LessonView: React.FunctionComponent<LessonViewProps> = ({ id }) => {
                     </>
                 );
             case LessonTypeEnum.LESSON_QUIZ:
-                return <></>;
+                return (
+                    <>
+                        <div
+                            className="mt-2 space-y-4 text-base text-gray-700"
+                            dangerouslySetInnerHTML={{
+                                __html: lesson.lessonQuiz?.htmlContent || '',
+                            }}
+                        />
+                        <div className="flex flex-col space-y-5">
+                            {lesson.lessonQuiz?.quizzes.map((quiz) => (
+                                <Link href={isAccess ? `${routes.simulationListUrl}/${quiz.id}` : '#'}>
+                                    <div className={`block rounded-lg bg-gray-100 ${isAccess && 'cursor-pointer hover:bg-gray-50'}`}>
+                                        <div className="px-4 py-4 sm:px-6">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex flex-col space-y-3">
+                                                    <div className="text-sm font-medium text-indigo-600 truncate">{quiz.name}</div>
+                                                    <div className="flex space-x-2">
+                                                        <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-green-500 rounded-full w-fit">
+                                                            {quiz.type.description}
+                                                        </div>
+                                                        {quiz.level.name === 'Hard' && (
+                                                            <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-red-500 rounded-full w-fit">
+                                                                Hard
+                                                            </div>
+                                                        )}
+                                                        {quiz.level.name === 'Medium' && (
+                                                            <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-yellow-500 rounded-full w-fit">
+                                                                Medium
+                                                            </div>
+                                                        )}
+                                                        {quiz.level.name === 'Easy' && (
+                                                            <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-green-500 rounded-full w-fit">
+                                                                Easy
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center flex-shrink-0 ml-2">
+                                                    <div className="flex">{quiz.numberOfQuestion} questions</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </>
+                );
             case LessonTypeEnum.SUBJECT_TOPIC:
                 return <></>;
         }
@@ -67,7 +131,7 @@ const LessonView: React.FunctionComponent<LessonViewProps> = ({ id }) => {
                     <div className="text-gray-800 cursor-pointer">{lesson && lesson.name}</div>
                 </div>
             </div>
-            <div className="">{_renderContent()}</div>
+            <div className="space-y-5">{_renderContent()}</div>
         </div>
     );
 };
