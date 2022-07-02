@@ -1,8 +1,8 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { StoreLayout } from '../../src/packages/store';
-import { SubjectDetail } from '../../src/packages/subject';
-import { SubjectFilterDTO } from '../../src/packages/subject/container/subjectList/interface';
+import { StoreLayout } from '../../../src/packages/store';
+import { SubjectDetail } from '../../../src/packages/subject';
+import { SubjectFilterDTO } from '../../../src/packages/subject/container/subjectList/interface';
 
 interface EditSliderPageProps extends SubjectFilterDTO {
     id: string;

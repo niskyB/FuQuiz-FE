@@ -9,7 +9,7 @@ export enum Gender {
     MALE = 'male',
     FEMALE = 'female',
 }
-export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.CUSTOMER, UserRole.EXPERT, UserRole.MARKETING];
+export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.CUSTOMER, UserRole.EXPERT, UserRole.MARKETING, UserRole.SALE];
 
 export interface User {
     id: string;
