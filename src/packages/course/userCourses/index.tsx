@@ -2,6 +2,7 @@ import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { toast } from 'react-toastify';
 import { UserCoursesPageProps } from '../../../../pages/user/courses';
 import { useUrlParams } from '../../../core/common/hooks/useUrlParams';
 import { RegistrationStatus } from '../../../core/models/registration';
@@ -11,7 +12,7 @@ import { PaginationBar } from '../../dashboard';
 import Contact from '../../store/container/Contact';
 import { CourseFilter } from '../components/courseFilter';
 import { useGetRegistrationUserList } from '../hooks/useGetRegistrationListUser';
-import { cancelRegistration } from './action';
+import { cancelRegistration, payCourse } from './action';
 
 export interface UserCoursesProps extends UserCoursesPageProps {
     status: string | RegistrationStatus;
@@ -26,18 +27,23 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
     );
 
     const { registrationList, count } = useGetRegistrationUserList({ category, currentPage, isFeature, name, order, pageSize });
-
     useUrlParams({
         defaultPath: routes.courseListUrl,
         query: { ...router.query, category, currentPage, isFeature, name, order, pageSize },
     });
 
-    const handleOnCancelRegistration = (id: string) => {
+    const _handleOnCancelRegistration = (id: string) => {
         cancelRegistration(id).then(() => {
             window.location.reload();
         });
     };
 
+    const _handleOnPayCourse = async (courseId: string) => {
+        const res = await payCourse(courseId);
+        if (res) {
+            window.location.reload();
+        }
+    };
     return (
         <div className="flex space-x-10">
             <div className="flex flex-col space-y-10 w-fit">
@@ -88,11 +94,20 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                                             <button
                                                 type="button"
                                                 onClick={() =>
-                                                    confirm('This action will cancel this registration') && handleOnCancelRegistration(item.id)
+                                                    confirm('This action will cancel this registration') && _handleOnCancelRegistration(item.id)
                                                 }
                                                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                             >
                                                 Cancel
+                                            </button>
+                                        )}
+                                        {item.status === RegistrationStatus.APPROVED && (
+                                            <button
+                                                type="button"
+                                                onClick={() => _handleOnPayCourse(item.pricePackage.subject?.id || '')}
+                                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                            >
+                                                PAY
                                             </button>
                                         )}
                                     </p>
