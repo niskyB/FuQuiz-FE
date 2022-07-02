@@ -3,6 +3,7 @@ import { Customer, Sale } from './user';
 
 export enum RegistrationStatus {
     SUBMITTED = 'submitted',
+    APPROVED = 'approved',
     PAID = 'paid',
     INACTIVE = 'inactive',
 }

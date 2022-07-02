@@ -55,8 +55,8 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
             methods.setValue('subject', registration.pricePackage.subject?.id || '');
 
             methods.setValue('registrationTime', dateParser(registration.registrationTime));
-            methods.setValue('validFrom', dateParser(registration.validFrom));
-            methods.setValue('validTo', dateParser(registration.validTo));
+            // methods.setValue('validFrom', dateParser(registration.validFrom));
+            // methods.setValue('validTo', dateParser(registration.validTo));
         }
     }, [registration]);
 
@@ -75,8 +75,8 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
             await editGeneralRegistration(id, {
                 notes: data.notes,
                 status: data.status,
-                validFrom: getDateValueString(data.validFrom),
-                validTo: getDateValueString(data.validTo),
+                // validFrom: getDateValueString(data.validFrom),
+                // validTo: getDateValueString(data.validTo),
             });
 
             router.push(routes.adminRegistrationUrl);
@@ -172,9 +172,9 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                                 disabled={registration?.status === RegistrationStatus.PAID || registration?.status === RegistrationStatus.INACTIVE}
                                 label="Status"
                                 name="status"
-                                values={registrationDataField}
+                                values={registrationDataField.filter((item) => item.value !== RegistrationStatus.PAID)}
                             />
-                            <DateField
+                            {/* <DateField
                                 disabled={registration?.status === RegistrationStatus.PAID || registration?.status === RegistrationStatus.INACTIVE}
                                 onChange={(e) => {
                                     methods.setValue(
@@ -187,7 +187,7 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                                 label="Valid From"
                                 name="validFrom"
                             />
-                            <DateField readOnly label="Valid To" name="validTo" />
+                            <DateField readOnly label="Valid To" name="validTo" /> */}
                             <TextareaField name="notes" label="Note" />
 
                             <FormErrorMessage />

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Order } from '../../../core/common/dataField';
 import { ApiListRoutes } from '../../../core/common/enum';
 import { useGetListWithCount } from '../../../core/common/hooks';
-import { Registration, RegistrationStatus } from '../../../core/models/registration';
+import { Registration } from '../../../core/models/registration';
 import { UserCoursesProps } from '../userCourses';
 
 export const useGetRegistrationUserList = ({ currentPage, pageSize, order, category, isFeature, name, status }: Partial<UserCoursesProps>) => {
