@@ -6,6 +6,7 @@ import { UserCoursesPageProps } from '../../../../pages/user/courses';
 import { useUrlParams } from '../../../core/common/hooks/useUrlParams';
 import { RegistrationStatus } from '../../../core/models/registration';
 import { routes } from '../../../core/routes';
+import { getDateStringToShow } from '../../../core/util/date';
 import { PaginationBar } from '../../dashboard';
 import Contact from '../../store/container/Contact';
 import { CourseFilter } from '../components/courseFilter';
@@ -76,7 +77,8 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                                     <div className="text-gray-500">Status: {item.status}</div>
                                     {item.validFrom && (
                                         <p className="text-gray-500">
-                                            Valid: {item.validFrom} {item.validTo ? ` - ${item.validTo}` : ''}
+                                            Valid: {getDateStringToShow(item.validFrom)}{' '}
+                                            {item.validTo ? ` - ${getDateStringToShow(item.validTo)}` : ''}
                                         </p>
                                     )}
                                     <p className="text-gray-500">Registration day: {moment(item.registrationTime).format('MMM Do YY')}</p>

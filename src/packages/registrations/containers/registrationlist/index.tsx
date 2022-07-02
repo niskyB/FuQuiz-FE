@@ -10,6 +10,7 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
+import { getDateStringToShow } from '../../../../core/util/date';
 import { PaginationBar } from '../../../dashboard';
 import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
@@ -142,10 +143,10 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                         <div className="text-gray-900">{registration.status.toUpperCase()}</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{registration.validFrom}</div>
+                                                        <div className="text-gray-900">{getDateStringToShow(registration.validFrom)}</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{registration.validTo}</div>
+                                                        <div className="text-gray-900">{getDateStringToShow(registration.validTo)}</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.lastUpdatedBy}</div>

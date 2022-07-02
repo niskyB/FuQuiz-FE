@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { LineChart } from '../../';
+import { Order } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { ColumnChart } from '../../components/columnChart';
 import { NewSubjectStatisticsDTO } from './interface';
@@ -24,8 +25,8 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
                         name="sort"
                         isRequire={false}
                         values={[
-                            { label: 'Newest', value: 'DESC' },
-                            { label: 'Oldest', value: 'ASC' },
+                            { label: 'Newest', value: Order.DESC },
+                            { label: 'Oldest', value: Order.ASC },
                         ]}
                     />
                     <button

@@ -48,7 +48,7 @@ export const CourseFilter: React.FunctionComponent<CourseFilterProps> = ({ regis
         <FormWrapper methods={methods}>
             <form
                 onSubmit={methods.handleSubmit(_handleOnSubmit)}
-                className="flex flex-col items-end w-full max-w-xs p-5 space-y-5 bg-white rounded-md h-fit"
+                className="flex flex-col items-end w-full max-w-xs p-5 space-y-5 bg-white rounded-md h-fit min-w-[320px]"
             >
                 <TextField label="Name" name="name" isRequire={false} />
                 <SelectField
