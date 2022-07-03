@@ -53,7 +53,7 @@ export const TotalRevenuesStatistics: React.FunctionComponent<TotalRevenuesStati
                             Search
                         </button>
                     </div>
-                    {data && data.length > 0 && <LineChart name={['Revenues']} data={[data]} />}
+                    <LineChart name={['Revenues']} data={[data]} />
                 </form>
             </FormWrapper>
         </>
