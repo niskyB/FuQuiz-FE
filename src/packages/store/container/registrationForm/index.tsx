@@ -43,8 +43,8 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
                 registrationTime: new Date().toISOString(),
                 sale: null,
                 status: RegistrationStatus.SUBMITTED,
-                validFrom: null,
-                validTo: null,
+                // validFrom: null,
+                // validTo: null,
             });
 
             if (res) {
