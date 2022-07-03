@@ -28,7 +28,7 @@ export const useGetSystemList = (options: Partial<SettingFilterDTO>, settingType
             case SettingEnum.SYSTEM_MENU:
                 return ApiListRoutes.SYSTEM_MENU_ADMIN;
             case SettingEnum.POST_CATEGORIES:
-                return ApiListRoutes.SYSTEM_MENU_ADMIN;
+                return ApiListRoutes.POST_CATEGORIES_ADMIN;
             case SettingEnum.SUBJECT_CATEGORIES:
                 return ApiListRoutes.SUBJECT_CATEGORIES_ADMIN;
             case SettingEnum.LESSON_TYPES:
