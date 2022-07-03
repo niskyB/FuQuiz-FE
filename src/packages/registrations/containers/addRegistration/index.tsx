@@ -31,8 +31,8 @@ const defaultValues: Partial<AddRegistrationFormDTO> = {
     sale: '',
     status: RegistrationStatus.SUBMITTED,
     subject: '',
-    validFrom: '',
-    validTo: '',
+    // validFrom: '',
+    // validTo: '',
     notes: '',
 };
 
@@ -46,15 +46,15 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
 
     const { subjects } = useGetSubjectList(options);
     const { pricePackageList } = useGetPricePackageListBySubjectId(selectedSubject || '');
-    const { pricePackage } = useGetPricePackageById(methods.watch('pricePackage'));
+    // const { pricePackage } = useGetPricePackageById(methods.watch('pricePackage'));
 
     const _handleOnSubmit = async (data: AddRegistrationFormDTO) => {
         const { subject, ...others } = data;
         others.sale = userStore.role.description === UserRole.SALE ? userStore.id : null;
 
-        if (pricePackage && others.validFrom) {
-            others.validTo = calculateValidTo(others.validFrom || '', pricePackage.duration || 0);
-        }
+        // if (pricePackage && others.validFrom) {
+        //     others.validTo = calculateValidTo(others.validFrom || '', pricePackage.duration || 0);
+        // }
         addRegistration(others).then(() => {
             methods.reset();
             toast.success('Add registration success');
@@ -91,7 +91,7 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
 
                             <DateField label="Registration Time" name="registrationTime" />
                             <SelectField label="Status" name="status" values={[unsetFieldData, ...registrationDataField]} />
-                            <DateField label="Valid From" name="validFrom" />
+                            {/* <DateField label="Valid From" name="validFrom" /> */}
 
                             <TextareaField name="notes" label="Note" />
 

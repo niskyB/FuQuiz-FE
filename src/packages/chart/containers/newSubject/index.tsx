@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { LineChart } from '../../';
 import { Order } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { ColumnChart } from '../../components/columnChart';
