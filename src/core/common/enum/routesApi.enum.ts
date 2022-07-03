@@ -44,4 +44,13 @@ export enum ApiListRoutes {
     REGISTRATIONS = 'registrations',
 
     REGISTRATIONS_ME = 'registrations/me',
+
+    ROLES_ADMIN = 'roles/admin',
+    SYSTEM_MENU_ADMIN = 'system-menu/admin',
+    POST_CATEGORIES_ADMIN = 'post-categories/admin',
+    SUBJECT_CATEGORIES_ADMIN = 'subject-categories/admin',
+    TEST_TYPES_ADMIN = 'exam_levels/admin',
+    QUESTION_LEVELS_ADMIN = 'question-levels/admin',
+    LESSON_TYPES_ADMIN = 'lesson-types/admin',
+    DIMENSION_TYPES_ADMIN = 'dimension-types/admin',
 }

@@ -95,6 +95,6 @@ export const routes = {
     // Course
     courseListUrl: '/user/courses',
 
-    // practiceListUrl
-    // adminQuestionListUrl: '/question',
+    // Setting
+    adminSettingListUrl: '/dashboard/setting',
 };

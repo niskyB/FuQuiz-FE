@@ -1,7 +1,7 @@
 import moment from 'moment';
 
-export const dateParser = (date: string) => {
-    return moment(date).format('YYYY-MM-DDTHH:mm');
+export const dateParser = (date: any) => {
+    return moment(date).format('YYYY-MM-DD');
 };
 
 export const calculateValidTo = (validFrom: string, duration: number) => {

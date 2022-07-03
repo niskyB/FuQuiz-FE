@@ -1,65 +1,56 @@
+import { options } from 'joi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { SystemPageProps } from '../../../../../pages/dashboard/setting';
+import { settingFieldData } from '../../../../core/common/dataField/system';
+import { useUrlParams } from '../../../../core/common/hooks';
+import { SystemType } from '../../../../core/common/interface';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { Setting } from '../../../../core/models/setting';
+import { SettingEnum } from '../../../../core/models/setting';
 import { routes } from '../../../../core/routes';
+import { pushWithParams } from '../../../../core/util';
 import { PaginationBar } from '../../../dashboard';
+import { useGetSystemList } from '../../common/hooks/useGetSystemList';
+import { SettingFilterDTO, SettingFilterForm } from './interface';
 
-interface SettingListProps {
-    currentPage?: number;
-    pageSize?: number;
-}
+export interface SettingListProps extends SystemPageProps {}
 
-export const SettingList: React.FunctionComponent<SettingListProps> = ({ currentPage, pageSize }) => {
-    const methods = useForm();
+export const SettingList: React.FunctionComponent<SettingListProps> = ({ currentPage, pageSize, order, orderBy, status, value, settingType }) => {
+    const methods = useForm<SettingFilterForm>();
+    // const [settingType, setSettingType] = React.useState<SettingEnum>(SettingEnum.ROLE);
+
+    const options: SettingFilterDTO = React.useMemo(
+        () => ({
+            currentPage,
+            pageSize,
+            order,
+            orderBy,
+            status,
+            value,
+        }),
+        [currentPage, pageSize, order, orderBy, status, value]
+    );
+
+    const { list, count } = useGetSystemList(options, settingType);
 
     const router = useRouter();
 
-    const [settings, setSettings] = React.useState<Setting[]>([
-        {
-            id: '12312-11-231',
-            type: { id: 'hzdio-11-asd', name: 'Role' },
-            value: 'cfd80d32-eb1b-11ec-8fea-0242ac120002',
-            order: 1,
-            isActivate: true,
-        },
-        {
-            id: '12312-11-231',
-            type: { id: 'hzdio-11-asd', name: 'Role' },
-            value: 'ef43be00-eb1b-11ec-8fea-0242ac120002',
-            order: 2,
-            isActivate: true,
-        },
-        {
-            id: '12312-11-231',
-            type: { id: 'hzdio-11-asd', name: 'Role' },
-            value: 'f296615c-eb1b-11ec-8fea-0242ac120002',
-            order: 3,
-            isActivate: true,
-        },
-        {
-            id: '12312-11-231',
-            type: { id: 'hzdio-11-asd', name: 'Role' },
-            value: 'f5aa34a4-eb1b-11ec-8fea-0242ac120002',
-            order: 4,
-            isActivate: true,
-        },
-        {
-            id: '12312-11-231',
-            type: { id: 'hzdio-11-asd', name: 'Role' },
-            value: 'f8deb802-eb1b-11ec-8fea-0242ac120002',
-            order: 5,
-            isActivate: true,
-        },
-    ]);
+    const _handleOnSubmit = async (data: SettingFilterForm) => {
+        pushWithParams(router, routes.adminSettingListUrl, { ...options, ...data });
+    };
 
-    const [count, setCount] = React.useState(4);
+    useUrlParams({
+        defaultPath: routes.adminSettingListUrl,
+        query: { ...router.query, currentPage, pageSize, order, orderBy, status, value, settingType },
+    });
 
-    const _handleOnSubmit = async () => {};
+    // const _onSettingType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setSettingType(e.target.value as SettingEnum);
+    // };
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -82,18 +73,10 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                         <div className="flex space-x-4">
                             <SelectField
                                 label="Type"
-                                values={[
-                                    { label: 'Role', value: 'ASC' },
-                                    { label: 'System Menu', value: 'DESC' },
-                                    { label: 'Blog Categories', value: 'DESC' },
-                                    { label: 'Subject Categories', value: 'DESC' },
-                                    { label: 'Test Types ', value: 'DESC' },
-                                    { label: 'Question Levels ', value: 'DESC' },
-                                    { label: 'Lesson Types ', value: 'DESC' },
-                                    { label: 'Subject Dimension', value: 'DESC' },
-                                ]}
+                                values={settingFieldData}
                                 isRequire={false}
-                                name="orderBy"
+                                name="settingType"
+                                // onChange={(e) => _onSettingType(e)}
                             />
                             <TextField isRequire={false} name="value" label="value" />
                             <SelectField
@@ -103,16 +86,16 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                     { label: 'Inactive', value: false },
                                 ]}
                                 isRequire={false}
-                                name="isActive"
+                                name="status"
                             />
                             <SelectField
                                 label="Order By"
                                 values={[
-                                    { label: 'Id', value: 'ASC' },
-                                    { label: 'Type', value: 'DESC' },
-                                    { label: 'Value', value: 'DESC' },
-                                    { label: 'Order', value: 'DESC' },
-                                    { label: 'Status ', value: 'DESC' },
+                                    { label: 'Id', value: 'id' },
+                                    { label: 'Type', value: 'type' },
+                                    { label: 'Value', value: 'value' },
+                                    { label: 'Order', value: 'order' },
+                                    { label: 'Status ', value: 'status' },
                                 ]}
                                 isRequire={false}
                                 name="orderBy"
@@ -146,23 +129,23 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                 <TableHead fields={['ID', 'Type', 'Value', 'Order', 'Activation', '', '']} />
 
                                 <TableBody>
-                                    {Boolean(count && settings) &&
-                                        settings.map((setting) => (
-                                            <TableRow key={setting.id}>
+                                    {Boolean(count && list) &&
+                                        list.map((setting) => (
+                                            <TableRow key={`setting-${setting.id}`}>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{setting.id}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{setting.type.name}</div>
+                                                    <div className="text-gray-900">{setting.type}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <div className="text-gray-900">{setting.value}</div>
+                                                    <div className="text-gray-900">{setting.description}</div>
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div className="text-gray-900">{setting.order}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    {setting.isActivate ? (
+                                                    {setting.isActive ? (
                                                         <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                             Active
                                                         </span>
@@ -178,7 +161,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                                     </Link>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    {setting.isActivate ? (
+                                                    {setting.description && setting.isActive ? (
                                                         <Link href={`${routes.editSettingUrl}/${setting.id}`} passHref>
                                                             <p className="text-red-600 cursor-pointer hover:text-red-900">Deactivate</p>
                                                         </Link>
@@ -196,7 +179,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };

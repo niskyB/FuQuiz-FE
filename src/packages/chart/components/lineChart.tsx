@@ -1,46 +1,56 @@
 import { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
+import { ChartData } from '../containers/newCustomers/interface';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface LineChartProps {
-    xAxis: string[];
     height?: number;
     title?: string;
-    series: ApexAxisChartSeries;
+    data: ChartData[][];
+    name: string[];
 }
 
-export const LineChart: React.FunctionComponent<LineChartProps> = ({ series, xAxis, height = 350, title = '' }) => {
-    const [options, setOptions] = React.useState<ApexOptions>({
-        chart: {
-            height,
-            type: 'line',
-            zoom: {
-                enabled: false,
+export const LineChart: React.FunctionComponent<LineChartProps> = ({ height = 350, title = '', data, name }) => {
+    const chartConfig = React.useMemo<{ options: ApexOptions; series: ApexAxisChartSeries }>(
+        () => ({
+            options: {
+                chart: {
+                    height,
+                    type: 'line',
+                    zoom: {
+                        enabled: false,
+                    },
+                },
+                stroke: {
+                    curve: 'smooth',
+                },
+                title: {
+                    text: title,
+                    align: 'left',
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'],
+                        opacity: 0.5,
+                    },
+                },
+                xaxis: {
+                    categories: (data && data.length > 0 && data[0].map((item) => item.date)) || [],
+                },
             },
-        },
-        stroke: {
-            curve: 'smooth',
-        },
-        title: {
-            text: title,
-            align: 'left',
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5,
-            },
-        },
-        xaxis: {
-            categories: xAxis,
-        },
-    });
+            series: data.map((item, index) => ({
+                data: item.map((a) => a.value),
+                name: name[index],
+            })),
+        }),
+        [data, name]
+    );
 
     return (
         <>
-            <Chart options={options} series={series} width="600" />
+            <Chart options={chartConfig?.options} series={chartConfig?.series} width="600" />
         </>
     );
 };

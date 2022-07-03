@@ -39,9 +39,12 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
     };
 
     const _handleOnPayCourse = async (courseId: string) => {
-        const res = await payCourse(courseId);
-        if (res) {
+        try {
+            const res = await payCourse(courseId);
+
             window.location.reload();
+        } catch (error: any) {
+            if (error.data.balance) toast.warn('Your balance is not enough to pay this course');
         }
     };
     return (
@@ -65,7 +68,7 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                             <div className="flex flex-col justify-between flex-1 p-6 bg-white">
                                 <div className="flex-1">
                                     <p className="text-sm font-medium text-indigo-600">
-                                        <p>#{item.id}</p>
+                                        <p>#{item.id.substring(0, 8)}</p>
                                         <a>{item.pricePackage.subject?.category.description}</a>
                                     </p>
                                     <Link href={`${routes.subjectUrl}/${item.pricePackage.subject?.id}`} passHref>
@@ -104,7 +107,7 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                                         {item.status === RegistrationStatus.APPROVED && (
                                             <button
                                                 type="button"
-                                                onClick={() => _handleOnPayCourse(item.pricePackage.subject?.id || '')}
+                                                onClick={() => _handleOnPayCourse(item.id || '')}
                                                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                             >
                                                 PAY
