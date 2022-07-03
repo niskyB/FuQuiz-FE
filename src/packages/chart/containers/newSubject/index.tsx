@@ -2,8 +2,10 @@ import { useForm } from 'react-hook-form';
 import { Order } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField } from '../../../../core/components/form';
 import { ColumnChart } from '../../components/columnChart';
+import { getNewSubjectStatistic } from './action';
 import { NewSubjectStatisticsDTO } from './interface';
-
+import React from 'react';
+import { ChartData } from '../newCustomers/interface';
 interface NewSubjectStatisticProps {}
 const defaultValues: NewSubjectStatisticsDTO = {
     sort: 'DESC',
@@ -12,6 +14,16 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
     const methods = useForm<NewSubjectStatisticsDTO>({
         defaultValues,
     });
+
+    const [data, setData] = React.useState<ChartData[]>([]);
+    React.useEffect(() => {
+        getNewSubjectStatistic().then((res) => {
+            setData(res);
+        });
+
+        return () => {};
+    }, []);
+
     const _handleOnSubmit = async (data: NewSubjectStatisticsDTO) => {};
     return (
         <FormWrapper methods={methods}>
@@ -37,11 +49,11 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
                 </div>
 
                 <ColumnChart
-                    xAxis={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']}
+                    xAxis={data.map((item) => item.date)}
                     series={[
                         {
-                            name: 'Desktops',
-                            data: [25, 41, 35, 80, 49, 62, 69, 60, 100],
+                            name: 'New subjects',
+                            data: data.map((item) => item.value),
                         },
                     ]}
                 />
