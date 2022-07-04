@@ -142,7 +142,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                     </Disclosure.Button>
                                 </div>
                                 <div className="flex items-center">
-                                    {userState.id && (
+                                    {userState.id && userState.role.description === UserRole.CUSTOMER && (
                                         <div
                                             onClick={() => setPopUp(true)}
                                             className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
