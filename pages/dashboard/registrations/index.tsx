@@ -4,8 +4,8 @@ import { RouterProtectionWrapper } from '../../../src/core/components/routerProt
 import { UserRole } from '../../../src/core/models/role';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
 import { RegistrationFilterDTO } from '../../../src/packages/registrations/common/hooks/useGetRegistrationList';
-import RegistrationsList from '../../../src/packages/registrations/containers/registrationList';
 import * as React from 'react';
+import { RegistrationsList } from '../../../src/packages/registrations';
 
 interface RegistrationListPageProps extends RegistrationFilterDTO {}
 
