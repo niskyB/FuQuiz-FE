@@ -10,6 +10,9 @@ import { FilterBlogListDTO } from '../../../blog/container/blogList/interface';
 import { SideBlog } from '../../../blog/container/sideBlog';
 import Contact from '../Contact';
 import { useGetSubjectList } from '../../../subject';
+import { useRouter } from 'next/router';
+import { route } from 'next/dist/server/router';
+import { toast } from 'react-toastify';
 
 const tabs = [
     { id: 'blog', name: 'Blog', href: '#', current: true },
@@ -25,17 +28,27 @@ interface HomeProps {}
 type TabContent = 'blog' | 'course';
 
 export const Home: React.FunctionComponent<HomeProps> = () => {
+    const router = useRouter();
+
     const [tabOpening, setTabOpening] = React.useState<TabContent>('blog');
 
     const blogListOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 1, isShow: true, pageSize: 10 }), []);
 
-    const subjectFilter = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ currentPage: 1, pageSize: 10, isActive: true }), []);
+    const subjectFilterOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ currentPage: 1, pageSize: 10, isActive: true }), []);
     const sliderOptions = React.useMemo<Partial<GetSliderOptionsDTO>>(() => ({ isShow: true, currentPage: 1, pageSize: 20 }), []);
 
     const { blogList } = useGetBlogList(blogListOptions);
 
     const { sliders } = useGetSliderList(sliderOptions);
-    const { subjects } = useGetSubjectList(subjectFilter);
+    const { subjects } = useGetSubjectList(subjectFilterOption);
+
+    React.useEffect(() => {
+        if (router.query?.notification) {
+            toast.success(router.query.notification);
+        }
+
+        return () => {};
+    }, [router.query]);
 
     const renderContent = () => {
         switch (tabOpening) {
