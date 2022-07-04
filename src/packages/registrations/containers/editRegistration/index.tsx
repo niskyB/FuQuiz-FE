@@ -1,6 +1,5 @@
-import moment from 'moment';
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -14,17 +13,17 @@ import { UserRole } from '../../../../core/models/role';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { dataParser } from '../../../../core/util/data';
-import { calculateValidTo, dateParser, getDateValueString } from '../../../../core/util/date';
+import { dateParser } from '../../../../core/util/date';
 import { useGetPricePackageListBySubjectId } from '../../../package';
 import { useGetRegistrationById } from '../../common/hooks/useGetRegistrationById';
-import { editGeneralRegistration, editRegistration, editSpecificRegistration } from './action';
+import { editGeneralRegistration, editSpecificRegistration } from './action';
 import { EditRegistrationDTO } from './interface';
 
 interface EditRegistrationProps {
     id: string;
 }
 
-const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }) => {
+export const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }) => {
     const methods = useForm<EditRegistrationDTO>({});
     const userState = useStoreUser();
     const router = useRouter();
@@ -211,5 +210,3 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
         </div>
     );
 };
-
-export default EditRegistration;
