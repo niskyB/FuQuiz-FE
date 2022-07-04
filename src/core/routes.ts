@@ -76,6 +76,9 @@ export const routes = {
     addPracticeUrl: '/practices/add',
     practiceDetailsUrl: '/practices/review',
 
+    //pay
+    pay: '/user/pay',
+
     // quiz Simulation exam
     simulationListUrl: '/practices/simulation',
     simulationReviewListUrl: '/practices/simulation',
