@@ -1,4 +1,5 @@
 import { http } from '../../../../core/api';
+import { AddBalanceDTO } from './interface';
 
 export const logout = async () => {
     try {
@@ -7,4 +8,9 @@ export const logout = async () => {
     } catch (error) {
         return null;
     }
+};
+
+export const addBalance = async (data: AddBalanceDTO) => {
+    const res = await http.post<string>('/transaction', data);
+    return res.data;
 };

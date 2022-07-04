@@ -158,8 +158,6 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
         }
     };
 
-    const _handleOnExit = async () => {};
-    console.log(quiz);
     return (
         <>
             {popUp && (
