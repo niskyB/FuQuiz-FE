@@ -16,7 +16,6 @@ export enum SettingEnum {
     SYSTEM_MENU = 'System Menu',
     POST_CATEGORIES = 'Post Categories',
     SUBJECT_CATEGORIES = 'Subject Categories',
-    TEST_TYPES = 'Test Types',
     QUESTION_LEVELS = 'Question Levels',
     LESSON_TYPES = 'Lesson Types',
     SUBJECT_DIMENSION = 'Subject Dimension',

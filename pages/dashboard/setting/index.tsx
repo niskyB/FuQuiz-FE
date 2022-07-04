@@ -43,7 +43,7 @@ SystemPage.getInitialProps = async (ctx: NextPageContext): Promise<SystemPagePro
         currentPage: ctx.query?.currentPage || 1,
         pageSize: ctx.query?.pageSize || 12,
         order: ctx.query?.order || Order.DESC,
-        orderBy: ctx.query?.orderBy || SettingEnum.ROLE,
+        orderBy: ctx.query?.orderBy || '',
     } as SystemPageProps;
     return props;
 };

@@ -117,7 +117,7 @@ export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSiz
                                                         <div className="text-gray-900">{item.attendedQuestions.length} Questions</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{Math.round(item.rate * item.attendedQuestions.length)}%</div>
+                                                        <div className="text-gray-900">{item.rate * 100}%</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <Link href={`${routes.reviewQuizResultUrl}/${item.id}`} passHref>
