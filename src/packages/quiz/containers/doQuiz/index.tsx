@@ -275,7 +275,7 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
                                 <div className="w-6 h-6 text-green-500 ">
                                     <BadgeCheckIcon />
                                 </div>
-                                <div className="">Mark: ${quiz.rate * 10}.0</div>
+                                <div className="">Mark: {quiz.rate * 100}%</div>
                             </div>
                         )}
                     </div>

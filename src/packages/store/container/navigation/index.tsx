@@ -177,9 +177,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                                             <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
                                                                 Hello, {userState.fullName}
                                                             </p>
-                                                            <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
-                                                                Balance: 90000 VNĐ
-                                                            </p>
+                                                            <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>Balance: VNĐ</p>
                                                         </div>
                                                         {USER_ACTION_LINK.map((item) => (
                                                             <Menu.Item key={item.label}>
