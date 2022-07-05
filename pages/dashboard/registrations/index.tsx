@@ -7,9 +7,7 @@ import { RegistrationFilterDTO } from '../../../src/packages/registrations/commo
 import * as React from 'react';
 import { RegistrationsList } from '../../../src/packages/registrations';
 
-interface RegistrationListPageProps extends RegistrationFilterDTO {}
-
-const RegistrationListPage: NextPage<RegistrationListPageProps> = ({
+const RegistrationListPage: NextPage<RegistrationFilterDTO> = ({
     currentPage,
     email,
     order,
@@ -39,7 +37,7 @@ const RegistrationListPage: NextPage<RegistrationListPageProps> = ({
     );
 };
 
-RegistrationListPage.getInitialProps = async (ctx: NextPageContext): Promise<RegistrationListPageProps> => {
+RegistrationListPage.getInitialProps = async (ctx: NextPageContext): Promise<RegistrationFilterDTO> => {
     let props = {
         currentPage: ctx.query?.currentPage || 1,
         email: ctx.query?.email || '',
@@ -50,7 +48,7 @@ RegistrationListPage.getInitialProps = async (ctx: NextPageContext): Promise<Reg
         subject: ctx.query?.subject || '',
         validFrom: ctx.query?.validFrom || '',
         validTo: ctx.query?.validTo || '',
-    } as RegistrationListPageProps;
+    } as RegistrationFilterDTO;
 
     return props;
 };
