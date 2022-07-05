@@ -4,7 +4,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { addBalance, logout } from './action';
+import { addBalance, getBalance, logout } from './action';
 import { useStoreUser } from '../../../../core/store';
 import { routes } from '../../../../core/routes';
 import { UserRole } from '../../../../core/models/role';
@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { AddBalanceDTO } from './interface';
+import { vietnamCurrencyConverter } from '../../../../core/util/price';
 
 interface NavigationProps {}
 function classNames(...classes: any) {
@@ -38,6 +39,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
     const router = useRouter();
     const userState = useStoreUser();
     const methods = useForm<AddBalanceDTO>({ defaultValues: { amount: 0 } });
+    const [balance, setBalance] = React.useState<number | null>(0);
 
     const [popUp, setPopUp] = React.useState<boolean>(false);
 
@@ -52,6 +54,12 @@ export const Navigation: React.FC<NavigationProps> = () => {
             router.push(res);
         }
     };
+
+    React.useEffect(() => {
+        getBalance().then((res) => {
+            setBalance(res.balance);
+        });
+    }, []);
 
     return (
         <>
@@ -177,7 +185,13 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                                             <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
                                                                 Hello, {userState.fullName}
                                                             </p>
-                                                            <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>Balance: VNĐ</p>
+                                                            {balance ? (
+                                                                <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
+                                                                    Balance: {vietnamCurrencyConverter(balance)}
+                                                                </p>
+                                                            ) : (
+                                                                <></>
+                                                            )}
                                                         </div>
                                                         {USER_ACTION_LINK.map((item) => (
                                                             <Menu.Item key={item.label}>
