@@ -54,6 +54,7 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
     const _handleOnPayCourse = async (courseId: string) => {
         try {
             const res = await payCourse(courseId);
+            toast.success('You can learn your course now');
 
             window.location.reload();
         } catch (error: any) {
