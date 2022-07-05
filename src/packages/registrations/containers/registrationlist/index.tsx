@@ -16,7 +16,7 @@ import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationLis
 
 interface RegistrationListProps extends RegistrationFilterDTO {}
 
-export const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
+const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     currentPage,
     pageSize,
     email,
@@ -172,3 +172,4 @@ export const RegistrationsList: React.FunctionComponent<RegistrationListProps> =
         </div>
     );
 };
+export default RegistrationsList;
