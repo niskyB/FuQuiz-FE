@@ -8,7 +8,7 @@ interface BlogCategoryPageProps {}
 
 const BlogCategoryPage: React.FunctionComponent<BlogCategoryPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
                 <BlogCategoryList />
             </DashBoardLayout>
