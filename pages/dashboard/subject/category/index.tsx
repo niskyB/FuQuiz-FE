@@ -8,7 +8,7 @@ interface SubjectCategoryListPageProps {}
 
 const SubjectCategoryListPage: React.FunctionComponent<SubjectCategoryListPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
                 <SubjectCategoryList />
             </DashBoardLayout>

@@ -11,6 +11,7 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { getDateStringToShow } from '../../../../core/util/date';
+import { vietnamCurrencyConverter } from '../../../../core/util/price';
 import { PaginationBar } from '../../../dashboard';
 import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
@@ -137,7 +138,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                         <div className="text-gray-900">{registration.pricePackage.name}</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{registration.totalCost}</div>
+                                                        <div className="text-gray-900">{vietnamCurrencyConverter(registration.totalCost)}</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.status.toUpperCase()}</div>
