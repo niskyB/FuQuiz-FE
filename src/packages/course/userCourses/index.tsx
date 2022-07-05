@@ -38,15 +38,30 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
         });
     };
 
+    const classNameStatusColor = (value: RegistrationStatus) => {
+        switch (value) {
+            case RegistrationStatus.APPROVED:
+                return 'text-green-800  bg-green-100';
+            case RegistrationStatus.PAID:
+                return 'text-green-800  bg-green-100';
+            case RegistrationStatus.SUBMITTED:
+                return 'text-yellow-800  bg-yellow-100';
+            case RegistrationStatus.INACTIVE:
+                return 'text-red-600 bg-red-100';
+        }
+    };
+
     const _handleOnPayCourse = async (courseId: string) => {
         try {
             const res = await payCourse(courseId);
+            toast.success('You can learn your course now');
 
             window.location.reload();
         } catch (error: any) {
             if (error.data.balance) toast.warn('Your balance is not enough to pay this course');
         }
     };
+
     return (
         <div className="flex space-x-10">
             <div className="flex flex-col space-y-10 w-fit">
@@ -83,7 +98,16 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
 
                                 <div className="flex flex-col items-start mt-6 space-y-1">
                                     <p className="text-gray-500">Package: {item.pricePackage.name}</p>
-                                    <div className="text-gray-500">Status: {item.status}</div>
+                                    <div className="flex space-x-2">
+                                        <p className="text-gray-500">Status:</p>
+                                        <span
+                                            className={`inline-flex px-2 text-xs font-semibold leading-5 capitalize ${classNameStatusColor(
+                                                item.status
+                                            )} rounded-full`}
+                                        >
+                                            {item.status}
+                                        </span>
+                                    </div>
                                     {item.validFrom && (
                                         <p className="text-gray-500">
                                             Valid: {getDateStringToShow(item.validFrom)}{' '}
@@ -110,7 +134,7 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                                                 onClick={() => _handleOnPayCourse(item.id || '')}
                                                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                             >
-                                                PAY
+                                                Pay
                                             </button>
                                         )}
                                     </p>

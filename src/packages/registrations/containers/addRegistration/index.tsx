@@ -36,7 +36,7 @@ const defaultValues: Partial<AddRegistrationFormDTO> = {
     notes: '',
 };
 
-const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
+export const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
     const userStore = useStoreUser();
     const methods = useForm<AddRegistrationFormDTO>({ defaultValues });
 
@@ -116,5 +116,3 @@ const AddRegistration: React.FunctionComponent<AddRegistrationProps> = () => {
         </div>
     );
 };
-
-export default AddRegistration;

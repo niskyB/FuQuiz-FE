@@ -6,7 +6,7 @@ export interface AttributeType {
 export interface SystemType<T> {
     id: string;
     type: string;
-    // value: string;
+    value?: string;
     order: number;
     description: T;
     isActive: boolean;

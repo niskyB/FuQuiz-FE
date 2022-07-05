@@ -1,11 +1,11 @@
 import { NextPage, NextPageContext } from 'next';
-import * as React from 'react';
 import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
 import { RegistrationFilterDTO } from '../../../src/packages/registrations/common/hooks/useGetRegistrationList';
-import RegistrationsList from '../../../src/packages/registrations/containers/registrationList';
+import * as React from 'react';
+import { RegistrationsList } from '../../../src/packages/registrations/index';
 
 interface RegistrationListPageProps extends RegistrationFilterDTO {}
 

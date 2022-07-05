@@ -37,8 +37,6 @@ export const useGetSystemList = (options: Partial<SettingFilterDTO>, settingType
                 return ApiListRoutes.DIMENSION_TYPES_ADMIN;
             case SettingEnum.QUESTION_LEVELS:
                 return ApiListRoutes.QUESTION_LEVELS_ADMIN;
-            case SettingEnum.TEST_TYPES:
-                return ApiListRoutes.TEST_TYPES_ADMIN;
             default:
                 return ApiListRoutes.ROLES_ADMIN;
         }
