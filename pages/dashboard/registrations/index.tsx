@@ -5,7 +5,7 @@ import { UserRole } from '../../../src/core/models/role';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
 import { RegistrationFilterDTO } from '../../../src/packages/registrations/common/hooks/useGetRegistrationList';
 import * as React from 'react';
-// import RegistrationsList from '../../../src/packages/registrations/containers/registrationList';
+import { RegistrationsList } from '../../../src/packages/registrations';
 
 interface RegistrationListPageProps extends RegistrationFilterDTO {}
 
@@ -23,7 +23,7 @@ const RegistrationListPage: NextPage<RegistrationListPageProps> = ({
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.SALE]}>
             <DashBoardLayout>
-                {/* <RegistrationsList
+                <RegistrationsList
                     currentPage={currentPage}
                     email={email}
                     order={order}
@@ -33,7 +33,7 @@ const RegistrationListPage: NextPage<RegistrationListPageProps> = ({
                     subject={subject}
                     validFrom={validFrom}
                     validTo={validTo}
-                /> */}
+                />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
