@@ -8,17 +8,17 @@ import { SystemType } from '../../../../core/common/interface';
 import { SettingFilterDTO } from '../../containers/settingList/interface';
 
 export const useGetSystemList = (options: Partial<SettingFilterDTO>, settingType: SettingEnum) => {
-    const { order, orderBy, status, value, currentPage, pageSize } = options;
+    const { order, orderBy, isActive, value, currentPage, pageSize } = options;
     const option = React.useMemo<SettingFilterDTO>(
         () => ({
             order: order || Order.DESC,
             value: value || '',
             orderBy: orderBy || '',
-            status: status || true,
+            isActive: isActive !== undefined ? isActive : true,
             currentPage: currentPage || 0,
             pageSize: pageSize || 10,
         }),
-        [order, value, orderBy, status, currentPage, pageSize, settingType]
+        [order, value, orderBy, isActive, currentPage, pageSize, settingType]
     );
 
     const switchRouteList = () => {
@@ -33,7 +33,7 @@ export const useGetSystemList = (options: Partial<SettingFilterDTO>, settingType
                 return ApiListRoutes.SUBJECT_CATEGORIES_ADMIN;
             case SettingEnum.LESSON_TYPES:
                 return ApiListRoutes.LESSON_TYPES_ADMIN;
-            case SettingEnum.DIMENSION_TYPES:
+            case SettingEnum.SUBJECT_DIMENSION:
                 return ApiListRoutes.DIMENSION_TYPES_ADMIN;
             case SettingEnum.QUESTION_LEVELS:
                 return ApiListRoutes.QUESTION_LEVELS_ADMIN;

@@ -9,7 +9,7 @@ import { SettingList } from '../../../src/packages/setting';
 
 export interface SystemPageProps {
     value: string;
-    status: boolean;
+    isActive: boolean;
     currentPage: number;
     pageSize: number;
     order: Order;
@@ -17,7 +17,7 @@ export interface SystemPageProps {
     settingType: SettingEnum;
 }
 
-const SystemPage: NextPage<SystemPageProps> = ({ currentPage, order, orderBy, pageSize, status, value, settingType }) => {
+const SystemPage: NextPage<SystemPageProps> = ({ currentPage, order, orderBy, pageSize, isActive, value, settingType }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
@@ -27,7 +27,7 @@ const SystemPage: NextPage<SystemPageProps> = ({ currentPage, order, orderBy, pa
                     order={order}
                     orderBy={orderBy}
                     pageSize={pageSize}
-                    status={status}
+                    isActive={isActive}
                     value={value}
                 />
             </DashBoardLayout>
@@ -39,7 +39,7 @@ SystemPage.getInitialProps = async (ctx: NextPageContext): Promise<SystemPagePro
     let props = {
         settingType: ctx.query?.settingType || SettingEnum.ROLE,
         value: ctx.query?.value || '',
-        status: ctx.query?.status || true,
+        isActive: ctx.query?.isActive || true,
         currentPage: ctx.query?.currentPage || 1,
         pageSize: ctx.query?.pageSize || 12,
         order: ctx.query?.order || Order.DESC,
