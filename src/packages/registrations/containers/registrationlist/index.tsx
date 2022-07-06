@@ -7,7 +7,6 @@ import { registrationStatusFieldData } from '../../../../core/common/dataField/r
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { getDateStringToShow } from '../../../../core/util/date';
