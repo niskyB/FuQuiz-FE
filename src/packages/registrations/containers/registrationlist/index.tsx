@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { allFieldData, OrderFieldData } from '../../../../core/common/dataField';
 import { registrationStatusFieldData } from '../../../../core/common/dataField/registration';
+import { useUrlParams } from '../../../../core/common/hooks';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
@@ -14,9 +15,7 @@ import { vietnamCurrencyConverter } from '../../../../core/util/price';
 import { PaginationBar } from '../../../dashboard';
 import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
-interface RegistrationListProps extends RegistrationFilterDTO {}
-
-export const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
+export const RegistrationsList: React.FunctionComponent<RegistrationFilterDTO> = ({
     currentPage,
     pageSize,
     email,
@@ -35,6 +34,11 @@ export const RegistrationsList: React.FunctionComponent<RegistrationListProps> =
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
+
+    useUrlParams({
+        defaultPath: routes.adminRegistrationUrl,
+        query: { ...router.query, currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo },
+    });
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -168,7 +172,7 @@ export const RegistrationsList: React.FunctionComponent<RegistrationListProps> =
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };

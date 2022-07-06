@@ -26,9 +26,9 @@ const DashboardPage: React.FunctionComponent<DashboardPageProps> = () => {
                         <NewRegistrationStatistics />
                     </div>
 
-                    <div className="flex flex-col items-start justify-start w-1/2 mt-5 space-y-5">
+                    {/* <div className="flex flex-col items-start justify-start w-1/2 mt-5 space-y-5">
                         <TrendingStatistics />
-                    </div>
+                    </div> */}
                 </div>
             </DashBoardLayout>
         </RouterProtectionWrapper>
