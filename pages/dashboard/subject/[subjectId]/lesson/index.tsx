@@ -8,11 +8,20 @@ import { FilterLessonListDTO } from '../../../../../src/packages/lesson/containe
 
 interface LessonPageProps extends FilterLessonListDTO {}
 
-const LessonPage: NextPage<LessonPageProps> = ({ id, createdAt, isActive, title, type, updatedAt }) => {
+const LessonPage: NextPage<LessonPageProps> = ({ id, createdAt, isActive, title, type, updatedAt, currentPage, pageSize }) => {
     return (
         <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
-                <LessonList id={id} createdAt={createdAt} isActive={isActive} title={title} type={type} updatedAt={updatedAt} />
+                <LessonList
+                    id={id}
+                    createdAt={createdAt}
+                    isActive={isActive}
+                    title={title}
+                    type={type}
+                    updatedAt={updatedAt}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                />
             </DashBoardLayout>
         </RouterProtectionWrapper>
     );
@@ -25,6 +34,8 @@ LessonPage.getInitialProps = async (ctx: NextPageContext): Promise<LessonPagePro
         createdAt: ctx.query?.createdAt || '',
         updatedAt: ctx.query?.updatedAt || '',
         isActive: ctx.query?.isActive || '',
+        currentPage: ctx.query?.currentPage || 1,
+        pageSize: ctx.query?.pageSize || 12,
     } as LessonPageProps;
 
     return props;

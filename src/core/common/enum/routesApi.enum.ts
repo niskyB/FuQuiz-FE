@@ -46,7 +46,7 @@ export enum ApiListRoutes {
     REGISTRATIONS_ME = 'registrations/me',
 
     ROLES_ADMIN = 'roles/admin',
-    SYSTEM_MENU_ADMIN = 'system-menu/admin',
+    SYSTEM_MENUS_ADMIN = 'system-menus/admin',
     POST_CATEGORIES_ADMIN = 'blog-categories/admin',
     SUBJECT_CATEGORIES_ADMIN = 'subject-categories/admin',
     QUESTION_LEVELS_ADMIN = 'question-levels/admin',

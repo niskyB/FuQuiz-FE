@@ -13,7 +13,7 @@ export interface SettingType {
 
 export enum SettingEnum {
     ROLE = 'Role',
-    SYSTEM_MENU = 'System Menu',
+    SYSTEM_MENUS = 'System Menus',
     POST_CATEGORIES = 'Post Categories',
     SUBJECT_CATEGORIES = 'Subject Categories',
     QUESTION_LEVELS = 'Question Levels',

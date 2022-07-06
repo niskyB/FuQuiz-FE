@@ -16,6 +16,7 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
     const minRange = numLinksTwoSide + 4;
     const numberOfTruncLeft = currentPage - numLinksTwoSide;
     const numberOfTruncRight = currentPage + numLinksTwoSide;
+    if (!totalPage) return <></>;
     return (
         <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 rounded-md sm:px-6">
             <div className="flex justify-between flex-1 sm:hidden">
