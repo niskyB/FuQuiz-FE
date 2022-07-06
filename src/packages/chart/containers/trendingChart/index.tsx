@@ -19,7 +19,7 @@ export const TrendingStatistics: React.FunctionComponent<TrendingStatisticsProps
     const methods = useForm<TrendingChartStatisticsDTO>({
         defaultValues: {
             from: dateParser(Date.now() - 7 * 24 * 3600 * 1000),
-            to: dateParser(new Date().toLocaleDateString()),
+            to: dateParser(new Date()),
         },
     });
     const _handleOnSubmit = async (data: TrendingChartStatisticsDTO) => {
@@ -30,7 +30,7 @@ export const TrendingStatistics: React.FunctionComponent<TrendingStatisticsProps
     React.useEffect(() => {
         getTrendingStatistic({
             from: dateParser(Date.now() - 7 * 24 * 3600 * 1000),
-            to: dateParser(new Date().toLocaleDateString()),
+            to: dateParser(new Date()),
         }).then((res) => {
             setData(res);
         });
