@@ -14,9 +14,7 @@ import { vietnamCurrencyConverter } from '../../../../core/util/price';
 import { PaginationBar } from '../../../dashboard';
 import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
-interface RegistrationListProps extends RegistrationFilterDTO {}
-
-export const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
+export const RegistrationsList: React.FunctionComponent<RegistrationFilterDTO> = ({
     currentPage,
     pageSize,
     email,
