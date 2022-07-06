@@ -15,7 +15,7 @@ export const PieChart: React.FunctionComponent<PieChartProps> = ({ labels, serie
             type: 'pie',
         },
         labels,
-        colors: ['#22C55E', '#EF4444', '#3B82F6'],
+        // colors: ['#22C55E', '#EF4444', '#3B82F6'],
     });
 
     return <>{series?.length && <Chart options={options} series={series} type="pie" width={size} />}</>;
