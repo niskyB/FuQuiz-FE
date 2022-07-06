@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { allFieldData, OrderFieldData } from '../../../../core/common/dataField';
 import { registrationStatusFieldData } from '../../../../core/common/dataField/registration';
+import { useUrlParams } from '../../../../core/common/hooks';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
@@ -33,6 +34,11 @@ export const RegistrationsList: React.FunctionComponent<RegistrationFilterDTO> =
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
+
+    useUrlParams({
+        defaultPath: routes.adminRegistrationUrl,
+        query: { ...router.query, currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo },
+    });
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -166,7 +172,7 @@ export const RegistrationsList: React.FunctionComponent<RegistrationFilterDTO> =
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };

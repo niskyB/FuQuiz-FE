@@ -20,7 +20,7 @@ import { FilterLessonListDTO, FilterLessonListFormDTO, UpdateLessonActivationDTO
 
 interface LessonListProps extends FilterLessonListDTO {}
 
-export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, createdAt, isActive, title, type, updatedAt }) => {
+export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, createdAt, isActive, title, type, updatedAt, currentPage, pageSize }) => {
     const methods = useForm<FilterLessonListFormDTO>({
         defaultValues: {
             createdAt: '',
@@ -32,7 +32,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, creat
     });
     const router = useRouter();
     const { lessonType } = useGetLessonType();
-    const { lessonList } = useGetLessonList({ id, createdAt, isActive, title, type, updatedAt });
+    const { lessonList, count } = useGetLessonList({ id, createdAt, isActive, title, type, updatedAt });
     const { pricePackageList } = useGetPricePackageListBySubjectId(id);
     const _handleOnSubmit = async (data: FilterLessonListFormDTO) => {
         const { pricePackage, ...other } = data;
@@ -159,7 +159,7 @@ export const LessonList: React.FunctionComponent<LessonListProps> = ({ id, creat
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };

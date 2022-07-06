@@ -203,7 +203,7 @@ const RegistrationListPage: NextPage<RegistrationFilterDTO> = ({
                             </div>
                         </div>
                     </div>
-                    <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+                    <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
                 </div>
             </DashBoardLayout>
         </RouterProtectionWrapper>

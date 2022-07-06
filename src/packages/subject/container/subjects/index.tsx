@@ -13,6 +13,7 @@ import { store } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { getMinMaxPriceOfPricePackage, vietnamCurrencyConverter } from '../../../../core/util/price';
 import SubjectSide from '../subjectSide';
+import { useRouter } from 'next/router';
 
 interface SubjectsProps extends BlogListFilterDTO {}
 
@@ -26,6 +27,8 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
     );
 
     const { subjects, count } = useGetSubjectList(subjectOption);
+
+    const router = useRouter();
 
     return (
         <>
@@ -133,7 +136,7 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                             );
                         })}
                     </div>
-                    <PaginationBar currentPage={1} numberOfItem={count} pageSize={10} routeUrl={''} />
+                    <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
                 </div>
             </div>
         </>

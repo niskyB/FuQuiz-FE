@@ -5,6 +5,8 @@ export interface FilterLessonListDTO {
     createdAt: string;
     updatedAt: string;
     isActive: string;
+    currentPage: number;
+    pageSize: number;
 }
 
 export interface FilterLessonListFormDTO extends Omit<FilterLessonListDTO, 'id'> {
