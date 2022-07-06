@@ -20,7 +20,7 @@ import { SettingFilterDTO, SettingFilterForm } from './interface';
 
 export interface SettingListProps extends SystemPageProps {}
 
-export const SettingList: React.FunctionComponent<SettingListProps> = ({ currentPage, pageSize, order, orderBy, status, value, settingType }) => {
+export const SettingList: React.FunctionComponent<SettingListProps> = ({ currentPage, pageSize, order, orderBy, isActive, value, settingType }) => {
     const methods = useForm<SettingFilterForm>();
 
     const options: SettingFilterDTO = React.useMemo(
@@ -29,16 +29,16 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
             pageSize,
             order,
             orderBy,
-            status,
+            isActive,
             value,
         }),
-        [currentPage, pageSize, order, orderBy, status, value]
+        [currentPage, pageSize, order, orderBy, isActive, value]
     );
 
     useTimeout(() => {
         methods.setValue('settingType', settingType);
         methods.setValue('value', value);
-        methods.setValue('status', status);
+        methods.setValue('isActive', isActive);
         methods.setValue('order', order);
         methods.setValue('orderBy', orderBy);
     }, 750);
@@ -53,7 +53,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
 
     useUrlParams({
         defaultPath: routes.adminSettingListUrl,
-        query: { ...router.query, currentPage, pageSize, order, orderBy, status, value, settingType },
+        query: { ...router.query, currentPage, pageSize, order, orderBy, isActive, value, settingType },
     });
 
     return (
