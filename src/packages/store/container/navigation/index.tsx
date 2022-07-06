@@ -185,7 +185,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                                             <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
                                                                 Hello, {userState.fullName}
                                                             </p>
-                                                            {balance ? (
+                                                            {balance !== null && balance != undefined ? (
                                                                 <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
                                                                     Balance: {vietnamCurrencyConverter(balance)}
                                                                 </p>
