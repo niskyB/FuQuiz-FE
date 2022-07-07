@@ -11,7 +11,7 @@ export interface SettingType {
     name: string;
 }
 
-export enum SettingEnum {
+export enum SettingsEnum {
     ROLE = 'Role',
     SYSTEM_MENUS = 'System Menus',
     POST_CATEGORIES = 'Post Categories',
@@ -20,4 +20,9 @@ export enum SettingEnum {
     LESSON_TYPES = 'Lesson Types',
     SUBJECT_DIMENSION = 'Subject Dimension',
     DIMENSION_TYPES = 'Dimension Types',
+}
+
+export enum SettingEditEnum {
+    POST_CATEGORY = 'Post Category',
+    SUBJECT_CATEGORY = 'Subject Category',
 }

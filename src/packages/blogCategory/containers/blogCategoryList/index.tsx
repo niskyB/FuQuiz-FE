@@ -47,7 +47,7 @@ const BlogCategoryList: React.FunctionComponent<BlogCategoryListProps> = () => {
                                                     <div className="text-gray-900">{category.description}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${routes.adminEditBlogCategoryUrl}/${category.id}`} passHref>
+                                                    <Link href={`${routes.editBlogCategorySettingUrl}/${category.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </TableDescription>

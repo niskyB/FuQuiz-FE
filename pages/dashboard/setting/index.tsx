@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
-import { SettingEnum } from '../../../src/core/models/setting';
+import { SettingsEnum } from '../../../src/core/models/setting';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
 import { SettingList } from '../../../src/packages/setting';
 
@@ -14,7 +14,7 @@ export interface SystemPageProps {
     pageSize: number;
     order: Order;
     orderBy: string;
-    settingType: SettingEnum;
+    settingType: SettingsEnum;
 }
 
 const SystemPage: NextPage<SystemPageProps> = ({ currentPage, order, orderBy, pageSize, isActive, value, settingType }) => {
@@ -37,7 +37,7 @@ const SystemPage: NextPage<SystemPageProps> = ({ currentPage, order, orderBy, pa
 
 SystemPage.getInitialProps = async (ctx: NextPageContext): Promise<SystemPageProps> => {
     let props = {
-        settingType: ctx.query?.settingType || SettingEnum.ROLE,
+        settingType: ctx.query?.settingType || SettingsEnum.ROLE,
         value: ctx.query?.value || '',
         isActive: ctx.query?.isActive || true,
         currentPage: ctx.query?.currentPage || 1,

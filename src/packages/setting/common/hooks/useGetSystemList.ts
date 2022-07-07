@@ -3,11 +3,11 @@ import { useGetListWithCount } from '../../../../core/common/hooks';
 import * as React from 'react';
 import { SettingListProps } from '../../containers/settingList';
 import { Order } from '../../../../core/common/dataField';
-import { SettingEnum } from '../../../../core/models/setting';
+import { SettingsEnum } from '../../../../core/models/setting';
 import { SystemType } from '../../../../core/common/interface';
 import { SettingFilterDTO } from '../../containers/settingList/interface';
 
-export const useGetSystemList = (options: Partial<SettingFilterDTO>, settingType: SettingEnum) => {
+export const useGetSystemList = (options: Partial<SettingFilterDTO>, settingType: SettingsEnum) => {
     const { order, orderBy, isActive, value, currentPage, pageSize } = options;
     const option = React.useMemo<SettingFilterDTO>(
         () => ({
@@ -23,19 +23,19 @@ export const useGetSystemList = (options: Partial<SettingFilterDTO>, settingType
 
     const switchRouteList = () => {
         switch (settingType) {
-            case SettingEnum.ROLE:
+            case SettingsEnum.ROLE:
                 return ApiListRoutes.ROLES_ADMIN;
-            case SettingEnum.SYSTEM_MENUS:
+            case SettingsEnum.SYSTEM_MENUS:
                 return ApiListRoutes.SYSTEM_MENUS_ADMIN;
-            case SettingEnum.POST_CATEGORIES:
+            case SettingsEnum.POST_CATEGORIES:
                 return ApiListRoutes.POST_CATEGORIES_ADMIN;
-            case SettingEnum.SUBJECT_CATEGORIES:
+            case SettingsEnum.SUBJECT_CATEGORIES:
                 return ApiListRoutes.SUBJECT_CATEGORIES_ADMIN;
-            case SettingEnum.LESSON_TYPES:
+            case SettingsEnum.LESSON_TYPES:
                 return ApiListRoutes.LESSON_TYPES_ADMIN;
-            case SettingEnum.SUBJECT_DIMENSION:
+            case SettingsEnum.SUBJECT_DIMENSION:
                 return ApiListRoutes.DIMENSION_TYPES_ADMIN;
-            case SettingEnum.QUESTION_LEVELS:
+            case SettingsEnum.QUESTION_LEVELS:
                 return ApiListRoutes.QUESTION_LEVELS_ADMIN;
             default:
                 return ApiListRoutes.ROLES_ADMIN;

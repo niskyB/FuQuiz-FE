@@ -55,6 +55,8 @@ export const routes = {
     settingUrl: '/dashboard/setting',
     addSettingUrl: '/dashboard/setting/add',
     editSettingUrl: '/dashboard/setting/edit',
+    editSubjectCategorySettingUrl: '/dashboard/setting/subject-category/edit',
+    editBlogCategorySettingUrl: '/dashboard/setting/blog-category/edit',
 
     //  Lesson
     adminLessonListUrl: '/lesson',
