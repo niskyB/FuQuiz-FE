@@ -11,7 +11,7 @@ interface EditBlogCategoryPageProps {
 
 const EditBlogCategoryPage: NextPage<EditBlogCategoryPageProps> = ({ id }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
                 <EditBlogCategory id={id} />
             </DashBoardLayout>
