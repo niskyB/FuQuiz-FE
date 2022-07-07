@@ -1,9 +1,11 @@
+import { warn } from 'console';
 import { options } from 'joi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { SystemPageProps } from '../../../../../pages/dashboard/setting';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { settingFieldData } from '../../../../core/common/dataField/system';
 import { useUrlParams } from '../../../../core/common/hooks';
 import useTimeout from '../../../../core/common/hooks/useTimeout';
@@ -11,11 +13,13 @@ import { SystemType } from '../../../../core/common/interface';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-import { SettingEnum } from '../../../../core/models/setting';
+import { SettingEditEnum, SettingsEnum } from '../../../../core/models/setting';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
+import { editBlogCategory } from '../../../blogCategory/containers/editCategory/action';
 import { PaginationBar } from '../../../dashboard';
 import { useGetSystemList } from '../../common/hooks/useGetSystemList';
+import { updateStatusBlogCategory, updateStatusSubjectCategory } from './action';
 import { SettingFilterDTO, SettingFilterForm } from './interface';
 
 export interface SettingListProps extends SystemPageProps {}
@@ -56,6 +60,57 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
         query: { ...router.query, currentPage, pageSize, order, orderBy, isActive, value, settingType },
     });
 
+    const renderEditCategory = (item: SystemType<any>) => {
+        switch (item.type.toUpperCase()) {
+            case SettingEditEnum.SUBJECT_CATEGORY.toUpperCase():
+                return (
+                    <Link href={`${routes.editSubjectCategorySettingUrl}/${item.id}`} passHref>
+                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                    </Link>
+                );
+            case SettingEditEnum.POST_CATEGORY.toUpperCase():
+                return (
+                    <Link href={`${routes.editBlogCategorySettingUrl}/${item.id}`} passHref>
+                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                    </Link>
+                );
+            default:
+                return <></>;
+        }
+    };
+
+    const _changeIsActive = (item: SystemType<any>) => {
+        const { isActive } = item;
+        if (confirm("Are you sure you want to change this item's status?")) {
+            if (item.type.toUpperCase() === SettingEditEnum.SUBJECT_CATEGORY.toUpperCase()) {
+                updateStatusSubjectCategory(item.id, { isActive: !isActive });
+            }
+            if (item.type.toUpperCase() === SettingEditEnum.POST_CATEGORY.toUpperCase()) {
+                updateStatusBlogCategory(item.id, { isActive: !isActive });
+            }
+            window.location.reload();
+        }
+    };
+
+    const renderEditStatusCategory = (item: SystemType<any>) => {
+        switch (item.type.toUpperCase()) {
+            case SettingEditEnum.SUBJECT_CATEGORY.toUpperCase():
+                return (
+                    <button onClick={() => _changeIsActive(item)}>
+                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">{item.isActive ? 'Deactivate' : 'Active'}</p>
+                    </button>
+                );
+            case SettingEditEnum.POST_CATEGORY.toUpperCase():
+                return (
+                    <button onClick={() => _changeIsActive(item)}>
+                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">{item.isActive ? 'Deactivate' : 'Active'}</p>
+                    </button>
+                );
+            default:
+                return <></>;
+        }
+    };
+
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
             <div className="sm:flex sm:items-center">
@@ -74,11 +129,6 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                             Blog Category
                         </p>
                     </Link>
-                    <Link href={routes.adminAddSubjectUrl} passHref>
-                        <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                            Add Subject
-                        </p>
-                    </Link>
                 </div>
             </div>
             <div>
@@ -87,15 +137,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                         <div className="flex space-x-4">
                             <SelectField label="Type" values={settingFieldData} isRequire={false} name="settingType" />
                             <TextField isRequire={false} name="value" label="value" />
-                            <SelectField
-                                label="Active"
-                                values={[
-                                    { label: 'Active', value: true },
-                                    { label: 'Inactive', value: false },
-                                ]}
-                                isRequire={false}
-                                name="isActive"
-                            />
+                            <SelectField label="Active" values={[...statusFieldData]} isRequire={false} name="isActive" />
                             <SelectField
                                 label="Order By"
                                 values={[
@@ -133,7 +175,7 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <Table>
-                                <TableHead fields={['ID', 'Type', 'Value', 'Description', 'Order', 'Activation', '']} />
+                                <TableHead fields={['ID', 'Type', 'Value', 'Description', 'Order', 'Activation', '', '']} />
 
                                 <TableBody>
                                     {Boolean(count && list) &&
@@ -165,11 +207,8 @@ export const SettingList: React.FunctionComponent<SettingListProps> = ({ current
                                                         </span>
                                                     )}
                                                 </TableDescription>
-                                                <TableDescription>
-                                                    <Link href={`${routes.editSettingUrl}/${setting.id}`} passHref>
-                                                        <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                    </Link>
-                                                </TableDescription>
+                                                <TableDescription>{renderEditCategory(setting)}</TableDescription>
+                                                <TableDescription>{renderEditStatusCategory(setting)}</TableDescription>
                                             </TableRow>
                                         ))}
                                 </TableBody>
