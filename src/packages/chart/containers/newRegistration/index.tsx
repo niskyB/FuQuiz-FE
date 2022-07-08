@@ -7,7 +7,7 @@ interface NewRegistrationStatisticsProps {}
 
 export const NewRegistrationStatistics: React.FunctionComponent<NewRegistrationStatisticsProps> = () => {
     const [approved, setApproved] = React.useState<number>(0);
-    const [inactive, setInactive] = React.useState<number>(0);
+    const [cancelled, setCancelled] = React.useState<number>(0);
     const [paid, setPaid] = React.useState<number>(0);
     const [submitted, setSubmitted] = React.useState<number>(0);
 
@@ -23,7 +23,7 @@ export const NewRegistrationStatistics: React.FunctionComponent<NewRegistrationS
                     return total + current.value;
                 }, 0)
             );
-            setInactive(
+            setCancelled(
                 res[1].reduce((total, current) => {
                     return total + current.value;
                 }, 0)
@@ -44,7 +44,7 @@ export const NewRegistrationStatistics: React.FunctionComponent<NewRegistrationS
     return (
         <>
             <h1 className="text-xl font-bold">New registration</h1>
-            <PieChart size={500} labels={['Approved', 'Submitted', 'Paid', 'Inactive']} series={[approved, submitted, paid, inactive]} />
+            <PieChart size={500} labels={['Approved', 'Submitted', 'Paid', 'Rejected']} series={[approved, submitted, paid, cancelled]} />
         </>
     );
 };
