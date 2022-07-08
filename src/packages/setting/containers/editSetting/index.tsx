@@ -75,6 +75,7 @@ export const EditSetting: React.FunctionComponent<EditSettingProps> = ({ id, typ
                             <TextField label="Order" name="order" type="order" />
                             <TextareaField label="Description" name="description" aria-rowspan={8} />
                             <SelectField
+                                disabled
                                 label="Activation"
                                 name="isActive"
                                 values={[
