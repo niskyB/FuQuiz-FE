@@ -7,7 +7,7 @@ import { useGetSubjectCategoryList } from '../../common/hooks/useGetSubjectCateg
 
 interface SubjectCategoryListProps {}
 
-const SubjectCategoryList: React.FunctionComponent<SubjectCategoryListProps> = () => {
+export const SubjectCategoryList: React.FunctionComponent<SubjectCategoryListProps> = () => {
     const { categories } = useGetSubjectCategoryList();
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -46,7 +46,7 @@ const SubjectCategoryList: React.FunctionComponent<SubjectCategoryListProps> = (
                                                     <div className="text-gray-900">{category.description}</div>
                                                 </TableDescription>
                                                 <TableDescription>
-                                                    <Link href={`${routes.adminEditSubjectCategoryUrl}/${category.id}`} passHref>
+                                                    <Link href={`${routes.editSubjectCategorySettingUrl}/${category.id}`} passHref>
                                                         <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
                                                     </Link>
                                                 </TableDescription>
@@ -64,5 +64,3 @@ const SubjectCategoryList: React.FunctionComponent<SubjectCategoryListProps> = (
         </div>
     );
 };
-
-export default SubjectCategoryList;
