@@ -40,22 +40,15 @@ export const EditSetting: React.FunctionComponent<EditSettingProps> = ({ id, typ
     }, []);
 
     const _handleOnSubmit = (data: SystemType<any>) => {
-        const { order, description, isActive } = data;
-        console.log(data);
+        const { order, description } = data;
         if (type === SettingEditEnum.SUBJECT_CATEGORY) {
             updateSubjectCategory(id, { name: description, order }).then(() => {
                 toast.success('Update subject category success');
-                updateStatusSubjectCategory(id, { isActive }).then(() => {
-                    toast.success('Update status subject category success');
-                });
             });
         }
         if (type === SettingEditEnum.POST_CATEGORY) {
             updatePostCategory(id, { name: description, order }).then(() => {
                 toast.success('Update post category success');
-                updateStatusBlogCategory(id, { isActive }).then(() => {
-                    toast.success('Update status post category success');
-                });
             });
         }
     };
