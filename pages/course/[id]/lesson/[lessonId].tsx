@@ -1,25 +1,29 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
+import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
+import { AllRole } from '../../../../src/core/models/user';
 import LessonView from '../../../../src/packages/lesson/containers/lessonView';
 import { StoreLayout } from '../../../../src/packages/store';
 
-interface EditSliderPageProps {
+interface LessonDetailProps {
     lessonId: string;
     subjectId: string;
 }
 
-const EditSliderPage: NextPage<EditSliderPageProps> = ({ lessonId, subjectId }) => {
+const LessonDetail: NextPage<LessonDetailProps> = ({ lessonId, subjectId }) => {
     return (
-        <StoreLayout>
-            <LessonView lessonId={lessonId} subjectId={subjectId} />
-        </StoreLayout>
+        <RouterProtectionWrapper acceptRoles={AllRole}>
+            <StoreLayout>
+                <LessonView lessonId={lessonId} subjectId={subjectId} />
+            </StoreLayout>
+        </RouterProtectionWrapper>
     );
 };
 
-EditSliderPage.getInitialProps = async (ctx: NextPageContext): Promise<EditSliderPageProps> => {
+LessonDetail.getInitialProps = async (ctx: NextPageContext): Promise<LessonDetailProps> => {
     let props = { lessonId: ctx.query?.lessonId || '', subjectId: ctx.query?.id || '' };
 
-    return props as EditSliderPageProps;
+    return props as LessonDetailProps;
 };
 
-export default EditSliderPage;
+export default LessonDetail;
