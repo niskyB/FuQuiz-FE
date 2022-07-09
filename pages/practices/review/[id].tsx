@@ -1,5 +1,7 @@
 import { NextPage, NextPageContext } from 'next';
 import React from 'react';
+import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
+import { UserRole } from '../../../src/core/models/role';
 import { ReviewPractice } from '../../../src/packages/practices/containers/reviewPractice';
 import { StoreLayout } from '../../../src/packages/store';
 
@@ -9,9 +11,11 @@ interface ReviewPracticePageProps {
 
 const ReviewPracticePage: NextPage<ReviewPracticePageProps> = ({ id }) => {
     return (
-        <StoreLayout>
-            <ReviewPractice id={id} />
-        </StoreLayout>
+        <RouterProtectionWrapper acceptRoles={[UserRole.CUSTOMER]}>
+            <StoreLayout>
+                <ReviewPractice id={id} />
+            </StoreLayout>
+        </RouterProtectionWrapper>
     );
 };
 

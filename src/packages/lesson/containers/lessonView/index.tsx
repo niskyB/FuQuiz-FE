@@ -1,13 +1,11 @@
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import * as React from 'react';
 import { LessonTypeEnum } from '../../../../core/models/lesson';
+import { routes } from '../../../../core/routes';
 import { getYoutubeCode } from '../../../../core/util';
 import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
-import { useGetRegistrationList } from '../../../registrations/common/hooks/useGetRegistrationList';
-import { useGetLessonById } from '../../common/hooks/useGetLessonById';
-import * as React from 'react';
-import { routes } from '../../../../core/routes';
+import { LessonResDTO, useGetLessonById } from '../../common/hooks/useGetLessonById';
 
 interface LessonViewProps {
     lessonId: string;
@@ -16,7 +14,7 @@ interface LessonViewProps {
 
 const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId, subjectId }) => {
     const { lesson } = useGetLessonById(lessonId);
-    const router = useRouter();
+
     const { registrationList } = useGetRegistrationUserList({});
     const isAccess = React.useMemo(() => {
         for (let i = 0; i < registrationList.length; i++) {
@@ -63,42 +61,46 @@ const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId, subjec
                             }}
                         />
                         <div className="flex flex-col space-y-5">
-                            {lesson.lessonQuiz?.quizzes.map((quiz) => (
-                                <Link href={isAccess ? `${routes.simulationListUrl}/${quiz.id}` : '#'}>
-                                    <div className={`block rounded-lg bg-gray-100 ${isAccess && 'cursor-pointer hover:bg-gray-50'}`}>
-                                        <div className="px-4 py-4 sm:px-6">
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex flex-col space-y-3">
-                                                    <div className="text-sm font-medium text-indigo-600 truncate">{quiz.name}</div>
-                                                    <div className="flex space-x-2">
-                                                        <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-green-500 rounded-full w-fit">
-                                                            {quiz.type.description}
-                                                        </div>
-                                                        {quiz.level.name === 'Hard' && (
-                                                            <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-red-500 rounded-full w-fit">
-                                                                Hard
-                                                            </div>
-                                                        )}
-                                                        {quiz.level.name === 'Medium' && (
-                                                            <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-yellow-500 rounded-full w-fit">
-                                                                Medium
-                                                            </div>
-                                                        )}
-                                                        {quiz.level.name === 'Easy' && (
+                            {lesson ? (
+                                lesson.lessonQuiz?.quizzes.map((quiz) => (
+                                    <Link href={isAccess ? `${routes.simulationListUrl}/${quiz.id}` : '#'}>
+                                        <div className={`block rounded-lg bg-gray-100 ${isAccess && 'cursor-pointer hover:bg-gray-50'}`}>
+                                            <div className="px-4 py-4 sm:px-6">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex flex-col space-y-3">
+                                                        <div className="text-sm font-medium text-indigo-600 truncate">{quiz.name}</div>
+                                                        <div className="flex space-x-2">
                                                             <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-green-500 rounded-full w-fit">
-                                                                Easy
+                                                                {quiz.type.description}
                                                             </div>
-                                                        )}
+                                                            {quiz.level.name === 'Hard' && (
+                                                                <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-red-500 rounded-full w-fit">
+                                                                    Hard
+                                                                </div>
+                                                            )}
+                                                            {quiz.level.name === 'Medium' && (
+                                                                <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-yellow-500 rounded-full w-fit">
+                                                                    Medium
+                                                                </div>
+                                                            )}
+                                                            {quiz.level.name === 'Easy' && (
+                                                                <div className="px-2 text-xs font-semibold leading-5 text-white capitalize bg-green-500 rounded-full w-fit">
+                                                                    Easy
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="flex items-center flex-shrink-0 ml-2">
-                                                    <div className="flex">{quiz.numberOfQuestion} questions</div>
+                                                    <div className="flex items-center flex-shrink-0 ml-2">
+                                                        <div className="flex">{quiz.numberOfQuestion} questions</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </Link>
-                            ))}
+                                    </Link>
+                                ))
+                            ) : (
+                                <div className="text-3xl font-bold text-center">Please unlock this course to view this page</div>
+                            )}
                         </div>
                     </>
                 );

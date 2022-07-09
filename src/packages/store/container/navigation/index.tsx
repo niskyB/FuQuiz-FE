@@ -8,7 +8,6 @@ import { addBalance, getBalance, logout } from './action';
 import { useStoreUser } from '../../../../core/store';
 import { routes } from '../../../../core/routes';
 import { UserRole } from '../../../../core/models/role';
-import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { FormWrapper, TextField } from '../../../../core/components/form';
 import { AddBalanceDTO } from './interface';
@@ -25,8 +24,9 @@ const NAV_LINK = [
     { label: 'Course', link: routes.subjectListUrl },
 ];
 
-const USER_ACTION_LINK = [
-    { label: 'your profile', link: routes.meUrl },
+const COMMON_ACTION_LINK = [{ label: 'your profile', link: routes.meUrl }];
+
+const CUSTOMER_ACTION_LINK = [
     { label: 'My course', link: routes.userCourseUrl },
     { label: 'Quiz Practice', link: routes.practiceListUrl },
 ];
@@ -40,7 +40,6 @@ export const Navigation: React.FC<NavigationProps> = () => {
     const userState = useStoreUser();
     const methods = useForm<AddBalanceDTO>({ defaultValues: { amount: 0 } });
     const [balance, setBalance] = React.useState<number | null>(0);
-
     const [popUp, setPopUp] = React.useState<boolean>(false);
 
     const _onLogout = async () => {
@@ -185,15 +184,13 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                                             <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
                                                                 Hello, {userState.fullName}
                                                             </p>
-                                                            {balance !== null && balance != undefined ? (
+                                                            {balance !== null && balance != undefined && (
                                                                 <p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
                                                                     Balance: {vietnamCurrencyConverter(balance)}
                                                                 </p>
-                                                            ) : (
-                                                                <></>
                                                             )}
                                                         </div>
-                                                        {USER_ACTION_LINK.map((item) => (
+                                                        {COMMON_ACTION_LINK.map((item) => (
                                                             <Menu.Item key={item.label}>
                                                                 {({ active }) => (
                                                                     <Link href={item.link}>
@@ -209,6 +206,23 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                                                 )}
                                                             </Menu.Item>
                                                         ))}
+                                                        {userState.role.description === UserRole.CUSTOMER &&
+                                                            CUSTOMER_ACTION_LINK.map((item) => (
+                                                                <Menu.Item key={item.label}>
+                                                                    {({ active }) => (
+                                                                        <Link href={item.link}>
+                                                                            <a
+                                                                                className={classNames(
+                                                                                    active ? 'bg-gray-100' : '',
+                                                                                    'block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 capitalize'
+                                                                                )}
+                                                                            >
+                                                                                {item.label}
+                                                                            </a>
+                                                                        </Link>
+                                                                    )}
+                                                                </Menu.Item>
+                                                            ))}
 
                                                         <Menu.Item>
                                                             {({ active }) => (
@@ -274,7 +288,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                             </div>
                                         </div>
                                         <div className="mt-3 space-y-1">
-                                            {USER_ACTION_LINK.map((item) => (
+                                            {CUSTOMER_ACTION_LINK.map((item) => (
                                                 <Link href={item.link} key={item.label} passHref>
                                                     <a
                                                         className={`block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:text-gray-800 hover:bg-gray-100 ${
