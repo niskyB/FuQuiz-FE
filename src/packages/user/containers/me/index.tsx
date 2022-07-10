@@ -1,15 +1,14 @@
+import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormWrapper, TextField, SelectField } from '../../../../core/components/form';
-import { Gender, User } from '../../../../core/models/user';
-import { useStoreUser } from '../../../../core/store';
-import { updateUser } from './action';
-import Link from 'next/link';
-import { routes } from '../../../../core/routes';
-import { toast } from 'react-toastify';
-import { UpdateUserDto } from './interface';
-import { checkFileType } from '../../../../core/util/file';
 import { genderFieldData } from '../../../../core/common/dataField';
+import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { Gender, User } from '../../../../core/models/user';
+import { routes } from '../../../../core/routes';
+import { useStoreUser } from '../../../../core/store';
+import { checkFileType } from '../../../../core/util/file';
+import { updateUser } from './action';
+import { UpdateUserDto } from './interface';
 
 interface UpdateUserProps {}
 
@@ -39,10 +38,10 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
 
     const _handleOnSubmit = async (data: UpdateUserDto) => {
         if (avatarFile) data.image = avatarFile;
-        const res = await updateUser(data);
 
+        const res = await updateUser(data);
         if (res.status === 200) {
-            window.location.reload();
+            // window.location.reload();
         }
     };
 
@@ -130,10 +129,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
                             >
                                 Choose image
                             </label>
-                            <img
-                                className="rounded-full w-72 h-72"
-                                src={previewAvatarUrl || 'https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Landscape-Wallpapers.jpg'}
-                            />
+                            <img className="rounded-full w-72 h-72" src={previewAvatarUrl || '/asset/images/default-avatar.png'} />
                         </div>
                         <div className="flex flex-col justify-between w-full space-y-2">
                             <button

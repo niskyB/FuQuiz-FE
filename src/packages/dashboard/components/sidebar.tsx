@@ -22,7 +22,7 @@ const navigation = [
         name: 'Statistics',
         icon: ChartSquareBarIcon,
         link: `${routes.dashboardUrl}`,
-        acceptRole: [UserRole.ADMIN, UserRole.MARKETING, UserRole.EXPERT, UserRole.SALE],
+        acceptRole: [UserRole.ADMIN, UserRole.MARKETING],
     },
     {
         name: 'Slider',
