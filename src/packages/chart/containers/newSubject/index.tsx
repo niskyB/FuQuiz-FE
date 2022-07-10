@@ -30,7 +30,7 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
             <form className="space-y-5" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <h1 className="text-xl font-bold">New subjects</h1>
 
-                <div className="flex items-end space-x-5">
+                {/* <div className="flex items-end space-x-5">
                     <SelectField
                         label="Sort"
                         name="sort"
@@ -46,7 +46,7 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
                     >
                         Search
                     </button>
-                </div>
+                </div> */}
 
                 <ColumnChart
                     xAxis={data.map((item) => item.date)}

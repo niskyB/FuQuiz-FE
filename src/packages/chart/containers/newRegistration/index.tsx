@@ -2,7 +2,6 @@ import { PieChart } from '../../';
 import React from 'react';
 import { getNewRegistrationStatistic } from './action';
 import { RegistrationStatus } from '../../../../core/models/registration';
-import { ChartData } from '../newCustomers/interface';
 interface NewRegistrationStatisticsProps {}
 
 export const NewRegistrationStatistics: React.FunctionComponent<NewRegistrationStatisticsProps> = () => {
@@ -10,13 +9,15 @@ export const NewRegistrationStatistics: React.FunctionComponent<NewRegistrationS
     const [cancelled, setCancelled] = React.useState<number>(0);
     const [paid, setPaid] = React.useState<number>(0);
     const [submitted, setSubmitted] = React.useState<number>(0);
+    const [inActive, setInActive] = React.useState<number>(0);
 
     React.useEffect(() => {
         Promise.all([
             getNewRegistrationStatistic(RegistrationStatus.APPROVED),
-            getNewRegistrationStatistic(RegistrationStatus.INACTIVE),
+            getNewRegistrationStatistic(RegistrationStatus.CANCELLED),
             getNewRegistrationStatistic(RegistrationStatus.PAID),
             getNewRegistrationStatistic(RegistrationStatus.SUBMITTED),
+            getNewRegistrationStatistic(RegistrationStatus.INACTIVE),
         ]).then((res) => {
             setApproved(
                 res[0].reduce((total, current) => {
@@ -38,13 +39,22 @@ export const NewRegistrationStatistics: React.FunctionComponent<NewRegistrationS
                     return total + current.value;
                 }, 0)
             );
+            setInActive(
+                res[4].reduce((total, current) => {
+                    return total + current.value;
+                }, 0)
+            );
         });
         return () => {};
     }, []);
     return (
         <>
             <h1 className="text-xl font-bold">New registration</h1>
-            <PieChart size={500} labels={['Approved', 'Submitted', 'Paid', 'Rejected']} series={[approved, submitted, paid, cancelled]} />
+            <PieChart
+                size={500}
+                labels={['Approved', 'Submitted', 'Paid', 'Cancelled', 'Inactive']}
+                series={[approved, submitted, paid, cancelled, inActive]}
+            />
         </>
     );
 };
