@@ -38,15 +38,24 @@ const defaultValues: Omit<AddQuestionDTO, 'image'> = {
 
 export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const router = useRouter();
-    const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
-    const [explanation, setExplanation] = React.useState<string>('');
 
     const methods = useForm<AddQuestionDTO>({
         defaultValues,
     });
     const answers = useFieldArray({ control: methods.control, name: 'answers' });
 
+    const [isMultipleChoice, setIsMultipleChoice] = React.useState<boolean>(false);
+    const [explanation, setExplanation] = React.useState<string>('');
     const [subjectId, setSubjectId] = React.useState<string>('');
+    const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
+    const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
+    const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
+    const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
+
+    const { subjects } = useGetSubjectListByRole();
+    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
+    const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
+    const { levels } = useGetQuestionLevelList();
 
     React.useEffect(() => {
         methods.reset();
@@ -56,16 +65,6 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
         setIsMultipleChoice(false);
         setExplanation('');
     }, [subjectId]);
-
-    const [selectedDimension, setSelectedDimension] = React.useState<SelectionFieldValues<any>>(unsetFieldData);
-    const [selectedDimensionList, setSelectedDimensionList] = React.useState<SelectionFieldValues<any>[]>([]);
-    const { subjects } = useGetSubjectListByRole();
-    const { lessonList: lessons } = useGetLessonList({ id: subjectId });
-    const { dimensionList: dimensions } = useGetDimensionListById(subjectId);
-    const { levels } = useGetQuestionLevelList();
-
-    const [previewThumbnailUrl, setPreviewThumbnailUrl] = React.useState<string>('');
-    const [thumbnailFile, setThumbnailFile] = React.useState<File | null>(null);
 
     const _onChangeSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSubjectId(e.target.value);
@@ -84,6 +83,7 @@ export const AddQuestion: React.FunctionComponent<AddQuestionProps> = () => {
     const _handleOnSubmit = async (data: AddQuestionDTO) => {
         const { subject, ...others } = data;
         if (thumbnailFile) others.image = thumbnailFile;
+
         others.explanation = explanation;
         others.isMultipleChoice = isMultipleChoice;
         let dimensionString = '';

@@ -42,6 +42,20 @@ export const Navigation: React.FC<NavigationProps> = () => {
     const [balance, setBalance] = React.useState<number | null>(0);
     const [popUp, setPopUp] = React.useState<boolean>(false);
 
+    const dashBoardLink = React.useMemo<string>(() => {
+        switch (userState.role.description) {
+            case UserRole.ADMIN:
+                return routes.dashboardUrl;
+            case UserRole.EXPERT:
+                return routes.adminSubjectListUrl;
+            case UserRole.MARKETING:
+                return routes.dashboardUrl;
+            case UserRole.SALE:
+                return routes.adminRegistrationUrl;
+        }
+        return '';
+    }, []);
+
     const _onLogout = async () => {
         const res = await logout();
         if (res) window.location.reload();
@@ -122,13 +136,9 @@ export const Navigation: React.FC<NavigationProps> = () => {
                                         ))}
 
                                         {userState.role.description !== UserRole.CUSTOMER && (
-                                            <Link href={routes.dashboardUrl}>
+                                            <Link href={dashBoardLink}>
                                                 <a
-                                                    className={`${
-                                                        router.pathname === routes.dashboardUrl
-                                                            ? 'border-indigo-500 text-gray-900'
-                                                            : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                                                    } inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 `}
+                                                    className={`${'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 `}
                                                 >
                                                     Dashboard
                                                 </a>
