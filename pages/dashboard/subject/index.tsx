@@ -8,7 +8,7 @@ import { SubjectFilterDTO } from '../../../src/packages/subject/container/subjec
 
 const SubjectPage: NextPage<SubjectFilterDTO> = ({ category, createdAt, currentPage, isActive, name, pageSize, isFeature }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
                 <SubjectList
                     category={category}

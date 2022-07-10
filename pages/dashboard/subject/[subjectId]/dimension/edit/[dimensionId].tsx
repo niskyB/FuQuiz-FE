@@ -12,7 +12,7 @@ interface BlogDetailPageProps {
 
 const BlogDetailPage: NextPage<BlogDetailPageProps> = ({ subjectId, dimensionId }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.EXPERT]}>
             <DashBoardLayout>
                 <EditDimension dimensionId={dimensionId} subjectId={subjectId} />
             </DashBoardLayout>
