@@ -3,9 +3,9 @@ import { FormParser, SendFormRequestConfig } from '../../../../core/util/form';
 import { UpdateUserDto } from './interface';
 
 export const updateUser = async (data: UpdateUserDto) => {
-    let { email, ...other } = data;
+    const { email, ...others } = data;
 
-    const form = FormParser(other);
+    const form = FormParser(others);
     const res = await http.put('/user', form, SendFormRequestConfig());
 
     return res;
