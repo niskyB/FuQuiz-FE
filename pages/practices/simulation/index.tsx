@@ -27,7 +27,7 @@ SimulationPage.getInitialProps = async (ctx: NextPageContext): Promise<Simulatio
     let props = {
         subject: ctx.query?.subject || '',
         name: ctx.query?.name || '',
-        currentPage: ctx.query?.currentPage || 0,
+        currentPage: ctx.query?.currentPage || 1,
         pageSize: ctx.query?.pageSize || 12,
     };
 

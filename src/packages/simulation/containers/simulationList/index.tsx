@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { SimulationPageProps } from '../../../../../pages/practices/simulation';
+import { allFieldData } from '../../../../core/common/dataField';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
@@ -61,7 +62,7 @@ export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ c
                 <FormWrapper methods={methods}>
                     <div className="flex items-end justify-between">
                         <form className="flex items-end space-x-2" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
-                            <SelectField label="Subject" values={dataParser(subjects, 'name', 'id')} name="subject" />
+                            <SelectField label="Subject" values={[allFieldData, ...dataParser(subjects, 'name', 'id')]} name="subject" />
                             <TextField name="name" label="Exam name" />
                             <button
                                 type="submit"
@@ -70,6 +71,11 @@ export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ c
                                 Search
                             </button>
                         </form>
+                        <Link href={routes.practiceListUrl}>
+                            <a className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                Practice List
+                            </a>
+                        </Link>
                     </div>
                 </FormWrapper>
             </div>
@@ -123,7 +129,7 @@ export const SimulationList: React.FunctionComponent<SimulationListProps> = ({ c
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };
