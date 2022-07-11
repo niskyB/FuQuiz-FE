@@ -59,6 +59,7 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
             window.location.reload();
         } catch (error: any) {
             if (error.data.balance) toast.warn('Your balance is not enough to pay this course');
+            if (error.data.errorMessage) toast.warn(error.data.errorMessage);
         }
     };
 
