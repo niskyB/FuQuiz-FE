@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
+import useTimeout from '../../../../core/common/hooks/useTimeout';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { UserRole } from '../../../../core/models/role';
@@ -62,14 +63,19 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
             methods.setValue('name', subject.name);
             methods.setValue('tagLine', subject.tagLine);
             methods.setValue('description', subject.description);
-            methods.setValue('assignTo', subject.assignTo.user.id);
-            methods.setValue('category', subject.category.id);
-            methods.setValue('isFeature', subject.isFeature);
-            methods.setValue('isActive', subject.isActive);
 
             setPreviewUrl(imageUrl);
         }
     }, [methods, subject, router, categories]);
+
+    useTimeout(() => {
+        if (subject) {
+            methods.setValue('category', subject.category.id);
+            methods.setValue('assignTo', subject.assignTo.user.id);
+            methods.setValue('isFeature', subject.isFeature);
+            methods.setValue('isActive', subject.isActive);
+        }
+    }, 1000);
 
     const _onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {

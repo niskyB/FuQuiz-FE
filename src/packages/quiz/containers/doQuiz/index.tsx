@@ -15,6 +15,7 @@ import useIsFirstRender from '../../../../core/common/hooks/useIsFirstRender';
 import { DoQuizType } from './interface';
 import { routes } from '../../../../core/routes';
 import Link from 'next/link';
+import useTimeout from '../../../../core/common/hooks/useTimeout';
 
 interface DoQuizProps {
     id: string;
@@ -39,13 +40,12 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
     const isInitRender = useIsFirstRender();
     const { quiz } = useGetQuizResultById(id);
 
-    React.useEffect(() => {
+    useTimeout(() => {
         if (!quiz) {
             router.push(routes.homeUrl);
             toast.warn("Quiz doesn't exist");
         }
-    }, []);
-
+    }, 1000);
     const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(

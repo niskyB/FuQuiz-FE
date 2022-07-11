@@ -96,9 +96,13 @@ export const PackageList: React.FunctionComponent<PackageListProps> = ({ subject
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div>
-                                                        <Link href={`${router.asPath}/edit/${packageSubject.id}`} passHref>
-                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                        </Link>
+                                                        {userStore.role.description === UserRole.ADMIN ? (
+                                                            <Link href={`${router.asPath}/edit/${packageSubject.id}`} passHref>
+                                                                <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                            </Link>
+                                                        ) : (
+                                                            <></>
+                                                        )}
                                                     </div>
                                                 </TableDescription>
                                             </TableRow>
