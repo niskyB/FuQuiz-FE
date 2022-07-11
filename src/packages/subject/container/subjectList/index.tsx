@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { allFieldData, Order, statusFieldData } from '../../../../core/common/dataField';
 import { useUrlParams } from '../../../../core/common/hooks';
 import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
@@ -26,9 +26,19 @@ const defaultValues: SubjectFilterFormDTO = {
     isActive: '',
     name: '',
     isFeature: '',
+    order: Order.DESC,
 };
 
-export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize, category, createdAt, isActive, name, isFeature }) => {
+export const SubjectList: React.FunctionComponent<SubjectListProps> = ({
+    currentPage,
+    pageSize,
+    category,
+    createdAt,
+    isActive,
+    name,
+    isFeature,
+    order,
+}) => {
     const userState = useStoreUser();
     const router = useRouter();
     const methods = useForm<SubjectFilterFormDTO>({
@@ -44,8 +54,9 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
             isActive,
             name,
             isFeature,
+            order,
         }),
-        [currentPage, pageSize, category, createdAt, isActive, name, isFeature]
+        [currentPage, pageSize, category, createdAt, isActive, name, isFeature, order]
     );
 
     useUrlParams({

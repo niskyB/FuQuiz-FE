@@ -1,5 +1,6 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
+import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
 import { DashBoardLayout } from '../../../src/packages/dashboard';
@@ -18,6 +19,7 @@ const SubjectPage: NextPage<SubjectFilterDTO> = ({ category, createdAt, currentP
                     name={name}
                     pageSize={pageSize}
                     isFeature={isFeature}
+                    order={Order.DESC}
                 />
             </DashBoardLayout>
         </RouterProtectionWrapper>
