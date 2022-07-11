@@ -16,12 +16,21 @@ import { useGetSubjectList } from '../../../subject';
 import { FilterQuizListDTO, FilterQuizListFormDTO, useGetQuizList } from '../../common/hooks/useGetQuizList';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { deleteQuiz } from './action';
+import { useStoreApi } from '../../../../core/store';
+import { toast } from 'react-toastify';
 
 interface QuizListProps extends FilterQuizListDTO {}
 
 export const QuizList: React.FunctionComponent<QuizListProps> = ({ currentPage, name, pageSize, subject, type }) => {
     const methods = useForm<FilterQuizListFormDTO>();
     const router = useRouter();
+
+    const { errorMessage } = useStoreApi();
+    React.useEffect(() => {
+        if (errorMessage.length) {
+            toast.warn(errorMessage);
+        }
+    }, [errorMessage]);
 
     const { quizList, count } = useGetQuizList({ currentPage, name, pageSize, subject, type });
     const { quizTypeList: QuizTypeList } = useGetQuizType();
