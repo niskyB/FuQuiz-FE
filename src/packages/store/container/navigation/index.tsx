@@ -54,7 +54,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                 return routes.adminRegistrationUrl;
         }
         return '';
-    }, []);
+    }, [userState.role.description]);
 
     const _onLogout = async () => {
         const res = await logout();
