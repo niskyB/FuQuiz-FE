@@ -1,14 +1,15 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
+import { Order } from '../../../src/core/common/dataField';
 import { StoreLayout } from '../../../src/packages/store';
 import { SubjectDetail } from '../../../src/packages/subject';
 import { SubjectFilterDTO } from '../../../src/packages/subject/container/subjectList/interface';
 
-interface EditSliderPageProps extends SubjectFilterDTO {
+interface CourseDetailPageProps extends SubjectFilterDTO {
     id: string;
 }
 
-const EditSliderPage: NextPage<EditSliderPageProps> = ({ id, category, createdAt, currentPage, isActive, isFeature, name, pageSize }) => {
+const CourseDetailPage: NextPage<CourseDetailPageProps> = ({ id, category, createdAt, currentPage, isActive, isFeature, name, pageSize }) => {
     return (
         <StoreLayout>
             <SubjectDetail
@@ -20,15 +21,16 @@ const EditSliderPage: NextPage<EditSliderPageProps> = ({ id, category, createdAt
                 isFeature={isFeature}
                 name={name}
                 pageSize={pageSize}
+                order={Order.DESC}
             />
         </StoreLayout>
     );
 };
 
-EditSliderPage.getInitialProps = async (ctx: NextPageContext): Promise<EditSliderPageProps> => {
+CourseDetailPage.getInitialProps = async (ctx: NextPageContext): Promise<CourseDetailPageProps> => {
     let props = { id: ctx.query?.id || '' };
 
-    return props as EditSliderPageProps;
+    return props as CourseDetailPageProps;
 };
 
-export default EditSliderPage;
+export default CourseDetailPage;
