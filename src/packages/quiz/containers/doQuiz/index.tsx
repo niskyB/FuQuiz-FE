@@ -39,6 +39,13 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
     const isInitRender = useIsFirstRender();
     const { quiz } = useGetQuizResultById(id);
 
+    React.useEffect(() => {
+        if (!quiz) {
+            router.push(routes.homeUrl);
+            toast.warn("Quiz doesn't exist");
+        }
+    }, []);
+
     const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(

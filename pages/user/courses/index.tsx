@@ -4,7 +4,6 @@ import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { RegistrationStatus } from '../../../src/core/models/registration';
 import { UserRole } from '../../../src/core/models/role';
-import { AllRole } from '../../../src/core/models/user';
 import { UserCourses } from '../../../src/packages/course/userCourses';
 import { StoreLayout } from '../../../src/packages/store';
 
