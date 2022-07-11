@@ -236,7 +236,6 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                                                         <TableDescription>{question.questionLevel.description}</TableDescription>
 
                                                         <TableDescription>
-                                                            {/* <input {...methods.register('questions')} value={question.id} type={`checkbox`} /> */}
                                                             <input
                                                                 value={question.id}
                                                                 type={`checkbox`}
