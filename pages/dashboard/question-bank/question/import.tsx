@@ -158,7 +158,6 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
     const _handleOnSubmit = async (formData: ImportFormDataDTO) => {
         const promiseList: Array<Promise<any>> = [];
         for (let i = 0; i < formData.check.length; i++) {
-            const currentIndex = i;
             const isCheck = formData.check[i];
             const currentData = data[i];
 
@@ -193,7 +192,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                             videoLink: currentData.videoUrl,
                         })
                             .then((res) => {
-                                resolve('');
+                                resolve(res);
                             })
                             .catch((err) => {
                                 reject(err);
@@ -208,10 +207,10 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                 switch (singleRes.status) {
                     case 'fulfilled':
                         methods.setValue(`check.${i}`, false);
-                        toast.success(`Success add question with index ${i + 1}`);
+                        toast.success(`Success add question`);
                         break;
                     case 'rejected':
-                        toast.error(`Failed to add question with index ${i + 1}, please make sure all information are correct!`);
+                        toast.error(`Failed to add question, please make sure all information are correct!`);
                         break;
                     default:
                         break;
