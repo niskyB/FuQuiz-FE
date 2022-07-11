@@ -98,7 +98,7 @@ export const routes = {
     adminAddPackageUrl: '/add',
 
     // Course
-    courseListUrl: '/user/courses',
+    courseListUrl: '/courses',
 
     // Setting
     adminSettingListUrl: '/dashboard/setting',

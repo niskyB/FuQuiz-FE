@@ -5,6 +5,7 @@ import { PricePackage } from '../../../../core/models/pricePackage';
 import { Subject } from '../../../../core/models/subject';
 import { SubjectFilterDTO } from '../../container/subjectList/interface';
 import * as React from 'react';
+import { Order } from '../../../../core/common/dataField';
 
 export interface SubjectResDTO extends Subject {
     lessons: Lesson[];
@@ -12,7 +13,7 @@ export interface SubjectResDTO extends Subject {
 }
 
 export const useGetSubjectList = (options: Partial<SubjectFilterDTO>) => {
-    const { category, createdAt, currentPage, isActive, isFeature, name, pageSize } = options;
+    const { category, createdAt, currentPage, isActive, isFeature, name, pageSize, order } = options;
 
     const option = React.useMemo<SubjectFilterDTO>(
         () => ({
@@ -23,8 +24,9 @@ export const useGetSubjectList = (options: Partial<SubjectFilterDTO>) => {
             isFeature: isFeature || '',
             name: name || '',
             pageSize: pageSize || 10,
+            order: order || Order.DESC,
         }),
-        [category, createdAt, currentPage, isActive, isFeature, name, pageSize]
+        [category, createdAt, currentPage, isActive, isFeature, name, pageSize, order]
     );
     const { list: subjects, count } = useGetListWithCount<SubjectResDTO, Partial<SubjectFilterDTO>>(ApiListRoutes.SUBJECTS, option);
 
