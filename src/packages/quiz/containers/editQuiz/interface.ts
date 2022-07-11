@@ -9,3 +9,5 @@ export interface EditQuizDTO {
     subject: string;
     questions: string[];
 }
+
+export interface EditQuizFromDTO extends Omit<EditQuizDTO, 'questions'> {}

@@ -21,7 +21,7 @@ import { useGetSubjectList } from '../../../subject';
 import { SubjectFilterDTO } from '../../../subject/container/subjectList/interface';
 import { useGetQuizType } from '../../common/hooks/useGetQuizType';
 import { addQuiz } from './action';
-import { AddQuizDTO, AddQuizFormDTO } from './interface';
+import { AddQuizFormDTO } from './interface';
 interface AddQuizProps {}
 
 const mapFields = [{ label: 'Name', name: 'name' }];
@@ -175,7 +175,10 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                                 </div>
                                 <div className="flex justify-end space-x-2">
                                     <button
-                                        type="submit"
+                                        onClick={() => {
+                                            filterMethods.reset();
+                                            setSelectedQuestions([]);
+                                        }}
                                         className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                                     >
                                         Reset
@@ -217,7 +220,6 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
 
                                                         <TableDescription>
                                                             <input
-                                                                // {...methods.register(`questions`)}
                                                                 value={question.id}
                                                                 type={`checkbox`}
                                                                 onChange={(e) => _onHandleCheckChange(e, question.id)}
