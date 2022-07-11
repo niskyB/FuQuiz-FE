@@ -41,7 +41,7 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
 
         const res = await updateUser(data);
         if (res.status === 200) {
-            window.location.reload();
+            // window.location.reload();
         }
     };
 
