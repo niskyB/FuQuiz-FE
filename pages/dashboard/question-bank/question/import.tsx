@@ -235,14 +235,14 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                     <div className="flex items-center space-x-10">
                                         <div
                                             onClick={() => download('/asset/file/importTestFile.xlsx', 'example.xlsx')}
-                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         >
                                             Download example file
                                         </div>
 
                                         <label
                                             htmlFor="file"
-                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         >
                                             Import
                                         </label>

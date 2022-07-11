@@ -3,7 +3,7 @@ import React from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../src/packages/dashboard';
-import QuestionList from '../../../../src/packages/question/containers/questionList';
+import { QuestionList } from '../../../../src/packages/question/containers/questionList';
 
 export interface QuestionListPageProps {
     currentPage: number;
@@ -13,7 +13,7 @@ export interface QuestionListPageProps {
     dimension: string;
     content: string;
     level: string;
-    isActive: boolean;
+    isActive: boolean | '';
 }
 
 const QuestionListPage: NextPage<QuestionListPageProps> = ({ content, currentPage, dimension, isActive, lesson, level, pageSize, subject }) => {
@@ -44,7 +44,7 @@ QuestionListPage.getInitialProps = async (ctx: NextPageContext): Promise<Questio
         dimension: ctx.query?.dimension || '',
         content: ctx.query?.content || '',
         level: ctx.query?.level || '',
-        isActive: ctx.query?.isActive || true,
+        isActive: ctx.query?.isActive || '',
     } as QuestionListPageProps;
     return props;
 };
