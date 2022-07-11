@@ -60,8 +60,8 @@ export const Register: React.FC<RegisterProps> = () => {
                                 label="sex"
                                 name="gender"
                                 values={[
-                                    { label: 'male', value: Gender.MALE },
-                                    { label: 'female', value: Gender.FEMALE },
+                                    { label: 'Male', value: Gender.MALE },
+                                    { label: 'Female', value: Gender.FEMALE },
                                 ]}
                             />
 

@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { TextareaField } from '../../../../core/components/form/textareaField';
 import { UserRole } from '../../../../core/models/role';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { checkFileType } from '../../../../core/util/file';
+import { RedStar } from '../../../store';
 import { useGetSlider } from '../../common/hooks/useGetSlider';
 import { updateSlider } from './action';
 import { UpdateSliderDTO, UpdateSliderInput } from './interface';
@@ -51,12 +52,6 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
     React.useEffect(() => {
         if (slider) {
-            // if user go in there are not admin or the owner of the slider, push them to sliderList page
-            // if (userState.role.description != UserRole.ADMIN && slider.marketing && slider.marketing.id && slider.marketing.id !== userState.typeId) {
-            //     router.push(routes.adminSliderListUrl);
-            //     return;
-            // }
-
             methods.setValue('title', slider.title);
             methods.setValue('backLink', slider.backLink);
             methods.setValue('isShow', slider.isShow);
@@ -85,6 +80,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
             checkFileType(file, () => {
                 setImageFile(file);
+                setImageUrl(URL.createObjectURL(file));
             });
         }
     };
@@ -105,6 +101,7 @@ export const EditSlider: React.FunctionComponent<EditSliderProps> = ({ id }) => 
 
                             <SelectField label="Show" values={SHOWING_FIELDS} direction="row" name="isShow" />
                             <TextareaField name="notes" label="Notes" direction="row" />
+
                             <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <div className="flex justify-start space-x-2">
                                     <label htmlFor="cover-photo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">

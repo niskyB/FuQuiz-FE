@@ -13,7 +13,7 @@ export const ResetPasswordSuccess: React.FunctionComponent<ResetPasswordSuccessP
                 <div className="flex flex-col items-center px-4 py-8 space-y-5 bg-white shadow sm:rounded-lg sm:px-10">
                     <p className="text-base text-gray-500 w-fit">Reset Password successfully</p>
                     <Link href={routes.loginUrl} passHref>
-                        <p className="px-2 py-1 text-gray-100 bg-indigo-600 rounded w-fit hover:text-gray-50">Return to login</p>
+                        <p className="px-2 py-1 text-gray-100 bg-indigo-600 rounded cursor-pointer w-fit hover:text-gray-50">Return to login</p>
                     </Link>
                 </div>
             </div>
