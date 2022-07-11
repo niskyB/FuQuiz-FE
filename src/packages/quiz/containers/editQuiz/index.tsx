@@ -21,7 +21,7 @@ import { SubjectFilterDTO } from '../../../subject/container/subjectList/interfa
 import { useGetQuizById } from '../../common/hooks/useGetQuizById';
 import { useGetQuizType } from '../../common/hooks/useGetQuizType';
 import { updateQuiz } from './action';
-import { EditQuizDTO } from './interface';
+import { EditQuizFromDTO } from './interface';
 interface EditQuizProps {
     quizId: string;
 }
@@ -31,11 +31,12 @@ const mapFields = [{ label: 'Name', name: 'name' }];
 export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => {
     const router = useRouter();
     const filterMethods = useForm<FilterQuestionFormDTO>();
-    const methods = useForm<EditQuizDTO>();
+    const methods = useForm<EditQuizFromDTO>();
 
     const [selectedSubjectId, setSelectedSubjectId] = React.useState<string>('');
     const [numberOfQuestion, setNumberOfQuestion] = React.useState<number>(0);
     const [questionOption, setQuestionOption] = React.useState<Partial<FilterQuestionsDTO>>({});
+    const [selectedQuestions, setSelectedQuestions] = React.useState<string[]>([]);
 
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({}), []);
 
@@ -45,7 +46,7 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
     const { ExamLevelList } = useGetExamLevel();
     const { quizTypeList: QuizTypeList } = useGetQuizType();
     const { levels } = useGetQuestionLevelList();
-    const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, ...questionOption });
+    const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, currentPage: 1, pageSize: 999, ...questionOption });
     const { quiz } = useGetQuizById(quizId);
 
     React.useEffect(() => {
@@ -60,21 +61,27 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
             methods.setValue('isPublic', quiz.isPublic);
             methods.setValue('quizLevel', quiz.level.id);
             methods.setValue('type', quiz.type.id);
-            methods.setValue(
-                'questions',
-                quiz.questions.map((item) => item.id)
-            );
+
+            setSelectedQuestions(quiz.questions.map((item) => item.id));
         }
         return () => {};
     }, [quiz]);
+
+    const _onHandleCheckChange = (e: React.ChangeEvent<HTMLInputElement>, questionId: string) => {
+        if (e.target.checked) {
+            setSelectedQuestions((prev) => [...prev, questionId]);
+        } else {
+            setSelectedQuestions((prev) => prev.filter((item) => item !== questionId));
+        }
+    };
 
     const _handleOnFilter = async (data: FilterQuestionFormDTO) => {
         setQuestionOption((prev) => ({ ...prev, ...data }));
     };
 
-    const _handleOnSubmit = async (data: EditQuizDTO) => {
-        if (data.questions.length === numberOfQuestion) {
-            const res = await updateQuiz(quizId, data);
+    const _handleOnSubmit = async (data: EditQuizFromDTO) => {
+        if (selectedQuestions.length === numberOfQuestion) {
+            const res = await updateQuiz(quizId, { ...data, questions: selectedQuestions });
             if (res) {
                 router.push(clearQuery(router.asPath).replace(`${routes.adminEditQuizUrl}/${quizId}`, ''));
                 toast.success('Update success!');
@@ -83,7 +90,6 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
             toast.warn('Number of question and number of question you have selected should be equal!');
         }
     };
-
     return (
         <div className="space-y-8 divide-y divide-gray-200">
             <FormWrapper methods={methods}>
@@ -92,7 +98,7 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                         <div className="space-y-8">
                             <div>
                                 <h1 className="text-2xl font-medium leading-6 text-gray-900">Edit Quiz</h1>
-                                <p className="max-w-2xl mt-1 text-xl text-gray-500">This page will be add new quiz</p>
+                                <p className="max-w-2xl mt-1 text-xl text-gray-500">This page for update quiz</p>
                             </div>
                             <div className="w-full mt-6 space-y-6 sm:max-w-3xl sm:mt-5 sm:space-y-5">
                                 <div>
@@ -186,7 +192,10 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                                 </div>
                                 <div className="flex justify-end space-x-2">
                                     <button
-                                        type="submit"
+                                        onClick={() => {
+                                            filterMethods.reset();
+                                            setSelectedQuestions([]);
+                                        }}
                                         className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                                     >
                                         Reset
@@ -227,7 +236,13 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
                                                         <TableDescription>{question.questionLevel.description}</TableDescription>
 
                                                         <TableDescription>
-                                                            <input {...methods.register('questions')} value={question.id} type={`checkbox`} />
+                                                            {/* <input {...methods.register('questions')} value={question.id} type={`checkbox`} /> */}
+                                                            <input
+                                                                value={question.id}
+                                                                type={`checkbox`}
+                                                                onChange={(e) => _onHandleCheckChange(e, question.id)}
+                                                                checked={selectedQuestions.includes(question.id)}
+                                                            />
                                                         </TableDescription>
                                                     </TableRow>
                                                 ))}
@@ -245,7 +260,7 @@ export const EditQuiz: React.FunctionComponent<EditQuizProps> = ({ quizId }) => 
 
             <div className="flex justify-between pt-5">
                 <p className="mt-2 font-semibold text-red-500 text">
-                    Choose Questions: {(methods.watch('questions') && methods.watch('questions').length) || 0}/{numberOfQuestion}
+                    Choose Questions: {selectedQuestions.length}/{numberOfQuestion}
                 </p>
                 <div className="flex">
                     <Link href={clearQuery(router.asPath).replace(`${routes.adminEditQuizUrl}/${quizId}`, '')} passHref>
