@@ -22,10 +22,7 @@ export interface LessonResDTO extends Lesson {
 }
 
 export const useGetLessonById = (id: string) => {
-    try {
-        const { data: lesson } = useGetDataById<LessonResDTO>(ApiListRoutes.LESSON, id);
-        return { lesson };
-    } catch (error) {
-        console.log('error');
-    }
+    const { data: lesson } = useGetDataById<LessonResDTO>(ApiListRoutes.LESSON, id);
+
+    return { lesson };
 };

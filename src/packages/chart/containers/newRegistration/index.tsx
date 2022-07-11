@@ -5,11 +5,11 @@ import { RegistrationStatus } from '../../../../core/models/registration';
 interface NewRegistrationStatisticsProps {}
 
 export const NewRegistrationStatistics: React.FunctionComponent<NewRegistrationStatisticsProps> = () => {
-    const [approved, setApproved] = React.useState<number>(0);
-    const [cancelled, setCancelled] = React.useState<number>(0);
-    const [paid, setPaid] = React.useState<number>(0);
-    const [submitted, setSubmitted] = React.useState<number>(0);
-    const [inActive, setInActive] = React.useState<number>(0);
+    const [approved, setApproved] = React.useState<number>(1);
+    const [cancelled, setCancelled] = React.useState<number>(4);
+    const [paid, setPaid] = React.useState<number>(5);
+    const [submitted, setSubmitted] = React.useState<number>(1);
+    const [inActive, setInActive] = React.useState<number>(2);
 
     React.useEffect(() => {
         Promise.all([

@@ -15,10 +15,13 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
         defaultValues,
     });
 
-    const [data, setData] = React.useState<ChartData[]>([]);
+    const [data, setData] = React.useState<ChartData[]>([
+        { date: 'UNKNOWN', value: 0 },
+        { date: 'UNKNOWN', value: 0 },
+    ]);
     React.useEffect(() => {
         getNewSubjectStatistic().then((res) => {
-            setData(res);
+            setData(res.reverse());
         });
 
         return () => {};
@@ -29,24 +32,6 @@ export const NewSubjectStatistic: React.FunctionComponent<NewSubjectStatisticPro
         <FormWrapper methods={methods}>
             <form className="space-y-5" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                 <h1 className="text-xl font-bold">New subjects</h1>
-
-                {/* <div className="flex items-end space-x-5">
-                    <SelectField
-                        label="Sort"
-                        name="sort"
-                        isRequire={false}
-                        values={[
-                            { label: 'Newest', value: Order.DESC },
-                            { label: 'Oldest', value: Order.ASC },
-                        ]}
-                    />
-                    <button
-                        type="button"
-                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Search
-                    </button>
-                </div> */}
 
                 <ColumnChart
                     xAxis={data.map((item) => item.date)}

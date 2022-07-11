@@ -1,20 +1,18 @@
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { LineChart } from '../../';
-import { DateField, FormWrapper, SelectField } from '../../../../core/components/form';
-import { getTrendingStatistic, TrendingChartStatisticsDTO } from './action';
-import React from 'react';
+import { DateField, FormWrapper } from '../../../../core/components/form';
 import { dateParser } from '../../../../core/util/date';
-import moment from 'moment';
 import { ChartData } from '../newCustomers/interface';
+import { getTrendingStatistic, TrendingChartStatisticsDTO } from './action';
 
 interface TrendingStatisticsProps {}
-const defaultValues: TrendingChartStatisticsDTO = {
-    from: '',
-    // status: 'SUCCESS',
-    to: '',
-};
+
 export const TrendingStatistics: React.FunctionComponent<TrendingStatisticsProps> = () => {
-    const [data, setData] = React.useState<ChartData[]>([]);
+    const [data, setData] = React.useState<ChartData[]>([
+        { date: 'UNKNOWN', value: 0 },
+        { date: 'UNKNOWN', value: 0 },
+    ]);
 
     const methods = useForm<TrendingChartStatisticsDTO>({
         defaultValues: {
@@ -43,15 +41,6 @@ export const TrendingStatistics: React.FunctionComponent<TrendingStatisticsProps
                 <form className="space-y-5" onSubmit={methods.handleSubmit(_handleOnSubmit)}>
                     <h1 className="text-xl font-bold">Trending (order counts)</h1>
                     <div className="flex items-end space-x-5">
-                        {/* <SelectField
-                            isRequire={false}
-                            label="Status"
-                            name="status"
-                            values={[
-                                { label: 'Success', value: 'SUCCESS' },
-                                { label: 'All', value: 'ALL' },
-                            ]}
-                        /> */}
                         <DateField isRequire={false} label="From" name="from" />
                         <DateField isRequire={false} label="To" name="to" />
                         <button
