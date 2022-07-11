@@ -57,6 +57,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
                     methods.reset();
                     store.dispatch(apiActions.resetState());
                     setSelectedSubjectId('');
+                    setSelectedQuestions([]);
                     setNumberOfQuestion(0);
 
                     toast.success('Add quiz success!');
