@@ -2,7 +2,7 @@ import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
 import { AllRole } from '../../../../src/core/models/user';
-import LessonView from '../../../../src/packages/lesson/containers/lessonView';
+import { LessonView } from '../../../../src/packages/lesson/containers/lessonView';
 import { StoreLayout } from '../../../../src/packages/store';
 
 interface LessonDetailProps {

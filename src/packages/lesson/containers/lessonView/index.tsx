@@ -12,8 +12,9 @@ interface LessonViewProps {
     subjectId: string;
 }
 
-const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId, subjectId }) => {
+export const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId, subjectId }) => {
     const { lesson } = useGetLessonById(lessonId);
+    // console.log(lesson);
 
     const { registrationList } = useGetRegistrationUserList({});
     const isAccess = React.useMemo(() => {
@@ -63,7 +64,7 @@ const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId, subjec
                         <div className="flex flex-col space-y-5">
                             {lesson ? (
                                 lesson.lessonQuiz?.quizzes.map((quiz) => (
-                                    <Link href={isAccess ? `${routes.simulationListUrl}/${quiz.id}` : '#'}>
+                                    <Link key={quiz.id} href={isAccess ? `${routes.simulationListUrl}/${quiz.id}` : '#'}>
                                         <div className={`block rounded-lg bg-gray-100 ${isAccess && 'cursor-pointer hover:bg-gray-50'}`}>
                                             <div className="px-4 py-4 sm:px-6">
                                                 <div className="flex items-center justify-between">
@@ -137,5 +138,3 @@ const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId, subjec
         </div>
     );
 };
-
-export default LessonView;
