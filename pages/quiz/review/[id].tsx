@@ -1,6 +1,5 @@
 import { NextPage, NextPageContext } from 'next';
 import React from 'react';
-import { ReviewPractice } from '../../../src/packages/practices/containers/reviewPractice';
 import { DoQuiz } from '../../../src/packages/quiz';
 import { DoQuizType } from '../../../src/packages/quiz/containers/doQuiz/interface';
 import { StoreLayout } from '../../../src/packages/store';

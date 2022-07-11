@@ -85,9 +85,8 @@ export const AddPractice: React.FunctionComponent<AddPracticeProps> = () => {
         if (practiceType === PracticeType.SUBJECT_TOPIC) {
             addData.subjectTopic = data.selectedGroup;
         }
-        console.log(addData);
         AddPracticeAction(addData).then((res) => {
-            toast('Add Practice success');
+            toast.success('Add Practice success');
             router.push(`${routes.quizUrl}/${res}`);
         });
     };
