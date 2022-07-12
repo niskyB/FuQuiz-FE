@@ -24,9 +24,15 @@ function MyApp({ Component, pageProps }: AppProps) {
                         openGraph={{
                             images: [
                                 {
-                                    url: '/asset/icons/logo-text.png',
-                                    width: 800,
-                                    height: 600,
+                                    url: 'https://tetcha.site/asset/icons/logo-text.png',
+                                    width: 1000,
+                                    height: 700,
+                                    alt: `FUQuiz`,
+                                },
+                                {
+                                    url: 'https://tetcha.site/asset/icons/logo-image.png',
+                                    width: 1000,
+                                    height: 700,
                                     alt: `FUQuiz`,
                                 },
                             ],
