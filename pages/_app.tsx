@@ -1,13 +1,13 @@
-import 'react-toastify/dist/ReactToastify.css';
-import 'react-quill/dist/quill.snow.css';
-import '../styles/globals.css';
+import { NextSeo } from 'next-seo';
 import type { AppProps } from 'next/app';
 import Script from 'next/script';
+import 'react-quill/dist/quill.snow.css';
 import { Provider } from 'react-redux';
-import { store } from '../src/core/store';
-import { GetCurrentUserWrapper } from '../src/core/components/routerProtection';
 import { ToastContainer } from 'react-toastify';
-import { ResetForm } from '../src/core/common/HOC/resetForm';
+import 'react-toastify/dist/ReactToastify.css';
+import { GetCurrentUserWrapper } from '../src/core/components/routerProtection';
+import { store } from '../src/core/store';
+import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -16,6 +16,22 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Script type="text/javascript" src="/static/js/google.script.js" />
             <Provider store={store}>
                 <GetCurrentUserWrapper>
+                    <NextSeo
+                        title={`FUQuiz`}
+                        description={
+                            'Quiz practicing for FPT University student with lots of courses on many different dimensions, join with us now!!!'
+                        }
+                        openGraph={{
+                            images: [
+                                {
+                                    url: '/asset/icons/logo-text.png',
+                                    width: 800,
+                                    height: 600,
+                                    alt: `FUQuiz`,
+                                },
+                            ],
+                        }}
+                    />
                     <Component {...pageProps} />
                 </GetCurrentUserWrapper>
                 <ToastContainer
