@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { QuestionListPageProps } from '../../../../../pages/dashboard/question-bank/question';
-import { statusFieldData } from '../../../../core/common/dataField';
+import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
@@ -22,7 +22,7 @@ import { FilterQuestionsDTO, QuestionListDTO } from './interface';
 
 export interface QuestionListProps extends QuestionListPageProps {}
 
-const QuestionList: React.FunctionComponent<QuestionListProps> = ({
+export const QuestionList: React.FunctionComponent<QuestionListProps> = ({
     content,
     currentPage,
     dimension,
@@ -113,19 +113,19 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                                     isRequire={false}
                                     label="Subject (will change lesson and dimension too)"
                                     onChange={(e) => _onChangeSubject(e)}
-                                    values={[unsetFieldData, ...dataParser(subjects, 'name', 'id')]}
+                                    values={[allFieldData, ...dataParser(subjects, 'name', 'id')]}
                                     name="subject"
                                 />
                                 <SelectField
                                     isRequire={false}
                                     label="Lesson"
-                                    values={[unsetFieldData, ...dataParser(lessons, 'name', 'id')]}
+                                    values={[allFieldData, ...dataParser(lessons, 'name', 'id')]}
                                     name="lesson"
                                 />
                                 <SelectField
                                     isRequire={false}
                                     label="Dimension"
-                                    values={[unsetFieldData, ...dataParser(dimensions, 'name', 'id')]}
+                                    values={[allFieldData, ...dataParser(dimensions, 'name', 'id')]}
                                     name="dimension"
                                 />
                             </div>
@@ -134,10 +134,10 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                                 <SelectField
                                     isRequire={false}
                                     label="Level"
-                                    values={[unsetFieldData, ...dataParser(levels, 'description', 'id')]}
+                                    values={[allFieldData, ...dataParser(levels, 'description', 'id')]}
                                     name="level"
                                 />
-                                <SelectField isRequire={false} label="Status" values={[unsetFieldData, ...statusFieldData]} name="isActive" />
+                                <SelectField isRequire={false} label="Status" values={[allFieldData, ...statusFieldData]} name="isActive" />
                             </div>
                         </div>
                         <div className="flex justify-end">
@@ -212,5 +212,3 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
         </div>
     );
 };
-
-export default QuestionList;

@@ -16,6 +16,7 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
     const minRange = numLinksTwoSide + 4;
     const numberOfTruncLeft = currentPage - numLinksTwoSide;
     const numberOfTruncRight = currentPage + numLinksTwoSide;
+    if (!totalPage) return <></>;
     return (
         <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 rounded-md sm:px-6">
             <div className="flex justify-between flex-1 sm:hidden">
@@ -84,11 +85,12 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
                             }
                             //reset truncated when a box is rendered
                             isTruncate = false;
+
                             return (
                                 <Link key={index} passHref href={routeUrl.replace(`currentPage=${currentPage}`, `currentPage=${index + 1}`)}>
                                     <a
                                         className={`${
-                                            index + 1 === currentPage
+                                            index + 1 === +currentPage
                                                 ? 'z-10 inline-flex items-center text-indigo-600 border border-indigo-500 bg-indigo-50'
                                                 : 'items-center hidden text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 md:inline-flex'
                                         } relative px-4 py-2 text-sm font-medium cursor-pointer`}

@@ -2,20 +2,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { allFieldData, OrderFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { allFieldData, OrderFieldData } from '../../../../core/common/dataField';
 import { registrationStatusFieldData } from '../../../../core/common/dataField/registration';
+import { useUrlParams } from '../../../../core/common/hooks';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
-
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
+import { getDateStringToShow } from '../../../../core/util/date';
+import { vietnamCurrencyConverter } from '../../../../core/util/price';
 import { PaginationBar } from '../../../dashboard';
 import { RegistrationFilterDTO, RegistrationFilterFormDTO, useGetRegistrationList } from '../../common/hooks/useGetRegistrationList';
 
-interface RegistrationListProps extends RegistrationFilterDTO {}
-
-const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
+export const RegistrationsList: React.FunctionComponent<RegistrationFilterDTO> = ({
     currentPage,
     pageSize,
     email,
@@ -34,6 +34,11 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
     const _handleOnSubmit = async (data: RegistrationFilterFormDTO) => {
         pushWithParams(router, routes.adminRegistrationUrl, { ...data });
     };
+
+    useUrlParams({
+        defaultPath: routes.adminRegistrationUrl,
+        query: { ...router.query, currentPage, pageSize, email, order, orderBy, status, subject, validFrom, validTo },
+    });
 
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -136,16 +141,16 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                                                         <div className="text-gray-900">{registration.pricePackage.name}</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{registration.totalCost}</div>
+                                                        <div className="text-gray-900">{vietnamCurrencyConverter(registration.totalCost)}</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.status.toUpperCase()}</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{registration.validFrom}</div>
+                                                        <div className="text-gray-900">{getDateStringToShow(registration.validFrom)}</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{registration.validTo}</div>
+                                                        <div className="text-gray-900">{getDateStringToShow(registration.validTo)}</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="text-gray-900">{registration.lastUpdatedBy}</div>
@@ -167,9 +172,7 @@ const RegistrationsList: React.FunctionComponent<RegistrationListProps> = ({
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };
-
-export default RegistrationsList;

@@ -23,7 +23,7 @@ QuizListPage.getInitialProps = async (ctx: NextPageContext): Promise<QuizListPag
         currentPage: ctx.query?.currentPage || 1,
         pageSize: ctx.query?.pageSize || 10,
         subject: ctx.query?.subject || '',
-        type: ctx.query?.type || '',
+        type: ctx.query?.type || '67a81d8a-ef1f-11ec-8ea0-0242ac120002',
     };
 
     return props as QuizListPageProps;

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Order } from '../../../src/core/common/dataField';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { RegistrationStatus } from '../../../src/core/models/registration';
-import { AllRole } from '../../../src/core/models/user';
+import { UserRole } from '../../../src/core/models/role';
 import { UserCourses } from '../../../src/packages/course/userCourses';
 import { StoreLayout } from '../../../src/packages/store';
 
@@ -19,7 +19,7 @@ export interface UserCoursesPageProps {
 
 const UserCoursesPage: NextPage<UserCoursesPageProps> = ({ category, currentPage, isFeature, order, pageSize, name, status }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={AllRole}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.CUSTOMER]}>
             <StoreLayout>
                 <UserCourses
                     name={name}

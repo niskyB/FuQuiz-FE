@@ -21,7 +21,7 @@ const defaultValues: FilterBlogsDTO = {
     currentPage: 1,
     pageSize: 12,
     category: '',
-    order: Order.ASC,
+    order: Order.DESC,
 };
 
 const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options }) => {
@@ -58,6 +58,7 @@ const SearchBlogBar: React.FunctionComponent<SearchBlogBarProps> = ({ options })
                         label="Sort"
                         name="order"
                         isRequire={false}
+                        defaultValue={Order.DESC}
                         values={[
                             { label: 'Newest', value: Order.DESC, isSelect: true },
                             { label: 'Oldest', value: Order.ASC },

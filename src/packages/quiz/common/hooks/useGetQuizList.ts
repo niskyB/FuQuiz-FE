@@ -15,7 +15,13 @@ export interface FilterQuizListFormDTO extends Omit<FilterQuizListDTO, 'currentP
 export const useGetQuizList = (options: Partial<FilterQuizListDTO>) => {
     const { name, subject, type, currentPage, pageSize } = options;
     const option = React.useMemo<FilterQuizListDTO>(
-        () => ({ name: name || '', subject: subject || '', type: type || '', currentPage: currentPage || 0, pageSize: pageSize || 10 }),
+        () => ({
+            name: name || '',
+            subject: subject || '',
+            type: type || '67a81d8a-ef1f-11ec-8ea0-0242ac120002',
+            currentPage: currentPage || 0,
+            pageSize: pageSize || 10,
+        }),
         [name, subject, type, currentPage, pageSize]
     );
 

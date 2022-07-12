@@ -2,15 +2,17 @@ import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { toast } from 'react-toastify';
 import { UserCoursesPageProps } from '../../../../pages/user/courses';
 import { useUrlParams } from '../../../core/common/hooks/useUrlParams';
 import { RegistrationStatus } from '../../../core/models/registration';
 import { routes } from '../../../core/routes';
+import { getDateStringToShow } from '../../../core/util/date';
 import { PaginationBar } from '../../dashboard';
 import Contact from '../../store/container/Contact';
 import { CourseFilter } from '../components/courseFilter';
 import { useGetRegistrationUserList } from '../hooks/useGetRegistrationListUser';
-import { cancelRegistration } from './action';
+import { cancelRegistration, payCourse } from './action';
 
 export interface UserCoursesProps extends UserCoursesPageProps {
     status: string | RegistrationStatus;
@@ -25,16 +27,40 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
     );
 
     const { registrationList, count } = useGetRegistrationUserList({ category, currentPage, isFeature, name, order, pageSize });
-
     useUrlParams({
         defaultPath: routes.courseListUrl,
         query: { ...router.query, category, currentPage, isFeature, name, order, pageSize },
     });
 
-    const handleOnCancelRegistration = (id: string) => {
+    const _handleOnCancelRegistration = (id: string) => {
         cancelRegistration(id).then(() => {
             window.location.reload();
         });
+    };
+
+    const classNameStatusColor = (value: RegistrationStatus) => {
+        switch (value) {
+            case RegistrationStatus.APPROVED:
+                return 'text-green-800  bg-green-100';
+            case RegistrationStatus.PAID:
+                return 'text-green-800  bg-green-100';
+            case RegistrationStatus.SUBMITTED:
+                return 'text-yellow-800  bg-yellow-100';
+            case RegistrationStatus.INACTIVE:
+                return 'text-red-600 bg-red-100';
+        }
+    };
+
+    const _handleOnPayCourse = async (courseId: string) => {
+        try {
+            const res = await payCourse(courseId);
+            toast.success('You can learn your course now');
+
+            window.location.reload();
+        } catch (error: any) {
+            if (error.data.balance) toast.warn('Your balance is not enough to pay this course');
+            if (error.data.errorMessage) toast.warn(error.data.errorMessage);
+        }
     };
 
     return (
@@ -58,7 +84,7 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                             <div className="flex flex-col justify-between flex-1 p-6 bg-white">
                                 <div className="flex-1">
                                     <p className="text-sm font-medium text-indigo-600">
-                                        <p>#{item.id}</p>
+                                        <p>#{item.id.substring(0, 8)}</p>
                                         <a>{item.pricePackage.subject?.category.description}</a>
                                     </p>
                                     <Link href={`${routes.subjectUrl}/${item.pricePackage.subject?.id}`} passHref>
@@ -73,10 +99,20 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
 
                                 <div className="flex flex-col items-start mt-6 space-y-1">
                                     <p className="text-gray-500">Package: {item.pricePackage.name}</p>
-                                    <div className="text-gray-500">Status: {item.status}</div>
+                                    <div className="flex space-x-2">
+                                        <p className="text-gray-500">Status:</p>
+                                        <span
+                                            className={`inline-flex px-2 text-xs font-semibold leading-5 capitalize ${classNameStatusColor(
+                                                item.status
+                                            )} rounded-full`}
+                                        >
+                                            {item.status}
+                                        </span>
+                                    </div>
                                     {item.validFrom && (
                                         <p className="text-gray-500">
-                                            Valid: {item.validFrom} {item.validTo ? ` - ${item.validTo}` : ''}
+                                            Valid: {getDateStringToShow(item.validFrom)}{' '}
+                                            {item.validTo ? ` - ${getDateStringToShow(item.validTo)}` : ''}
                                         </p>
                                     )}
                                     <p className="text-gray-500">Registration day: {moment(item.registrationTime).format('MMM Do YY')}</p>
@@ -86,11 +122,20 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                                             <button
                                                 type="button"
                                                 onClick={() =>
-                                                    confirm('This action will cancel this registration') && handleOnCancelRegistration(item.id)
+                                                    confirm('This action will cancel this registration') && _handleOnCancelRegistration(item.id)
                                                 }
                                                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                             >
                                                 Cancel
+                                            </button>
+                                        )}
+                                        {item.status === RegistrationStatus.APPROVED && (
+                                            <button
+                                                type="button"
+                                                onClick={() => _handleOnPayCourse(item.id || '')}
+                                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                            >
+                                                Pay
                                             </button>
                                         )}
                                     </p>

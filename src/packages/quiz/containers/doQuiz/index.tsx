@@ -2,7 +2,7 @@ import QuizQuestion from '../../components/question';
 import * as React from 'react';
 import QuizAnswer from '../quizAnswer';
 import { convertQuestionListToQuestionAnswerToSend, findQuestionAndDoAction } from '../../../../core/util/question';
-import { ClockIcon } from '@heroicons/react/outline';
+import { BadgeCheckIcon, ClockIcon } from '@heroicons/react/outline';
 import { useGetQuizResultById } from '../../common/hooks/useGetQuizResultById';
 import { QuizAnswerStatus } from '../../../../core/models/quiz';
 import { ClientQuestionInQuiz } from '../../../../core/models/quizResult';
@@ -14,6 +14,8 @@ import { useRouter } from 'next/router';
 import useIsFirstRender from '../../../../core/common/hooks/useIsFirstRender';
 import { DoQuizType } from './interface';
 import { routes } from '../../../../core/routes';
+import Link from 'next/link';
+import useTimeout from '../../../../core/common/hooks/useTimeout';
 
 interface DoQuizProps {
     id: string;
@@ -38,6 +40,12 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
     const isInitRender = useIsFirstRender();
     const { quiz } = useGetQuizResultById(id);
 
+    useTimeout(() => {
+        if (!quiz) {
+            router.push(routes.homeUrl);
+            toast.warn("Quiz doesn't exist");
+        }
+    }, 1000);
     const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(
@@ -48,7 +56,6 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
             }, 0),
         [questionList]
     );
-
     const isDone = React.useMemo(() => {
         if (totalDone >= questionList.length) {
             return true;
@@ -158,7 +165,6 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
         }
     };
 
-    const _handleOnExit = async () => {};
     return (
         <>
             {popUp && (
@@ -188,7 +194,13 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
                                                 Cancel
                                             </button>
                                             <button
-                                                onClick={_handleOnSubmit}
+                                                onClick={() => {
+                                                    if (totalDone === 0) {
+                                                        router.back();
+                                                    } else {
+                                                        _handleOnSubmit();
+                                                    }
+                                                }}
                                                 type="submit"
                                                 className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             >
@@ -265,7 +277,14 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
                             </div>
                         )}
 
-                        {mode === DoQuizType.REVIEW && quiz && (quiz.rate * 100) / 100}
+                        {mode === DoQuizType.REVIEW && quiz && (
+                            <div className="flex items-center space-x-2">
+                                <div className="w-6 h-6 text-green-500 ">
+                                    <BadgeCheckIcon />
+                                </div>
+                                <div className="">Mark: {quiz.rate * 100}%</div>
+                            </div>
+                        )}
                     </div>
                     <div className="flex flex-col p-5 space-y-3 bg-white rounded-md">
                         <h1 className="text-xl font-semibold">Quiz progress : </h1>
@@ -314,15 +333,16 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
                         >
                             Next
                         </button>
-                        {mode === DoQuizType.REVIEW && (
+                        {mode === DoQuizType.TEST && totalDone === 0 && (
                             <button
+                                onClick={() => setPopUp(true)}
                                 type="button"
                                 className={`bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 inline-flex items-center px-4 py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  `}
                             >
                                 Go back
                             </button>
                         )}
-                        {mode === DoQuizType.TEST && (
+                        {mode === DoQuizType.TEST && totalDone > 0 && (
                             <button
                                 onClick={() => setPopUp(true)}
                                 type="button"
@@ -330,6 +350,15 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
                             >
                                 Score Exam now
                             </button>
+                        )}
+                        {mode === DoQuizType.REVIEW && (
+                            <Link href={routes.practiceListUrl}>
+                                <a
+                                    className={`bg-red-600 hover:bg-red-700 focus:ring-red-500 inline-flex items-center px-4 py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  `}
+                                >
+                                    Return practice list
+                                </a>
+                            </Link>
                         )}
                     </div>
                 </div>

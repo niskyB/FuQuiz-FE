@@ -1,7 +1,7 @@
 import moment from 'moment';
 
-export const dateParser = (date: string) => {
-    return moment(date).format('YYYY-MM-DDTHH:mm');
+export const dateParser = (date: any) => {
+    return moment(date).format('YYYY-MM-DD');
 };
 
 export const calculateValidTo = (validFrom: string, duration: number) => {
@@ -11,6 +11,12 @@ export const calculateValidTo = (validFrom: string, duration: number) => {
 export const getDateValueString = (date: string) => {
     if (date !== 'Invalid date') {
         return new Date(date).toISOString();
+    }
+    return '';
+};
+export const getDateStringToShow = (date: string) => {
+    if (date.trim()) {
+        return new Date(date).toLocaleDateString();
     }
     return '';
 };

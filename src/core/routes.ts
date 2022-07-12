@@ -55,6 +55,8 @@ export const routes = {
     settingUrl: '/dashboard/setting',
     addSettingUrl: '/dashboard/setting/add',
     editSettingUrl: '/dashboard/setting/edit',
+    editSubjectCategorySettingUrl: '/dashboard/setting/subject-category/edit',
+    editBlogCategorySettingUrl: '/dashboard/setting/blog-category/edit',
 
     //  Lesson
     adminLessonListUrl: '/lesson',
@@ -76,6 +78,9 @@ export const routes = {
     addPracticeUrl: '/practices/add',
     practiceDetailsUrl: '/practices/review',
 
+    //pay
+    pay: '/user/pay',
+
     // quiz Simulation exam
     simulationListUrl: '/practices/simulation',
     simulationReviewListUrl: '/practices/simulation',
@@ -93,8 +98,8 @@ export const routes = {
     adminAddPackageUrl: '/add',
 
     // Course
-    courseListUrl: '/user/courses',
+    courseListUrl: '/courses',
 
-    // practiceListUrl
-    // adminQuestionListUrl: '/question',
+    // Setting
+    adminSettingListUrl: '/dashboard/setting',
 };

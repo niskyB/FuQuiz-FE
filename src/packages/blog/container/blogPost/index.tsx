@@ -17,7 +17,11 @@ export const BlogPost: React.FunctionComponent<BlogPostProps> = ({ id }) => {
                     <div className="flex justify-between">
                         <div className="flex space-x-3">
                             <div className="flex-shrink-0">
-                                <img className="w-10 h-10 rounded-full" src={blog?.thumbnailUrl} alt={blog?.title + 'thumbnail'} />
+                                <img
+                                    className="w-10 h-10 rounded-full"
+                                    src={blog?.marketing && blog?.marketing.user ? blog.marketing.user.imageUrl : '/asset/images/default-avatar.png'}
+                                    alt={blog?.title + 'thumbnail'}
+                                />
                             </div>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium text-gray-900">

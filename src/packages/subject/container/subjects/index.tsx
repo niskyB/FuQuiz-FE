@@ -13,12 +13,16 @@ import { store } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { getMinMaxPriceOfPricePackage, vietnamCurrencyConverter } from '../../../../core/util/price';
 import SubjectSide from '../subjectSide';
+import { useRouter } from 'next/router';
+import { useUrlParams } from '../../../../core/common/hooks';
+import { pushWithParams } from '../../../../core/util';
 
 interface SubjectsProps extends BlogListFilterDTO {}
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
 }
+
 export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, currentPage, isFeature, name, pageSize, order }) => {
     const subjectOption = React.useMemo<Partial<SubjectFilterDTO>>(
         () => ({ isActive: true, isFeature, currentPage, pageSize, category, name, order }),
@@ -26,6 +30,13 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
     );
 
     const { subjects, count } = useGetSubjectList(subjectOption);
+
+    const router = useRouter();
+
+    useUrlParams({
+        defaultPath: routes.courseListUrl,
+        query: { ...router.query, category, currentPage, isFeature, name, pageSize, order },
+    });
 
     return (
         <>
@@ -59,7 +70,7 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                         </div>
 
                                         <div className="flex items-center mt-6">
-                                            <p className="font-medium text-gray-900 ">
+                                            <div className="font-medium text-gray-900 ">
                                                 {minPricePackage ? (
                                                     <div className="flex flex-col text-orange-600">
                                                         <div className="line-through">{vietnamCurrencyConverter(minPricePackage.originalPrice)}</div>
@@ -69,7 +80,7 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                                 ) : (
                                                     <div className="text-orange-600">Not open yet!</div>
                                                 )}
-                                            </p>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -133,7 +144,7 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                             );
                         })}
                     </div>
-                    <PaginationBar currentPage={1} numberOfItem={count} pageSize={10} routeUrl={''} />
+                    <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
                 </div>
             </div>
         </>

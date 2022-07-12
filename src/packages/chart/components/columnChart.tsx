@@ -12,28 +12,31 @@ interface ColumnChartProps {
 }
 
 export const ColumnChart: React.FunctionComponent<ColumnChartProps> = ({ series, xAxis, height = 350, title = '' }) => {
-    const [options, setOptions] = React.useState<ApexOptions>({
-        chart: {
-            height,
-            type: 'bar',
-        },
-        stroke: {
-            curve: 'smooth',
-        },
-        title: {
-            text: title,
-            align: 'left',
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5,
+    const options = React.useMemo<ApexOptions>(
+        () => ({
+            chart: {
+                height,
+                type: 'bar',
             },
-        },
-        xaxis: {
-            categories: xAxis,
-        },
-    });
+            stroke: {
+                curve: 'smooth',
+            },
+            title: {
+                text: title,
+                align: 'left',
+            },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'],
+                    opacity: 0.5,
+                },
+            },
+            xaxis: {
+                categories: xAxis,
+            },
+        }),
+        [series, xAxis]
+    );
 
     return (
         <>

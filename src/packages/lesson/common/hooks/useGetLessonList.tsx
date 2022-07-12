@@ -5,7 +5,7 @@ import { Lesson } from '../../../../core/models/lesson';
 import { FilterLessonListDTO } from '../../containers/lessonList/interface';
 
 export const useGetLessonList = (option: Partial<FilterLessonListDTO>) => {
-    const { createdAt, id, isActive, title, type, updatedAt } = option;
+    const { createdAt, id, isActive, title, type, updatedAt, currentPage, pageSize } = option;
     const options = React.useMemo<FilterLessonListDTO>(
         () => ({
             createdAt: createdAt || '',
@@ -14,8 +14,10 @@ export const useGetLessonList = (option: Partial<FilterLessonListDTO>) => {
             title: title || '',
             type: type || '',
             updatedAt: updatedAt || '',
+            currentPage: currentPage || 1,
+            pageSize: pageSize || 12,
         }),
-        [createdAt, id, isActive, title, type, updatedAt]
+        [createdAt, id, isActive, title, type, updatedAt, currentPage, pageSize]
     );
     const { list: lessonList, count } = useGetListWithCount<Lesson, Partial<FilterLessonListDTO>>(`${ApiListRoutes.LESSONS}/${options.id}`, options);
 

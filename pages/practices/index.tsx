@@ -1,7 +1,6 @@
 import { NextPage, NextPageContext } from 'next';
-import * as React from 'react';
 import { RouterProtectionWrapper } from '../../src/core/components/routerProtection';
-import { AllRole } from '../../src/core/models/user';
+import { UserRole } from '../../src/core/models/role';
 import { PracticeList } from '../../src/packages/practices/containers/practiceList';
 import { StoreLayout } from '../../src/packages/store';
 
@@ -13,7 +12,7 @@ export interface PracticeListPageProps {
 
 const PracticeListPage: NextPage<PracticeListPageProps> = ({ currentPage, pageSize, subject }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={AllRole}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.CUSTOMER]}>
             <StoreLayout>
                 <PracticeList currentPage={currentPage} pageSize={pageSize} subject={subject} />
             </StoreLayout>

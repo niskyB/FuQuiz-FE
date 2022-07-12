@@ -39,7 +39,7 @@ const AddBlogCategory: React.FunctionComponent<AddBlogCategoryProps> = () => {
                             <TextField label="Name" name="name" type="text" />
 
                             <div className="flex space-x-2">
-                                <Link href={routes.adminBlogListUrl} passHref>
+                                <Link href={routes.adminBlogCategoryListUrl} passHref>
                                     <div className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                         Cancel
                                     </div>

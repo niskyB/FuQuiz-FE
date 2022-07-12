@@ -36,15 +36,13 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
     }, [formState.registrationForm, userState]);
 
     const _handleOnSubmit = async (data: RegistrationFormDTO) => {
-        if (userState.role.description !== UserRole.ADMIN) {
+        if (userState.role.description === UserRole.CUSTOMER) {
             const { subject, ...other } = data;
             const res = await addRegistration({
                 ...other,
                 registrationTime: new Date().toISOString(),
                 sale: null,
                 status: RegistrationStatus.SUBMITTED,
-                validFrom: null,
-                validTo: null,
             });
 
             if (res) {
@@ -53,7 +51,7 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
                 toast.success('Register success, please wait for response from our saler!');
             }
         } else {
-            toast.warn('Admin is not access to register a course, please try on another account!');
+            toast.warn('Only customer can register a course, please try on another account!');
         }
     };
     if (formState.isOpening)

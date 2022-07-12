@@ -22,7 +22,7 @@ const navigation = [
         name: 'Statistics',
         icon: ChartSquareBarIcon,
         link: `${routes.dashboardUrl}`,
-        acceptRole: [UserRole.ADMIN, UserRole.MARKETING, UserRole.EXPERT, UserRole.SALE],
+        acceptRole: [UserRole.ADMIN, UserRole.MARKETING],
     },
     {
         name: 'Slider',
@@ -31,9 +31,9 @@ const navigation = [
         acceptRole: [UserRole.ADMIN, UserRole.MARKETING],
     },
     { name: 'Blog', icon: BookOpenIcon, link: routes.adminBlogListUrl, acceptRole: [UserRole.ADMIN, UserRole.MARKETING] },
-    { name: 'Subject', icon: AcademicCapIcon, link: routes.adminSubjectListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
     { name: 'Registration', icon: PencilAltIcon, link: routes.adminRegistrationUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
-    { name: 'Question Bank', icon: LibraryIcon, link: routes.adminQuestionListUrl, acceptRole: [UserRole.ADMIN, UserRole.SALE] },
+    { name: 'Subject', icon: AcademicCapIcon, link: routes.adminSubjectListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
+    { name: 'Question Bank', icon: LibraryIcon, link: routes.adminQuestionListUrl, acceptRole: [UserRole.ADMIN, UserRole.EXPERT] },
     { name: 'User', icon: IdentificationIcon, link: routes.adminUsersUrl, acceptRole: [UserRole.ADMIN] },
     { name: 'Setting', icon: CogIcon, link: routes.settingUrl, acceptRole: [UserRole.ADMIN] },
 ];

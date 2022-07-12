@@ -11,7 +11,7 @@ interface EditSubjectCategoryPageProps {
 
 const EditSubjectCategoryPage: NextPage<EditSubjectCategoryPageProps> = ({ id }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
                 <EditSubjectCategory id={id} />
             </DashBoardLayout>

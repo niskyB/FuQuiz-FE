@@ -11,7 +11,6 @@ interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const DateField: React.FC<DateFieldProps> = ({ name, label, direction, isRequire = true, require, ...rest }) => {
-    const { errorDetails } = useStoreApi();
     const { register } = useFormContext();
 
     return (
@@ -19,7 +18,7 @@ export const DateField: React.FC<DateFieldProps> = ({ name, label, direction, is
             <input
                 {...register(name)}
                 {...rest}
-                type="datetime-local"
+                type="date"
                 className="w-full py-2 border-gray-300 rounded-md outline-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
         </CommonFieldWrapper>

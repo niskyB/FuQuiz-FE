@@ -3,15 +3,18 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
+import { UserRole } from '../../../../core/models/role';
 import { routes } from '../../../../core/routes';
+import { useStoreUser } from '../../../../core/store';
 import { useGetPricePackageListBySubjectId } from '../../common/hooks/useGetPricePackageListBySubjectId';
 
 interface PackageListProps {
     subjectId: string;
 }
 
-const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) => {
+export const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) => {
     const router = useRouter();
+    const userStore = useStoreUser();
 
     const { pricePackageList } = useGetPricePackageListBySubjectId(subjectId);
     return (
@@ -38,13 +41,17 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) =
                                 </p>
                             </Link>
                         </div>
-                        <div>
-                            <Link href={router.asPath + routes.adminAddPackageUrl} passHref>
-                                <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    Add Packages
-                                </p>
-                            </Link>
-                        </div>
+                        {userStore.role.description === UserRole.ADMIN ? (
+                            <div>
+                                <Link href={router.asPath + routes.adminAddPackageUrl} passHref>
+                                    <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                        Add Packages
+                                    </p>
+                                </Link>
+                            </div>
+                        ) : (
+                            <></>
+                        )}
                     </div>
                 </div>
             </div>
@@ -89,9 +96,13 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) =
                                                 </TableDescription>
                                                 <TableDescription>
                                                     <div>
-                                                        <Link href={`${router.asPath}/edit/${packageSubject.id}`} passHref>
-                                                            <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                        </Link>
+                                                        {userStore.role.description === UserRole.ADMIN ? (
+                                                            <Link href={`${router.asPath}/edit/${packageSubject.id}`} passHref>
+                                                                <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                            </Link>
+                                                        ) : (
+                                                            <></>
+                                                        )}
                                                     </div>
                                                 </TableDescription>
                                             </TableRow>
@@ -105,5 +116,3 @@ const PackageList: React.FunctionComponent<PackageListProps> = ({ subjectId }) =
         </div>
     );
 };
-
-export default PackageList;

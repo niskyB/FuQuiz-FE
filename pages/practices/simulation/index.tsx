@@ -1,6 +1,7 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
+import { UserRole } from '../../../src/core/models/role';
 import { AllRole } from '../../../src/core/models/user';
 import { SimulationList } from '../../../src/packages/simulation/containers/simulationList';
 import { StoreLayout } from '../../../src/packages/store';
@@ -14,7 +15,7 @@ export interface SimulationPageProps {
 
 const SimulationPage: NextPage<SimulationPageProps> = ({ currentPage, name, pageSize, subject }) => {
     return (
-        <RouterProtectionWrapper acceptRoles={AllRole}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.CUSTOMER]}>
             <StoreLayout>
                 <SimulationList currentPage={currentPage} name={name} pageSize={pageSize} subject={subject} />
             </StoreLayout>
@@ -26,7 +27,7 @@ SimulationPage.getInitialProps = async (ctx: NextPageContext): Promise<Simulatio
     let props = {
         subject: ctx.query?.subject || '',
         name: ctx.query?.name || '',
-        currentPage: ctx.query?.currentPage || 0,
+        currentPage: ctx.query?.currentPage || 1,
         pageSize: ctx.query?.pageSize || 12,
     };
 

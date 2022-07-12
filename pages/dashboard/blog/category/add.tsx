@@ -8,7 +8,7 @@ interface AddCategoryPageProps {}
 
 const AddCategoryPage: React.FunctionComponent<AddCategoryPageProps> = () => {
     return (
-        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN, UserRole.MARKETING]}>
+        <RouterProtectionWrapper acceptRoles={[UserRole.ADMIN]}>
             <DashBoardLayout>
                 <AddBlogCategory />
             </DashBoardLayout>

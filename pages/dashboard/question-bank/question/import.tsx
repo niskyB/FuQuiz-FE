@@ -158,7 +158,6 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
     const _handleOnSubmit = async (formData: ImportFormDataDTO) => {
         const promiseList: Array<Promise<any>> = [];
         for (let i = 0; i < formData.check.length; i++) {
-            const currentIndex = i;
             const isCheck = formData.check[i];
             const currentData = data[i];
 
@@ -193,7 +192,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                             videoLink: currentData.videoUrl,
                         })
                             .then((res) => {
-                                resolve('');
+                                resolve(res);
                             })
                             .catch((err) => {
                                 reject(err);
@@ -208,10 +207,10 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                 switch (singleRes.status) {
                     case 'fulfilled':
                         methods.setValue(`check.${i}`, false);
-                        toast.success(`Success add question with index ${i + 1}`);
+                        toast.success(`Success add question`);
                         break;
                     case 'rejected':
-                        toast.error(`Failed to add question with index ${i + 1}, please make sure all information are correct!`);
+                        toast.error(`Failed to add question, please make sure all information are correct!`);
                         break;
                     default:
                         break;
@@ -235,14 +234,14 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                     <div className="flex items-center space-x-10">
                                         <div
                                             onClick={() => download('/asset/file/importTestFile.xlsx', 'example.xlsx')}
-                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         >
                                             Download example file
                                         </div>
 
                                         <label
                                             htmlFor="file"
-                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            className="inline-flex items-center py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer h-fit px-7 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         >
                                             Import
                                         </label>
@@ -254,7 +253,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                     <ol className="ml-10 list-decimal">
                                         <li>On subject, dimension, lesson please input correct ID</li>
                                         <li>
-                                            On case a question have more than 2 dimension, please put "," between them <br />
+                                            On case a question have more than 2 dimension, please put &quot;,&quot; between them <br />
                                             Example : dimension_id_a,dimension_id_b
                                         </li>
                                         <li>Type correctly the level text</li>
@@ -283,7 +282,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                     />
                                     <TableBody>
                                         {data.map((item, index) => (
-                                            <TableRow>
+                                            <TableRow key={item.content + '-row-' + index}>
                                                 <TableDescription>{index + 1}</TableDescription>
                                                 <TableDescription>{item.subject}</TableDescription>
                                                 <TableDescription>{item.dimension}</TableDescription>

@@ -85,9 +85,8 @@ export const AddPractice: React.FunctionComponent<AddPracticeProps> = () => {
         if (practiceType === PracticeType.SUBJECT_TOPIC) {
             addData.subjectTopic = data.selectedGroup;
         }
-        console.log(addData);
         AddPracticeAction(addData).then((res) => {
-            toast('Add Practice success');
+            toast.success('Add Practice success');
             router.push(`${routes.quizUrl}/${res}`);
         });
     };
@@ -117,12 +116,11 @@ export const AddPractice: React.FunctionComponent<AddPracticeProps> = () => {
                                 values={[allFieldData, ...groupData]}
                             />
                             <div className="flex space-x-2">
-                                <button
-                                    type="submit"
-                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Cancel
-                                </button>
+                                <Link href={routes.practiceListUrl}>
+                                    <a className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        Cancel
+                                    </a>
+                                </Link>
                                 <button
                                     type="submit"
                                     className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

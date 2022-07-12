@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { allFieldData, Order, statusFieldData } from '../../../../core/common/dataField';
+import { useUrlParams } from '../../../../core/common/hooks';
 import { DateField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Table, TableDescription, TableHead, TableRow } from '../../../../core/components/table';
 import { TableBody } from '../../../../core/components/table/tableBody';
@@ -25,9 +26,19 @@ const defaultValues: SubjectFilterFormDTO = {
     isActive: '',
     name: '',
     isFeature: '',
+    order: Order.DESC,
 };
 
-export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ currentPage, pageSize, category, createdAt, isActive, name, isFeature }) => {
+export const SubjectList: React.FunctionComponent<SubjectListProps> = ({
+    currentPage,
+    pageSize,
+    category,
+    createdAt,
+    isActive,
+    name,
+    isFeature,
+    order,
+}) => {
     const userState = useStoreUser();
     const router = useRouter();
     const methods = useForm<SubjectFilterFormDTO>({
@@ -43,9 +54,15 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
             isActive,
             name,
             isFeature,
+            order,
         }),
-        [currentPage, pageSize, category, createdAt, isActive, name, isFeature]
+        [currentPage, pageSize, category, createdAt, isActive, name, isFeature, order]
     );
+
+    useUrlParams({
+        defaultPath: routes.adminRegistrationUrl,
+        query: { ...router.query, currentPage, pageSize, category, createdAt, name, isFeature },
+    });
 
     const { categories } = useGetSubjectCategory();
 
@@ -72,11 +89,6 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                 </div>
                 {userState.role.description === UserRole.ADMIN && (
                     <div className="mt-4 space-x-2 sm:mt-0 sm:ml-16 sm:flex-none">
-                        <Link href={routes.adminSubjectCategoryListUrl} passHref>
-                            <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                Subject category
-                            </p>
-                        </Link>
                         <Link href={routes.adminAddSubjectUrl} passHref>
                             <p className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                                 Add Subject
@@ -178,7 +190,7 @@ export const SubjectList: React.FunctionComponent<SubjectListProps> = ({ current
                     </div>
                 </div>
             </div>
-            <PaginationBar currentPage={Number(1)} numberOfItem={4} pageSize={Number(12)} routeUrl={router.asPath} />
+            <PaginationBar currentPage={currentPage} numberOfItem={count} pageSize={pageSize} routeUrl={router.asPath} />
         </div>
     );
 };

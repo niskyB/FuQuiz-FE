@@ -1,6 +1,5 @@
-import moment from 'moment';
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -14,17 +13,17 @@ import { UserRole } from '../../../../core/models/role';
 import { routes } from '../../../../core/routes';
 import { useStoreUser } from '../../../../core/store';
 import { dataParser } from '../../../../core/util/data';
-import { calculateValidTo, dateParser, getDateValueString } from '../../../../core/util/date';
+import { dateParser } from '../../../../core/util/date';
 import { useGetPricePackageListBySubjectId } from '../../../package';
 import { useGetRegistrationById } from '../../common/hooks/useGetRegistrationById';
-import { editGeneralRegistration, editRegistration, editSpecificRegistration } from './action';
+import { editGeneralRegistration, editSpecificRegistration } from './action';
 import { EditRegistrationDTO } from './interface';
 
 interface EditRegistrationProps {
     id: string;
 }
 
-const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }) => {
+export const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }) => {
     const methods = useForm<EditRegistrationDTO>({});
     const userState = useStoreUser();
     const router = useRouter();
@@ -55,8 +54,8 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
             methods.setValue('subject', registration.pricePackage.subject?.id || '');
 
             methods.setValue('registrationTime', dateParser(registration.registrationTime));
-            methods.setValue('validFrom', dateParser(registration.validFrom));
-            methods.setValue('validTo', dateParser(registration.validTo));
+            // methods.setValue('validFrom', dateParser(registration.validFrom));
+            // methods.setValue('validTo', dateParser(registration.validTo));
         }
     }, [registration]);
 
@@ -75,8 +74,8 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
             await editGeneralRegistration(id, {
                 notes: data.notes,
                 status: data.status,
-                validFrom: getDateValueString(data.validFrom),
-                validTo: getDateValueString(data.validTo),
+                // validFrom: getDateValueString(data.validFrom),
+                // validTo: getDateValueString(data.validTo),
             });
 
             router.push(routes.adminRegistrationUrl);
@@ -172,9 +171,9 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                                 disabled={registration?.status === RegistrationStatus.PAID || registration?.status === RegistrationStatus.INACTIVE}
                                 label="Status"
                                 name="status"
-                                values={registrationDataField}
+                                values={registrationDataField.filter((item) => item.value !== RegistrationStatus.PAID)}
                             />
-                            <DateField
+                            {/* <DateField
                                 disabled={registration?.status === RegistrationStatus.PAID || registration?.status === RegistrationStatus.INACTIVE}
                                 onChange={(e) => {
                                     methods.setValue(
@@ -187,7 +186,7 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
                                 label="Valid From"
                                 name="validFrom"
                             />
-                            <DateField readOnly label="Valid To" name="validTo" />
+                            <DateField readOnly label="Valid To" name="validTo" /> */}
                             <TextareaField name="notes" label="Note" />
 
                             <FormErrorMessage />
@@ -211,5 +210,3 @@ const EditRegistration: React.FunctionComponent<EditRegistrationProps> = ({ id }
         </div>
     );
 };
-
-export default EditRegistration;

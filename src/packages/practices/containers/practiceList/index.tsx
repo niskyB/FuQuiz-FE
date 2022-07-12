@@ -13,6 +13,7 @@ import { Subject } from '../../../../core/models/subject';
 import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
+import { dateParser } from '../../../../core/util/date';
 import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
 import { PaginationBar } from '../../../dashboard';
 import { useGetPracticeList } from '../../common/hooks/useGetPracticeList';
@@ -100,7 +101,7 @@ export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSiz
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <div className="max-w-sm">
-                                                            <div className="text-gray-900">{item.createdAt}</div>
+                                                            <div className="text-gray-900">{dateParser(item.createdAt)}</div>
                                                         </div>
                                                     </TableDescription>
                                                     <TableDescription>
@@ -117,7 +118,7 @@ export const PracticeList: React.FC<PracticeListProps> = ({ currentPage, pageSiz
                                                         <div className="text-gray-900">{item.attendedQuestions.length} Questions</div>
                                                     </TableDescription>
                                                     <TableDescription>
-                                                        <div className="text-gray-900">{Math.round(item.rate * item.attendedQuestions.length)}%</div>
+                                                        <div className="text-gray-900">{item.rate * 100}%</div>
                                                     </TableDescription>
                                                     <TableDescription>
                                                         <Link href={`${routes.reviewQuizResultUrl}/${item.id}`} passHref>

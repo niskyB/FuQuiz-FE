@@ -3,7 +3,7 @@ import React from 'react';
 import { RouterProtectionWrapper } from '../../../../../src/core/components/routerProtection';
 import { UserRole } from '../../../../../src/core/models/role';
 import { DashBoardLayout } from '../../../../../src/packages/dashboard';
-import PackageList from '../../../../../src/packages/package/containers/packageList';
+import { PackageList } from '../../../../../src/packages/package/containers/packageList';
 
 interface PackagePageProps {
     subjectId: string;
