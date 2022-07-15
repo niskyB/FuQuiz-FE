@@ -5,6 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotificationWrapper from '../src/core/common/HOC/notificationWrapper';
 import { GetCurrentUserWrapper } from '../src/core/components/routerProtection';
 import { store } from '../src/core/store';
 import '../styles/globals.css';
@@ -38,6 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                             ],
                         }}
                     />
+                    {/* <NotificationWrapper></NotificationWrapper> */}
                     <Component {...pageProps} />
                 </GetCurrentUserWrapper>
                 <ToastContainer
