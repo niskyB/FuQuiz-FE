@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import * as React from 'react';
-import { BookmarkIcon, CheckIcon, LightBulbIcon, PhotographIcon, VolumeUpIcon, XIcon } from '@heroicons/react/outline';
+import { BookmarkIcon, CheckIcon, LightBulbIcon, PhotographIcon, PlayIcon, VolumeUpIcon, XIcon } from '@heroicons/react/outline';
 import { ClientQuestionInQuiz } from '../../../core/models/quizResult';
 import { DoQuizType } from '../containers/doQuiz/interface';
 import { store } from '../../../core/store';
@@ -122,12 +122,12 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                             })}
                         </fieldset>
                     </div>
-                    <div className="flex flex-col space-y-3 ">
+                    <div className="flex flex-col space-y-10 ">
                         <h1 className="font-bold">Material</h1>
                         {data.questionInQuiz.question.imageUrl && (
                             <div className="flex flex-col space-y-3">
                                 <div className="flex items-center space-x-1 font-semibold">
-                                    <div className="w-5 h-5">
+                                    <div className="w-6 h-6">
                                         <PhotographIcon />
                                     </div>
 
@@ -139,8 +139,8 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                         {data.questionInQuiz.question.videoLink && (
                             <div className="flex flex-col space-y-3 ">
                                 <div className="flex items-center space-x-1 font-semibold">
-                                    <div className="w-5 h-5">
-                                        <PhotographIcon />
+                                    <div className="w-6 h-6">
+                                        <PlayIcon />
                                     </div>
 
                                     <div className="">Video :</div>
@@ -158,10 +158,9 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                         {data.questionInQuiz.question.audioLink && (
                             <div className="flex flex-col space-y-3">
                                 <div className="flex items-center space-x-1 font-semibold">
-                                    <div className="w-5 h-5">
+                                    <div className="w-6 h-6">
                                         <VolumeUpIcon />
                                     </div>
-
                                     <div className="">Audio :</div>
                                 </div>
                                 <iframe
