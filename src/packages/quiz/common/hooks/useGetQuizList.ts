@@ -18,7 +18,7 @@ export const useGetQuizList = (options: Partial<FilterQuizListDTO>) => {
         () => ({
             name: name || '',
             subject: subject || '',
-            type: type || '67a81d8a-ef1f-11ec-8ea0-0242ac120002',
+            type: type || '',
             currentPage: currentPage || 0,
             pageSize: pageSize || 10,
         }),
