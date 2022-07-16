@@ -4,10 +4,16 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { UserCoursesPageProps } from '../../../../pages/user/courses';
+import { ApiListRoutes } from '../../../core/common/enum';
+import { getDataById } from '../../../core/common/hooks';
 import { useUrlParams } from '../../../core/common/hooks/useUrlParams';
+import { PricePackage } from '../../../core/models/pricePackage';
 import { RegistrationStatus } from '../../../core/models/registration';
 import { routes } from '../../../core/routes';
+import { store } from '../../../core/store';
+import { formActions } from '../../../core/store/form';
 import { getDateStringToShow } from '../../../core/util/date';
+import { vietnamCurrencyConverter } from '../../../core/util/price';
 import { PaginationBar } from '../../dashboard';
 import Contact from '../../store/container/Contact';
 import { CourseFilter } from '../components/courseFilter';
@@ -97,7 +103,7 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                                     </Link>
                                 </div>
 
-                                <div className="flex flex-col items-start mt-6 space-y-1">
+                                <div className="flex flex-col items-start mt-6 space-y-2">
                                     <p className="text-gray-500">Package: {item.pricePackage.name}</p>
                                     <div className="flex space-x-2">
                                         <p className="text-gray-500">Status:</p>
@@ -117,28 +123,67 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
                                     )}
                                     <p className="text-gray-500">Registration day: {moment(item.registrationTime).format('MMM Do YY')}</p>
                                     <p className="flex justify-between w-full text-2xl font-medium text-gray-900">
-                                        <div className="text-orange-600">{item.pricePackage.salePrice}VNĐ</div>
+                                        <div className="text-orange-600">{vietnamCurrencyConverter(item.pricePackage.salePrice)}</div>
+                                    </p>
+                                    <div className="flex justify-between w-full gap-3">
                                         {item.status === RegistrationStatus.SUBMITTED && (
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    confirm('This action will cancel this registration') && _handleOnCancelRegistration(item.id)
-                                                }
-                                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                            >
-                                                Cancel
-                                            </button>
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        confirm('This action will cancel this registration') && _handleOnCancelRegistration(item.id)
+                                                    }
+                                                    className="items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                >
+                                                    Cancel
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={async () => {
+                                                        console.log(item);
+                                                        const pricePackageList = await getDataById<PricePackage[]>(
+                                                            ApiListRoutes.PRICE_PACKAGES,
+                                                            item.pricePackage.subject?.id || ''
+                                                        );
+                                                        store.dispatch(
+                                                            formActions.setRegistrationForm({
+                                                                defaultPackage: item.pricePackage.id,
+                                                                pricePackage: pricePackageList,
+                                                                subjectId: item.pricePackage.subject?.id || '',
+                                                                subjectName: item.pricePackage.subject?.name || '',
+                                                                type: 'EDIT',
+                                                                registrationId: item.id,
+                                                                notes: item.notes,
+                                                            })
+                                                        );
+                                                    }}
+                                                    className="items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                >
+                                                    Edit
+                                                </button>
+                                            </>
                                         )}
                                         {item.status === RegistrationStatus.APPROVED && (
-                                            <button
-                                                type="button"
-                                                onClick={() => _handleOnPayCourse(item.id || '')}
-                                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                            >
-                                                Pay
-                                            </button>
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => _handleOnPayCourse(item.id || '')}
+                                                    className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                >
+                                                    Pay
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        confirm('This action will cancel this registration') && _handleOnCancelRegistration(item.id)
+                                                    }
+                                                    className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </>
                                         )}
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

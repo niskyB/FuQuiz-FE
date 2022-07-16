@@ -6,6 +6,9 @@ export interface RegistrationForm {
     subjectId: string;
     pricePackage: PricePackage[];
     defaultPackage: string;
+    type: 'REGISTER' | 'EDIT';
+    registrationId?: string;
+    notes?: string;
 }
 
 export interface FormState {
@@ -20,6 +23,9 @@ const initialState: FormState = {
         subjectName: '',
         pricePackage: [],
         defaultPackage: '',
+        type: 'EDIT',
+        registrationId: '',
+        notes: '',
     },
 };
 

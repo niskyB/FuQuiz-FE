@@ -117,6 +117,7 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                                                                             subjectId: item.id,
                                                                                             subjectName: item.name,
                                                                                             defaultPackage: pricePackage.id,
+                                                                                            type: 'REGISTER',
                                                                                         })
                                                                                     );
                                                                                 }}
