@@ -34,7 +34,10 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
 
     const blogListOptions = React.useMemo<Partial<FilterBlogListDTO>>(() => ({ currentPage: 1, isShow: true, pageSize: 10 }), []);
 
-    const subjectFilterOption = React.useMemo<Partial<SubjectFilterDTO>>(() => ({ currentPage: 1, pageSize: 10, isActive: true }), []);
+    const subjectFilterOption = React.useMemo<Partial<SubjectFilterDTO>>(
+        () => ({ currentPage: 1, pageSize: 10, isActive: true, isFeature: true }),
+        []
+    );
     const sliderOptions = React.useMemo<Partial<GetSliderOptionsDTO>>(() => ({ isShow: true, currentPage: 1, pageSize: 20 }), []);
 
     const { blogList } = useGetBlogList(blogListOptions);
