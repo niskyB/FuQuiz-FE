@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import * as React from 'react';
-import { BookmarkIcon, CheckIcon, LightBulbIcon, XIcon } from '@heroicons/react/outline';
+import { BookmarkIcon, CheckIcon, LightBulbIcon, PhotographIcon, VolumeUpIcon, XIcon } from '@heroicons/react/outline';
 import { ClientQuestionInQuiz } from '../../../core/models/quizResult';
 import { DoQuizType } from '../containers/doQuiz/interface';
 import { store } from '../../../core/store';
@@ -46,7 +46,7 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
     if (isShow)
         return (
             <>
-                <div className="px-5 py-5 space-y-2 text-base bg-white rounded-md">
+                <div className="px-5 py-5 space-y-5 text-base bg-white rounded-md">
                     <div className="flex justify-between">
                         <h1 className="font-bold">Question {index + 1}</h1>
                         <div className="flex space-x-5">
@@ -122,39 +122,58 @@ const QuizQuestion: React.FunctionComponent<QuizQuestionProps> = ({
                             })}
                         </fieldset>
                     </div>
-                </div>
-                <div className="flex flex-col space-y-10">
-                    {data.questionInQuiz.question.imageUrl && (
-                        <div className="flex flex-col space-y-3">
-                            <div className="">Image :</div>
-                            <img className="" src={data.questionInQuiz.question.imageUrl} alt={data.questionInQuiz.question.id} />
-                        </div>
-                    )}
-                    {data.questionInQuiz.question.videoLink && (
-                        <div className="flex flex-col space-y-3">
-                            <div className="">Video :</div>
-                            <iframe
-                                width="560"
-                                height="315"
-                                src={`https://www.youtube.com/embed/${getYoutubeCode(data.questionInQuiz.question.videoLink)}`}
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            ></iframe>
-                        </div>
-                    )}
+                    <div className="flex flex-col space-y-3 ">
+                        <h1 className="font-bold">Material</h1>
+                        {data.questionInQuiz.question.imageUrl && (
+                            <div className="flex flex-col space-y-3">
+                                <div className="flex items-center space-x-1 font-semibold">
+                                    <div className="w-5 h-5">
+                                        <PhotographIcon />
+                                    </div>
 
-                    {data.questionInQuiz.question.audioLink && (
-                        <div className="flex flex-col space-y-3">
-                            <div className="">Audio :</div>
-                            <iframe
-                                width="560"
-                                height="315"
-                                src={`https://www.youtube.com/embed/${getYoutubeCode(data.questionInQuiz.question.audioLink)}`}
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            ></iframe>
-                        </div>
-                    )}
+                                    <div className="">Image :</div>
+                                </div>
+                                <img className="" src={data.questionInQuiz.question.imageUrl} alt={data.questionInQuiz.question.id} />
+                            </div>
+                        )}
+                        {data.questionInQuiz.question.videoLink && (
+                            <div className="flex flex-col space-y-3 ">
+                                <div className="flex items-center space-x-1 font-semibold">
+                                    <div className="w-5 h-5">
+                                        <PhotographIcon />
+                                    </div>
+
+                                    <div className="">Video :</div>
+                                </div>
+                                <iframe
+                                    width="560"
+                                    height="315"
+                                    src={`https://www.youtube.com/embed/${getYoutubeCode(data.questionInQuiz.question.videoLink)}`}
+                                    title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                ></iframe>
+                            </div>
+                        )}
+
+                        {data.questionInQuiz.question.audioLink && (
+                            <div className="flex flex-col space-y-3">
+                                <div className="flex items-center space-x-1 font-semibold">
+                                    <div className="w-5 h-5">
+                                        <VolumeUpIcon />
+                                    </div>
+
+                                    <div className="">Audio :</div>
+                                </div>
+                                <iframe
+                                    width="560"
+                                    height="315"
+                                    src={`https://www.youtube.com/embed/${getYoutubeCode(data.questionInQuiz.question.audioLink)}`}
+                                    title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                ></iframe>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </>
         );
