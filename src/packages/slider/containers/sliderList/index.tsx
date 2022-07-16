@@ -14,6 +14,9 @@ import { TableBody } from '../../../../core/components/table/tableBody';
 import { useGetSliderList } from '../../common/hooks/useGetSliderList';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { allFieldData, statusFieldData } from '../../../../core/common/dataField';
+import { useGetSlider } from '../../common/hooks/useGetSlider';
+import { updateSlider } from '../editSlider/action';
+import { toast } from 'react-toastify';
 
 interface SliderProps extends GetSliderOptionsDTO {}
 export const SliderList: React.FunctionComponent<SliderProps> = ({
@@ -29,6 +32,9 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
     const router = useRouter();
     const userState = useStoreUser();
     const methods = useForm<SliderProps>();
+    const [decoy, setDecoy] = React.useState<number>(0);
+    const [id, setId] = React.useState<string>('');
+
     const options = React.useMemo<GetSliderOptionsDTO>(
         () => ({
             currentPage,
@@ -40,7 +46,7 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
             createdAt: createdAt,
             backLink,
         }),
-        [currentPage, pageSize, title, userId, isShow, orderBy, createdAt, backLink]
+        [currentPage, pageSize, title, userId, isShow, orderBy, createdAt, backLink, decoy]
     );
 
     useUrlParams({
@@ -49,6 +55,13 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
     });
 
     const { count, sliders } = useGetSliderList(options);
+    const { slider } = useGetSlider({ id });
+
+    React.useEffect(() => {
+        _onToggleStatus(id);
+
+        return () => {};
+    }, [slider]);
 
     const _handleOnSubmit = async (data: SliderProps) => {
         pushWithParams(router, routes.adminSliderListUrl, {
@@ -60,6 +73,22 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
             createdAt: data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '',
             backLink: data.backLink,
         });
+    };
+
+    const _onToggleStatus = async (id: string) => {
+        if (id && slider) {
+            const res = await updateSlider(id, {
+                isShow: !slider.isShow,
+                title: slider.title,
+                backLink: slider.backLink,
+                notes: slider.notes,
+                image: new File([], ''),
+            });
+            if (res) toast.success('Update slider success');
+
+            setId('');
+            setDecoy(Math.random());
+        }
     };
     return (
         <div className="px-4 space-y-4 sm:px-6 lg:px-4">
@@ -151,9 +180,17 @@ export const SliderList: React.FunctionComponent<SliderProps> = ({
                                                         {(slider.marketing && slider.marketing.user.id === userState.id) ||
                                                         userState.role.description === UserRole.ADMIN ||
                                                         userState.id === slider.marketing?.user.id ? (
-                                                            <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
-                                                                <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
-                                                            </Link>
+                                                            <>
+                                                                <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
+                                                                    <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">Edit</p>
+                                                                </Link>
+                                                                <p
+                                                                    onClick={() => setId(slider.id)}
+                                                                    className="text-red-600 cursor-pointer hover:text-red-900"
+                                                                >
+                                                                    Change status
+                                                                </p>
+                                                            </>
                                                         ) : (
                                                             <Link href={`${routes.adminEditSliderUrl}/${slider.id}`} passHref>
                                                                 <p className="text-indigo-600 cursor-pointer hover:text-indigo-900">View</p>
