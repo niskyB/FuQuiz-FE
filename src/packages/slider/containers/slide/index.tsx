@@ -27,12 +27,12 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
         return () => {};
     }, [scrollDeg]);
 
-    const swigger = useInterval(() => {
+    const clearInterval = useInterval(() => {
         _onScrollRight(false);
     }, 5000);
 
     const _onScrollLeft = (isSwagger: boolean) => {
-        if (isSwagger) swigger();
+        if (isSwagger) clearInterval();
 
         if (slide.current && scrollDeg > 0) {
             const scrollWith = slide.current.scrollWidth;
@@ -40,7 +40,7 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
         }
     };
     const _onScrollRight = (isSwagger: boolean) => {
-        if (isSwagger) swigger();
+        if (isSwagger) clearInterval();
 
         if (slide.current) {
             const scrollWith = slide.current.scrollWidth;
