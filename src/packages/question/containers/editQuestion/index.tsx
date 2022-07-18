@@ -47,10 +47,10 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
         if (question) {
             methods.setValue('explanation', question.explanation);
             methods.setValue('content', question.content);
-
-            setPreviewThumbnailUrl(question.imageUrl);
             methods.setValue('audioLink', question.audioLink);
             methods.setValue('videoLink', question.videoLink);
+
+            setPreviewThumbnailUrl(question.imageUrl);
             setExplanation(question.explanation);
         }
     }, [question]);
@@ -58,10 +58,11 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
     useTimeout(() => {
         if (question) {
             methods.setValue('isMultipleChoice', question.isMultipleChoice);
-            setIsMultipleChoice(question.isMultipleChoice);
             methods.setValue('isActive', question.isActive);
             methods.setValue('questionLevel', question.questionLevel.id);
+
             answers.replace(question.answers);
+            setIsMultipleChoice(question.isMultipleChoice);
         }
     }, 500);
 
@@ -156,23 +157,6 @@ export const EditQuestion: React.FunctionComponent<EditQuestionProps> = ({ id })
                                     direction={'row'}
                                     label="Answers"
                                 />
-
-                                {/* {answers.fields.map((answer, index) => (
-                                    <div key={'answer-' + index}>
-                                        <TextField direction="row" label={`Answer ${index + 1}`} name={`answers.${index}.detail` as const} />
-                                        <div className={`flex justify-end col-span-2 col-end-4 space-x-4`}>
-                                            <div className="flex items-center space-x-2 text-sm font-medium text-gray-900 w-fit">
-                                                <input
-                                                    type={isMultipleChoice ? 'checkbox' : 'radio'}
-                                                    name="isCorrect"
-                                                    defaultChecked={answer.isCorrect}
-                                                    onChange={(e) => _onChangeRightAnswerBox({ ...e }, index)}
-                                                />
-                                                <label>Right Answer</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))} */}
 
                                 <div className="flex justify-end space-x-2">
                                     <button
