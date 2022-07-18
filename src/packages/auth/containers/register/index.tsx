@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormWrapper, RadioField, TextField } from '../../../../core/components/form';
 import { routes } from '../../../../core/routes';
 import { authRegister } from './action';
 import { toast } from 'react-toastify';
@@ -10,6 +9,7 @@ import { store } from '../../../../core/store';
 import { apiActions } from '../../../../core/store/api';
 import { useRouter } from 'next/router';
 import { AuthRegisterDto } from './interface';
+import { FormErrorMessage, FormWrapper, RadioField, TextField } from '../../../../core/components/form';
 
 const defaultValues: AuthRegisterDto = {
     password: '',

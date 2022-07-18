@@ -2,8 +2,8 @@ import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { Order } from '../../src/core/common/dataField';
 import { Blogs } from '../../src/packages/blog/container/blogs';
-import { FilterBlogsDTO } from '../../src/packages/blog/container/blogs/interface';
 import { StoreLayout } from '../../src/packages/store';
+import { FilterBlogsDTO } from '../../src/packages/blog/container/blogs/interface';
 
 interface BlogsPageProps extends FilterBlogsDTO {}
 

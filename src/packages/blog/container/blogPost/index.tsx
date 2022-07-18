@@ -1,6 +1,6 @@
 import * as React from 'react';
-import SearchBlogBar from '../../component/SearchBlogBar';
 import { useGetBlog } from '../../common/hooks/useGetBlog';
+import SearchBlogBar from '../../component/SearchBlogBar';
 
 interface BlogPostProps {
     id: string;

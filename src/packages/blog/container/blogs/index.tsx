@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { FilterBlogsDTO } from './interface';
 import { useUrlParams } from '../../../../core/common/hooks/useUrlParams';
 import { routes } from '../../../../core/routes';
 import { PaginationBar } from '../../../dashboard';
@@ -7,7 +8,6 @@ import SearchBlogBar from '../../component/SearchBlogBar';
 import { useGetBlogs } from '../../common/hooks/useGetBlogs';
 import { BlogBox } from '../blogBox';
 import { FilterBlogListDTO } from '../blogList/interface';
-import { FilterBlogsDTO } from './interface';
 
 export interface BlogsProps extends FilterBlogsDTO {}
 

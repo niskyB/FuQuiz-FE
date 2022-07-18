@@ -11,8 +11,8 @@ import { routes } from '../../../../core/routes';
 import { RootState } from '../../../../core/store';
 import { UserState } from '../../../../core/store/user';
 import { getYoutubeCode } from '../../../../core/util';
-import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
 import { useGetLessonById } from '../../common/hooks/useGetLessonById';
+import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
 
 interface LessonViewProps {
     lessonId: string;

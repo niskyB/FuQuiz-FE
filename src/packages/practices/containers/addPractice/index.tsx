@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { allFieldData } from '../../../../core/common/dataField';
-import { PracticeType, PracticeTypeFieldData } from '../../../../core/common/dataField/practiceType';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import { SelectionFieldValues } from '../../../../core/common/interface';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
@@ -20,6 +19,7 @@ import { LessonList } from '../../../lesson';
 import { useGetLessonList } from '../../../lesson/common/hooks/useGetLessonList';
 import { AddPracticeAction } from './action';
 import { AddPracticeDTO, FormAddPracticeDTO } from './interface';
+import { PracticeType, PracticeTypeFieldData } from '../../../../core/common/dataField/practiceType';
 
 interface AddPracticeProps {}
 
