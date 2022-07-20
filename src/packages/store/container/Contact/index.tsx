@@ -4,7 +4,7 @@ const Contact: React.FunctionComponent<ContactProps> = () => {
     return (
         <div className="flex flex-col space-y-5">
             <h2 className="text-2xl font-semibold">Contact information</h2>
-            <a target={'_blank'} href="https://www.facebook.com/duc.dau.731">
+            <a target={'_blank'} href="" rel="noreferrer">
                 <div className="flex items-center space-x-4">
                     <div className="w-6 h-6">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@ const Contact: React.FunctionComponent<ContactProps> = () => {
                     <p>Facebook</p>
                 </div>
             </a>
-            <a target={'_blank'} href="https://www.linkedin.com/in/ducdauu/">
+            <a target={'_blank'} href="" rel="noreferrer">
                 <div className="flex items-center space-x-4">
                     <div className="w-6 h-6">
                         <svg viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +47,7 @@ const Contact: React.FunctionComponent<ContactProps> = () => {
                     <p>Linkln</p>
                 </div>
             </a>
-            <a target={'_blank'} href="https://github.com/dauleduc2/FU-Quiz">
+            <a target={'_blank'} href="" rel="noreferrer">
                 <div className="flex items-center space-x-4">
                     <div className="w-6 h-6">
                         <svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
