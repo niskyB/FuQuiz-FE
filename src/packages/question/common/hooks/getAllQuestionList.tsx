@@ -4,7 +4,7 @@ import { FilterQuestionsDTO, QuestionListDTO } from '../../containers/questionLi
 import * as React from 'react';
 
 export interface FilterQuestionWithChangeDTO extends Partial<FilterQuestionsDTO> {
-    boolean: boolean;
+    boolean?: boolean;
 }
 
 export const useGetAllQuestionList = (options: FilterQuestionWithChangeDTO) => {
