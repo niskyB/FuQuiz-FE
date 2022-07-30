@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
-import { Answer } from '../../../../core/models/answer';
-import { Question } from '../../../../core/models/question';
 import { routes } from '../../../../core/routes';
 import { useGetQuizById } from '../../../quiz/common/hooks/useGetQuizById';
 import { ReviewQuestion } from '../../components/reviewQuestion';

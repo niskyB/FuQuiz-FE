@@ -1,7 +1,6 @@
 import QuizQuestion from '../../components/question';
 import * as React from 'react';
 import QuizAnswer from '../quizAnswer';
-import { convertQuestionListToQuestionAnswerToSend, findQuestionAndDoAction } from '../../../../core/util/question';
 import { BadgeCheckIcon, ClockIcon } from '@heroicons/react/outline';
 import { useGetQuizResultById } from '../../common/hooks/useGetQuizResultById';
 import { QuizAnswerStatus } from '../../../../core/models/quiz';
@@ -16,6 +15,7 @@ import { DoQuizType } from './interface';
 import { routes } from '../../../../core/routes';
 import Link from 'next/link';
 import useTimeout from '../../../../core/common/hooks/useTimeout';
+import { convertQuestionListToQuestionAnswerToSend, findQuestionAndDoAction } from '../../../../core/util/question';
 
 interface DoQuizProps {
     id: string;

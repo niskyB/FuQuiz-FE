@@ -1,9 +1,8 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { RouterUnAuthProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { VerifyEmail } from '../../../src/packages/auth/containers/verifyEmail';
-
 import { StoreLayout } from '../../../src/packages/store';
+import { RouterUnAuthProtectionWrapper } from '../../../src/core/components/routerProtection';
 
 interface VerifyEmailPageProps {
     token: string;

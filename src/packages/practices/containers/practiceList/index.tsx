@@ -14,9 +14,9 @@ import { routes } from '../../../../core/routes';
 import { pushWithParams } from '../../../../core/util';
 import { dataParser } from '../../../../core/util/data';
 import { dateParser } from '../../../../core/util/date';
-import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
 import { PaginationBar } from '../../../dashboard';
 import { useGetPracticeList } from '../../common/hooks/useGetPracticeList';
+import { useGetRegistrationUserList } from '../../../course/hooks/useGetRegistrationListUser';
 
 interface PracticeListProps extends PracticeListPageProps {}
 

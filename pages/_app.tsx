@@ -13,6 +13,11 @@ import '../styles/globals.css';
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
+            <Script
+                src="https://browser.sentry-cdn.com/7.7.0/bundle.min.js"
+                integrity="sha384-zVycKakbFST6m0pi9RFIAnb5nw7mrA1n/mE4C8grImB4B6iqCp/0LHOcTIu9AI7+"
+                // crossorigin="anonymous"
+            />
             <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FEMBDB700Z" />
             <Script type="text/javascript" src="/static/js/google.script.js" />
             <Provider store={store}>

@@ -17,8 +17,8 @@ import { vietnamCurrencyConverter } from '../../../core/util/price';
 import { PaginationBar } from '../../dashboard';
 import Contact from '../../store/container/Contact';
 import { CourseFilter } from '../components/courseFilter';
-import { useGetRegistrationUserList } from '../hooks/useGetRegistrationListUser';
 import { cancelRegistration, payCourse } from './action';
+import { useGetRegistrationUserList } from '../hooks/useGetRegistrationListUser';
 
 export interface UserCoursesProps extends UserCoursesPageProps {
     status: string | RegistrationStatus;

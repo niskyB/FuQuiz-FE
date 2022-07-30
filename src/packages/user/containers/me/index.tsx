@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { genderFieldData } from '../../../../core/common/dataField';
-import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
 import { store, useStoreUser } from '../../../../core/store';
@@ -12,6 +11,7 @@ import { userThunk } from '../../../../core/store/user/thunks';
 import { checkFileType } from '../../../../core/util/file';
 import { updateUser } from './action';
 import { UpdateUserDto } from './interface';
+import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 
 interface UpdateUserProps {}
 

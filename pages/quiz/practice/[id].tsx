@@ -1,7 +1,7 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { QuizPractice } from '../../../src/packages/practice/containers/quizPractice';
 import { StoreLayout } from '../../../src/packages/store';
+import { QuizPractice } from '../../../src/packages/practice/containers/quizPractice';
 
 interface PracticeQuizPageProps {
     id: string;

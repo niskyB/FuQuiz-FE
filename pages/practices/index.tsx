@@ -1,8 +1,8 @@
 import { NextPage, NextPageContext } from 'next';
 import { RouterProtectionWrapper } from '../../src/core/components/routerProtection';
 import { UserRole } from '../../src/core/models/role';
-import { PracticeList } from '../../src/packages/practices/containers/practiceList';
 import { StoreLayout } from '../../src/packages/store';
+import { PracticeList } from '../../src/packages/practices/containers/practiceList';
 
 export interface PracticeListPageProps {
     currentPage: number;

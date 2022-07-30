@@ -1,5 +1,5 @@
-import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
+import { NextPage, NextPageContext } from 'next';
 import { BlogPost } from '../../src/packages/blog';
 import { StoreLayout } from '../../src/packages/store';
 
