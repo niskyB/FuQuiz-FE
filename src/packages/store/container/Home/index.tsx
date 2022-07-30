@@ -41,7 +41,6 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
     const sliderOptions = React.useMemo<Partial<GetSliderOptionsDTO>>(() => ({ isShow: true, currentPage: 1, pageSize: 999 }), []);
 
     const { blogList } = useGetBlogList(blogListOptions);
-
     const { sliders } = useGetSliderList(sliderOptions);
     const { subjects } = useGetSubjectList(subjectFilterOption);
 
