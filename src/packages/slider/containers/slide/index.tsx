@@ -7,7 +7,7 @@ interface SlideProps {
     slideList: SliderWithoutAuthDTO[];
 }
 
-export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
+export const Slide: React.FunctionComponent<SlideProps> = ({ slideList, children }) => {
     const slide = React.useRef<HTMLDivElement | null>(null);
     const slideLength = React.useMemo(
         () =>
@@ -24,7 +24,6 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
         if (slide.current) {
             slide.current.scrollTo({ left: scrollDeg, behavior: 'smooth' });
         }
-        return () => {};
     }, [scrollDeg]);
 
     const swigger = useInterval(() => {
@@ -61,7 +60,19 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
                 </div>
             </div> */}
 
-            <div ref={slide} className="flex flex-1 overflow-x-auto duration-700 snap-x snap-mandatory slider-content">
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: '',
+                    textAlign: 'center',
+                    backgroundColor: 'black',
+                    color: 'white',
+                    lineHeight: '',
+                    fontSize: '20px',
+                }}
+                ref={slide}
+                className="flex flex-1 overflow-x-auto duration-700 snap-x snap-mandatory slider-content"
+            >
                 <div className="absolute z-10 items-center visible -translate-y-1/2 fl ex top-1/2 left-2 slider-pointer">
                     <div onClick={() => _onScrollLeft(true)} className="w-10 h-10 cursor-pointer text-gray/80 hover:text-gray ">
                         <ChevronLeftIcon />
@@ -70,7 +81,11 @@ export const Slide: React.FunctionComponent<SlideProps> = ({ slideList }) => {
                 {slideList.map((item) => {
                     if (item.isShow)
                         return (
-                            <div key={item.id} className="w-full h-auto px-3 mx-auto space-y-5 cursor-pointer snap-center shrink-0">
+                            <div
+                                key={item.id}
+                                style={{ width: '100%' }}
+                                className="w-full h-auto px-3 mx-auto space-y-5 cursor-pointer snap-center shrink-0"
+                            >
                                 <a className="relative w-full" href={item.backLink}>
                                     <p className="absolute left-0 px-2 text-2xl font-semibold text-center text-gray-100 capitalize bg-gray-900/70 bottom-6">
                                         {item.title}
