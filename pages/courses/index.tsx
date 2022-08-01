@@ -1,8 +1,8 @@
 import { NextPage, NextPageContext } from 'next';
 import { Order } from '../../src/core/common/dataField';
 import { StoreLayout } from '../../src/packages/store';
-import { Subjects } from '../../src/packages/subject';
 import { BlogListFilterDTO } from '../../src/packages/subject/container/subjects/interface';
+import { Subjects } from '../../src/packages/subject';
 
 interface CourseListPageProps extends BlogListFilterDTO {}
 

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { routes } from '../../../../core/routes';
 import { authVerifyEmail } from './action';
+import { routes } from '../../../../core/routes';
 
 interface VerifyEmailProps {
     token: string;

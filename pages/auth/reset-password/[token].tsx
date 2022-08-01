@@ -1,7 +1,7 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
-import { RouterUnAuthProtectionWrapper } from '../../../src/core/components/routerProtection';
 import ResetPassword from '../../../src/packages/auth/containers/resetPassword/resetPassword';
+import { RouterUnAuthProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { StoreLayout } from '../../../src/packages/store';
 
 interface ResetPasswordPageProps {

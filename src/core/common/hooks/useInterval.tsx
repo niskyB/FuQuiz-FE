@@ -1,9 +1,10 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function useInterval(callback: () => void, delay: number | null) {
     const savedCallback = useRef(callback);
+    const [id, setId] = useState<NodeJS.Timer>();
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
 
@@ -13,7 +14,12 @@ export function useInterval(callback: () => void, delay: number | null) {
         }
 
         const id = setInterval(() => savedCallback.current(), delay);
+        setId(id);
 
         return () => clearInterval(id);
     }, [delay]);
+
+    return () => {
+        if (id) clearInterval(id);
+    };
 }

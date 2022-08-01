@@ -1,18 +1,19 @@
+import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { genderFieldData } from '../../../../core/common/dataField';
 import { FormWrapper, SelectField, TextField } from '../../../../core/components/form';
+import { TextareaField } from '../../../../core/components/form/textareaField';
 import { PricePackage } from '../../../../core/models/pricePackage';
+import { RegistrationStatus } from '../../../../core/models/registration';
+import { UserRole } from '../../../../core/models/role';
 import { store, useStoreApi, useStoreForm, useStoreUser } from '../../../../core/store';
 import { formActions } from '../../../../core/store/form';
 import { dataParser } from '../../../../core/util/data';
-import * as React from 'react';
-import { RegistrationFormDTO } from './interface';
-import { RedStar } from '../../components/errorStar';
 import { addRegistration } from '../../../registrations/containers/addRegistration/action';
-import { TextareaField } from '../../../../core/components/form/textareaField';
-import { RegistrationStatus } from '../../../../core/models/registration';
-import { toast } from 'react-toastify';
-import { UserRole } from '../../../../core/models/role';
+import { RedStar } from '../../components/errorStar';
+import { editRegistration } from './action';
+import { RegistrationFormDTO } from './interface';
 
 interface RegistrationFormProps {}
 
@@ -25,6 +26,7 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
     React.useEffect(() => {
         methods.setValue('subject', formState.registrationForm.subjectName);
         methods.setValue('pricePackage', formState.registrationForm.defaultPackage);
+        methods.setValue('notes', formState.registrationForm.notes || '');
         if (userState.id) {
             methods.setValue('email', userState.email);
             methods.setValue('fullName', userState.fullName);
@@ -36,22 +38,40 @@ export const RegistrationForm: React.FunctionComponent<RegistrationFormProps> = 
     }, [formState.registrationForm, userState]);
 
     const _handleOnSubmit = async (data: RegistrationFormDTO) => {
-        if (userState.role.description === UserRole.CUSTOMER) {
-            const { subject, ...other } = data;
-            const res = await addRegistration({
-                ...other,
-                registrationTime: new Date().toISOString(),
-                sale: null,
-                status: RegistrationStatus.SUBMITTED,
-            });
+        switch (formState.registrationForm.type) {
+            case 'EDIT':
+                if (formState.registrationForm.registrationId) {
+                    const res = await editRegistration(formState.registrationForm.registrationId, {
+                        notes: data.notes,
+                        pricePackage: data.pricePackage,
+                    });
+                    if (res) {
+                        toast.success('Update success!');
+                        store.dispatch(formActions.resetState());
+                        window.location.reload();
+                    }
+                }
 
-            if (res) {
-                methods.reset();
-                store.dispatch(formActions.resetState());
-                toast.success('Register success, please wait for response from our saler!');
-            }
-        } else {
-            toast.warn('Only customer can register a course, please try on another account!');
+                break;
+            case 'REGISTER':
+                if (userState.role.description === UserRole.CUSTOMER) {
+                    const { subject, ...other } = data;
+                    const res = await addRegistration({
+                        ...other,
+                        registrationTime: new Date().toISOString(),
+                        sale: null,
+                        status: RegistrationStatus.SUBMITTED,
+                    });
+
+                    if (res) {
+                        methods.reset();
+                        store.dispatch(formActions.resetState());
+                        toast.success('Register success, please wait for response from our saler!');
+                    }
+                } else {
+                    toast.warn('Only customer can register a course, please try on another account!');
+                }
+                break;
         }
     };
     if (formState.isOpening)

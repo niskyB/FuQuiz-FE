@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { statusFieldData } from '../../../../core/common/dataField';
+import { publicFieldData, statusFieldData } from '../../../../core/common/dataField';
 import { unsetFieldData } from '../../../../core/common/dataField/unset';
 import useTimeout from '../../../../core/common/hooks/useTimeout';
 import { FileField, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
@@ -115,7 +115,7 @@ export const EditSubject: React.FunctionComponent<EditSubjectProps> = ({ id }) =
 
                     <SelectField label="Feature" direction="row" values={[unsetFieldData, ...statusFieldData]} name="isFeature" />
 
-                    <SelectField label="Active" direction="row" values={[unsetFieldData, ...statusFieldData]} name="isActive" />
+                    <SelectField label="Public" direction="row" values={[unsetFieldData, ...publicFieldData]} name="isActive" />
                 </>
             );
         }

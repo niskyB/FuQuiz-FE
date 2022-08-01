@@ -5,6 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotificationWrapper from '../src/core/common/HOC/notificationWrapper';
 import { GetCurrentUserWrapper } from '../src/core/components/routerProtection';
 import { store } from '../src/core/store';
 import '../styles/globals.css';
@@ -12,6 +13,11 @@ import '../styles/globals.css';
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
+            <Script
+                src="https://browser.sentry-cdn.com/7.7.0/bundle.min.js"
+                integrity="sha384-zVycKakbFST6m0pi9RFIAnb5nw7mrA1n/mE4C8grImB4B6iqCp/0LHOcTIu9AI7+"
+                // crossorigin="anonymous"
+            />
             <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FEMBDB700Z" />
             <Script type="text/javascript" src="/static/js/google.script.js" />
             <Provider store={store}>
@@ -38,6 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                             ],
                         }}
                     />
+                    {/* <NotificationWrapper></NotificationWrapper> */}
                     <Component {...pageProps} />
                 </GetCurrentUserWrapper>
                 <ToastContainer

@@ -3,8 +3,12 @@ import { useGetListWithCount } from '../../../../core/common/hooks';
 import { FilterQuestionsDTO, QuestionListDTO } from '../../containers/questionList/interface';
 import * as React from 'react';
 
-export const useGetAllQuestionList = (options: Partial<FilterQuestionsDTO>) => {
-    const { content, currentPage, dimension, isActive, lesson, level, pageSize, subject } = options;
+export interface FilterQuestionWithChangeDTO extends Partial<FilterQuestionsDTO> {
+    boolean?: boolean;
+}
+
+export const useGetAllQuestionList = (options: FilterQuestionWithChangeDTO) => {
+    const { content, currentPage, dimension, isActive, lesson, level, pageSize, subject, boolean } = options;
     const option = React.useMemo<Partial<FilterQuestionsDTO>>(
         () => ({
             content: options.content || '',
@@ -16,7 +20,7 @@ export const useGetAllQuestionList = (options: Partial<FilterQuestionsDTO>) => {
             subject: options.subject || '',
             pageSize: options.pageSize || 10,
         }),
-        [content, currentPage, dimension, isActive, lesson, level, pageSize, subject]
+        [content, currentPage, dimension, isActive, lesson, level, pageSize, subject, boolean]
     );
     const { count, list: questions } = useGetListWithCount<QuestionListDTO, Partial<FilterQuestionsDTO>>(ApiListRoutes.QUESTIONS, option);
 

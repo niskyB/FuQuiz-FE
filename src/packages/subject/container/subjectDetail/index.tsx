@@ -89,6 +89,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                                 subjectId: subject.id,
                                                                 subjectName: subject?.name,
                                                                 defaultPackage: tier.id,
+                                                                type: 'REGISTER',
                                                             })
                                                         );
                                                     }

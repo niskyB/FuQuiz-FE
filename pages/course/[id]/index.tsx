@@ -2,8 +2,8 @@ import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { Order } from '../../../src/core/common/dataField';
 import { StoreLayout } from '../../../src/packages/store';
-import { SubjectDetail } from '../../../src/packages/subject';
 import { SubjectFilterDTO } from '../../../src/packages/subject/container/subjectList/interface';
+import { SubjectDetail } from '../../../src/packages/subject';
 
 interface CourseDetailPageProps extends SubjectFilterDTO {
     id: string;

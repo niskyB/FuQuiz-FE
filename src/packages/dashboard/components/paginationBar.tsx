@@ -85,7 +85,7 @@ export const PaginationBar: React.FunctionComponent<PaginationBarProps> = ({ pag
                             }
                             //reset truncated when a box is rendered
                             isTruncate = false;
-
+                            console.log(routeUrl.replace(`currentPage=${currentPage}`, `currentPage=${index + 1}`));
                             return (
                                 <Link key={index} passHref href={routeUrl.replace(`currentPage=${currentPage}`, `currentPage=${index + 1}`)}>
                                     <a

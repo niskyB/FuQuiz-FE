@@ -2,7 +2,6 @@ import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { RouterProtectionWrapper } from '../../../src/core/components/routerProtection';
 import { UserRole } from '../../../src/core/models/role';
-import { AllRole } from '../../../src/core/models/user';
 import { SimulationDetail } from '../../../src/packages/simulation';
 import { StoreLayout } from '../../../src/packages/store';
 

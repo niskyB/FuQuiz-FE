@@ -1,8 +1,8 @@
 import { NextPage, NextPageContext } from 'next';
 import * as React from 'react';
 import { DoQuiz } from '../../../src/packages/quiz';
-import { DoQuizType } from '../../../src/packages/quiz/containers/doQuiz/interface';
 import { StoreLayout } from '../../../src/packages/store';
+import { DoQuizType } from '../../../src/packages/quiz/containers/doQuiz/interface';
 
 interface SimulationQuizPageProps {
     id: string;

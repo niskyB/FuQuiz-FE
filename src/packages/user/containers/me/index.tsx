@@ -1,14 +1,17 @@
 import Link from 'next/link';
+import Router, { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { genderFieldData } from '../../../../core/common/dataField';
-import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 import { Gender, User } from '../../../../core/models/user';
 import { routes } from '../../../../core/routes';
-import { useStoreUser } from '../../../../core/store';
+import { store, useStoreUser } from '../../../../core/store';
+import { userThunk } from '../../../../core/store/user/thunks';
 import { checkFileType } from '../../../../core/util/file';
 import { updateUser } from './action';
 import { UpdateUserDto } from './interface';
+import { FormErrorMessage, FormWrapper, SelectField, TextField } from '../../../../core/components/form';
 
 interface UpdateUserProps {}
 
@@ -36,13 +39,14 @@ export const UpdateUser: React.FC<UpdateUserProps> = () => {
 
     const userState = useStoreUser();
 
+    const router = useRouter();
     const _handleOnSubmit = async (data: UpdateUserDto) => {
         if (avatarFile) data.image = avatarFile;
 
-        const res = await updateUser(data);
-        if (res.status === 200) {
-            // window.location.reload();
-        }
+        updateUser(data).then(() => {
+            store.dispatch(userThunk.getCurrentUser());
+            toast.success('Update profile successfully');
+        });
     };
 
     React.useEffect(() => {

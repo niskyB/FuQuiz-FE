@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { FormErrorMessage, FormWrapper, TextField } from '../../../../core/components/form';
+import { toast } from 'react-toastify';
 import { routes } from '../../../../core/routes';
 import { store } from '../../../../core/store';
+import { ChangePasswordDto } from './interface';
 import { apiActions } from '../../../../core/store/api';
 import { userChangePassword } from './action';
-import { ChangePasswordDto } from './interface';
 
 interface PasswordProps {}
 
