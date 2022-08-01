@@ -40,7 +40,7 @@ export const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId,
             router.back();
             toast.warn('you might not have permission to see this lesson, please buy this course first to view the content!');
         }
-    }, 1000);
+    }, 7000);
 
     React.useEffect(() => {
         if (userState.id && userState.role.description === UserRole.ADMIN) {

@@ -69,11 +69,8 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     };
 
     const _onHandleCheckChange = (e: React.ChangeEvent<HTMLInputElement>, questionId: string) => {
-        if (e.target.checked) {
-            setSelectedQuestions((prev) => [...prev, questionId]);
-        } else {
-            setSelectedQuestions((prev) => prev.filter((item) => item !== questionId));
-        }
+        if (e.target.checked) setSelectedQuestions((prev) => [...prev, questionId]);
+        else setSelectedQuestions((prev) => prev.filter((item) => item !== questionId));
     };
     return (
         <div className="space-y-8 divide-y divide-gray-200">
