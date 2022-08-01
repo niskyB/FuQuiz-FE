@@ -16,6 +16,7 @@ import { routes } from '../../../../core/routes';
 import Link from 'next/link';
 import useTimeout from '../../../../core/common/hooks/useTimeout';
 import { convertQuestionListToQuestionAnswerToSend, findQuestionAndDoAction } from '../../../../core/util/question';
+import { useStoreApi } from '../../../../core/store';
 
 interface DoQuizProps {
     id: string;
@@ -38,14 +39,17 @@ export const DoQuiz: React.FunctionComponent<DoQuizProps> = ({ id, mode }) => {
     const [answerStatus, setAnswerStatus] = React.useState<QuizAnswerStatus>(QuizAnswerStatus.ALL_QUESTION);
 
     const isInitRender = useIsFirstRender();
-    const { quiz } = useGetQuizResultById(id);
+    const { quiz, error } = useGetQuizResultById(id);
 
-    useTimeout(() => {
-        if (!quiz) {
+    React.useEffect(() => {
+        if (error) {
             router.push(routes.homeUrl);
-            toast.warn("Quiz doesn't exist");
+            toast.warn(error.data.errorMessage);
         }
-    }, 1000);
+    }, [error]);
+
+    React.useEffect(() => {}, []);
+
     const [popUp, setPopUp] = React.useState<boolean>();
 
     const totalDone = React.useMemo(
