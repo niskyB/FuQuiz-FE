@@ -4,7 +4,7 @@ export interface FilterLessonListDTO {
     type: string;
     createdAt: string;
     updatedAt: string;
-    isActive: string;
+    isActive: boolean | '';
     currentPage: number;
     pageSize: number;
 }
