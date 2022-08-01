@@ -43,11 +43,8 @@ export const Home: React.FunctionComponent<HomeProps> = () => {
     const { subjects } = useGetSubjectList(subjectFilterOption);
 
     React.useEffect(() => {
-        if (router.query?.notification) {
-            toast.success(router.query.notification);
-        }
-
-        return () => {};
+        if (router.query?.resultCode != '0') toast.error('Something went wrong, please try again later');
+        if (router.query?.notification && router.query?.resultCode == '0') toast.success(router.query.notification);
     }, [router.query]);
 
     const renderContent = () => {
