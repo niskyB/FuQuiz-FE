@@ -128,7 +128,8 @@ export const Subjects: React.FunctionComponent<SubjectsProps> = ({ category, cur
                                                                             >
                                                                                 <div className="font-semibold">{pricePackage.name}</div>
                                                                                 <div className="">
-                                                                                    {vietnamCurrencyConverter(pricePackage.salePrice)}/ 3 months
+                                                                                    {vietnamCurrencyConverter(pricePackage.salePrice)}/{' '}
+                                                                                    {pricePackage.duration} months
                                                                                 </div>
                                                                             </div>
                                                                         </Link>
