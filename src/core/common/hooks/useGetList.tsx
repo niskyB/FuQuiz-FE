@@ -40,13 +40,18 @@ export const getFilter = async <T, Options>(apiRoute: ApiListRoutes | string, op
 
 export const useGetDataById = <T,>(apiRoute: ApiListRoutes | string, id: string) => {
     const [data, setData] = React.useState<T>();
+    const [error, setError] = React.useState<any>();
     React.useEffect(() => {
-        getDataById<T>(apiRoute, id).then((data) => {
-            setData(data);
-        });
+        getDataById<T>(apiRoute, id)
+            .then((data) => {
+                setData(data);
+            })
+            .catch((e) => {
+                setError(e);
+            });
     }, [id]);
 
-    return { data };
+    return { data, error };
 };
 
 export const getDataById = async <T,>(apiRoute: ApiListRoutes | string, id: string) => {

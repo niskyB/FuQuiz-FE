@@ -1,21 +1,20 @@
+import { PhotographIcon, PlayIcon, VolumeUpIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import useDownloader from 'react-use-downloader';
+import * as XLSX from 'xlsx';
 import { FormWrapper } from '../../../../src/core/components/form';
 import { RouterProtectionWrapper } from '../../../../src/core/components/routerProtection';
-import { Table, TableDescription, TableHead, TableRow } from '../../../../src/core/components/table';
-import { TableBody } from '../../../../src/core/components/table/tableBody';
+import { Answer } from '../../../../src/core/models/answer';
 import { UserRole } from '../../../../src/core/models/role';
-import { DashBoardLayout } from '../../../../src/packages/dashboard';
-import * as XLSX from 'xlsx';
 import { routes } from '../../../../src/core/routes';
+import { getYoutubeCode } from '../../../../src/core/util';
+import { DashBoardLayout } from '../../../../src/packages/dashboard';
 import { useGetQuestionLevelList } from '../../../../src/packages/question';
 import { addQuestion } from '../../../../src/packages/question/containers/addQuestion/action';
-import { Answer } from '../../../../src/core/models/answer';
-import { toast } from 'react-toastify';
-import { rejects } from 'assert';
-import useDownloader from 'react-use-downloader';
 
 interface ImportQuestionPageProps {}
 
@@ -111,6 +110,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
     const [file, setFile] = React.useState<File | null>();
     const [data, setData] = React.useState<ImportedQuestion[]>([]);
 
+    const selectWatcher = methods.watch('check');
     const { download } = useDownloader();
     const { levels } = useGetQuestionLevelList();
 
@@ -149,9 +149,8 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
     };
 
     React.useEffect(() => {
-        if (file) {
-            _readExcel(file);
-        }
+        if (file) _readExcel(file);
+
         return () => {};
     }, [file]);
 
@@ -261,7 +260,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                         <li>Use example form to edit to make sure you have good experience</li>
                                     </ol>
                                 </div>
-                                <Table>
+                                {/* <Table>
                                     <TableHead
                                         fields={[
                                             '',
@@ -309,7 +308,115 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                             </TableRow>
                                         ))}
                                     </TableBody>
-                                </Table>
+                                </Table> */}
+                                {data.map((item, index) => (
+                                    <div
+                                        key={item.content + '-row-' + index}
+                                        className={`px-5 py-5 space-y-5 text-base bg-white rounded-md ${
+                                            selectWatcher && selectWatcher[index] && 'outline-double outline-2  outline-indigo-600'
+                                        }`}
+                                    >
+                                        <div className="flex flex-col space-y-3">
+                                            <div className="flex justify-between">
+                                                <h1 className="font-bold">Question {index + 1}</h1>
+                                                <input type="checkbox" {...methods.register(`check.${index}`)} />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <div className="flex space-x-3">
+                                                    <label className="font-semibold">Subject ID:</label>
+                                                    <p>{item.subject}</p>
+                                                </div>
+                                                <div className="flex space-x-3">
+                                                    <label className="font-semibold">Lesson ID:</label>
+                                                    <p>{item.lesson}</p>
+                                                </div>
+                                                <div className="flex space-x-3">
+                                                    <label className="font-semibold">SubjectID:</label>
+                                                    <p>{item.subject}</p>
+                                                </div>
+                                                <div className="flex space-x-3">
+                                                    <label className="font-semibold">Level:</label>
+                                                    <p>{item.level}</p>
+                                                </div>
+                                                <div className="flex space-x-3">
+                                                    <label className="font-semibold">Status:</label>
+                                                    <p>{item.status}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col space-y-1">
+                                            <p className="font-semibold">{item.content}</p>
+                                            <fieldset className="space-y-5">
+                                                {[item.answer1, item.answer2, item.answer3, item.answer4].map((answer, index1) => {
+                                                    return (
+                                                        <div
+                                                            key={item.content + { index1 }}
+                                                            className={`relative flex items-start ${
+                                                                index1 + 1 == item.correctAnswer && 'text-green-600'
+                                                            }`}
+                                                        >
+                                                            <div className="flex items-center h-5">{index1 + 1}.</div>
+                                                            <div className="ml-2 text-sm">
+                                                                <label className={`font-medium  cursor-pointer `}>{answer}</label>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </fieldset>
+                                        </div>
+                                        <div className="flex flex-col space-y-10 ">
+                                            <h1 className="font-bold">Material</h1>
+                                            {item.imageUrl && (
+                                                <div className="flex flex-col space-y-3">
+                                                    <div className="flex items-center space-x-1 font-semibold">
+                                                        <div className="w-6 h-6">
+                                                            <PhotographIcon />
+                                                        </div>
+
+                                                        <div className="">Image :</div>
+                                                    </div>
+                                                    <img className="max-w-xl" src={item.imageUrl} alt={item.imageUrl} />
+                                                </div>
+                                            )}
+                                            {item.videoUrl && (
+                                                <div className="flex flex-col space-y-3 ">
+                                                    <div className="flex items-center space-x-1 font-semibold">
+                                                        <div className="w-6 h-6">
+                                                            <PlayIcon />
+                                                        </div>
+
+                                                        <div className="">Video :</div>
+                                                    </div>
+                                                    <iframe
+                                                        width="560"
+                                                        height="315"
+                                                        src={`https://www.youtube.com/embed/${getYoutubeCode(item.videoUrl)}`}
+                                                        title="YouTube video player"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    ></iframe>
+                                                </div>
+                                            )}
+
+                                            {item.audioUrl && (
+                                                <div className="flex flex-col space-y-3">
+                                                    <div className="flex items-center space-x-1 font-semibold">
+                                                        <div className="w-6 h-6">
+                                                            <VolumeUpIcon />
+                                                        </div>
+                                                        <div className="">Audio :</div>
+                                                    </div>
+                                                    <iframe
+                                                        width="560"
+                                                        height="315"
+                                                        src={`https://www.youtube.com/embed/${getYoutubeCode(item.audioUrl)}`}
+                                                        title="YouTube video player"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    ></iframe>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 

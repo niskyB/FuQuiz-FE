@@ -23,7 +23,7 @@ export const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId,
     const router = useRouter();
     const userState = useSelector<RootState, UserState>((state) => state.user);
 
-    const { lesson } = useGetLessonById(lessonId);
+    const { lesson, error } = useGetLessonById(lessonId);
     const { registrationList } = useGetRegistrationUserList({});
     const isAccess = React.useMemo(() => {
         for (let i = 0; i < registrationList.length; i++) {
@@ -35,12 +35,19 @@ export const LessonView: React.FunctionComponent<LessonViewProps> = ({ lessonId,
         return false;
     }, [registrationList]);
 
-    useTimeout(() => {
-        if (!lesson) {
+    React.useEffect(() => {
+        if (error && error.data.errorMessage) {
             router.back();
-            toast.warn('you might not have permission to see this lesson, please buy this course first to view the content!');
+            toast.warn(error.data.errorMessage);
         }
-    }, 1000);
+    }, [error]);
+
+    // useTimeout(() => {
+    //     if (!lesson) {
+    //         router.back();
+    //         toast.warn('you might not have permission to see this lesson, please buy this course first to view the content!');
+    //     }
+    // }, 7000);
 
     React.useEffect(() => {
         if (userState.id && userState.role.description === UserRole.ADMIN) {
