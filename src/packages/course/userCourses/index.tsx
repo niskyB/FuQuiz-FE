@@ -27,12 +27,14 @@ export interface UserCoursesProps extends UserCoursesPageProps {
 export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ category, currentPage, isFeature, name, order, pageSize }) => {
     const router = useRouter();
 
+    const [decoy, setDecoy] = React.useState<boolean>(true);
+
     const registrationOptions = React.useMemo<Partial<UserCoursesProps>>(
         () => ({ isActive: true, currentPage: 0, pageSize: 12, category, isFeature, name, order }),
         [category, isFeature, name, order]
     );
 
-    const { registrationList, count } = useGetRegistrationUserList({ category, currentPage, isFeature, name, order, pageSize });
+    const { registrationList, count } = useGetRegistrationUserList({ category, currentPage, isFeature, name, order, pageSize, decoy });
     useUrlParams({
         defaultPath: routes.courseListUrl,
         query: { ...router.query, category, currentPage, isFeature, name, order, pageSize },
@@ -40,7 +42,8 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
 
     const _handleOnCancelRegistration = (id: string) => {
         cancelRegistration(id).then(() => {
-            window.location.reload();
+            // window.location.reload();
+            setDecoy((prev) => !prev);
         });
     };
 
@@ -60,15 +63,16 @@ export const UserCourses: React.FunctionComponent<UserCoursesProps> = ({ categor
     const _handleOnPayCourse = async (courseId: string) => {
         try {
             const res = await payCourse(courseId);
+            setDecoy((prev) => !prev);
             toast.success('You can learn your course now');
 
-            window.location.reload();
+            // window.location.reload();
         } catch (error: any) {
             if (error.data.balance) toast.warn('Your balance is not enough to pay this course');
             if (error.data.errorMessage) toast.warn(error.data.errorMessage);
         }
     };
-
+    console.log(registrationList);
     return (
         <div className="flex space-x-10">
             <div className="flex flex-col space-y-10 w-fit">
