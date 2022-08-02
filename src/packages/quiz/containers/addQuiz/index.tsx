@@ -44,7 +44,7 @@ export const AddQuiz: React.FunctionComponent<AddQuizProps> = () => {
     const { ExamLevelList } = useGetExamLevel();
     const { quizTypeList: QuizTypeList } = useGetQuizType();
     const { levels } = useGetQuestionLevelList();
-    const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, ...questionOption });
+    const { questions: questionList } = useGetAllQuestionList({ subject: selectedSubjectId, pageSize: 99, ...questionOption });
 
     const _handleOnFilter = async (data: FilterQuestionFormDTO) => {
         setQuestionOption((prev) => ({ ...prev, ...data }));

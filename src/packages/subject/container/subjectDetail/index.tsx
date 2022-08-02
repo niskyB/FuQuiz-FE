@@ -72,10 +72,10 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
                                                     {vietnamCurrencyConverter(tier.originalPrice)}
                                                 </span>
                                                 <div className="">
-                                                    <span className="text-4xl font-medium text-gray-900">
+                                                    <span className="text-3xl font-medium text-gray-900">
                                                         {vietnamCurrencyConverter(tier.salePrice)}
                                                     </span>
-                                                    <span className="text-base font-medium text-gray-500">/mo</span>
+                                                    <span className="text-base font-medium text-gray-500">/{tier.duration} months</span>
                                                 </div>
                                             </p>
                                             <button
