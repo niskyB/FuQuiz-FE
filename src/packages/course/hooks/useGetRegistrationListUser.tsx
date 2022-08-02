@@ -6,7 +6,7 @@ import { Registration } from '../../../core/models/registration';
 import { UserCoursesProps } from '../userCourses';
 
 export interface GetRegistrationDTO extends Partial<UserCoursesProps> {
-    decoy: boolean;
+    decoy?: boolean;
 }
 
 export const useGetRegistrationUserList = ({ currentPage, pageSize, order, category, isFeature, name, status, decoy }: GetRegistrationDTO) => {
