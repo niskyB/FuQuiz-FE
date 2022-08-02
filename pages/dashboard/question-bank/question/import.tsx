@@ -319,7 +319,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                         <div className="flex flex-col space-y-3">
                                             <div className="flex justify-between">
                                                 <h1 className="font-bold">Question {index + 1}</h1>
-                                                <input key={item.index} type="checkbox" {...methods.register(`check.${index}`)} />
+                                                <input type="checkbox" {...methods.register(`check.${index}`)} />
                                             </div>
                                             <div className="flex flex-col">
                                                 <div className="flex space-x-3">
@@ -350,6 +350,7 @@ const ImportQuestionPage: React.FunctionComponent<ImportQuestionPageProps> = () 
                                                 {[item.answer1, item.answer2, item.answer3, item.answer4].map((answer, index1) => {
                                                     return (
                                                         <div
+                                                            key={item.content + { index1 }}
                                                             className={`relative flex items-start ${
                                                                 index1 + 1 == item.correctAnswer && 'text-green-600'
                                                             }`}
