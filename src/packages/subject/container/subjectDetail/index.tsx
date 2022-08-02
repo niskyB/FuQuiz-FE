@@ -32,7 +32,7 @@ export const SubjectDetail: React.FunctionComponent<SubjectDetailProps> = ({
 
     const { pricePackageList } = useGetPricePackageListBySubjectId(id);
     const { subject } = useGetSubject(id);
-    const { lessonList } = useGetLessonList({ id });
+    const { lessonList } = useGetLessonList({ id, isActive: true });
     return (
         <>
             <div className="flex space-x-10">

@@ -39,7 +39,7 @@ UserCoursesPage.getInitialProps = async (ctx: NextPageContext): Promise<UserCour
     let props = {
         currentPage: ctx.query?.currentPage || 1,
         pageSize: ctx.query?.pageSize || 12,
-        isFeature: ctx.query?.isFeature || true,
+        isFeature: ctx.query?.isFeature || '',
         order: ctx.query?.order || Order.DESC,
         category: ctx.query?.category || '',
         name: ctx.query?.name || '',
